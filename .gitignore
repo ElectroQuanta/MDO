@@ -1,0 +1,27 @@
+.DS_Store
+
+# ignore LaTeX files
+*.acn
+*.acr
+*.alg
+*.aux
+*.bbl
+*.blg
+*.ist
+*.lof
+*.log
+*.lot
+*.symbols*
+*.toc
+*.upa
+*.glo
+*.lol
+*.org
+*.gz
+*.out
+*.gls
+*.glg
+*.slo
+
+# ignore the designated subfolders
+auto/
