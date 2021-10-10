@@ -1,0 +1,44 @@
+\chapter{Design}
+\label{ch:design}
+
+\section{Hardware specification}
+\label{sec:hw-specs}
+- Block diagram with COTS components, if possible
+- List of constraints of functions to be implemented in HW or SW
+  - Inclusion of a multiplexer may reduce SW burden
+  - CPU peripherals:
+    - PCA for wave generation
+    
+\section{Hardware interfaces definition}
+\label{sec:hw-interf-def}
+- I/O ports
+- HW registers
+- Memory addresses for shared or I/O by memory mapping
+- HW interrupts
+
+\section{Software specification}
+\label{sec:sw-specs}
+Top-down methodology
+1. Identify main subsystems
+   1. Signal input detector
+   2. Event handler
+   3. Output generator
+
+\section{Software interfaces definition}
+\label{sec:sw-interf-def}
+- Define the APIs in detail:
+  - header files with:
+    - functions prototypes
+    - data structure declarations
+    - class declarations
+
+\section{Start-up/shutdown process specification}
+\label{sec:startup-shutdown}
+
+\section{Error handling specification}
+\label{sec:error-handling-specification}
+- Create error-handling routines
+- Watchdog timer can be used for system recovery
+
+\section{Design verification}
+\label{sec:design-verification}
