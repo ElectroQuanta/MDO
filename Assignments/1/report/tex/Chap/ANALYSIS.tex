@@ -34,4 +34,40 @@
 
 \section{Theoretical foundations}
 \label{sec:theor-found}
-Talk about the theoretical foundations.
+	Pushing a button on a remote control sets in motion a series of events that causes the controlled device to carry out a command. The process works something like this:
+	
+1- Pushing the button on the remote control causes a touch to the contact beneath it and complete the button circuit on the circuit board. The integrated circuit detects this.
+
+2- The integrated circuit sends the binary of the button function command to the LED at the front of the remote.
+
+3- The LED sends out a series of light pulses that corresponds to the binary the button command.
+
+Here's an example of this clicking on the "volume up" button on a Sony TV Remote:
+
+\begin{figure}
+\centering
+    \includegraphics[width=0.9\columnwidth]{./img/buttoncode.png}
+  \caption{Example of wave generator for "volume up" from~\cite{btncode})}%
+\label{fig:btncode}
+\end{figure}
+
+The remote signal includes more than the command for "volume up". It sends several bits of information to the receiving device, including:
+
+-> a "start" command
+
+-> the command code for "volume up"
+
+-> the device address (so the TV knows the data is intended for it)
+
+-> a "stop" command (triggered when you release the "volume up" button)
+
+In this case, the buttons that are needed and its codes are:
+
+Power On = 001 0101
+
+Power Off = 010 1111
+
+Volume Up = 001 0010
+
+Volume Down = 001 0011
+
