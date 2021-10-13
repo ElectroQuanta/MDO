@@ -5,7 +5,9 @@ phase, the product requirements are derived --- defining the client expectations
 for the product --- as well as the project constraints --- what the environments
 limits about the product. Finally, the theoretical foundations are outlined,
 providing the basic technical knowledge to undertake the project.
-
+%
+  \vspace{-5mm}
+%  
 \section{Requirements}
 \label{sec:requirements}
 The requirements defined the client expectations for the TV remote control,
@@ -18,7 +20,9 @@ namely:
 \item Infrared emitter response time (system output response time): 100 ms
 \item The TV remote may be upgraded in the future to use more buttons
 \end{item-c}
-
+%
+  \vspace{-5mm}
+%  
 \section{Constraints}
 \label{sec:constraints}
 The project constraints are the limitations the environment imposes on it, namely:
@@ -44,7 +48,9 @@ The project constraints are the limitations the environment imposes on it, namel
     IVA
   \end{itemize}
 \end{item-c}
-
+%
+  \vspace{-5mm}
+%  
 \section{Theoretical foundations}
 \label{sec:theor-found}
 The theoretical foundations provide the basic technical knowledge for project
@@ -70,6 +76,9 @@ The \gls{led} emits a series of light pulses that corresponds to the binary the 
 
 As an example, one can take a look at the clicking on the ``volume up'' button
 on a Sony TV remote (Fig.~\ref{fig:btncode}):
+%
+  \vspace{-5mm}
+%  
 %
 \begin{figure}[htb!]
 \centering
@@ -99,7 +108,9 @@ Volume Up = 001 0010
 \item
 Volume Down = 001 0011
 \end{item-c}
-
+%
+  \vspace{-5mm}
+%  
 \subsection{Reverse engineering}
 \label{sec:reverse-engineering}
 The contract established between the client (Samsung company) and the developer
@@ -124,9 +135,12 @@ emitter characteristics, if already present in the database, or simply recorded
 for later usage. For the present use case, the list of available commands for
 Samsung TVs can also be obtained for the database for actual TV ``attack''.
 %
+  \vspace{-5mm}
+%  
+%
 \begin{figure}[htb!]
 \centering
-    \includegraphics[width=0.45\columnwidth]{./img/rasp-reverse-engineering-setup.jpg}
+    \includegraphics[width=0.43\columnwidth]{./img/rasp-reverse-engineering-setup.jpg}
   \caption{Example setup for reverse engineering of TV remote control commands
     using an emulator~\cite{rasp-lirc}}%
 \label{fig:rasp-lirc}
