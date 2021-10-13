@@ -66,14 +66,14 @@ the \gls{cpu} of the MCU via an external interrupt, ``waking'' it up. The CPU
 handles that interrupt via an \gls{isr}, processing it and actuating, if
 required. The system then goes back to sleep.
 
-The 8051 MCU only contains 2 external interrupts sources --- \texttt{EXT0} and
-\texttt{EXT1} --- thus limitting the direct connection of the pushbuttons to the
+The 8051 MCU only contains 2 external interrupts sources --- \texttt{INTO} and
+\texttt{INT1} --- thus limitting the direct connection of the pushbuttons to the
 MCU, even with the pull-up circuitry. This is where the serial I/O expander
 becomes most useful, as it can be connected to TV remote keys (up to 8 in this
 case) and connected to a single external interrupt pin, being then read via
 \gls{i2c} or \gls{spi} interface. Thus, the keys can be connected through
 pull-up circuitry to the I/O expander and the output is then connected to
-\texttt{EXT0} on the 8051 MCU. The communication protocol chosen is \gls{i2c} as
+\texttt{INTO} on the 8051 MCU. The communication protocol chosen is \gls{i2c} as
 it is more expandable
 
 Concerning the output, the 8051 PCA peripheral is connected to the IR
@@ -101,7 +101,7 @@ startup --- \texttt{Idle} state --- the peripherals are initialized (interrupts,
 generated interrupts) and the program waits for events, going into sleep
 mode.
 
-When a key is pressed, the external interrupt \texttt{EXT0} signals this
+When a key is pressed, the external interrupt \texttt{INTO} signals this
 event right away to the CPU awaking it up triggering the execution of
 \texttt{ISR\_Key\_Press}. This ISR checks which key was pressed by reading it
 from the I/O expander via I2C, pushes the associated code to
