@@ -26,7 +26,8 @@ be also a digital interface, to handle the large amount of keys as a
 \gls{io} expander with serial interface, e.g. the Microchip MCP23008/MCP23S08~\cite{microchip}, which is considered here for future expansibility of the device,
 thus making it scalable. This can be especially useful when using
 microprocessor units with lower I/O inputs. A tradeoff between the inclusion of
-the multiplexer versus future redesign must be performed.
+the multiplexer versus future redesign must be performed. The system is powered
+by batteries.
 
 The microprocessor chosen depends on various factors, such as: architecture,
 throughput, memory, processing power, power efficiency, toolchain availability
@@ -121,21 +122,33 @@ sending it via IR circuitry (\texttt{ir\_send(keycode)}).
 
 \section{Start-up/shutdown process specification}
 \label{sec:startup-shutdown}
+As highlighted in Fig.~\ref{fig:state-mach}, the process starts with battery
+power being supplied to the system, going into sleep mode and waiting for
+events, minimizing power consumption. However, there is still residual power
+being drawn. This could be overcome by placing a power button for the remote
+itself, but with the inconvenience of MCU reset and the initial delays
+associated. The shutdown results from batteries disconnection.
 %
   \vspace{-5mm}
 %  
 \section{Error handling specification}
 \label{sec:error-handling-specification}
-- Create error-handling routines
-- Watchdog timer can be used for system recovery
+Every system is prone to glitches, bugs and errors, thus, requiring it to be
+handled. Errors should be handled gracefully by creating error handling
+routines, which try to circumvent them and provide feedback.
+
+For extreme cases, where this is not possible, the watchdog timer should be
+enabled to help the system recover from crashes. However, this is a last resort,
+as constant reboots --- sign of a bad design --- are inadmissible and will
+frustrate the user.
+
+The error handling routines can be built into the design by considering return
+codes and asserts from function calls, e.g., \texttt{int i2c_\read(char *byte)},
+where \texttt{0} signals success and otherwise an error was encountered. Thus,
+good design eases error-handling specification and should be an aspect to keep
+in mind in this phase.
 %
   \vspace{-5mm}
-%  
-\section{Design verification}
-\label{sec:design-verification}
-%
-  \vspace{-5mm}
-%  
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "../../dissertation"
