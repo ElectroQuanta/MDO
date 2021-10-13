@@ -82,11 +82,32 @@ transmitter circuitry, for IR code emission.
 %  
 \section{Software specification}
 \label{sec:sw-specs}
-Top-down methodology
-1. Identify main subsystems
-   1. Signal input detector
-   2. Event handler
-   3. Output generator
+Next, the \gls{sw} responsible for system operation is specified. As this system
+is an event-driven asynchronous one it can be more easily specified using a
+state machine diagram as illustrated in Fig.~\ref{fig:state-mach}. At program
+startup --- \texttt{Idle} state --- the peripherals are initialized (interrupts, PCA, I2C, timer for tick
+generated interrupts) and the program waits for events, going into sleep
+mode.
+
+When a key is pressed, the external interrupt \texttt{EXT0} signals this
+event right away to the CPU awaking it up triggering the execution of
+\texttt{ISR\_Key\_Press}. This ISR checks which key was pressed by reading it
+from the I/O expander via I2C, pushes the associated code to
+\texttt{keycode\_fifo} --- a circular buffer --- and flags it to the CPU, enabling \texttt{keycode\_avail}.
+
+The CPU is awaked regularly to check if any keycode is available. If it is, it
+triggers the execution of \texttt{ISR\_IR\_emit}, clearing the flag
+\texttt{keycode\_avail}, popping the keycode from \texttt{keycode\_fifo} and
+sending it via IR circuitry (\texttt{ir\_send(keycode)}).
+%
+  \vspace{-5mm}
+%  
+\begin{figure}[htb!]
+\centering
+    \includegraphics[width=0.7\columnwidth]{./img/state-mach.png}
+  \caption{TV remote state machine diagram}%
+\label{fig:state-mach}
+\end{figure}
 %
   \vspace{-5mm}
 %  
