@@ -1,0 +1,195 @@
+	% CHAPTER - Conclusion/Future Work --------------
+\chapter{Conclusion}%
+\label{ch:conclusion}
+In this chapter are outlined the conclusions and the prospect for future work
+regarding the autonomous navigation of robots.
+%
+\section{Conclusions}%
+\label{ch:conclusion-concls}
+The autonomous navigation of robots can be described as a collision-free path
+towards a target and successfully formulated and implemented using dynamic
+systems. Amongst the class of the dynamic systems, the nonlinear type arises as
+the most useful due to variations of qualitative behavior --- number and or/or
+stability of the fixed points of the dynamic system. 
+
+Then, the behaviors were analyzed in isolation and in integration, namely target
+acquisition and obstacle avoidance, strongly supported by a previous analytical
+study of the corresponding dynamic system. This analytical study, based on the
+qualitative theory of dynamic systems, consisted in the determination of the
+fixed points and its stability, the corresponding phase portraits, i.e.,
+possible evolution of the system's state, and the bifurcation diagram, yielding
+the bifurcation points as a function of the parameters of the system.
+\\\\
+\textbf{Target Acquisition}: An autonomous mobile robot must be able to navigate to a target position. The
+target acquisition behavior can be yielded by dynamic systems for the heading
+direction and path velocity (Eq.~(\ref{eq:3}) and Eq.~(\ref{eq:4})). The heading direction dynamics consists of a
+sinusoidal function (Eq.~(\ref{eq:5})), as it is required the heading direction
+converges to the target independently of its initial state, yielding an attractor in the heading direction and a
+repeller in the opposite one for faster convergence. 
+
+The implementation of the
+dynamic systems was performed using Forward Euler's method in Matlab, and used
+to command a simulation in CoppeliaSim environment. Several scenarios were
+simulated for different velocities functions, and was observed that a dynamic
+system for path velocity is required for adequate velocity control. Alongside
+with these simulations, the system's parameters were tuned, namely the time
+constants of the system. 
+
+Lastly, a linear dynamic system for heading direction
+was considered and compared to the nonlinear one. 
+It was observed the nonlinear
+dynamic system is better suited for the target acquisition behavior of the
+robot, as it provides smoother paths --- narrower angular velocity range.
+\\\\
+\textbf{Obstacle avoidance}: While moving to a target, a robot must also avoid obstacles that may appear ---
+obstacle avoidance. To avoid obstacles, the robot must firstly detect them, in
+this case, using infrared radiation sensors. The strategy adopted consisted in
+assuming that each sensor $i$ specifies a virtual obstacle in the direction
+$\psi_{obs,i}$ if an obstruction is detected in that direction, modelled by a
+repulsive force centered in the direction the respective sensor points out,
+$f_{obs,i}$ (Eq.~(\ref{eq:24})). As each sensor is mounted in a fixed direction
+$\theta_i$ in respect to the frontal direction of the robot, the calibration of
+the system is unnecessary. 
+
+The obstacle avoidance dynamics establishes a
+repeller in the virtual obstacle direction with variable strength, as a function
+of the distance to obstacles (Eq.~(\ref{eq:25})) --- high for small distances
+and low for high distances --- and where the angular range over which the
+force-let exerts its repulsive effect should be limited
+(Eq.~(\ref{eq:26})). Gaussian white noise is also added to the dynamics to
+enable the escape from the repeller in a finite time, in case this is the
+initial condition. 
+
+The implementation was performed in Matlab using Forward
+Euler's method. Several simulations were then performed to evaluate the impact
+of parameters' variations, namely the maximum strenght of repulsion,
+$\beta_1$, the decay rate of the repulsion force with the distance increase,
+$\beta_2$, and noise magnitude $Q$. $\beta_1$ relates to the minimum time
+constant of the obstacle avoidance dynamics $\tau_{obs,i}$ (Eq.~(\ref{eq:32})),
+and for the simulations performed $\beta_1 = 3.5 \Delta t$. It should be noted,
+however, that the value of this parameter is dependent on the rate of fixed
+points shift. As for the parameter $\beta_2$, for increasing values the decay
+rate diminishes, maintaining the repulsive effect significantly for
+a wider distance range --- the robot starts to rotate farther away from the
+obstacles. Conversely, for decreasing values of $\beta_2$, the decay rate
+increases, maintaining the repulsive effect significantly for
+a narrow distance range --- the robot starts to rotate closer to the
+obstacles. The addition of noise is important, but should be limited in
+magnitude to avoid jitter: it should be sufficient enough to guarantee the escape from the
+repellers within a time limit, in case the system is initially placed
+there. Additionally, noise induces different qualitative behaviors (turn
+left/right) due to stochastic effect. It was also noted that noise may not
+always be required, as the system may present slight bias in sensors
+readings. 
+
+The simulations with different gap between obstacles showed a
+the heading direction dynamics
+exhibits different qualitative behaviors --- the stability of the fixed
+points varies --- starting from gap = 50 cm. This corresponds to a bifurcation
+point, representing the distance below which the robot
+(with diameter 45 cm) cannot pass between the two obstacles. For gap < 50 cm, the planning dynamics has an reppeller
+at the heading direction $\phi = \pi/2$, and for gap > 50 this reppeller becomes
+asymptotically stable (i.e., an attractor). 
+
+Lastly, a simulation was performed
+in an environment with multiple obstacles, with the robot successfully and
+adequately avoiding all of them.
+\\\\
+\textbf{Integration: Obstacle avoidance and Target acquisition}:
+Next, the obstacle avoidance and target acquisition behaviors were integrated,
+considering two approaches for the latter: nonlinear or linear dynamic
+system. For both approaches the obstacle avoidance behavior must take precedence over the target acquisition
+to prevent the robot from hitting an obstacle while attempting to move to the
+target. This is guaranteed by imposing greater magnitude for repulsive component than for
+attractive one, i.e. $\lambda_{obs} \gg \lambda_{tar}$, and consequently,
+$\tau_{obs} \ll \tau_{tar}$.
+After analyzing the robot's behavior for both nonlinear and linear dynamics, it
+is was possible to compare them.
+Mathematically, the fact that the nonlinear function is a sinusoidal function, yielding always
+two fixed points --- one attractor, and in the opposite direction a
+repeller --- whereas the linear function only contributes with one attractor to
+the vector field. 
+The repeller in the opposite direction to the target reinforces the heading direction that must be taken by the robot so that it reaches the target.
+In the previous experiments, as well by Section~\ref{sec:discussion-linear-phi},
+it is concluded by experimentation too, that the nonlinear system provides smoother paths at narrower angular velocity range.
+Thus, it can be concluded that the nonlinear dynamic system is better for the target acquisition behavior of the robot. 
+%
+\\\\
+\textbf{Control of driving speed}
+The stability of the planning dynamics is affected by the rate of fixed points
+shift, as to keep the system stable, i.e. in or near an attractor at all times, the rate of such
+shifts must be limited to permit the track the attractor as it shifts. One way
+of accomplishing this is by controlling the path velocity of the vehicle, as the
+rate of fixed points shift is determined by the relative velocity of the robot
+with respect to its environment~\cite{bicho2000dynamic}.
+
+The shifting of fixed points for the planning dynamics can stem from robot
+movement through the environment and associated sensory information 
+changes or due to environmental changes (obstacles moving in the world), causing
+attractors and repellers to change. 
+
+Thus, a more adequate dynamic system for path velocity was
+established, as the sum of obstacles and target contributions, where one of the
+components dominates at all times. A systematic way to construct a
+function that indicates if obstacles contributions are present, is to integrate
+force-lets, from which a potential function of the obstacle avoidance dynamics
+results. If the potential is positive a repeller is established for the planning
+dynamics, and conversely, if negative an attractor arises. A convenient way 
+to transform the potential levels to the strengths of the two contributions
+to the velocity control is through the use of a sigmoidal threshold function,
+defining the angular range the obstacles contribution is noticeable.
+
+Then, the parameters were tuned considering the hierarchy of relaxation rates
+--- which ensures that the system relaxes to the attractors and that obstacle
+avoidance has precedence over the target --- and some rules of thumb for the
+remaining path velocity parameters.
+
+Finally, two scenarios were simulated --- S and Tar-Obs --- to assess the
+performance of the overall dynamics. It was shown that, although the average
+velocity was increased, the planning dynamics remains robust, suggesting a performance improvement in the overall dynamics.
+%
+\\\\
+\textbf{Final remarks}:
+Dynamic systems can be used to successfully implement the autonomous mobile
+navigation of robots in a robust way, as the system follows closely the
+asymptotically stable states, i.e. the attractors, yielding it robust to noise
+and external disturbances. Specifically, nonlinear dynamic systems provide a
+richness of qualitative behaviors as required for the highly dynamic conditions
+imposed by the surroundings. Although more complex than the linear counterparts,
+the qualitative theory of dynamic systems provides a convenient framework for a
+relatively easy analysis of nonlinear dynamic systems.
+
+The autonomous navigation of robots can be described as a collision-free path
+towards a target, thus requiring both obstacle avoidance and target acquisition
+behaviors for the planning dynamics. For the former, a repeller is established in the direction of the
+virtual obstacles detected by the robot's sensor; for the latter, an attractor
+is established in the direction of the target and a repeller in the opposite
+direction for faster convergence of the desired heading direction. In the
+integration of both behaviors the hierarchy of time constants must be observed,
+assuring obstacle avoidance precedence over target acquisition and in a adequate
+form, related to the computing time of the system.
+
+To keep the planning dynamics stable, i.e. in or near an attractor at all times, the rate of such
+shifts must be limited to permit the track the attractor as it shifts. One way
+of accomplishing this is by controlling the path velocity of the vehicle, as the
+rate of fixed points shift is determined by the relative velocity of the robot
+with respect to its environment~\cite{bicho2000dynamic}. Thus, a more adequate
+dynamic system for path velocity can be established using obstacles and target
+contributions to the dynamic through a thresholded potential function and a
+convenient tuning of the system.
+%
+\section{Prospect for Future Work}%
+\label{ch:conclusion-future-work}
+In the foreseeable future, the deployment of the planning and path velocity
+dynamics to hardware could be performed, analyzing the navigation behavior of
+the robot in real world scenarios. Additionally, the detection of targets could
+be performed by the robot using different techniques such as sound detection or
+computer vision.
+
+Another interesting feature is to incorporate artificial intelligence to the
+robot, enabling it to recall the most relevant target and to forget the others,
+making it even more adaptable to the highly dynamic conditions of the surroundings. 
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../../dissertation"
+%%% End:

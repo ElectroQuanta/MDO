@@ -1,0 +1,512 @@
+%!TEX root = ../dissertation.tex
+%
+% here are the symbols entries
+\newglossaryentry{pi}
+{
+  name={\ensuremath{\pi}},
+  description={ratio of circumference of circle to its diameter},
+  sort=pi,
+  symbol={\ensuremath{\pi}},
+  unit={}
+}
+%
+\newglossaryentry{omega}
+{
+  name={\ensuremath{\omega}},
+  description={angular velocity},
+  sort=omega,
+  symbol={\ensuremath{\omega}},
+  unit={\si{rad/s}}
+}
+%
+\newglossaryentry{phi}
+{
+  name={\ensuremath{\phi}},
+  description={heading direction of the robot relative to an external reference axis},
+  sort=phi,
+  symbol={\ensuremath{\phi}},
+  unit={\si{rad}}
+}
+%
+\newglossaryentry{theta}
+{
+  name={\ensuremath{\theta_i}},
+  description={direction of the obstacle detected by sensor i in respect to the
+    external reference axis},
+  sort=theta,
+  symbol={\ensuremath{\theta}},
+  unit={\si{rad}}
+}
+%
+\newglossaryentry{v}
+{
+  name={\ensuremath{v}},
+  description={linear velocity of the robot},
+  sort=v,
+  symbol={\ensuremath{v}},
+  unit={\si{m/s}}
+}
+%%% Target
+\newglossaryentry{ftar}
+{
+  name={\ensuremath{f_{tar}}},
+  description={Target contribution to the planning dynamics},
+  sort=ftar,
+  symbol={\ensuremath{f_{tar}}},
+  unit={\si{rad/s}}
+}
+%
+\newglossaryentry{fstoch}
+{
+  name={\ensuremath{f_{stoch}}},
+  description={Stochastic effect contribution to the planning dynamics},
+  sort=fstoch,
+  symbol={\ensuremath{f_{stoch}}},
+  unit={\si{rad/s}}
+}
+%
+\newglossaryentry{xtar}
+{
+  name={\ensuremath{x_{tar}}},
+  description={x coordinate of the target position},
+  sort=xtar,
+  symbol={\ensuremath{x_{tar}}},
+  unit={\si{m}}
+}
+%
+\newglossaryentry{ytar}
+{
+  name={\ensuremath{y_{tar}}},
+  description={y coordinate of the target position},
+  sort=ytar,
+  symbol={\ensuremath{y_{tar}}},
+  unit={\si{m}}
+}
+%
+\newglossaryentry{xrobot}
+{
+  name={\ensuremath{x_{robot}}},
+  description={x coordinate of the robot's position},
+  sort=xrobot,
+  symbol={\ensuremath{x_{robot}}},
+  unit={\si{m}}
+}
+%
+\newglossaryentry{yrobot}
+{
+  name={\ensuremath{y_{robot}}},
+  description={y coordinate of the robot's position},
+  sort=yrobot,
+  symbol={\ensuremath{y_{robot}}},
+  unit={\si{m}}
+}
+%
+%
+\newglossaryentry{psi-tar}
+{
+  name={\ensuremath{\psi_{tar}}},
+  description={angle by which the robot `sees' the target in respect to the
+    external world axes},
+  sort=psi-tar,
+  symbol={\ensuremath{\psi_{tar}}},
+  unit={\si{rad}}
+}
+%
+\newglossaryentry{lambda-tar}
+{
+  name={\ensuremath{\lambda_{tar}}},
+  description={magnitude of the `attraction' force the target exerts over the
+    robot in heading direction dynamics},
+  sort=lambda-tar,
+  symbol={\ensuremath{\lambda_{tar}}},
+  unit={adim}
+}
+%
+\newglossaryentry{Q}
+{
+  name={\ensuremath{Q}},
+  description={magnitude of the stochastic force},
+  sort=Q,
+  symbol={\ensuremath{Q}},
+  unit={adim}
+}
+%
+\newglossaryentry{varepsilon-n}
+{
+  name={\ensuremath{\varepsilon_n}},
+  description={Gaussian white noise of unit variance},
+  sort=varepsilon-n,
+  symbol={\ensuremath{\varepsilon_n}},
+  unit={adim}
+}
+%
+\newglossaryentry{phi-star}
+{
+  name={\ensuremath{\phi^*}},
+  description={fixed point of the heading direction dynamics},
+  sort=phi-star,
+  symbol={\ensuremath{\phi^*}},
+  unit={\si{rad}}
+}
+%
+\newglossaryentry{m}
+{
+  name={\ensuremath{m}},
+  description={slope of the fixed point},
+  sort=m,
+  symbol={\ensuremath{m}},
+  unit={adim}
+}
+%
+\newglossaryentry{tau-tar}
+{
+  name={\ensuremath{\tau_{tar}}},
+  description={relaxation time to the attractor for target acquisition in
+    heading direction dynamics},
+  sort=tau-tar,
+  symbol={\ensuremath{\tau_{tar}}},
+  unit={\si{s}}
+}
+%
+\newglossaryentry{delta-t}
+{
+  name={\ensuremath{\Delta t}},
+  description={Euler's timestep},
+  sort=delta-t,
+  symbol={\ensuremath{\Delta t}},
+  unit={\si{s}}
+}
+%
+%
+\newglossaryentry{v-des}
+{
+  name={\ensuremath{v_{des}}},
+  description={desired velocity},
+  sort=v-des,
+  symbol={\ensuremath{v_{des}}},
+  unit={\si{m/s}}
+}
+%
+\newglossaryentry{v-star}
+{
+  name={\ensuremath{v^*}},
+  description={fixed point of the path velocity dynamics},
+  sort=v-star,
+  symbol={\ensuremath{v^*}},
+  unit={\si{m/s}}
+}
+%
+\newglossaryentry{lambda-v}
+{
+  name={\ensuremath{\lambda_{v}}},
+  description={magnitude of the `attraction' force the target exerts over the
+    robot in path velocity dynamics},
+  sort=lambda-v,
+  symbol={\ensuremath{\lambda_{v}}},
+  unit={adim}
+}
+%
+\newglossaryentry{tau-v}
+{
+  name={\ensuremath{\tau_{v}}},
+  description={relaxation time to the attractor for target acquisition in
+    path velocity dynamics},
+  sort=tau-v,
+  symbol={\ensuremath{\tau_{v}}},
+  unit={\si{s}}
+}
+%
+\newglossaryentry{a}
+{
+  name={\ensuremath{a}},
+  description={linear acceleration of the robot},
+  sort=a,
+  symbol={\ensuremath{a}},
+  unit={\si{m/sˆ2}}
+}
+%
+\newglossaryentry{vmax}
+{
+  name={\ensuremath{v_{max}}},
+  description={maximum linear velocity of the robot},
+  sort=vmax,
+  symbol={\ensuremath{v_{max}}},
+  unit={\si{m/s}}
+}
+%
+%
+\newglossaryentry{tau-vdes}
+{
+  name={\ensuremath{\tau_{vdes}}},
+  description={time constant for the desired velocity increase in path velocity dynamics},
+  sort=tau-vdes,
+  symbol={\ensuremath{\tau_{vdes}}},
+  unit={\si{s}}
+}
+%
+\newglossaryentry{kv}
+{
+  name={\ensuremath{k_{v}}},
+  description={linearity constant for linear velocity},
+  sort=kv,
+  symbol={\ensuremath{k_{v}}},
+  unit={adim}
+}
+%
+\newglossaryentry{d}
+{
+  name={\ensuremath{d}},
+  description={distance to target},
+  sort=d,
+  symbol={\ensuremath{d}},
+  unit={adim}
+}
+%
+\newglossaryentry{d-min}
+{
+  name={\ensuremath{d_{min}}},
+  description={minimum allowable distance to target},
+  sort=d-min,
+  symbol={\ensuremath{d_{min}}},
+  unit={adim}
+}
+%
+\newglossaryentry{Rrobot}
+{
+  name={\ensuremath{R_{robot}}},
+  description={robot's radius},
+  sort=r-robot,
+  symbol={\ensuremath{R_{robot}}},
+  unit={m}
+}
+%
+\newglossaryentry{Rtar}
+{
+  name={\ensuremath{R_{tar}}},
+  description={target's radius},
+  sort=r-tar,
+  symbol={\ensuremath{R_{tar}}},
+  unit={m}
+}
+%
+%%% obstacle
+\newglossaryentry{psi-obs-i}
+{
+  name={\ensuremath{\psi_{obs,i}}},
+  description={angle by which each robot's sensor `sees' an obstruction in
+    respect to the external reference axis},
+  sort=psi-obs-i,
+  symbol={\ensuremath{\psi_{obs,i}}},
+  unit={\si{rad}}
+}
+%
+\newglossaryentry{theta-i}
+{
+  name={\ensuremath{\theta_{i}}},
+  description={fixed angle each robot's sensor is mounted in
+    respect to the external reference axis},
+  sort=theta-i,
+  symbol={\ensuremath{\theta_{i}}},
+  unit={\si{rad}}
+}
+%
+\newglossaryentry{lambda-obs-i}
+{
+  name={\ensuremath{\lambda_{obs,i}}},
+  description={magnitude of the `repulsion' force the virtual obstacle i exerts
+    over the robot in heading direction dynamics},
+  sort=lambda-obs-i,
+  symbol={\ensuremath{\lambda_{obs,i}}},
+  unit={adim}
+}
+%
+\newglossaryentry{tau-obs-i}
+{
+  name={\ensuremath{\tau_{obs,i}}},
+  description={repulsion time for the repeller associated with the virtual
+    obstacle i for obstacle avoidance in
+    heading direction dynamics},
+  sort=tau-obs,
+  symbol={\ensuremath{\tau_{obs,i}}},
+  unit={\si{s}}
+}
+%
+\newglossaryentry{d-i}
+{
+  name={\ensuremath{d_{i}}},
+  description={sensed distance to the obstacle by sensor i},
+  sort=d-i,
+  symbol={\ensuremath{d_{i}}},
+  unit={m}
+}
+%
+\newglossaryentry{beta1}
+{
+  name={\ensuremath{\beta_{1}}},
+  description={maximum strenght of repulsion force},
+  sort=beta1,
+  symbol={\ensuremath{\beta_{1}}},
+  unit={adim}
+}
+%
+\newglossaryentry{beta2}
+{
+  name={\ensuremath{\beta_{2}}},
+  description={decay rate of repulsion force with the distance increase},
+  sort=beta1,
+  symbol={\ensuremath{\beta_{2}}},
+  unit={adim}
+}
+%
+\newglossaryentry{sigma-i}
+{
+  name={\ensuremath{\sigma_{i}}},
+  description={angular range over which each force-let exerts its repulsive effect},
+  sort=sigma-i,
+  symbol={\ensuremath{\sigma_{i}}},
+  unit={rad}
+}
+%
+\newglossaryentry{delta-theta}
+{
+  name={\ensuremath{\Delta \theta}},
+  description={angular distance between adjacent sensors (sensor sector)},
+  sort=delta-theta,
+  symbol={\ensuremath{\Delta \theta}},
+  unit={\si{rad}}
+}
+%
+\newglossaryentry{N}
+{
+  name={\ensuremath{N}},
+  description={number of obstacle detection sensors},
+  sort=N,
+  symbol={\ensuremath{N}},
+  unit={adim}
+}
+%
+\newglossaryentry{f-obs-i}
+{
+  name={\ensuremath{f_{obs,i}}},
+  description={repulsive force due to a virtual obstacle i},
+  sort=f-obs-i,
+  symbol={\ensuremath{f_{obs,i}}},
+  unit={\si{rad/s}}
+}
+%
+\newglossaryentry{f-obs}
+{
+  name={\ensuremath{f_{obs}}},
+  description={total repulsion force due to all obstacles contributions},
+  sort=f-obs,
+  symbol={\ensuremath{f_{obs}}},
+  unit={\si{rad/s}}
+}
+%
+\newglossaryentry{F-obs}
+{
+  name={\ensuremath{F_{obs}}},
+  description={overall obstacle avoidance dynamics},
+  sort=F-obs,
+  symbol={\ensuremath{F_{obs}}},
+  unit={\si{rad/s}}
+}
+%
+%%% Lyapunov
+\newglossaryentry{psi-max-dot}
+{
+  name={\ensuremath{\dot \psi_{max}}},
+  description={maximal rate of fixed points' shift},
+  sort=psi-max-dot,
+  symbol={\ensuremath{\dot \psi_{max}}},
+  unit={\si{rad/s}}
+}
+%
+\newglossaryentry{V-j}
+{
+  name={\ensuremath{V_{j}}},
+  description={desired velocity for obstacle or target},
+  sort=V-j,
+  symbol={\ensuremath{V_{j}}},
+  unit={\si{m/s}}
+}
+%
+\newglossaryentry{d-j}
+{
+  name={\ensuremath{d_{j}}},
+  description={minimum distance for obstacle or target},
+  sort=d-j,
+  symbol={\ensuremath{d_{j}}},
+  unit={\si{m}}
+}
+%
+\newglossaryentry{c-obs}
+{
+  name={\ensuremath{c_{obs}}},
+  description={strenght of obstacles contribution to path velocity dynamics},
+  sort=c-obs,
+  symbol={\ensuremath{c_{obs}}},
+  unit={adim}
+}
+%
+\newglossaryentry{c-tar}
+{
+  name={\ensuremath{c_{tar}}},
+  description={strenght of target contribution to path velocity dynamics},
+  sort=c-tar,
+  symbol={\ensuremath{c_{tar}}},
+  unit={adim}
+}
+%
+\newglossaryentry{U}
+{
+  name={\ensuremath{U}},
+  description={potential function of obstacle avoidance dynamics},
+  sort=U,
+  symbol={\ensuremath{U}},
+  unit={rad}
+}
+%
+\newglossaryentry{alpha}
+{
+  name={\ensuremath{\alpha}},
+  description={sigmoidal thresholded potential function},
+  sort=alpha,
+  symbol={\ensuremath{\alpha}},
+  unit={rad}
+}
+%
+\newglossaryentry{C}
+{
+  name={\ensuremath{C}},
+  description={sigmoidal sharpness constant},
+  sort=C,
+  symbol={\ensuremath{C}},
+  unit={rad}
+}
+%
+\newglossaryentry{c-v-obs}
+{
+  name={\ensuremath{c_{v,obs}}},
+  description={relaxation rate for velocity dynamics when obstacles dominate},
+  sort=c-v-obs,
+  symbol={\ensuremath{c-v-obs}},
+  unit={rad}
+}
+%
+\newglossaryentry{c-v-tar}
+{
+  name={\ensuremath{c_{v,tar}}},
+  description={relaxation rate for velocity dynamics when target dominates},
+  sort=c-v-tar,
+  symbol={\ensuremath{c-v-tar}},
+  unit={rad}
+}
+\newglossaryentry{sigma-v}
+{
+  name={\ensuremath{\sigma_{v}}},
+  description={angular range over which the velocity fixed points have effect},
+  sort=sigma-i,
+  symbol={\ensuremath{\sigma_{v}}},
+  unit={rad}
+}

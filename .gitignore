@@ -22,6 +22,11 @@
 *.gls
 *.glg
 *.slo
+*.slg
+*.sls
+*.upb
+*.fdb_latexmk
+*.aux
 
 # ignore the designated subfolders
 auto/
