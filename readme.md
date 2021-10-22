@@ -1,31 +1,31 @@
-- [Preamble](#orgddcdd4c)
-  - [Doc struct <code>[8/8]</code>](#orgec16d36)
-- [Project](#orga243a68)
-  - [Requirements](#org76e74d6)
-  - [Problem statement](#orgbc7c118)
-  - [Research](#org10e2637)
-    - [Topics <code>[0/3]</code>](#orgbe97a37)
-    - [Store Marketeer](#org0af7176)
-- [Tools](#org57248a6)
-  - [Project management](#org9b8492a)
-  - [Software](#org2e2f49f)
-- [Work Assignments](#org5564e5a)
-  - [1](#org1312baf)
-    - [Problem statement](#org50b4314)
-    - [Market research](#org8d80a60)
-    - [Requirements & Constraints](#orgb1ef086)
-    - [Design](#org6fb1f27)
+- [Preamble](#org2342464)
+  - [Doc struct <code>[8/8]</code>](#org37a271d)
+- [Project](#orgf765f5b)
+  - [Requirements](#orga2eafad)
+  - [Problem statement](#orgd874eef)
+  - [Research](#orgf4fa5cd)
+    - [Topics <code>[0/3]</code>](#org16d444d)
+    - [Marketing Digital Outdoor](#org861b7a6)
+- [Tools](#org19cd0a7)
+  - [Project management](#org91a6113)
+  - [Software](#orga788be7)
+- [Work Assignments](#orgcd24ba1)
+  - [1](#orgb149d29)
+    - [Problem statement](#org330a322)
+    - [Market research](#orgdf11a80)
+    - [Requirements & Constraints](#org461af68)
+    - [Design](#org0edc294)
 
 
 
-<a id="orgddcdd4c"></a>
+<a id="org2342464"></a>
 
 # Preamble
 
 This repository contains all the info related to ESRG Semester 1.
 
 
-<a id="orgec16d36"></a>
+<a id="org37a271d"></a>
 
 ## Doc struct <code>[8/8]</code>
 
@@ -35,12 +35,12 @@ This repository contains all the info related to ESRG Semester 1.
 -   [X] Work Assignments: contains the info related to the assignments given during this semester.
 
 
-<a id="orga243a68"></a>
+<a id="orgf765f5b"></a>
 
 # Project
 
 
-<a id="org76e74d6"></a>
+<a id="orga2eafad"></a>
 
 ## Requirements
 
@@ -51,19 +51,19 @@ This repository contains all the info related to ESRG Semester 1.
 -   CPS: Cyber-physical systems
 
 
-<a id="orgbc7c118"></a>
+<a id="orgd874eef"></a>
 
 ## Problem statement
 
 Think about the project and deliver a document about it.
 
 
-<a id="org10e2637"></a>
+<a id="orgf4fa5cd"></a>
 
 ## Research
 
 
-<a id="orgbe97a37"></a>
+<a id="org16d444d"></a>
 
 ### Topics <code>[0/3]</code>
 
@@ -72,9 +72,9 @@ Think about the project and deliver a document about it.
 -   [ ] Situate the project requirements, the project constraints
 
 
-<a id="org0af7176"></a>
+<a id="org861b7a6"></a>
 
-### Store Marketeer
+### Marketing Digital Outdoor
 
 1.  Topics
 
@@ -145,12 +145,12 @@ Think about the project and deliver a document about it.
         -   [ ] Camera
 
 
-<a id="org57248a6"></a>
+<a id="org19cd0a7"></a>
 
 # Tools
 
 
-<a id="org9b8492a"></a>
+<a id="org91a6113"></a>
 
 ## Project management
 
@@ -183,10 +183,11 @@ Think about the project and deliver a document about it.
     7.  Deployment diagram
 4.  Gantt diagram: project management
     1.  Define the project outline
+    2.  Tool: Project Libre: <https://www.projectlibre.com/>
 5.  Doxygen: source code documentation
 
 
-<a id="org2e2f49f"></a>
+<a id="orga788be7"></a>
 
 ## Software
 
@@ -199,24 +200,24 @@ Think about the project and deliver a document about it.
 7.  Makefiles
 
 
-<a id="org5564e5a"></a>
+<a id="orgcd24ba1"></a>
 
 # Work Assignments
 
 
-<a id="org1312baf"></a>
+<a id="orgb149d29"></a>
 
 ## 1
 
 
-<a id="org50b4314"></a>
+<a id="org330a322"></a>
 
 ### Problem statement
 
 Design a remote control with three buttons that can remotely control the television (TV). It should be very light, powered by batteries and controls your TV via an infrared emitter. The TV has a built-in infrared receiver. A button on the remote control switches the TV on/off and will be labeled with the word "Power". The other two buttons are used to scroll up/down and select the available channels and they are labeled with the arrows up/down.
 
 
-<a id="org8d80a60"></a>
+<a id="orgdf11a80"></a>
 
 ### Market research
 
@@ -227,7 +228,7 @@ Design a remote control with three buttons that can remotely control the televis
 -   Sales/Quantity of sold items anually
 
 
-<a id="orgb1ef086"></a>
+<a id="org461af68"></a>
 
 ### Requirements & Constraints
 
@@ -261,7 +262,7 @@ Design a remote control with three buttons that can remotely control the televis
             -   20 EUR per hour per person: 20 \* 14 \* 2 = 560 EUR + IVA
 
 
-<a id="org6fb1f27"></a>
+<a id="org0edc294"></a>
 
 ### Design
 
