@@ -1,0 +1,272 @@
+#+TITLE: ESRG Sem1
+#+AUTHOR: José Pires
+#+DATE: [2021-10-19 ter 12:04]
+#+EMAIL: a50178@alunos.uminho.pt
+
+* Preamble
+  This repository contains all the info related to ESRG Semester 1.
+  
+** Doc struct [8/8]
+- [X] Preamble: introduces the main aspects about the ESRG Semester 1.
+- [X] Project: contains the project requirements, notes, deadlines, etc.
+- [X] Tools: presents the required tools for this course.
+- [X] Work Assignments: contains the info related to the assignments given
+  during this semester.
+
+* Project
+** Requirements
+   - buildroot
+   - c/c++ (both)
+   - Device drivers
+   - Linux/Raspberry Pi
+   - CPS: Cyber-physical systems
+   - Makefiles
+** Problem statement
+   DEADLINE: <2021-10-28 qui>
+   Think about the project and deliver a document about it.
+** Research
+*** Topics [0/3]
+ - [ ] Cyber-physical systems characteristics: _identify the required features
+   for the system_
+ - [ ] Analyze previous projects to understand what is feasible in terms of
+   Real-time systems using device drivers with Raspberry Pi: _gives an overall
+   idea of what can be achieved_
+ - [ ] Situate the project requirements, the project constraints
+*** Marketing Digital Outdoor
+**** Topics
+1. Motivation and context
+   - Scenting marketing is a great approach to draw people into stores.
+   - Scent sense is the fastest way to the brain, thus, providing an exceptional
+     opportunity for marketing.
+   - Combining that with additional stimuli, like eye and earing, can
+     significantly boost the marketing outcome.
+     #+begin_quote
+   - Knowing your target audience it is critical for the success of stores.
+   - Marketing can be used to collect, analyse, investigate and decide the best
+     politics for addressing a specific target audience, understanding the
+     its behavioral patterns. 
+   - To understand behavioral patterns _machine-learning models_ can be used.
+     #+end_quote
+2. Concept
+   - Offer a marketing digital outdoor for brands to advertise and captivate customers
+   - Brands can buy advertisement space and time by sending the following data:
+	| Digital Outdoor location | Fragrance name | Start Time | Stop Time | Audio Message | Video |
+     - The brands can send the data to our company database through our
+       website/application.
+     - The data will then be sent to the marketing digital outdoor using a wireless
+       communication technology.
+   - The advertisement data will be exposed into a display, an audio message
+     transmitted, as well as the indicate fragrance between the designated time
+     interval.
+   - COVID pandemics changed the perspectives about user interaction with the
+     surroundings, with non touch interfaces being preferred. Thus, a non touch
+     user interface is a must have.
+   - When a user approaches the marketing digital outdoor, a proximity sensor will detect
+     it and activate the _user interaction mode_.
+     - When activating this mode the camera is started mirroring the user into
+       the display and providing additional options.
+     - In this mode, the user can:
+       1) apply image filters related to the brand
+       2) take pics
+       3) create GIFs
+       4) share them
+     - This mode requires:
+       - Facial recognition for image filter application
+       - Hand gesture recognition for navigating the menus and activating
+         options
+       - A virtual keyboard (non-touch) will be provided for user input, by
+         mapping the screen to the keys and waiting for a designated time before
+         accepting it.
+       - A set of hand gestures to be used in user interaction
+     - Several sharing platforms shall be provided namely social media and
+       email.
+       - Tracking the nr of shares provides feedback for the brands in respect
+         of the brand awareness.
+       - Additionally, brands can also monitor this by checking their social
+         media accounts.
+     
+**** Technologies [0/11]
+1. [ ] Computer vision for facial and gesture recognition (OpenCV)
+2. [ ] Database for marketing digital outdoor management (SQL)
+3. [ ] Website/Application for brands communication to our database
+4. [ ] Wireless communication technology for remote communication with digital outdoors
+5. [ ] Image filter application
+6. [ ] Infrared detection
+7. [ ] Camera recording
+8. [ ] Audio output
+9. [ ] Nebulizer technology for scenting
+10. [ ] Screen mapping to keys for virtual keyboard
+11. [ ] Social media and e-mail sharing APIs
+
+**** Problem statement
+
+**** Market research
+
+**** Project planning
+***** Required HW [0/7]
+- [ ] Raspberry Pi 4
+- [ ] HDMI screen: https://pt.aliexpress.com/item/33005274109.html?spm=a2g0o.detail.1000013.3.38072ea5MrfWq9&gps-id=pcDetailBottomMoreThisSeller&scm=1007.13339.169870.0&scm_id=1007.13339.169870.0&scm-url=1007.13339.169870.0&pvid=e1784609-f2f3-4547-9d9e-d5461fddc4c8&_t=gps-id:pcDetailBottomMoreThisSeller,scm-url:1007.13339.169870.0,pvid:e1784609-f2f3-4547-9d9e-d5461fddc4c8,tpp_buckets:668%232846%238110%231995&&pdp_ext_f=%7B%22sceneId%22:%223339%22,%22sku_id%22:%2212000023440173741%22%7D
+- [ ] Relay/Transistor + Ultrassonic actuator for nebulizing fragrance
+- [ ] Audio output
+- [ ] Power supply
+- [ ] Mechanical structure
+- [ ] Camera
+** Report
+*** Outline [0/7]
+1. [ ] Introduction
+   1. Problem statement
+   2. Motivation and context
+   3. Market research
+   4. Goals
+   5. Report outline
+2. [ ] Analysis
+   1. Background and state of the art
+   2. Requirements and constraints
+   3. System overview
+   4. System architecture
+      1. HW architecture
+      2. SW architecture
+   5. Subsystems decomposition
+      1. Events
+      2. Use cases
+      3. State machine diagram
+      4. Sequence diagram
+   6. Project planning and budget
+3. [ ] Design
+   1. HW specification
+      1. Block diagram with COTS components, if possible
+      2. List of constraints of functions to be implemented in HW or SW
+   2. HW interfaces definition
+      1. I/O ports
+      2. HW registers
+      3. Memory addresses for shared or I/O by memory mapping
+      4. HW interrupts
+   3. SW specification
+      1. Identify main subsystems
+      2. System tasks
+   4. SW interfaces definition
+      - Define the APIs in detail:
+	- header files with:
+	  - functions prototypes
+	  - data structure declarations
+	  - class declarations
+   5. Start-up/shutdown process specification
+   6. Error Handling specification
+4. [ ] Implementation
+5. [ ] Testing
+6. [ ] Verification/Validation
+7. [ ] Conclusions
+
+* Tools
+** Project management
+ 1) Latex:
+    - Overleaf
+    - Linux
+      #+begin_src bash
+	sudo apt install texlive-latex-extra # basic
+	sudo apt install texlive-xetex # compiler
+	sudo apt install tex-lang-portuguese # lang
+	sudo apt install texlive-science # 
+      #+end_src
+ 2) Git:
+    1) code
+    2) doc
+    3) readme
+    4) writing
+       #+begin_src bash
+ sudo apt install git
+       #+end_src
+ 3) Diagram Tool:
+    1) Draw.io
+    2) Block diagram
+    3) Flowcharts
+    4) Class Diagram
+    5) Sequence diagram
+    6) State-machine diagram
+    7) Deployment diagram
+ 4) Gantt diagram: project management
+    1) Define the project outline
+    2) Tool: Project Libre: https://www.projectlibre.com/
+ 5) Doxygen: source code documentation
+** Software
+1) Linux
+2) Buildroot
+3) Raspberry Pi 4B
+4) Ethernet cable
+5) SD card reader
+6) USB-to-serial converter: boot process
+7) Makefiles
+   
+* Work Assignments
+** 1
+*** Problem statement
+    Design a remote control with three buttons that can
+remotely control the television (TV). It should be very
+light, powered by batteries and controls your TV via an
+infrared emitter. The TV has a built-in infrared receiver. A
+button on the remote control switches the TV on/off and
+will be labeled with the word "Power". The other two
+buttons are used to scroll up/down and select the available
+channels and they are labeled with the arrows up/down.
+*** Market research
+- Brief description of a remote TV control
+- Bill of materials
+- Unit cost
+- Time to market
+- Sales/Quantity of sold items anually
+*** Requirements & Constraints
+**** Requirements
+- Remotely operated
+- Low weight
+- Powered by batteries
+- 3 buttons:
+  1) Power
+  2) Up
+  3) Down
+- Infrared emitter response time (system output response time): 100 ms
+- The TV remote may be upgraded in the future to use more buttons
+**** Constraints
+- Contains an infrared emitter (the TV already has an infrared receiver)
+- The TV remote control must supply the required data frames imposed by the TV
+  manufacturer
+- Data frames may not be provided by the client
+- Security concerns are defined by the data frames and the specific
+  communication frequency imposed by the TV manufacturer
+- 1 week deadline: 14 h
+- 2 people
+- Budget:
+  - HW (parts acquisition and assembly): fixed costs --- 1 EUR/unit
+    - TV remote Shell
+    - TV remote membrane
+    - LED
+    - Data acquisition & Infrared emitter PCB
+  - Development: project
+    - 20 EUR per hour per person: 20 * 14 * 2 = 560 EUR + IVA
+*** Design
+**** HW specification
+- Block diagram with COTS components, if possible
+- List of constraints of functions to be implemented in HW or SW
+  - Inclusion of a multiplexer may reduce SW burden
+  - CPU peripherals:
+    - PCA for wave generation
+**** HW interfaces definition
+- I/O ports
+- HW registers
+- Memory addresses for shared or I/O by memory mapping
+- HW interrupts
+**** SW specification: Top-down methodology
+1. Identify main subsystems
+   1. Signal input detector
+   2. Event handler
+   3. Output generator
+**** SW interfaces definition
+- Define the APIs in detail:
+  - header files with:
+    - functions prototypes
+    - data structure declarations
+    - class declarations
+**** Start-up/shutdown process specification
+**** Error handling specification
+- Create error-handling routines
+- Watchdog timer can be used for system recovery
+**** Design verification

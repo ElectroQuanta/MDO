@@ -1,31 +1,33 @@
-- [Preamble](#org2342464)
-  - [Doc struct <code>[8/8]</code>](#org37a271d)
-- [Project](#orgf765f5b)
-  - [Requirements](#orga2eafad)
-  - [Problem statement](#orgd874eef)
-  - [Research](#orgf4fa5cd)
-    - [Topics <code>[0/3]</code>](#org16d444d)
-    - [Marketing Digital Outdoor](#org861b7a6)
-- [Tools](#org19cd0a7)
-  - [Project management](#org91a6113)
-  - [Software](#orga788be7)
-- [Work Assignments](#orgcd24ba1)
-  - [1](#orgb149d29)
-    - [Problem statement](#org330a322)
-    - [Market research](#orgdf11a80)
-    - [Requirements & Constraints](#org461af68)
-    - [Design](#org0edc294)
+- [Preamble](#org6179dd1)
+  - [Doc struct <code>[8/8]</code>](#org6a61d55)
+- [Project](#org72b1991)
+  - [Requirements](#org4aeaa6e)
+  - [Problem statement](#org1053df9)
+  - [Research](#orge8cf277)
+    - [Topics <code>[0/3]</code>](#org56a2772)
+    - [Marketing Digital Outdoor](#orgc339300)
+  - [Report](#orgcf251b4)
+    - [Outline <code>[0/7]</code>](#org3940a4c)
+- [Tools](#org686683a)
+  - [Project management](#org5a7ec18)
+  - [Software](#org7488e0c)
+- [Work Assignments](#org5eb8011)
+  - [1](#org1ae7287)
+    - [Problem statement](#orgdc7ae65)
+    - [Market research](#org07a0229)
+    - [Requirements & Constraints](#org572a936)
+    - [Design](#orgc63d13f)
 
 
 
-<a id="org2342464"></a>
+<a id="org6179dd1"></a>
 
 # Preamble
 
 This repository contains all the info related to ESRG Semester 1.
 
 
-<a id="org37a271d"></a>
+<a id="org6a61d55"></a>
 
 ## Doc struct <code>[8/8]</code>
 
@@ -35,12 +37,12 @@ This repository contains all the info related to ESRG Semester 1.
 -   [X] Work Assignments: contains the info related to the assignments given during this semester.
 
 
-<a id="orgf765f5b"></a>
+<a id="org72b1991"></a>
 
 # Project
 
 
-<a id="orga2eafad"></a>
+<a id="org4aeaa6e"></a>
 
 ## Requirements
 
@@ -49,21 +51,22 @@ This repository contains all the info related to ESRG Semester 1.
 -   Device drivers
 -   Linux/Raspberry Pi
 -   CPS: Cyber-physical systems
+-   Makefiles
 
 
-<a id="orgd874eef"></a>
+<a id="org1053df9"></a>
 
 ## Problem statement
 
 Think about the project and deliver a document about it.
 
 
-<a id="orgf4fa5cd"></a>
+<a id="orge8cf277"></a>
 
 ## Research
 
 
-<a id="org16d444d"></a>
+<a id="org56a2772"></a>
 
 ### Topics <code>[0/3]</code>
 
@@ -72,7 +75,7 @@ Think about the project and deliver a document about it.
 -   [ ] Situate the project requirements, the project constraints
 
 
-<a id="org861b7a6"></a>
+<a id="orgc339300"></a>
 
 ### Marketing Digital Outdoor
 
@@ -145,12 +148,66 @@ Think about the project and deliver a document about it.
         -   [ ] Camera
 
 
-<a id="org19cd0a7"></a>
+<a id="orgcf251b4"></a>
+
+## Report
+
+
+<a id="org3940a4c"></a>
+
+### Outline <code>[0/7]</code>
+
+1.  [ ] Introduction
+    1.  Problem statement
+    2.  Motivation and context
+    3.  Market research
+    4.  Goals
+    5.  Report outline
+2.  [ ] Analysis
+    1.  Background and state of the art
+    2.  Requirements and constraints
+    3.  System overview
+    4.  System architecture
+        1.  HW architecture
+        2.  SW architecture
+    5.  Subsystems decomposition
+        1.  Events
+        2.  Use cases
+        3.  State machine diagram
+        4.  Sequence diagram
+    6.  Project planning and budget
+3.  [ ] Design
+    1.  HW specification
+        1.  Block diagram with COTS components, if possible
+        2.  List of constraints of functions to be implemented in HW or SW
+    2.  HW interfaces definition
+        1.  I/O ports
+        2.  HW registers
+        3.  Memory addresses for shared or I/O by memory mapping
+        4.  HW interrupts
+    3.  SW specification
+        1.  Identify main subsystems
+        2.  System tasks
+    4.  SW interfaces definition
+        -   Define the APIs in detail:
+            -   header files with:
+                -   functions prototypes
+                -   data structure declarations
+                -   class declarations
+    5.  Start-up/shutdown process specification
+    6.  Error Handling specification
+4.  [ ] Implementation
+5.  [ ] Testing
+6.  [ ] Verification/Validation
+7.  [ ] Conclusions
+
+
+<a id="org686683a"></a>
 
 # Tools
 
 
-<a id="org91a6113"></a>
+<a id="org5a7ec18"></a>
 
 ## Project management
 
@@ -187,7 +244,7 @@ Think about the project and deliver a document about it.
 5.  Doxygen: source code documentation
 
 
-<a id="orga788be7"></a>
+<a id="org7488e0c"></a>
 
 ## Software
 
@@ -200,24 +257,24 @@ Think about the project and deliver a document about it.
 7.  Makefiles
 
 
-<a id="orgcd24ba1"></a>
+<a id="org5eb8011"></a>
 
 # Work Assignments
 
 
-<a id="orgb149d29"></a>
+<a id="org1ae7287"></a>
 
 ## 1
 
 
-<a id="org330a322"></a>
+<a id="orgdc7ae65"></a>
 
 ### Problem statement
 
 Design a remote control with three buttons that can remotely control the television (TV). It should be very light, powered by batteries and controls your TV via an infrared emitter. The TV has a built-in infrared receiver. A button on the remote control switches the TV on/off and will be labeled with the word "Power". The other two buttons are used to scroll up/down and select the available channels and they are labeled with the arrows up/down.
 
 
-<a id="orgdf11a80"></a>
+<a id="org07a0229"></a>
 
 ### Market research
 
@@ -228,7 +285,7 @@ Design a remote control with three buttons that can remotely control the televis
 -   Sales/Quantity of sold items anually
 
 
-<a id="org461af68"></a>
+<a id="org572a936"></a>
 
 ### Requirements & Constraints
 
@@ -262,7 +319,7 @@ Design a remote control with three buttons that can remotely control the televis
             -   20 EUR per hour per person: 20 \* 14 \* 2 = 560 EUR + IVA
 
 
-<a id="org0edc294"></a>
+<a id="orgc63d13f"></a>
 
 ### Design
 

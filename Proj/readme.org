@@ -1,0 +1,14 @@
+#+TITLE: Report
+#+AUTHOR: José Pires
+#+DATE: [2021-10-19 ter 11:25]
+#+EMAIL: a50178@alunos.uminho.pt
+
+* Preamble
+- This folder contains all the information about the project report writing.
+- It is written incrementally, i.e., as the several project phases take place,
+  the document versions pertaining to each phase are stored in the folder
+  *submission*.
+
+* Versions [1/1]
+1. [X] Problem statement: deadline - <2021-10-28 qui>
+
