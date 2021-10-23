@@ -1,33 +1,33 @@
-- [Preamble](#org6179dd1)
-  - [Doc struct <code>[8/8]</code>](#org6a61d55)
-- [Project](#org72b1991)
-  - [Requirements](#org4aeaa6e)
-  - [Problem statement](#org1053df9)
-  - [Research](#orge8cf277)
-    - [Topics <code>[0/3]</code>](#org56a2772)
-    - [Marketing Digital Outdoor](#orgc339300)
-  - [Report](#orgcf251b4)
-    - [Outline <code>[0/7]</code>](#org3940a4c)
-- [Tools](#org686683a)
-  - [Project management](#org5a7ec18)
-  - [Software](#org7488e0c)
-- [Work Assignments](#org5eb8011)
-  - [1](#org1ae7287)
-    - [Problem statement](#orgdc7ae65)
-    - [Market research](#org07a0229)
-    - [Requirements & Constraints](#org572a936)
-    - [Design](#orgc63d13f)
+- [Preamble](#org4ed5ceb)
+  - [Doc struct <code>[8/8]</code>](#orgb1ed2bd)
+- [Project](#orgea36d3d)
+  - [Requirements](#orge00c2a7)
+  - [Problem statement](#org1aff61c)
+  - [Research](#orgbaff4ea)
+    - [Topics <code>[0/3]</code>](#org67a81f4)
+    - [Marketing Digital Outdoor](#org34efc2e)
+  - [Report](#org14809c5)
+    - [Outline <code>[0/7]</code>](#orgcc6235b)
+- [Tools](#orgf2be94b)
+  - [Project management](#orgf93afc9)
+  - [Software](#orga797a6c)
+- [Work Assignments](#orgdafa900)
+  - [1](#org797dace)
+    - [Problem statement](#org14760e4)
+    - [Market research](#orgeeab8bc)
+    - [Requirements & Constraints](#orga9e3ca6)
+    - [Design](#org6d18248)
 
 
 
-<a id="org6179dd1"></a>
+<a id="org4ed5ceb"></a>
 
 # Preamble
 
 This repository contains all the info related to ESRG Semester 1.
 
 
-<a id="org6a61d55"></a>
+<a id="orgb1ed2bd"></a>
 
 ## Doc struct <code>[8/8]</code>
 
@@ -37,12 +37,12 @@ This repository contains all the info related to ESRG Semester 1.
 -   [X] Work Assignments: contains the info related to the assignments given during this semester.
 
 
-<a id="org72b1991"></a>
+<a id="orgea36d3d"></a>
 
 # Project
 
 
-<a id="org4aeaa6e"></a>
+<a id="orge00c2a7"></a>
 
 ## Requirements
 
@@ -54,19 +54,19 @@ This repository contains all the info related to ESRG Semester 1.
 -   Makefiles
 
 
-<a id="org1053df9"></a>
+<a id="org1aff61c"></a>
 
 ## Problem statement
 
 Think about the project and deliver a document about it.
 
 
-<a id="orge8cf277"></a>
+<a id="orgbaff4ea"></a>
 
 ## Research
 
 
-<a id="org56a2772"></a>
+<a id="org67a81f4"></a>
 
 ### Topics <code>[0/3]</code>
 
@@ -75,7 +75,7 @@ Think about the project and deliver a document about it.
 -   [ ] Situate the project requirements, the project constraints
 
 
-<a id="orgc339300"></a>
+<a id="org34efc2e"></a>
 
 ### Marketing Digital Outdoor
 
@@ -131,29 +131,35 @@ Think about the project and deliver a document about it.
     10. [ ] Screen mapping to keys for virtual keyboard
     11. [ ] Social media and e-mail sharing APIs
 
-3.  Problem statement
+3.  ✔ DONE Problem statement
 
-4.  Market research
+4.  Market research <code>[0/3]</code>
+
+    1.  [ ] Scenting marketing: trends, market value
+    2.  [ ] Digital Outdoors: quantity, market value
+    3.  [ ] Combined marketing: are they digital outdoor + scenting?
 
 5.  Project planning
 
-    1.  Required HW <code>[0/7]</code>
+    1.  Required HW <code>[3/7]</code>
     
-        -   [ ] Raspberry Pi 4
+        -   [X] Raspberry Pi 4
         -   [ ] HDMI screen: <https://pt.aliexpress.com/item/33005274109.html?spm=a2g0o.detail.1000013.3.38072ea5MrfWq9&gps-id=pcDetailBottomMoreThisSeller&scm=1007.13339.169870.0&scm_id=1007.13339.169870.0&scm-url=1007.13339.169870.0&pvid=e1784609-f2f3-4547-9d9e-d5461fddc4c8&_t=gps-id:pcDetailBottomMoreThisSeller,scm-url:1007.13339.169870.0,pvid:e1784609-f2f3-4547-9d9e-d5461fddc4c8,tpp_buckets:668%232846%238110%231995&&pdp_ext_f=%7B%22sceneId%22:%223339%22,%22sku_id%22:%2212000023440173741%22%7D>
         -   [ ] Relay/Transistor + Ultrassonic actuator for nebulizing fragrance
         -   [ ] Audio output
-        -   [ ] Power supply
-        -   [ ] Mechanical structure
+        -   [X] Power supply
+        -   [X] Mechanical structure
         -   [ ] Camera
+        
+        Research link: <https://www.one-tab.com/page/TZxmVAXJTO6nVyNO593ARA>
 
 
-<a id="orgcf251b4"></a>
+<a id="org14809c5"></a>
 
 ## Report
 
 
-<a id="org3940a4c"></a>
+<a id="orgcc6235b"></a>
 
 ### Outline <code>[0/7]</code>
 
@@ -202,12 +208,12 @@ Think about the project and deliver a document about it.
 7.  [ ] Conclusions
 
 
-<a id="org686683a"></a>
+<a id="orgf2be94b"></a>
 
 # Tools
 
 
-<a id="org5a7ec18"></a>
+<a id="orgf93afc9"></a>
 
 ## Project management
 
@@ -244,7 +250,7 @@ Think about the project and deliver a document about it.
 5.  Doxygen: source code documentation
 
 
-<a id="org7488e0c"></a>
+<a id="orga797a6c"></a>
 
 ## Software
 
@@ -257,24 +263,24 @@ Think about the project and deliver a document about it.
 7.  Makefiles
 
 
-<a id="org5eb8011"></a>
+<a id="orgdafa900"></a>
 
 # Work Assignments
 
 
-<a id="org1ae7287"></a>
+<a id="org797dace"></a>
 
 ## 1
 
 
-<a id="orgdc7ae65"></a>
+<a id="org14760e4"></a>
 
 ### Problem statement
 
 Design a remote control with three buttons that can remotely control the television (TV). It should be very light, powered by batteries and controls your TV via an infrared emitter. The TV has a built-in infrared receiver. A button on the remote control switches the TV on/off and will be labeled with the word "Power". The other two buttons are used to scroll up/down and select the available channels and they are labeled with the arrows up/down.
 
 
-<a id="org07a0229"></a>
+<a id="orgeeab8bc"></a>
 
 ### Market research
 
@@ -285,7 +291,7 @@ Design a remote control with three buttons that can remotely control the televis
 -   Sales/Quantity of sold items anually
 
 
-<a id="org572a936"></a>
+<a id="orga9e3ca6"></a>
 
 ### Requirements & Constraints
 
@@ -319,7 +325,7 @@ Design a remote control with three buttons that can remotely control the televis
             -   20 EUR per hour per person: 20 \* 14 \* 2 = 560 EUR + IVA
 
 
-<a id="orgc63d13f"></a>
+<a id="org6d18248"></a>
 
 ### Design
 

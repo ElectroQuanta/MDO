@@ -98,19 +98,27 @@
 10. [ ] Screen mapping to keys for virtual keyboard
 11. [ ] Social media and e-mail sharing APIs
 
-**** Problem statement
+**** ✔ DONE Problem statement
+     :LOGBOOK:
+     - State "✔ DONE"     from              [2021-10-23 sáb 11:55]
+     :END:
 
-**** Market research
+**** Market research [0/3]
+1) [ ] Scenting marketing: trends, market value
+2) [ ] Digital Outdoors: quantity, market value
+3) [ ] Combined marketing: are they digital outdoor + scenting?
 
 **** Project planning
-***** Required HW [0/7]
-- [ ] Raspberry Pi 4
+***** Required HW [3/7]
+- [X] Raspberry Pi 4
 - [ ] HDMI screen: https://pt.aliexpress.com/item/33005274109.html?spm=a2g0o.detail.1000013.3.38072ea5MrfWq9&gps-id=pcDetailBottomMoreThisSeller&scm=1007.13339.169870.0&scm_id=1007.13339.169870.0&scm-url=1007.13339.169870.0&pvid=e1784609-f2f3-4547-9d9e-d5461fddc4c8&_t=gps-id:pcDetailBottomMoreThisSeller,scm-url:1007.13339.169870.0,pvid:e1784609-f2f3-4547-9d9e-d5461fddc4c8,tpp_buckets:668%232846%238110%231995&&pdp_ext_f=%7B%22sceneId%22:%223339%22,%22sku_id%22:%2212000023440173741%22%7D
 - [ ] Relay/Transistor + Ultrassonic actuator for nebulizing fragrance
 - [ ] Audio output
-- [ ] Power supply
-- [ ] Mechanical structure
+- [X] Power supply
+- [X] Mechanical structure
 - [ ] Camera
+
+Research link: https://www.one-tab.com/page/TZxmVAXJTO6nVyNO593ARA
 ** Report
 *** Outline [0/7]
 1. [ ] Introduction
