@@ -1,33 +1,39 @@
-- [Preamble](#org4ed5ceb)
-  - [Doc struct <code>[8/8]</code>](#orgb1ed2bd)
-- [Project](#orgea36d3d)
-  - [Requirements](#orge00c2a7)
-  - [Problem statement](#org1aff61c)
-  - [Research](#orgbaff4ea)
-    - [Topics <code>[0/3]</code>](#org67a81f4)
-    - [Marketing Digital Outdoor](#org34efc2e)
-  - [Report](#org14809c5)
-    - [Outline <code>[0/7]</code>](#orgcc6235b)
-- [Tools](#orgf2be94b)
-  - [Project management](#orgf93afc9)
-  - [Software](#orga797a6c)
-- [Work Assignments](#orgdafa900)
-  - [1](#org797dace)
-    - [Problem statement](#org14760e4)
-    - [Market research](#orgeeab8bc)
-    - [Requirements & Constraints](#orga9e3ca6)
-    - [Design](#org6d18248)
+- [Preamble](#org546c77c)
+  - [Doc struct <code>[8/8]</code>](#org2bee0ba)
+- [Project](#orgdcb859c)
+  - [Requirements](#orgf0f1e7c)
+  - [Problem statement](#orgab4e553)
+  - [Research](#orgf57cf26)
+    - [Topics <code>[0/3]</code>](#org8670364)
+    - [Selection](#org84ad7be)
+  - [Report](#org7335aba)
+    - [Outline <code>[0/7]</code>](#org610b8f4)
+  - [Marketing Digital Outdoor](#org9d020a4)
+    - [Topics](#org6d10069)
+    - [Technologies <code>[0/11]</code>](#org0482b6a)
+    - [Problem statement](#org8875e7c)
+    - [Market research <code>[0/3]</code>](#org1891595)
+    - [Project planning](#orgc8c05b9)
+- [Tools](#org1b61083)
+  - [Project management](#org42d9c30)
+  - [Software](#org76ad403)
+- [Work Assignments](#org8d2f39c)
+  - [1](#org9cade6c)
+    - [Problem statement](#org963a82c)
+    - [Market research](#orgf442efe)
+    - [Requirements & Constraints](#orgabb4b05)
+    - [Design](#org021875e)
 
 
 
-<a id="org4ed5ceb"></a>
+<a id="org546c77c"></a>
 
 # Preamble
 
 This repository contains all the info related to ESRG Semester 1.
 
 
-<a id="orgb1ed2bd"></a>
+<a id="org2bee0ba"></a>
 
 ## Doc struct <code>[8/8]</code>
 
@@ -37,12 +43,12 @@ This repository contains all the info related to ESRG Semester 1.
 -   [X] Work Assignments: contains the info related to the assignments given during this semester.
 
 
-<a id="orgea36d3d"></a>
+<a id="orgdcb859c"></a>
 
 # Project
 
 
-<a id="orge00c2a7"></a>
+<a id="orgf0f1e7c"></a>
 
 ## Requirements
 
@@ -54,19 +60,19 @@ This repository contains all the info related to ESRG Semester 1.
 -   Makefiles
 
 
-<a id="org1aff61c"></a>
+<a id="orgab4e553"></a>
 
 ## Problem statement
 
 Think about the project and deliver a document about it.
 
 
-<a id="orgbaff4ea"></a>
+<a id="orgf57cf26"></a>
 
 ## Research
 
 
-<a id="org67a81f4"></a>
+<a id="org8670364"></a>
 
 ### Topics <code>[0/3]</code>
 
@@ -75,91 +81,19 @@ Think about the project and deliver a document about it.
 -   [ ] Situate the project requirements, the project constraints
 
 
-<a id="org34efc2e"></a>
+<a id="org84ad7be"></a>
 
-### Marketing Digital Outdoor
+### Selection
 
-1.  Topics
-
-    1.  Motivation and context
-        -   Scenting marketing is a great approach to draw people into stores.
-        -   Scent sense is the fastest way to the brain, thus, providing an exceptional opportunity for marketing.
-        -   Combining that with additional stimuli, like eye and earing, can significantly boost the marketing outcome.
-            
-            > -   Knowing your target audience it is critical for the success of stores.
-            > -   Marketing can be used to collect, analyse, investigate and decide the best politics for addressing a specific target audience, understanding the its behavioral patterns.
-            > -   To understand behavioral patterns <span class="underline">machine-learning models</span> can be used.
-    2.  Concept
-        -   Offer a marketing digital outdoor for brands to advertise and captivate customers
-        -   Brands can buy advertisement space and time by sending the following data:
-            
-            |                         |               |           |          |              |      |
-            |------------------------ |-------------- |---------- |--------- |------------- |----- |
-            | Digital Outdoor location | Fragrance name | Start Time | Stop Time | Audio Message | Video |
-            
-            -   The brands can send the data to our company database through our website/application.
-            -   The data will then be sent to the marketing digital outdoor using a wireless communication technology.
-        -   The advertisement data will be exposed into a display, an audio message transmitted, as well as the indicate fragrance between the designated time interval.
-        -   COVID pandemics changed the perspectives about user interaction with the surroundings, with non touch interfaces being preferred. Thus, a non touch user interface is a must have.
-        -   When a user approaches the marketing digital outdoor, a proximity sensor will detect it and activate the <span class="underline">user interaction mode</span>.
-            -   When activating this mode the camera is started mirroring the user into the display and providing additional options.
-            -   In this mode, the user can:
-                1.  apply image filters related to the brand
-                2.  take pics
-                3.  create GIFs
-                4.  share them
-            -   This mode requires:
-                -   Facial recognition for image filter application
-                -   Hand gesture recognition for navigating the menus and activating options
-                -   A virtual keyboard (non-touch) will be provided for user input, by mapping the screen to the keys and waiting for a designated time before accepting it.
-                -   A set of hand gestures to be used in user interaction
-            -   Several sharing platforms shall be provided namely social media and email.
-                -   Tracking the nr of shares provides feedback for the brands in respect of the brand awareness.
-                -   Additionally, brands can also monitor this by checking their social media accounts.
-
-2.  Technologies <code>[0/11]</code>
-
-    1.  [ ] Computer vision for facial and gesture recognition (OpenCV)
-    2.  [ ] Database for marketing digital outdoor management (SQL)
-    3.  [ ] Website/Application for brands communication to our database
-    4.  [ ] Wireless communication technology for remote communication with digital outdoors
-    5.  [ ] Image filter application
-    6.  [ ] Infrared detection
-    7.  [ ] Camera recording
-    8.  [ ] Audio output
-    9.  [ ] Nebulizer technology for scenting
-    10. [ ] Screen mapping to keys for virtual keyboard
-    11. [ ] Social media and e-mail sharing APIs
-
-3.  ✔ DONE Problem statement
-
-4.  Market research <code>[0/3]</code>
-
-    1.  [ ] Scenting marketing: trends, market value
-    2.  [ ] Digital Outdoors: quantity, market value
-    3.  [ ] Combined marketing: are they digital outdoor + scenting?
-
-5.  Project planning
-
-    1.  Required HW <code>[3/7]</code>
-    
-        -   [X] Raspberry Pi 4
-        -   [ ] HDMI screen: <https://pt.aliexpress.com/item/33005274109.html?spm=a2g0o.detail.1000013.3.38072ea5MrfWq9&gps-id=pcDetailBottomMoreThisSeller&scm=1007.13339.169870.0&scm_id=1007.13339.169870.0&scm-url=1007.13339.169870.0&pvid=e1784609-f2f3-4547-9d9e-d5461fddc4c8&_t=gps-id:pcDetailBottomMoreThisSeller,scm-url:1007.13339.169870.0,pvid:e1784609-f2f3-4547-9d9e-d5461fddc4c8,tpp_buckets:668%232846%238110%231995&&pdp_ext_f=%7B%22sceneId%22:%223339%22,%22sku_id%22:%2212000023440173741%22%7D>
-        -   [ ] Relay/Transistor + Ultrassonic actuator for nebulizing fragrance
-        -   [ ] Audio output
-        -   [X] Power supply
-        -   [X] Mechanical structure
-        -   [ ] Camera
-        
-        Research link: <https://www.one-tab.com/page/TZxmVAXJTO6nVyNO593ARA>
+-   [Marketing digital Outdoor](readme.md)
 
 
-<a id="org14809c5"></a>
+<a id="org7335aba"></a>
 
 ## Report
 
 
-<a id="orgcc6235b"></a>
+<a id="org610b8f4"></a>
 
 ### Outline <code>[0/7]</code>
 
@@ -208,12 +142,158 @@ Think about the project and deliver a document about it.
 7.  [ ] Conclusions
 
 
-<a id="orgf2be94b"></a>
+<a id="org9d020a4"></a>
+
+## Marketing Digital Outdoor
+
+
+<a id="org6d10069"></a>
+
+### Topics
+
+1.  Motivation and context
+    -   Scenting marketing is a great approach to draw people into stores.
+    -   Scent sense is the fastest way to the brain, thus, providing an exceptional opportunity for marketing.
+    -   Combining that with additional stimuli, like eye and earing, can significantly boost the marketing outcome.
+        
+        > -   Knowing your target audience it is critical for the success of stores.
+        > -   Marketing can be used to collect, analyse, investigate and decide the best politics for addressing a specific target audience, understanding the its behavioral patterns.
+        > -   To understand behavioral patterns <span class="underline">machine-learning models</span> can be used.
+2.  Concept
+    -   Offer a marketing digital outdoor for brands to advertise and captivate customers
+    -   Brands can buy advertisement space and time by sending the following data:
+        
+        |                         |               |           |          |              |      |
+        |------------------------ |-------------- |---------- |--------- |------------- |----- |
+        | Digital Outdoor location | Fragrance name | Start Time | Stop Time | Audio Message | Video |
+        
+        -   The brands can send the data to our company database through our website/application.
+        -   The data will then be sent to the marketing digital outdoor using a wireless communication technology.
+    -   The advertisement data will be exposed into a display, an audio message transmitted, as well as the indicate fragrance between the designated time interval.
+    -   COVID pandemics changed the perspectives about user interaction with the surroundings, with non touch interfaces being preferred. Thus, a non touch user interface is a must have.
+    -   When a user approaches the marketing digital outdoor, a proximity sensor will detect it and activate the <span class="underline">user interaction mode</span>.
+        -   When activating this mode the camera is started mirroring the user into the display and providing additional options.
+        -   In this mode, the user can:
+            1.  apply image filters related to the brand
+            2.  take pics
+            3.  create GIFs
+            4.  share them
+        -   This mode requires:
+            -   Facial recognition for image filter application
+            -   Hand gesture recognition for navigating the menus and activating options
+            -   A virtual keyboard (non-touch) will be provided for user input, by mapping the screen to the keys and waiting for a designated time before accepting it.
+            -   A set of hand gestures to be used in user interaction
+        -   Several sharing platforms shall be provided namely social media and email.
+            -   Tracking the nr of shares provides feedback for the brands in respect of the brand awareness.
+            -   Additionally, brands can also monitor this by checking their social media accounts.
+
+
+<a id="org0482b6a"></a>
+
+### Technologies <code>[0/11]</code>
+
+1.  [ ] Computer vision for facial and gesture recognition (OpenCV)
+2.  [ ] Database for marketing digital outdoor management (SQL)
+3.  [ ] Website/Application for brands communication to our database
+4.  [ ] Wireless communication technology for remote communication with digital outdoors
+5.  [ ] Image filter application
+6.  [ ] Infrared detection
+7.  [ ] Camera recording
+8.  [ ] Audio output
+9.  [ ] Nebulizer technology for scenting
+10. [ ] Screen mapping to keys for virtual keyboard
+11. [ ] Social media and e-mail sharing APIs
+
+
+<a id="org8875e7c"></a>
+
+### ✔ DONE Problem statement
+
+
+<a id="org1891595"></a>
+
+### Market research <code>[0/3]</code>
+
+1.  [ ] Scenting marketing: trends, market value
+2.  [ ] Digital Outdoors: quantity, market value
+3.  [ ] Combined marketing: are they digital outdoor + scenting?
+
+
+<a id="orgc8c05b9"></a>
+
+### Project planning
+
+1.  Gantt diagram
+
+    1.  [ ] Planning
+        -   [ ] Kick-off meeting
+        -   [ ] Problem Statement
+        -   [ ] Market Research
+        -   [ ] Project Planning
+    2.  [ ] Analysis
+        -   [ ] System overview
+        -   [ ] Requirements and constraints
+        -   [ ] System architecture
+        -   [ ] System Analysis
+        -   [ ] Estimated budgets
+        -   [ ] Subsystem decomposition
+            -   [ ] Events
+            -   [ ] Use-cases
+            -   [ ] Dynamic operation: state-machine diagram
+            -   [ ] Flow of events: sequence diagram
+    3.  [ ] Design
+        -   [ ] Analysis review
+        -   [ ] HW specification
+        -   [ ] Component shipping
+        -   [ ] Software specification
+            -   [ ] Remote client
+            -   [ ] Remote server + database
+            -   [ ] Local system
+    4.  [ ] Implementation
+        -   [ ] HW testing
+        -   [ ] SW implementation
+            -   [ ] Remote client
+            -   [ ] Remote server + database
+            -   [ ] Local system
+        -   [ ] HW implementation
+            -   [ ] Breadboard
+            -   [ ] PCB design
+        -   [ ] System configuration
+    5.  [ ] Testing
+        1.  [ ] SW unit testing
+        2.  [ ] SW integrated testing
+        3.  [ ] HW unit testing
+        4.  [ ] HW integrated testing
+        5.  [ ] Functional testing
+    6.  [ ] Verification/Validation
+        1.  [ ] Verification
+        2.  [ ] Validation
+    7.  [ ] Report Writing
+        1.  [ ] Problem statement
+        2.  [ ] Analysis
+        3.  [ ] Design
+        4.  [ ] Implementation
+        5.  [ ] Final
+
+2.  Required HW <code>[3/7]</code>
+
+    Research link: <https://www.one-tab.com/page/TZxmVAXJTO6nVyNO593ARA>
+    
+    -   [X] Raspberry Pi 4: 52 EUR
+    -   [X] HDMI screen: 50 EUR - <https://shorturl.at/oyAOR>
+    -   [ ] Relay/Transistor + Ultrassonic actuator for nebulizing fragrance
+    -   [ ] Audio output
+    -   [ ] Power supply
+    -   [ ] Mechanical structure
+    -   [X] Camera: 14 EUR - <https://shorturl.at/gnpCU>
+
+
+<a id="org1b61083"></a>
 
 # Tools
 
 
-<a id="orgf93afc9"></a>
+<a id="org42d9c30"></a>
 
 ## Project management
 
@@ -250,7 +330,7 @@ Think about the project and deliver a document about it.
 5.  Doxygen: source code documentation
 
 
-<a id="orga797a6c"></a>
+<a id="org76ad403"></a>
 
 ## Software
 
@@ -263,24 +343,24 @@ Think about the project and deliver a document about it.
 7.  Makefiles
 
 
-<a id="orgdafa900"></a>
+<a id="org8d2f39c"></a>
 
 # Work Assignments
 
 
-<a id="org797dace"></a>
+<a id="org9cade6c"></a>
 
 ## 1
 
 
-<a id="org14760e4"></a>
+<a id="org963a82c"></a>
 
 ### Problem statement
 
 Design a remote control with three buttons that can remotely control the television (TV). It should be very light, powered by batteries and controls your TV via an infrared emitter. The TV has a built-in infrared receiver. A button on the remote control switches the TV on/off and will be labeled with the word "Power". The other two buttons are used to scroll up/down and select the available channels and they are labeled with the arrows up/down.
 
 
-<a id="orgeeab8bc"></a>
+<a id="orgf442efe"></a>
 
 ### Market research
 
@@ -291,7 +371,7 @@ Design a remote control with three buttons that can remotely control the televis
 -   Sales/Quantity of sold items anually
 
 
-<a id="orga9e3ca6"></a>
+<a id="orgabb4b05"></a>
 
 ### Requirements & Constraints
 
@@ -325,7 +405,7 @@ Design a remote control with three buttons that can remotely control the televis
             -   20 EUR per hour per person: 20 \* 14 \* 2 = 560 EUR + IVA
 
 
-<a id="org6d18248"></a>
+<a id="org021875e"></a>
 
 ### Design
 

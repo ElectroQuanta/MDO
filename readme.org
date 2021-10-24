@@ -32,8 +32,55 @@
    Real-time systems using device drivers with Raspberry Pi: _gives an overall
    idea of what can be achieved_
  - [ ] Situate the project requirements, the project constraints
-*** Marketing Digital Outdoor
-**** Topics
+*** Selection
+- [[file:readme.org][Marketing digital Outdoor]]
+** Report
+*** Outline [0/7]
+1. [ ] Introduction
+   1. Problem statement
+   2. Motivation and context
+   3. Market research
+   4. Goals
+   5. Report outline
+2. [ ] Analysis
+   1. Background and state of the art
+   2. Requirements and constraints
+   3. System overview
+   4. System architecture
+      1. HW architecture
+      2. SW architecture
+   5. Subsystems decomposition
+      1. Events
+      2. Use cases
+      3. State machine diagram
+      4. Sequence diagram
+   6. Project planning and budget
+3. [ ] Design
+   1. HW specification
+      1. Block diagram with COTS components, if possible
+      2. List of constraints of functions to be implemented in HW or SW
+   2. HW interfaces definition
+      1. I/O ports
+      2. HW registers
+      3. Memory addresses for shared or I/O by memory mapping
+      4. HW interrupts
+   3. SW specification
+      1. Identify main subsystems
+      2. System tasks
+   4. SW interfaces definition
+      - Define the APIs in detail:
+	- header files with:
+	  - functions prototypes
+	  - data structure declarations
+	  - class declarations
+   5. Start-up/shutdown process specification
+   6. Error Handling specification
+4. [ ] Implementation
+5. [ ] Testing
+6. [ ] Verification/Validation
+7. [ ] Conclusions
+** Marketing Digital Outdoor
+*** Topics
 1. Motivation and context
    - Scenting marketing is a great approach to draw people into stores.
    - Scent sense is the fastest way to the brain, thus, providing an exceptional
@@ -85,7 +132,7 @@
        - Additionally, brands can also monitor this by checking their social
          media accounts.
      
-**** Technologies [0/11]
+*** Technologies [0/11]
 1. [ ] Computer vision for facial and gesture recognition (OpenCV)
 2. [ ] Database for marketing digital outdoor management (SQL)
 3. [ ] Website/Application for brands communication to our database
@@ -98,72 +145,77 @@
 10. [ ] Screen mapping to keys for virtual keyboard
 11. [ ] Social media and e-mail sharing APIs
 
-**** ✔ DONE Problem statement
-     :LOGBOOK:
-     - State "✔ DONE"     from              [2021-10-23 sáb 11:55]
-     :END:
+*** ✔ DONE Problem statement
+    :LOGBOOK:
+    - State "✔ DONE"     from              [2021-10-23 sáb 11:55]
+    :END:
 
-**** Market research [0/3]
+*** Market research [0/3]
 1) [ ] Scenting marketing: trends, market value
 2) [ ] Digital Outdoors: quantity, market value
 3) [ ] Combined marketing: are they digital outdoor + scenting?
 
-**** Project planning
-***** Required HW [3/7]
-- [X] Raspberry Pi 4
-- [ ] HDMI screen: https://pt.aliexpress.com/item/33005274109.html?spm=a2g0o.detail.1000013.3.38072ea5MrfWq9&gps-id=pcDetailBottomMoreThisSeller&scm=1007.13339.169870.0&scm_id=1007.13339.169870.0&scm-url=1007.13339.169870.0&pvid=e1784609-f2f3-4547-9d9e-d5461fddc4c8&_t=gps-id:pcDetailBottomMoreThisSeller,scm-url:1007.13339.169870.0,pvid:e1784609-f2f3-4547-9d9e-d5461fddc4c8,tpp_buckets:668%232846%238110%231995&&pdp_ext_f=%7B%22sceneId%22:%223339%22,%22sku_id%22:%2212000023440173741%22%7D
+*** Project planning
+**** Gantt diagram
+1) [ ] Planning
+   - [ ] Kick-off meeting
+   - [ ] Problem Statement
+   - [ ] Market Research
+   - [ ] Project Planning
+2) [ ] Analysis
+   - [ ] System overview
+   - [ ] Requirements and constraints
+   - [ ] System architecture
+   - [ ] System Analysis
+   - [ ] Estimated budgets
+   - [ ] Subsystem decomposition
+     - [ ] Events
+     - [ ] Use-cases
+     - [ ] Dynamic operation: state-machine diagram
+     - [ ] Flow of events: sequence diagram
+3) [ ] Design
+   - [ ] Analysis review
+   - [ ] HW specification
+   - [ ] Component shipping
+   - [ ] Software specification
+     - [ ] Remote client
+     - [ ] Remote server + database
+     - [ ] Local system
+4) [ ] Implementation
+   - [ ] HW testing
+   - [ ] SW implementation
+     - [ ] Remote client
+     - [ ] Remote server + database
+     - [ ] Local system
+   - [ ] HW implementation
+     - [ ] Breadboard
+     - [ ] PCB design
+   - [ ] System configuration
+5) [ ] Testing
+   1) [ ] SW unit testing
+   2) [ ] SW integrated testing
+   3) [ ] HW unit testing
+   4) [ ] HW integrated testing
+   5) [ ] Functional testing
+6) [ ] Verification/Validation
+   1) [ ] Verification
+   2) [ ] Validation
+7) [ ] Report Writing
+   1) [ ] Problem statement
+   2) [ ] Analysis
+   3) [ ] Design
+   4) [ ] Implementation
+   5) [ ] Final
+**** Required HW [3/7]
+Research link: https://www.one-tab.com/page/TZxmVAXJTO6nVyNO593ARA
+
+- [X] Raspberry Pi 4: 52 EUR
+- [X] HDMI screen: 50 EUR - https://shorturl.at/oyAOR 
 - [ ] Relay/Transistor + Ultrassonic actuator for nebulizing fragrance
 - [ ] Audio output
-- [X] Power supply
-- [X] Mechanical structure
-- [ ] Camera
-
-Research link: https://www.one-tab.com/page/TZxmVAXJTO6nVyNO593ARA
-** Report
-*** Outline [0/7]
-1. [ ] Introduction
-   1. Problem statement
-   2. Motivation and context
-   3. Market research
-   4. Goals
-   5. Report outline
-2. [ ] Analysis
-   1. Background and state of the art
-   2. Requirements and constraints
-   3. System overview
-   4. System architecture
-      1. HW architecture
-      2. SW architecture
-   5. Subsystems decomposition
-      1. Events
-      2. Use cases
-      3. State machine diagram
-      4. Sequence diagram
-   6. Project planning and budget
-3. [ ] Design
-   1. HW specification
-      1. Block diagram with COTS components, if possible
-      2. List of constraints of functions to be implemented in HW or SW
-   2. HW interfaces definition
-      1. I/O ports
-      2. HW registers
-      3. Memory addresses for shared or I/O by memory mapping
-      4. HW interrupts
-   3. SW specification
-      1. Identify main subsystems
-      2. System tasks
-   4. SW interfaces definition
-      - Define the APIs in detail:
-	- header files with:
-	  - functions prototypes
-	  - data structure declarations
-	  - class declarations
-   5. Start-up/shutdown process specification
-   6. Error Handling specification
-4. [ ] Implementation
-5. [ ] Testing
-6. [ ] Verification/Validation
-7. [ ] Conclusions
+- [ ] Power supply
+- [ ] Mechanical structure
+- [X] Camera: 14 EUR - https://shorturl.at/gnpCU
 
 * Tools
 ** Project management
