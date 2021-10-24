@@ -156,7 +156,7 @@
 3) [ ] Combined marketing: are they digital outdoor + scenting?
 
 *** Project planning
-**** Gantt diagram
+**** Gantt diagram [0/8]
 1) [ ] Planning
    - [ ] Kick-off meeting
    - [ ] Problem Statement
@@ -206,6 +206,12 @@
    3) [ ] Design
    4) [ ] Implementation
    5) [ ] Final
+8) [ ] Documentation
+   1) [ ] Problem statement
+   2) [ ] Analysis
+   3) [ ] Design
+   4) [ ] Implementation
+   5) [ ] Testing
 **** Required HW [3/7]
 Research link: https://www.one-tab.com/page/TZxmVAXJTO6nVyNO593ARA
 
