@@ -196,26 +196,25 @@
   %\clearpage %see what this means
   %\include{./tex/mybibliography}
 %
-  % ---------------------- APPENDIX ------------------------------------
   % renew figures and tables to use Alphabetic numbering and set counter to zero
   % src: https://tex.stackexchange.com/questions/118606/numbering-tables-a1-a2-etc-in-latex#comment862599_311998
-%%  \setcounter{table}{0}
-%%  \setcounter{figure}{0}
-%%  \renewcommand{\thetable}{\Alph{chapter}.\arabic{table}}  
-%%  \renewcommand{\thefigure}{\Alph{chapter}.\arabic{figure}}
-%% %
-%%  % Adding a page to separate appendices from the other chapters
-%%  \chapter*{Appendices}%
-%%\label{ch:Append}
-%%  \addcontentsline{toc}{chapter}{\normalfont\scshape{Appendices}}
-%%  \cleardoublepage%
-%%%
-%%  %\appendix % this is the normal appendix; we use a custom one
-%%  \umappendix{Appendix}
-%
+  \setcounter{table}{0}
+  \setcounter{figure}{0}
+  \renewcommand{\thetable}{\Alph{chapter}.\arabic{table}}  
+  \renewcommand{\thefigure}{\Alph{chapter}.\arabic{figure}}
+ 
+  % Adding a page to separate appendices from the other chapters
+  \chapter*{Appendices}%
+\label{ch:Append}
+  \addcontentsline{toc}{chapter}{\normalfont\scshape{Appendices}}
+  \cleardoublepage%
+
+  %\appendix % this is the normal appendix; we use a custom one
+  \umappendix{Appendix}
+
   % Appendix chapters inclusion
-%  \include{./tex/Append/APPENDICES}
-%
+  \include{./tex/Append/APPENDICES}
+  
 	%\chapter{Support material}
 	%Auxiliary results which are not main-stream; or
 %

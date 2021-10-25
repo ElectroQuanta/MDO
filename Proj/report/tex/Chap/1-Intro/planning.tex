@@ -1,0 +1,74 @@
+\section{Project planning}
+\label{sec:project-planning}
+In Appendix~\ref{ch:append-gantt-diag} is illustrated the Gantt chart for the
+project (Fig.~\ref{fig:gantt-diag-orig}), containing the tasks' descriptions. It
+should be noted that the project follows the Waterfall project
+methodology, which is meant to be iterative.
+
+The tasks are described as follows:
+\begin{item-c}
+\item \emph{Project planning}: in the project planning, a brainstorming about conceivable devices takes place, whose
+viability is then assessed, resulting in the problem statement
+(Milestone 0). A market research is performed to assess the product's market
+space and opportunities. Finally, an initial version of the project planning is
+conceived to define a feasible timeline for the suggested tasks.
+\item \emph{Analysis}: In the first stage --- Analysis 1 --- contains the analysis
+results of the state of the art. It should yield the specifications document,
+containing the requisites and restrictions to the project/product, on a
+quantifiable basis as required to initiate the design; for example, the
+vehicle's desired speed should be, at maximum, \texttt{2 m/s}. The second stage --- Analysis 2
+--- contains the analysis of the first iteration of the development cycle.
+\item \emph{Design}: it is done in two segments: modules design --- where the modules are
+designed; integration design --- where the interconnections between modules is
+designed. It can be subdivided into \emph{conceptual design} and \emph{solution
+design}. 
+\begin{itemize}
+\item In the conceptual design, several problem solutions are identified,
+quantifying its relevance for the project through a measuring scale,
+inserted into an evaluation matrix, for example, QFD.%
+\item In the solution design, the selected solution is developed. It must include
+the solution modelling, e.g.:
+\begin{itemize}
+\item \emph{Control system}: analytically and using simulation;
+\item \underline{Transducer design}: circuit design and simulation;
+\item \emph{Power system}: power supply, motors actuation and
+  respective circuitry design and simulation;
+\item \emph{Communications middleware}: communication protocols evaluation and
+  selection;
+\item \emph{Software layers}: for all required modules, and considering its
+  interconnections, at distinct levels:
+  \begin{itemize}
+  \item \emph{front end layer}: user interface software, providing a easy and convenient
+    way for the user to control and manage the system.
+  \item \emph{framework layer}: software required to emulate/simulate and test the
+    required system behaviour, providing seamless interfaces for the dependents
+    modules
+  \item \emph{back end layer}: software running \emph{behind the scenes}, handling user
+    commands received, system monitoring and control.
+  \end{itemize}
+\end{itemize}
+\end{itemize}
+\item \emph{Implementation}: product implementation which is done by
+  \emph{modular integration}. In the first stage, the implementation is done in a prototyping
+environment --- the assisting framework developed, yielding version alpha; in the second stage
+it must include the coding on the final target modules, yielding
+prototype beta.
+\item \emph{Tests}: modular tests and integrated tests are performed. Tests are generally considered as those performed over any physical
+component or prototype. Here, it is used as a broader term, to reflect the tests
+conducted into the system and the several prototypes.
+\item \emph{Functional Verification/Validation}: System verification may be performed to validate overall
+  function, but not for quantifiable measurement, due to the latencies
+  involved. Regarding validation, specially for an external agent, thus, it should be limited
+  to user interface validation.
+\item \emph{Delivery}: --- project closure encompassing:
+\begin{enum-c}
+\item Final prototype
+\item Support documentation: how to replicate, instruction manual.
+\item Final report
+\item Public presentation
+\end{enum-c}
+\end{item-c}
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../../../dissertation"
+%%% End:
