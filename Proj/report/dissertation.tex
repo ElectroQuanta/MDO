@@ -115,27 +115,27 @@
 %  \listoftables
 %  \cleardoublepage%
   % List of listings
-  \phantomsection%
-  \addcontentsline{toc}{chapter}{List of Listings}
-  \lstlistoflistings%
-  \cleardoublepage%
+%  \phantomsection%
+%  \addcontentsline{toc}{chapter}{List of Listings}
+%  \lstlistoflistings%
+%  \cleardoublepage%
   %list of Acronyms
   \phantomsection%
   \addcontentsline{toc}{chapter}{List of Abbreviations}
   \listofacronyms%
-  %\cleardoublepage%
+  \cleardoublepage%
 %    \printglossary[type=\acronymtype]%
     %\printglossary[type=\acronymtype]%
    %\listofabbreviations%
   % List of symbols
-  \phantomsection%
-  \addcontentsline{toc}{chapter}{List of Symbols}
-  \listofsymbols%
-  \cleardoublepage%
+%  \phantomsection%
+%  \addcontentsline{toc}{chapter}{List of Symbols}
+%  \listofsymbols%
+%  \cleardoublepage%
 %
-	\thispagestyle{empty}
+  \thispagestyle{empty}
   %\newpage
-	\pagenumbering{arabic}
+  \pagenumbering{arabic}
   %\newpage
   %\setcounter{page}{0}
   %\pagenumbering{arabic}
@@ -181,9 +181,9 @@
 
   % -----------------------------------------------------------------
   %
-	\bookmarksetup{startatroot} % Ends last part.
-	%\addtocontents{toc}{\bigskip} % Making the table of contents look good.
-	%\cleardoublepage
+  \bookmarksetup{startatroot} % Ends last part.
+  % \addtocontents{toc}{\bigskip} % Making the table of contents look good.
+  % \cleardoublepage
 %
 	%- Bibliography (needs bibtex) -%
   % Using relative paths: 
@@ -202,11 +202,14 @@
   \setcounter{figure}{0}
   \renewcommand{\thetable}{\Alph{chapter}.\arabic{table}}  
   \renewcommand{\thefigure}{\Alph{chapter}.\arabic{figure}}
- 
+% 
+%  \renewcommand{\thetable}{\Alph{section}.\arabic{table}}  
+%  \renewcommand{\thefigure}{\Alph{section}.\arabic{figure}}
   % Adding a page to separate appendices from the other chapters
   \chapter*{Appendices}%
-\label{ch:Append}
-  \addcontentsline{toc}{chapter}{\normalfont\scshape{Appendices}}
+  \label{ch:Append}
+  %\addcontentsline{toc}{chapter}{\normalfont\scshape{Appendices}}
+  \addcontentsline{toc}{chapter}{\normalfont\bfseries{Appendices}}
   \cleardoublepage%
 
   %\appendix % this is the normal appendix; we use a custom one
