@@ -545,6 +545,7 @@ align=left, leftmargin=*} %,label=$\star$
 % Thesis authoring
 \gdef\@supervisor{}
 \gdef\@cosupervisor{}
+\gdef\@cosupervisorTwo{}
 \gdef\@titleA{}
 \gdef\@titleB{}
 \gdef\@subtitleA{}
@@ -564,6 +565,7 @@ align=left, leftmargin=*} %,label=$\star$
 % Authoring Macros
 \def\supervisor#1{\gdef\@supervisor{#1}}
 \def\cosupervisor#1{\gdef\@cosupervisor{#1}}
+\def\cosupervisorTwo#1{\gdef\@cosupervisorTwo{#1}}
 \def\titleA#1{\gdef\@titleA{#1}}
 \def\titleB#1{\gdef\@titleB{#1}}
 \def\subtitleA#1{\gdef\@subtitleA{#1}}
@@ -588,16 +590,18 @@ align=left, leftmargin=*} %,label=$\star$
 \\\withboldnewsgott{{Embedded systems}}
 \\\rule{0pt}{1cm}
 \\\withboldnewsgott{\large{Project: Report}}
-\\\rule{0pt}{3cm}
+\\\rule{0pt}{2.5cm}
 %\\\withboldnewsgott{\Large\@titleA}
 %\\\withboldnewsgott{\Large\@titleB}
 \\\withboldnewsgott{\Huge{Marketing Digital Outdoor}}
 \\\withboldnewsgott{\Huge{with gesture interaction ---}}
 \\\withboldnewsgott{\Huge{Problem statement}}
-\\\rule{0pt}{2cm}
+\\\rule{0pt}{1.5cm}
 %\\\withboldnewsgott{\hspace{2cm}\large{Group 7}}
 \\\rule{0pt}{0.1cm}
+\\\withboldnewsgott{\hspace{1.7cm}\large{Group 8}}
 \\\withnewsgott{\large\@author}
+%\\\withnewsgott{\hspace{1.7cm}\large\@author}
 %\\\rule{0pt}{0.3cm}
 %\\\withboldnewsgott{\large\@subtitleA}
 %\\\withboldnewsgott{\large\@subtitleB}
@@ -606,8 +610,9 @@ align=left, leftmargin=*} %,label=$\star$
 %\\\optionalwithnewsgott{\large Master Degree in \@masterdegree}
 \\\rule{0pt}{15mm}
 \\\optionalwithnewsgott{Supervised by:}
-\\\optionalwithboldnewsgott{\@supervisor}\rule{0pt}{4mm}
-\\\optionalwithboldnewsgott{\@cosupervisor}
+\\\optionalwithboldnewsgott{\hspace{0.5cm}\@supervisor}\rule{0pt}{4mm}
+\\\optionalwithboldnewsgott{\hspace{0.5cm}\@cosupervisor}
+\\\optionalwithboldnewsgott{\hspace{0.5cm}\@cosupervisorTwo}
 \\\rule{0pt}{1cm}
 \\\withnewsgott{{\small\@date}}
 \end{tabular}
@@ -662,6 +667,7 @@ align=left, leftmargin=*} %,label=$\star$
 % Supervisor(s)
 \supervisor{Professor Tiago Gomes}
 \cosupervisor{Professor Ricardo Roriz}
+\cosupervisorTwo{Professor Sérgio Pereira}
 %
 % University (uncomment if you need to change default values)
 % \def\school{Escola de Engenharia}
