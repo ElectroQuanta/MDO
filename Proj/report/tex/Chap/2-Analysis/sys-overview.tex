@@ -65,12 +65,42 @@ The main functions of the \texttt{\gls{mdo-rs}} are:
 \item \emph{\gls{mdo-l} update}: periodically check for start times of each
   \gls{mdo-l} device and transfer the relevant data to it.
 \end{item-c}
-%
 
+The server interface is the responsible for managing the requests and respective
+responses from the remote client and for periodically send the update data to
+all \gls{mdo-l} devices. 
+%
+%
 \subsection{MDO Local system}
 \label{sec:mdo-local-system}
+The \gls{mdo} local system (MDO-L) is the marketing device, interacting with the user
+to display multi-sensory advertisements. As aforementioned in
+Section~\ref{sec:prob-stat}, it is comprised of four modes:
+\begin{item-c}
+\item \emph{normal mode}: the MDO provides sound, video and fragrance
+  outputs. It is the default mode.
+\item \emph{interaction mode}: When a user approaches the device, the \gls{mdo} will
+go into interaction mode, turning on and displaying the camera feed and waiting
+for recognizable gestures to provide additional functionalities, such as
+brand-specific image filters. This is the \texttt{User} \gls{ui}.
+\item \emph{multimedia mode}: in this mode the facial recognition is applied,
+  enabling the user to select and apply different brand-specific image filters and take pictures or create a \gls{gif}.
+\item \emph{sharing mode}: after a user take a picture or create a \gls{gif}, it
+  can share it across social media.
+\end{item-c}
 
+The user interaction is considered to be a higher priority activity than the
+advertisements, so when a \texttt{User} interacts with the system, the \texttt{normal
+mode} is overriden by the \texttt{Interaction mode}, thus, halting the
+advertisements.
 
+The \gls{mdo-l} application communicates with the remote server
+(\texttt{\gls{mdo-rs}}) through the \texttt{Supervisor} via \gls{tcp-ip}
+ to handle requests from \texttt{Company staff} members
+to monitor and control the device through the \texttt{Supervisor} or to update
+the advertisements. Additionally, the \texttt{Supervisor} oversees the
+application mode and the communication (\texttt{Comm Manager}) and database
+(\texttt{Database manager}) managers to handle system events.
 
 
 %%% Local Variables:
