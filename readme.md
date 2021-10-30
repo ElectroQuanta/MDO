@@ -1,39 +1,40 @@
-- [Preamble](#org546c77c)
-  - [Doc struct <code>[8/8]</code>](#org2bee0ba)
-- [Project](#orgdcb859c)
-  - [Requirements](#orgf0f1e7c)
-  - [Problem statement](#orgab4e553)
-  - [Research](#orgf57cf26)
-    - [Topics <code>[0/3]</code>](#org8670364)
-    - [Selection](#org84ad7be)
-  - [Report](#org7335aba)
-    - [Outline <code>[0/7]</code>](#org610b8f4)
-  - [Marketing Digital Outdoor](#org9d020a4)
-    - [Topics](#org6d10069)
-    - [Technologies <code>[0/11]</code>](#org0482b6a)
-    - [Problem statement](#org8875e7c)
-    - [Market research <code>[0/3]</code>](#org1891595)
-    - [Project planning](#orgc8c05b9)
-- [Tools](#org1b61083)
-  - [Project management](#org42d9c30)
-  - [Software](#org76ad403)
-- [Work Assignments](#org8d2f39c)
-  - [1](#org9cade6c)
-    - [Problem statement](#org963a82c)
-    - [Market research](#orgf442efe)
-    - [Requirements & Constraints](#orgabb4b05)
-    - [Design](#org021875e)
+- [Preamble](#orgfd2e9c5)
+  - [Doc struct <code>[8/8]</code>](#orgfbfbcb9)
+- [Project](#orgf607e4c)
+  - [Requirements](#org2f0f96c)
+  - [Problem statement](#org35e5169)
+  - [Research](#org67a1202)
+    - [Topics <code>[0/3]</code>](#orgaaa0e71)
+    - [Selection](#org6161948)
+  - [Report](#org191f3f3)
+    - [Outline <code>[0/7]</code>](#orgf1b8da7)
+  - [Marketing Digital Outdoor](#org42ca81b)
+    - [Topics](#org0df1f52)
+    - [Technologies <code>[0/11]</code>](#orgb64061d)
+    - [Problem statement](#orgfadf7c4)
+    - [Market research <code>[0/3]</code>](#orgfebcbbc)
+    - [Project planning](#org994f219)
+    - [Analysis](#org40826dc)
+- [Tools](#org173d5b7)
+  - [Project management](#org021bef2)
+  - [Software](#orgccbff98)
+- [Work Assignments](#org2c883d3)
+  - [1](#org813eed6)
+    - [Problem statement](#org2945f84)
+    - [Market research](#org5c7f327)
+    - [Requirements & Constraints](#orgdb2e053)
+    - [Design](#org26163e2)
 
 
 
-<a id="org546c77c"></a>
+<a id="orgfd2e9c5"></a>
 
 # Preamble
 
 This repository contains all the info related to ESRG Semester 1.
 
 
-<a id="org2bee0ba"></a>
+<a id="orgfbfbcb9"></a>
 
 ## Doc struct <code>[8/8]</code>
 
@@ -43,12 +44,12 @@ This repository contains all the info related to ESRG Semester 1.
 -   [X] Work Assignments: contains the info related to the assignments given during this semester.
 
 
-<a id="orgdcb859c"></a>
+<a id="orgf607e4c"></a>
 
 # Project
 
 
-<a id="orgf0f1e7c"></a>
+<a id="org2f0f96c"></a>
 
 ## Requirements
 
@@ -60,19 +61,19 @@ This repository contains all the info related to ESRG Semester 1.
 -   Makefiles
 
 
-<a id="orgab4e553"></a>
+<a id="org35e5169"></a>
 
 ## Problem statement
 
 Think about the project and deliver a document about it.
 
 
-<a id="orgf57cf26"></a>
+<a id="org67a1202"></a>
 
 ## Research
 
 
-<a id="org8670364"></a>
+<a id="orgaaa0e71"></a>
 
 ### Topics <code>[0/3]</code>
 
@@ -81,19 +82,19 @@ Think about the project and deliver a document about it.
 -   [ ] Situate the project requirements, the project constraints
 
 
-<a id="org84ad7be"></a>
+<a id="org6161948"></a>
 
 ### Selection
 
 -   [Marketing digital Outdoor](readme.md)
 
 
-<a id="org7335aba"></a>
+<a id="org191f3f3"></a>
 
 ## Report
 
 
-<a id="org610b8f4"></a>
+<a id="orgf1b8da7"></a>
 
 ### Outline <code>[0/7]</code>
 
@@ -142,12 +143,12 @@ Think about the project and deliver a document about it.
 7.  [ ] Conclusions
 
 
-<a id="org9d020a4"></a>
+<a id="org42ca81b"></a>
 
 ## Marketing Digital Outdoor
 
 
-<a id="org6d10069"></a>
+<a id="org0df1f52"></a>
 
 ### Topics
 
@@ -188,7 +189,7 @@ Think about the project and deliver a document about it.
             -   Additionally, brands can also monitor this by checking their social media accounts.
 
 
-<a id="org0482b6a"></a>
+<a id="orgb64061d"></a>
 
 ### Technologies <code>[0/11]</code>
 
@@ -205,12 +206,12 @@ Think about the project and deliver a document about it.
 11. [ ] Social media and e-mail sharing APIs
 
 
-<a id="org8875e7c"></a>
+<a id="orgfadf7c4"></a>
 
 ### ✔ DONE Problem statement
 
 
-<a id="org1891595"></a>
+<a id="orgfebcbbc"></a>
 
 ### Market research <code>[0/3]</code>
 
@@ -219,11 +220,11 @@ Think about the project and deliver a document about it.
 3.  [ ] Combined marketing: are they digital outdoor + scenting?
 
 
-<a id="orgc8c05b9"></a>
+<a id="org994f219"></a>
 
 ### Project planning
 
-1.  Gantt diagram
+1.  Gantt diagram <code>[0/8]</code>
 
     1.  [ ] Planning
         -   [ ] Kick-off meeting
@@ -274,6 +275,12 @@ Think about the project and deliver a document about it.
         3.  [ ] Design
         4.  [ ] Implementation
         5.  [ ] Final
+    8.  [ ] Documentation
+        1.  [ ] Problem statement
+        2.  [ ] Analysis
+        3.  [ ] Design
+        4.  [ ] Implementation
+        5.  [ ] Testing
 
 2.  Required HW <code>[3/7]</code>
 
@@ -288,12 +295,25 @@ Think about the project and deliver a document about it.
     -   [X] Camera: 14 EUR - <https://shorturl.at/gnpCU>
 
 
-<a id="org1b61083"></a>
+<a id="org40826dc"></a>
+
+### Analysis
+
+1.  System architecture
+
+    **Example**
+    
+    > BRAND -> DB RC -> RS: q brand Nestle RS -> DB: query brand Nestle DS -> RS: Nestle milka.mp4 milka.wav Chocolate RS -> RC: Nestle milka.mp4 milka.wav Chocolate
+    > 
+    > COMPANY -> MDO-L Staff member login RC -> RS: q mdo systems RS -> DB: query mdo-systems DB -> RS: std::<vector> mdo<sub>systems</sub> for(i = 0; i < mdo<sub>systems.size</sub>(); i++ ) RS -> RC: mdo<sub>systems</sub>[i] RC -> RC: Select MDO-L machine Send command RC -> RS: mdo <nr> <command> (mdo 1 get mode) RS -> RS: parse command RS -> RS: get mdo<sub>nr</sub> IP (query mdo-systems 1 IP) RS -> MDO-L: connect IP:port MDO-L -> RS: connected RS -> MDO-L: get mode MDO-L -> RS: normal mode (example) RS -> RC: normal
+
+
+<a id="org173d5b7"></a>
 
 # Tools
 
 
-<a id="org42d9c30"></a>
+<a id="org021bef2"></a>
 
 ## Project management
 
@@ -330,7 +350,7 @@ Think about the project and deliver a document about it.
 5.  Doxygen: source code documentation
 
 
-<a id="org76ad403"></a>
+<a id="orgccbff98"></a>
 
 ## Software
 
@@ -343,24 +363,24 @@ Think about the project and deliver a document about it.
 7.  Makefiles
 
 
-<a id="org8d2f39c"></a>
+<a id="org2c883d3"></a>
 
 # Work Assignments
 
 
-<a id="org9cade6c"></a>
+<a id="org813eed6"></a>
 
 ## 1
 
 
-<a id="org963a82c"></a>
+<a id="org2945f84"></a>
 
 ### Problem statement
 
 Design a remote control with three buttons that can remotely control the television (TV). It should be very light, powered by batteries and controls your TV via an infrared emitter. The TV has a built-in infrared receiver. A button on the remote control switches the TV on/off and will be labeled with the word "Power". The other two buttons are used to scroll up/down and select the available channels and they are labeled with the arrows up/down.
 
 
-<a id="orgf442efe"></a>
+<a id="org5c7f327"></a>
 
 ### Market research
 
@@ -371,7 +391,7 @@ Design a remote control with three buttons that can remotely control the televis
 -   Sales/Quantity of sold items anually
 
 
-<a id="orgabb4b05"></a>
+<a id="orgdb2e053"></a>
 
 ### Requirements & Constraints
 
@@ -405,7 +425,7 @@ Design a remote control with three buttons that can remotely control the televis
             -   20 EUR per hour per person: 20 \* 14 \* 2 = 560 EUR + IVA
 
 
-<a id="org021875e"></a>
+<a id="org26163e2"></a>
 
 ### Design
 
