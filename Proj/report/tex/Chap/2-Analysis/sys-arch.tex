@@ -45,10 +45,75 @@ In this section the \gls{sw} architecture for \gls{mdo-rc}, \gls{mdo-rs}, and
 
 \subsubsection{MDO remote client}
 \label{sec:mdo-remote-client}
+Fig.~\ref{fig:sw-arch-rc} illustrates the \gls{sw} architecture for the remote
+client, representing its \gls{sw} stack.
+It is comprised of the following layers:
+\begin{item-c}
+\item \emph{Application}: contains the remote client application. The
+  \texttt{Brand} and \texttt{Admin} members interact with the \gls{ui}, which is
+  the visual part of the interface. The \texttt{\gls{ui} engine} is notified and
+  handles all \gls{ui} events --- internal or external --- providing the \texttt{UI}
+  with feedback for its users. The relevant commands
+  are then parsed --- \texttt{Parser} component --- and responded. The commands
+  are then translated to the appropriate \gls{db} queries and responded through
+  the \texttt{DB Manager}. The \texttt{Comm Manager} is responsible for
+  encapsulating the \gls{db} queries into the respective \gls{tcp-ip} frames to
+  be sent to the \texttt{Remote Server} as well as unwrap the incoming server
+  responses.
+\item \emph{Middleware}: contains the \gls{tcp-ip} framework supporting these
+  communication protocols as part of \gls{osi} model for internet
+  applications. It manages the incoming/outgoing \gls{tcp-ip} frames by
+  providing the adequate protocol handshaking and queueing and timing aspects of
+  the bytes to send/receive.
+\item \emph{OS \& BSP} --- \gls{os} \& \gls{bsp}: it contains the low-level and
+  communication drivers required to handle input (keyboard/touch), output
+  (screen) and communication to the \texttt{Remote Server}.
+\end{item-c}
+It should be noted that for desktop and mobile applications, the
+\texttt{Middleware} and \texttt{OS \& BSP} layers are usually abstracted by the
+\gls{os}, thus, the relevant \gls{api}s should be used.
+%
+\begin{figure}
+\centering
+    \includegraphics[width=0.55\columnwidth]{./img/sw-arch-rc.png}
+  \caption{~\gls{sw} architecture diagram: remote client}%
+\label{fig:sw-arch-rc}
+\end{figure}
 
 \subsubsection{MDO remote server}
 \label{sec:mdo-remote-server-1}
-
+%
+Fig.~\ref{fig:sw-arch-rs} illustrates the \gls{sw} stack for architecture for
+the remote server.
+It is comprised of the following layers:
+\begin{item-c}
+\item \emph{Application}: contains the remote server application. It provides a
+  \gls{cli} to handle \texttt{Remote client} requests.  The \gls{cli} engine
+  is notified and handles all \gls{ui} events --- internal or external ---
+  providing the appropriate feedback. The relevant commands
+  are then parsed --- \texttt{Parser} component --- and responded: \gls{db}
+  queries are handled by the \texttt{\gls{rdbms}} issuing \gls{db} transactions;
+  other commands received by the \texttt{Remote Client} are handled internally
+  and translated, being dispatched to the \texttt{Local
+    System} by the \texttt{Comm Manager}  (via \texttt{Communication drivers}). Internal events can also
+  trigger the \texttt{\gls{rdbms}} to issue database transactions for the
+  \texttt{Remote Client} or \texttt{Local System}.
+  The \texttt{Comm Manager} is responsible for wrapping\slash unwrapping the data
+  frames received by or sent to the \texttt{Remote Client} or \texttt{Local System}.
+\item \emph{Middleware}: contains the \gls{rdbms} framework supporting the
+  management of the relational databases using database transactions.
+\item \emph{OS \& BSP} --- \gls{os} \& \gls{bsp}: it contains the \texttt{Communication}
+  drivers to the handle requests from the \texttt{Remote Client}, and the
+  \texttt{File I/O} drivers to manipulate \gls{db} transactions from\slash to storage.
+\end{item-c}
+%
+\begin{figure}
+\centering
+    \includegraphics[width=0.55\columnwidth]{./img/sw-arch-rs.png}
+  \caption{~\gls{sw} architecture diagram: remote server}%
+\label{fig:sw-arch-rs}
+\end{figure}
+%
 \subsubsection{MDO local system}
 \label{sec:mdo-local-system-1}
 
