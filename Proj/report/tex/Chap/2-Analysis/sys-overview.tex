@@ -17,8 +17,8 @@ Considering the system interactions, three main actors were identified:
 \begin{enum-c}
 \item \emph{Brand}: represents the brands contracting the advertisement
   services;
-\item \emph{Company staff}: the development company staff, which can monitor and
-  control the outdoor.
+\item \emph{Administrator}: the development company staff, which can monitor and
+  control the outdoor (administrative privileges).
 \item \emph{User}: the user (the target audience of the advertisiment)
   interacting with the system.
 \end{enum-c}
@@ -29,7 +29,7 @@ identified: \textbf{\gls{mdo-rc}}, \textbf{\gls{mdo-rs}}, and
 explained next.
 
 \subsection{MDO Remote Client}
-The \emph{Brand} and \emph{Company Staff} members require a remote \gls{ui} (front-end) to
+The \emph{Brand} and \emph{Administrator} members require a remote \gls{ui} (front-end) to
 interact with the system: the former to configure the advertisements being
 displayed at the \gls{mdo} and purchase them; the latter to remotely monitor and
 control the operation of the \gls{mdo}. Thus, it is clear that \emph{an
@@ -52,7 +52,7 @@ fails, the remote client would have to provide the backup information.
 Thus, a remote server component is included, providing the access and management
 of the system databases, pertaining to the \emph{Brand}, \emph{Company}, and
 \emph{MDO Local system}. The first two provide the historical information of the
-\texttt{Brand} and \texttt{Company} entities, and the last one the information
+\texttt{Brand} and \texttt{Administrator} entities, and the last one the information
 related to all of the \texttt{\gls{mdo-l}} systems in operation.
 
 The main functions of the \texttt{\gls{mdo-rs}} are:
@@ -60,7 +60,7 @@ The main functions of the \texttt{\gls{mdo-rs}} are:
 \item \emph{UI requests responses}: when a \gls{ui} user requests/modifies
   some information from the database, the server must provide/update it.
 \item \emph{\gls{mdo-l} monitoring and control}: provide command dispatch and
-  feedback to the \texttt{Company} staff for remote monitoring and control of
+  feedback to the \texttt{Administrator} staff for remote monitoring and control of
   the device.
 \item \emph{\gls{mdo-l} update}: periodically check for start times of each
   \gls{mdo-l} device and transfer the relevant data to it.
@@ -96,7 +96,7 @@ advertisements.
 
 The \gls{mdo-l} application communicates with the remote server
 (\texttt{\gls{mdo-rs}}) through the \texttt{Supervisor} via \gls{tcp-ip}
- to handle requests from \texttt{Company staff} members
+ to handle requests from \texttt{Administrator} members
 to monitor and control the device through the \texttt{Supervisor} or to update
 the advertisements. Additionally, the \texttt{Supervisor} oversees the
 application mode and the communication (\texttt{Comm Manager}) and database
