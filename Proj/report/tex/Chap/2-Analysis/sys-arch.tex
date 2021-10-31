@@ -30,10 +30,10 @@ The remote server establishes connection with the cloud that has stored all the 
 
 Lastly, the \texttt{Remote Client} which can be a computer, a tablet or a smart phone to run the \gls{mdo} management application.
 %
-\begin{figure}
+\begin{figure}[htb!]
 \centering
-    \includegraphics[width=0.9\columnwidth]{./img/HW_Architecture.png}
-  \caption{~\gls{hw} Architecture Diagram}%
+    \includegraphics[width=0.8\columnwidth]{./img/HW_Architecture.png}
+  \caption{\gls{hw} architecture diagram}%
 \label{fig:hw-arch}
 \end{figure}
 %
@@ -45,6 +45,7 @@ In this section the \gls{sw} architecture for \gls{mdo-rc}, \gls{mdo-rs}, and
 
 \subsubsection{MDO remote client}
 \label{sec:mdo-remote-client}
+%
 Fig.~\ref{fig:sw-arch-rc} illustrates the \gls{sw} architecture for the remote
 client, representing its \gls{sw} stack.
 It is comprised of the following layers:
@@ -73,10 +74,10 @@ It should be noted that for desktop and mobile applications, the
 \texttt{Middleware} and \texttt{OS \& BSP} layers are usually abstracted by the
 \gls{os}, thus, the relevant \gls{api}s should be used.
 %
-\begin{figure}
+\begin{figure}[htb!]
 \centering
     \includegraphics[width=0.55\columnwidth]{./img/sw-arch-rc.png}
-  \caption{~\gls{sw} architecture diagram: remote client}%
+  \caption{\gls{sw} architecture diagram: remote client}%
 \label{fig:sw-arch-rc}
 \end{figure}
 
@@ -93,7 +94,7 @@ It is comprised of the following layers:
   providing the appropriate feedback. The relevant commands
   are then parsed --- \texttt{Parser} component --- and responded: \gls{db}
   queries are handled by the \texttt{\gls{rdbms}} issuing \gls{db} transactions;
-  other commands received by the \texttt{Remote Client} are handled internally
+  other commands received from the \texttt{Remote Client} are handled internally
   and translated, being dispatched to the \texttt{Local
     System} by the \texttt{Comm Manager}  (via \texttt{Communication drivers}). Internal events can also
   trigger the \texttt{\gls{rdbms}} to issue database transactions for the
@@ -107,19 +108,57 @@ It is comprised of the following layers:
   \texttt{File I/O} drivers to manipulate \gls{db} transactions from\slash to storage.
 \end{item-c}
 %
-\begin{figure}
+\begin{figure}[htb!]
 \centering
     \includegraphics[width=0.55\columnwidth]{./img/sw-arch-rs.png}
-  \caption{~\gls{sw} architecture diagram: remote server}%
+  \caption{\gls{sw} architecture diagram: remote server}%
 \label{fig:sw-arch-rs}
 \end{figure}
 %
 \subsubsection{MDO local system}
 \label{sec:mdo-local-system-1}
-
-
-
-
+%
+Fig.~\ref{fig:sw-arch-local} illustrates the \gls{sw} stack for architecture for
+the \texttt{Local System}.
+It is comprised of the following layers:
+\begin{item-c}
+\item \emph{Application}: contains the local system application. It provides a
+  \gls{ui} to handle \texttt{User} interaction.  The \texttt{Interface} engine
+  is notified and handles all \gls{ui} events --- internal or external ---
+  through gesture recognition, providing the appropriate feedback. The relevant
+  commands are then parsed --- \texttt{Supervisor} component --- and responded: \gls{db}
+  queries are handled by the \texttt{Database manager} issuing \gls{db}
+  transactions for internal databases;
+  commands received from the \texttt{Remote Server} to monitor or control the
+  system are handled internally
+  and responded back by the \texttt{Comm Manager}  (via \texttt{Communication
+    drivers}); mode management is performed.
+  Internal events can also trigger the \texttt{Database manager} to issue
+  database transactions to update the \texttt{Local System}.
+  The \texttt{Comm Manager} is responsible for wrapping\slash unwrapping the data
+  frames received by or sent to the \texttt{Remote Server}.
+\item \emph{Middleware}: contains: the \gls{db} framework supporting the
+  management of the internal databases using database transactions; the \gls{cv}
+  framework that handles gesture and facial recognition; image filtering and
+  \gls{gif} frameworks for multimedia; social media framework.
+\item \emph{OS \& BSP} --- \gls{os} \& \gls{bsp}: contains: the \texttt{Communication}
+  drivers to the handle requests from the \texttt{Remote Server} and for social
+  media sharing; the
+  \texttt{File I/O} drivers to manipulate internal \gls{db} transactions
+  from\slash to storage; audio, video and fragrance diffuser actuator drivers
+  for normal mode; the camera driver for camera feed; the detection sensor
+  driver to signal a \texttt{User} is in range, triggering the switch from
+  normal mode to interaction mode.
+\end{item-c}
+%
+\begin{figure}[htb!]
+\centering
+    \includegraphics[width=1.0\columnwidth]{./img/sw-arch-local.png}
+  \caption{\gls{sw} architecture diagram: local system}%
+\label{fig:sw-arch-local}
+\end{figure}
+%
+%
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "../../../dissertation"
