@@ -115,6 +115,18 @@ It is comprised of the following layers:
 \label{fig:sw-arch-rs}
 \end{figure}
 %
+It should be noted that the \texttt{Remote Server} main functions are:
+\begin{item-c}
+\item provide relational databases for easier management of all entities and
+  respective data in the system;
+\item decompose the relationship many-to-many, between the remote clients and
+  local systems --- many remote clients may want to connect to different local
+  systems; 
+\item decouple the architecture as the \texttt{Remote Client} should not know
+the \gls{ip} address of every local system it may potentially try to access,
+acting as a proxy server.
+\end{item-c}
+%
 \subsubsection{MDO local system}
 \label{sec:mdo-local-system-1}
 %
@@ -143,7 +155,8 @@ It is comprised of the following layers:
   \gls{gif} frameworks for multimedia; social media framework.
 \item \emph{OS \& BSP} --- \gls{os} \& \gls{bsp}: contains: the \texttt{Communication}
   drivers to the handle requests from the \texttt{Remote Server} and for social
-  media sharing; the
+  media sharing, and, potentially the \gls{api} calls to cloud-based image
+  filtering frameworks, depending on the application profiling; the
   \texttt{File I/O} drivers to manipulate internal \gls{db} transactions
   from\slash to storage; audio, video and fragrance diffuser actuator drivers
   for normal mode; the camera driver for camera feed; the detection sensor
