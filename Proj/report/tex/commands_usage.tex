@@ -141,6 +141,25 @@ Images should be added to folder /img/.
 % table: single column
 % position [!hbt]: not used - class will select where to place the float
 
+% ADJUST SPACINGS
+% src: https://www.overleaf.com/project/5c349976c042023b1bd97751
+% A table with adjusted row and column spacings
+% \setlength sets the horizontal (column) spacing
+% \arraystretch sets the vertical (row) spacing
+%\begingroup
+%\setlength{\tabcolsep}{10pt} % Default value: 6pt
+%\renewcommand{\arraystretch}{0.5} % Default value: 1
+%\begin{tabular}{ c c c }
+%First Row & -6 & -5 \\
+%Second Row & 4 & 10\\
+%Third Row & 20 & 30\\
+%Fourth Row & 100 & -30\\
+%\end{tabular}
+%\endgroup
+% The \begingroup ... \endgroup pair ensures the separation
+% parameters only affect this particular table, and not any
+% sebsequent ones in the document.
+
 % double-column
 \begin{table*}
    \centering
