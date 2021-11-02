@@ -6,37 +6,50 @@ In this section, the system architecture is devised in the \gls{hw} and \gls{sw}
 \subsection{Hardware architecture}
 \label{sec:hardw-arch}
 %
-The diagram in Fig.\ref{fig:hw-arch} represents an initial hardware big picture in order to facilitate the objective identification.
-As it can bee seen, the diagram is divided in four distinguished parts: \emph{External Environment}, \emph{Local System}, \emph{Remote Server} and \emph{Remote Client}.
-
-Firstly, the \texttt{External Environment} represents all the environment that interacts with the system. In this case, these are all its users - normal users, brands and staff.
-
-Secondly, the \texttt{Local System} is composed for the main controller, which is the Raspberry Pi 4B. 
-This \gls{soc} is responsible to control all the Local System and to establish connection with the remote server through its included WiFi module. 
-The board is powered connecting it to the electrical network. 
-Then, it has several blocks connected to it:
-%
-\begin{item-c}
-\item \emph{Motion Detection}: used to detect the users and switch from normal mode to interaction mode;
-\item \emph{Fragrance Diffusion Actuator}: used to diffuse the fragrance onto the air;
-\item \emph{Camera}: used to capture image that is then processed;
-\item \emph{Speakers}: used to produce advertisements sounds;
-\item \emph{Screen}: used to produce video clips of advertisements.
-\end{item-c}
-%
-
-In third place, the \texttt{Remote Server} has a server node running in another machine that can be one computer or a main frame.
-The remote server establishes connection with the cloud that has stored all the data from all databases.
-
-Lastly, the \texttt{Remote Client} which can be a computer, a tablet or a smart phone to run the \gls{mdo} management application.
+Fig.~\ref{fig:hw-arch} illustrates an initial hardware big picture that fulfils
+the system's goals, meeting its requirements and constraints.
+As it can bee seen, the diagram is divided in four distinct parts:
+\texttt{External Environment}, \texttt{Local System}, \texttt{Remote Server} and
+\texttt{Remote Client}.
 %
 \begin{figure}[htb!]
 \centering
-    \includegraphics[width=0.8\columnwidth]{./img/HW_Architecture.png}
+    \includegraphics[width=0.8\columnwidth]{./img/hw-arch.png}
   \caption{\gls{hw} architecture diagram}%
 \label{fig:hw-arch}
 \end{figure}
 %
+
+Firstly, the \texttt{External Environment} represents all the environment that
+interacts with the system. In this case, these are all its users --- normal
+users, brands and company staff (Administrator role).
+
+Secondly, the \texttt{Local System} is composed of the main controller, which is the Raspberry Pi 4B. 
+This \gls{soc} is responsible to control all the \texttt{Local System} and to establish a
+connection with the \texttt{Remote Server} through its included WiFi
+module. Additionally, the \texttt{Local system} also communicates with the
+\textit{Cloud} to share contents on social media, and, potentially, to access
+image filtering \gls{api}s.
+The \texttt{Local System} is powered through a \gls{ac}-\gls{dc} power
+converter, and, potentially, a step-down converter --- \texttt{Power Supply Module}.
+The main board has several blocks connected to it:
+%
+\begin{item-c}
+\item \emph{Motion Detection}: used to detect the users and switch from normal mode to interaction mode;
+\item \emph{Fragrance Diffusion Actuator}: used to diffuse the fragrance into the air;
+\item \emph{Camera}: used to capture image that is then processed;
+\item \emph{Speakers}: used to reproduce advertisements sounds;
+\item \emph{Screen}: used to display video clips of advertisements.
+\end{item-c}
+%
+
+In third place, the \texttt{Remote Server} has a server node running in another machine that can be one computer or a main frame.
+The remote server stores all databases which the \texttt{Remote Client} and
+\texttt{Local System} may need to access and serves as a proxy server to enable
+the \texttt{Admin} users to control and monitor the \texttt{Local System}.
+
+Lastly, the \texttt{Remote Client} runs the \gls{mdo} management application,
+which can be deploy to a computer (like the Raspberry Pi), a tablet or a smartphone.
 %
 \subsection{Software architecture}
 \label{sec:softw-arch}
