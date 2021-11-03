@@ -1,19 +1,95 @@
 %
 \subsection{Remote Client}
 \label{sec:remote-cli-decomp}
+%
+In this section the remote client is analyzed, considering its events, use cases, dynamic operation and the flow of events.
 
 \subsubsection{User mockups}
 \label{sec:user-mockups-1}
+%
+In Fig.~\ref{fig:user-mockups-rc} is illustrated the user mockups for the remote client. 
+It intends to clarify how does the~\gls{ui} works for the two different sides: Brands and Company (staff).
+
+The initial state of the~\gls{mdo-rc}'s~\gls{ui} is depicted in thick border outline: the 'Sign In' window. 
+If the \texttt{User} makes a mistake in its username and/or password, it will be shown an error message. 
+Also, the 'Sign In' window has an option to recover the password, which sends an e-mail to switch password.
+If the \texttt{User} still remembers its credentials, the app flows through one out of two possibilities: if the user is an admin, goes to the admin main menu, or else if the user is a brand, it will appear the brand main menu.
+
+Firstly, the \texttt{Admin} workflow:
+%
+\begin{itemize}
+\item The \texttt{Admin} main menu contains a drop down button with all the stations available. Choosing one of them, the \texttt{Admin} can turn it On/Off, see it's current mode and the current brand ad being displayed. Also, the \texttt{Admin} can log out and choose between two different paths:
+%
+\begin{itemize}
+\item \emph{Statistics}: It is possible to see various statistics of all different brands that are currently playing on the station: the number of times that the ad was shown, the number of pictures/\gls{gif}s and shared posts, the fragrance slot and quantity (percentage) and the days remaining for the rent to end.
+It is also possible to deactivate the add if something wrong occurs and go back to the previous menu.
+\item \emph{Ads to Activate}: In this window, the \texttt{Admin} can handle all the ads that the brands are intending to rent.
+For that, the \texttt{Admin} needs to see if everything is in order, such as if all the videos that the brand wants to display are in order (in case there are some  or decontextualized videos), if it has a filter, a fragrance and a slot.
+After that, the \texttt{Admin} can either accept or deny the ad.
+If it accepts the ad, it is shown a success message and the ad is added to the station with its preferences.
+If the ad is denied, the \texttt{Admin} needs to send a reason why it denied the ad, that is consequently send to the brand's email.
+\end{itemize}
+%
+\end{itemize}
+
+Secondly, the \texttt{Brand} workflow:
+\begin{itemize}
+\item The \texttt{Brand} main menu contains a welcome message, a notification bell to see if another ad was accepted or denied and three buttons - Rented, To Rent and Log Out.
+The 'Log Out' button logs the \texttt{Brand} out of its account, the other two buttons switch to different widgets:
+%
+\begin{itemize}
+\item \emph{Rented}: The \texttt{Brand} can see all statistics of all its rented ads on different stations that it rented.
+That statistics are: status, number of times the ad was shown, the fragrance slot and quantity (percentage), the number of pictures/\gls{gif}s taken, the number of shared posts and the number of days remaining to end its rent.
+The 'Go Back' button goes back to the previous menu.
+\item \emph{To Rent}: The \texttt{Brand} can rent ads in the same station or in other stations.
+To that happens, it is only needed to choose the target hours and then a calendar will show what days are available to that hours, then after choosing the days, the \texttt{Brand} need to upload a filter and a .zip file with a maximum of ten videos. 
+Finally, the \texttt{Brand} needs to select the fragrance that wants to spill to the air and select 'Rent'. After that, a success message will be shown and the ad will enter in wait list for an \texttt{Admin} check if everything is in order.
+\end{itemize}
+%
+\end{itemize}
+
+Finally, at any time, it can occur the loss of internet connection, which toggles an error message informing the automatic log out of the account.
 \begin{figure}[htb!]
 \centering
     \includegraphics[width=0.9\columnwidth]{./img/user-mockups-rc.png}
   \caption{User mockups: remote client}%
-\label{fig:user-mockups-local}
+\label{fig:user-mockups-rc}
 \end{figure}
 
 \subsubsection{Events}
 \label{sec:events-1}
+Table~\ref{tab:events-rc} presents the most relevant events for the Local system, categorizing them by their source and
+synchronism and linking it to the system’s intended response.
 
+%
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+% \usepackage{graphicx}
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+\begingroup
+\renewcommand{\arraystretch}{0.7} % Default value: 1
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+\begin{table}[]
+\caption{Events: remote client}
+\label{tab:events-rc}
+\begin{tabular}{@{}llll@{}}
+\toprule
+\textbf{Event}       & \textbf{System response}                                                                                                                                      & \textbf{Source} & \textbf{Type} \\ \midrule
+Login                & \begin{tabular}[c]{@{}l@{}}The system verifies if the user credentials\\ are correct and what type of user is and\\ asks for data from databases\end{tabular} & User            & Asynchronous  \\ \midrule
+Verify connection    & Periodically verify internet connection                                                                                                                       & System          & Synchronous   \\ \midrule
+Statistics           & \begin{tabular}[c]{@{}l@{}}Request to the Remote Server all the\\  information to show statistics from \\ all stations and brands\end{tabular}                & User (Admin)    & Asynchronous  \\ \midrule
+Accept/Deny ad       & \begin{tabular}[c]{@{}l@{}}Send information to the Remote \\ Server if the ad is either accepted\\ or denied and if so, why\end{tabular}                      & User (Admin)    & Asynchronous  \\ \midrule
+Power On/Off Station & \begin{tabular}[c]{@{}l@{}}Send command to Remote Server\\  to Power On/Off a certain station\end{tabular}                                                    & User (Admin)    & Asynchronous  \\ \midrule
+Rented               & \begin{tabular}[c]{@{}l@{}}Request to the Remote Server all the\\  information to show statistics from \\ all stations the brand rented\end{tabular}          & User (Brand)    & Asynchronous  \\ \midrule
+Rent                 & \begin{tabular}[c]{@{}l@{}}Send to the Remote Server all the \\ information of rent from the brand, \\ all the videos and the filter\end{tabular}             & User (Brand)    & Asynchronous  \\ \midrule
+Forgot Password      & \begin{tabular}[c]{@{}l@{}}Send e-mail to the user that has \\ forgotten his password\end{tabular}                                                            & User            & Asynchronous  \\ \bottomrule
+\end{tabular}
+\end{table}
+%
+%
+%
 \subsubsection{Use cases}
 \label{sec:use-cases-1}
 
