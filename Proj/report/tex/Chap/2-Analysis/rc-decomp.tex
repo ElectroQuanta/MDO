@@ -62,30 +62,55 @@ Table~\ref{tab:events-rc} presents the most relevant events for the Local system
 synchronism and linking it to the system’s intended response.
 
 %
-% Please add the following required packages to your document preamble:
-% \usepackage{booktabs}
-% \usepackage{graphicx}
-% Please add the following required packages to your document preamble:
-% \usepackage{booktabs}
 \begingroup
 \renewcommand{\arraystretch}{0.7} % Default value: 1
 % Please add the following required packages to your document preamble:
-% \usepackage{booktabs}
+% \usepackage{graphicx}
 \begin{table}[]
+\centering
 \caption{Events: remote client}
 \label{tab:events-rc}
-\begin{tabular}{@{}llll@{}}
-\toprule
-\textbf{Event}       & \textbf{System response}                                                                                                                                      & \textbf{Source} & \textbf{Type} \\ \midrule
-Login                & \begin{tabular}[c]{@{}l@{}}The system verifies if the user credentials\\ are correct and what type of user is and\\ asks for data from databases\end{tabular} & User            & Asynchronous  \\ \midrule
-Verify connection    & Periodically verify internet connection                                                                                                                       & System          & Synchronous   \\ \midrule
-Statistics           & \begin{tabular}[c]{@{}l@{}}Request to the Remote Server all the\\  information to show statistics from \\ all stations and brands\end{tabular}                & User (Admin)    & Asynchronous  \\ \midrule
-Accept/Deny ad       & \begin{tabular}[c]{@{}l@{}}Send information to the Remote \\ Server if the ad is either accepted\\ or denied and if so, why\end{tabular}                      & User (Admin)    & Asynchronous  \\ \midrule
-Power On/Off Station & \begin{tabular}[c]{@{}l@{}}Send command to Remote Server\\  to Power On/Off a certain station\end{tabular}                                                    & User (Admin)    & Asynchronous  \\ \midrule
-Rented               & \begin{tabular}[c]{@{}l@{}}Request to the Remote Server all the\\  information to show statistics from \\ all stations the brand rented\end{tabular}          & User (Brand)    & Asynchronous  \\ \midrule
-Rent                 & \begin{tabular}[c]{@{}l@{}}Send to the Remote Server all the \\ information of rent from the brand, \\ all the videos and the filter\end{tabular}             & User (Brand)    & Asynchronous  \\ \midrule
-Forgot Password      & \begin{tabular}[c]{@{}l@{}}Send e-mail to the user that has \\ forgotten his password\end{tabular}                                                            & User            & Asynchronous  \\ \bottomrule
-\end{tabular}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{llll}
+\hline
+\textbf{Event} &
+  \textbf{System response} &
+  \textbf{Source} &
+  \textbf{Type} \\ \hline
+Login &
+  \begin{tabular}[c]{@{}l@{}}The system verifies if the user credentials\\ are correct and what type of user is and\\ asks for data from databases\end{tabular} &
+  User &
+  Asynchronous \\ \hline
+Verify internet connection &
+  Periodically verify internet connection &
+  Remote Client &
+  Synchronous \\ \hline
+Statistics &
+  \begin{tabular}[c]{@{}l@{}}Request to the Remote Server all the\\  information to show statistics from \\ all stations and brands\end{tabular} &
+  User (Admin) &
+  Asynchronous \\ \hline
+Accept/Deny ad &
+  \begin{tabular}[c]{@{}l@{}}Send information to the Remote \\ Server if the ad is either accepted\\ or denied and if so, why\end{tabular} &
+  User (Admin) &
+  Asynchronous \\ \hline
+Power On/Off Station &
+  \begin{tabular}[c]{@{}l@{}}Send command to Remote Server\\  to Power On/Off a certain station\end{tabular} &
+  User (Admin) &
+  Asynchronous \\ \hline
+Rented &
+  \begin{tabular}[c]{@{}l@{}}Request to the Remote Server all the\\  information to show statistics from \\ all stations the brand rented\end{tabular} &
+  User (Brand) &
+  Asynchronous \\ \hline
+Rent &
+  \begin{tabular}[c]{@{}l@{}}Send to the Remote Server all the \\ information of rent from the brand, \\ all the videos and the filter\end{tabular} &
+  User (Brand) &
+  Asynchronous \\ \hline
+Forgot Password &
+  \begin{tabular}[c]{@{}l@{}}Send e-mail to the user that has \\ forgotten his password\end{tabular} &
+  User &
+  Asynchronous \\ \hline
+\end{tabular}%
+}
 \end{table}
 %
 %
