@@ -97,6 +97,32 @@ Share post status                      & Inform user about shared post status   
 %
 \subsubsection{Use cases}
 \label{sec:use-cases}
+Fig.~\ref{fig:use-cases-local} depicts the use cases diagram for the
+\texttt{Local System}, describing how the system should respond under various
+conditions to a request from one of the stakeholders to deliver a specific
+goal.
+
+The \texttt{Admin} interacts with the \texttt{Remote Client} (through its
+\gls{ui}) requesting the \texttt{Remote Server} to process commands, getting the
+state of the device, adding a video or selecting the fragrance. Additionally,
+the \texttt{Admin} may test the operation of the device: play video, test audio,
+nebulize fragrance or test the camera. This last one tests the main
+functionalities the \texttt{User} also utilizes, namely: select image filter,
+apply/reject image filter, take picture, create \gls{gif} or share multimedia on
+the social media.
+
+A precondition for the interaction of the \texttt{Admin} with the \texttt{Local System} is the establishment of a remote
+connection between the \texttt{Remote Server} and the \texttt{Local system},
+verifying its credentials. However, there is another important use case for this
+remote connection: the update of the \texttt{Local System}'s internal databases
+from the \texttt{Remote server} which will sent appropriate commands for this purpose.
+%
+\begin{figure}[htb!]
+\centering
+    \includegraphics[width=0.85\columnwidth]{./img/use-cases-local.png}
+  \caption{Use cases diagram: local system}%
+\label{fig:use-cases-local}
+\end{figure}
 
 \subsubsection{Dynamic operation}
 \label{sec:dyn-oper}
