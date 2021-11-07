@@ -126,11 +126,31 @@ from the \texttt{Remote server} which will sent appropriate commands for this pu
 %
 \subsubsection{Dynamic operation}
 \label{sec:dyn-oper}
-Fig.~\ref{fig:state-mach-local} depicts the state machine diagram for the \texttt{Local System}.
+Fig.~\ref{fig:state-mach-local} depicts the state machine diagram for the
+\texttt{Local System}, illustrating its dynamic behavior. There are two main
+states:
+\begin{item-c}
+\item \emph{\texttt{Initialization}}: the device is initialized. The settings are
+  and \gls{db}s are loaded and if invalid they are restored. The WiFi
+  communication is setup, signaling the communication status and if valid, an
+  \gls{ip} address is returned. Lastly, the \gls{hw} is initialized, checking
+  its presence, configuring it and testing the configuration: if any error
+  occurs the device goes into the \texttt{Critical Error} state, dumping the
+  error to a log file and waiting for reset; otherwise, the initialization is
+  complete.
+\item \emph{\texttt{Execution}}: after the initialization is successful, the
+  system goes into the \texttt{Execution} macro composite state with several
+  concurrent activities, modeled as composite states too. However, it should be
+  noted that there is only one actual state for the device, although at the
+  perceivable time scale they appear to happen simultaneously. These activities
+  are communication management (\texttt{Comm Manager}), \gls{db} management
+  (\texttt{DB manager}), and application supervision (\texttt{Supervisor}), and
+  are executed forever until system's power off. They are detailed next.
+\end{item-c}
 %
 \begin{figure}[htb!]
 \centering
-    \includegraphics[width=1.0\columnwidth]{./img/state-mach-local.png}
+    \includegraphics[width=0.7\columnwidth]{./img/state-mach-local.png}
   \caption{State machine diagram: local system}%
 \label{fig:state-mach-local}
 \end{figure}
