@@ -365,7 +365,16 @@ align=left, leftmargin=*} %,label=$\star$
 % http://www.dickimaw-books.com/gallery/glossaries-styles/#long4col-style
 % this is set individually for each glossary in the .sty file (see listofsymbols)
 %\setglossarystyle{long4colheader}
-\setglossarystyle{long3colheader}%
+%\setglossarystyle{longheader}%
+
+%%%%%%%%% change column width for acronyms %%%%%%%%%%
+% src: https://tex.stackexchange.com/a/426409
+%\renewcommand*\entryname{Name}
+%\renewcommand*\descriptionname{Bedeutung}
+\setglossarystyle{long3colheader}
+\addtolength{\glspagelistwidth}{0.6cm}
+\addtolength{\glsdescwidth}{-2.5cm}
+%%%%%%%
 
 \newglossarystyle{symbunitlong}{%
 \setglossarystyle{long3col}% base this style on the list style
