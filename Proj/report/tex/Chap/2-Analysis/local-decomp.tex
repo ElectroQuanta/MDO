@@ -155,6 +155,30 @@ states:
 \label{fig:state-mach-local}
 \end{figure}
 %
+%
+\paragraph{\emph{Communication Manager}}
+Fig.~\ref{fig:state-mach-local-comm} depicts the state machine diagram for the
+\texttt{Comm Manager} component. Upon successful initialization the
+\texttt{Comm Manager} goes to \texttt{Idle}, listening for incoming
+connections. When a remote node tries to connects, it makes a connection request
+which can be accepted or denied. If the connection is accepted and the node
+authenticates successfully the \texttt{Comm Manager} is ready for bidirectional
+communication. When a message is received from the remote node, it is written to
+\texttt{TX msg queue} and the \texttt{Supervisor} is notified. When a message
+must be sent to the remote, it is read from the \texttt{TX msg queue} and sent
+to the recipient. If the connection goes down, it is restarted, going into
+\texttt{Idle} state again.
+%
+\paragraph{\emph{Database Manager}}
+
+%
+\begin{figure}[htb!]
+\centering
+    \includegraphics[width=0.6\columnwidth]{./img/state-mach-local-comm.png}
+  \caption{State machine diagram: local system --- Communication Manager}%
+\label{fig:state-mach-local-comm}
+\end{figure}
+%
 
 \subsubsection{Flow of events}
 \label{sec:flow-events}
