@@ -169,14 +169,51 @@ must be sent to the remote, it is read from the \texttt{TX msg queue} and sent
 to the recipient. If the connection goes down, it is restarted, going into
 \texttt{Idle} state again.
 %
+\begin{figure}[htb!]
+\centering
+    \includegraphics[width=0.6\columnwidth]{./img/state-mach-local-comm.png}
+  \caption{State machine diagram: local system --- Comm Manager}%
+\label{fig:state-mach-local-comm}
+\end{figure}
+%
+%
 \paragraph{\emph{Database Manager}}
-
+Fig.~\ref{fig:state-mach-local-db} depicts the state machine diagram for the
+\texttt{DB Manager} component. Upon successful initialization the
+\texttt{DB Manager} goes to \texttt{Idle}, waiting for incoming \gls{db}
+requests.
+When a request arrives, it is parsed, checking its validity. If the request is a
+\gls{db} query, a transaction is read from the respective \gls{db} to the
+\texttt{RX transaction queue} and the \texttt{Supervisor} is notified that there
+is a transaction to read. Otherwise, if the request is a \gls{db} update
+the transaction is written from the \texttt{TX transaction queue} to the
+\gls{db} and the \texttt{Supervisor} is notified that the \gls{DB} was updated.
+%
+\begin{figure}[htb!]
+\centering
+    \includegraphics[width=0.6\columnwidth]{./img/state-mach-local-db.png}
+  \caption{State machine diagram: local system --- \gls{db} Manager}%
+\label{fig:state-mach-local-db}
+\end{figure}
+%
+%
+\paragraph{\emph{Supervisor}}
+Fig.~\ref{fig:state-mach-local-superv} depicts the state machine diagram for the
+\texttt{Supervisor} component.
+Upon successful initialization the \texttt{DB Manager} goes to \texttt{Idle},
+waiting for incoming \gls{db} requests.
+When a request arrives, it is parsed, checking its validity. If the request is a
+\gls{db} query, a transaction is read from the respective \gls{db} to the
+\texttt{RX transaction queue} and the \texttt{Supervisor} is notified that there
+is a transaction to read. Otherwise, if the request is a \gls{db} update
+the transaction is written from the \texttt{TX transaction queue} to the
+\gls{db} and the \texttt{Supervisor} is notified that the \gls{DB} was updated.
 %
 \begin{figure}[htb!]
 \centering
     \includegraphics[width=0.6\columnwidth]{./img/state-mach-local-comm.png}
-  \caption{State machine diagram: local system --- Communication Manager}%
-\label{fig:state-mach-local-comm}
+  \caption{State machine diagram: local system --- Supervisor}%
+\label{fig:state-mach-local-superv}
 \end{figure}
 %
 
