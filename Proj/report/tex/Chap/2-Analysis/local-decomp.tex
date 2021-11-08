@@ -187,7 +187,7 @@ When a request arrives, it is parsed, checking its validity. If the request is a
 \texttt{RX transaction queue} and the \texttt{Supervisor} is notified that there
 is a transaction to read. Otherwise, if the request is a \gls{db} update
 the transaction is written from the \texttt{TX transaction queue} to the
-\gls{db} and the \texttt{Supervisor} is notified that the \gls{DB} was updated.
+\gls{db} and the \texttt{Supervisor} is notified that the \gls{db} was updated.
 %
 \begin{figure}[htb!]
 \centering
@@ -207,11 +207,11 @@ When a request arrives, it is parsed, checking its validity. If the request is a
 \texttt{RX transaction queue} and the \texttt{Supervisor} is notified that there
 is a transaction to read. Otherwise, if the request is a \gls{db} update
 the transaction is written from the \texttt{TX transaction queue} to the
-\gls{db} and the \texttt{Supervisor} is notified that the \gls{DB} was updated.
+\gls{db} and the \texttt{Supervisor} is notified that the \gls{db} was updated.
 %
 \begin{figure}[htb!]
 \centering
-    \includegraphics[width=0.6\columnwidth]{./img/state-mach-local-comm.png}
+    \includegraphics[width=1.0\columnwidth]{./img/state-mach-local-superv.png}
   \caption{State machine diagram: local system --- Supervisor}%
 \label{fig:state-mach-local-superv}
 \end{figure}
