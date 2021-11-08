@@ -18,11 +18,14 @@ If the \texttt{User} still remembers its credentials, the app flows through one 
 Firstly, the \texttt{Admin} workflow:
 %
 \begin{itemize}
-\item The \texttt{Admin} main menu contains a drop down button with all the stations available. Choosing one of them, the \texttt{Admin} can turn it On/Off, see it's current mode and the current brand ad being displayed. Also, the \texttt{Admin} can log out and choose between two different paths:
+\item The \texttt{Admin} main menu contains a drop down button with all the stations available. Choosing one of them, the \texttt{Admin} can turn it On/Off, see it's current mode and the current brand ad being displayed. Also, the \texttt{Admin}  can log out and choose between two different paths:
 %
 \begin{itemize}
 \item \emph{Statistics}: It is possible to see various statistics of all different brands that are currently playing on the station: the number of times that the ad was shown, the number of pictures/\gls{gif}s and shared posts, the fragrance slot and quantity (percentage) and the days remaining for the rent to end.
 It is also possible to deactivate the add if something wrong occurs and go back to the previous menu.
+\item \emph{Users}: In this window, the admin can manage all users and see their information.
+It is possible to the admin to change the type of user to brand or to admin, and it can also remove its type.
+Also, the admin can delete users from the database. 
 \item \emph{Ads to Activate}: In this window, the \texttt{Admin} can handle all the ads that the brands are intending to rent.
 For that, the \texttt{Admin} needs to see if everything is in order, such as if all the videos that the brand wants to display are in order (in case there are some  or decontextualized videos), if it has a filter, a fragrance and a slot.
 After that, the \texttt{Admin} can either accept or deny the ad.
@@ -47,6 +50,10 @@ Finally, the \texttt{Brand} needs to select the fragrance that wants to spill to
 \end{itemize}
 %
 \end{itemize}
+
+It is also possible to register a new user through the 'Register' button.
+This opens a window to type a username, a password, confirm the password and the e-mail.
+If everything is in order, the user is created with the default user type of Brand.
 
 Finally, at any time, it can occur the loss of internet connection, which toggles an error message informing the automatic log out of the account.
 \begin{figure}[htb!]
@@ -117,6 +124,27 @@ Forgot Password &
 %
 \subsubsection{Use cases}
 \label{sec:use-cases-1}
+%
+Fig.~\ref{fig:use-cases-rc} depicts the use cases diagram for the \texttt{Remote Client}, describing how the system should respond under various conditions to a request from one of the stakeholders to deliver a specific
+goal.
+
+The \texttt{Admin} and the \texttt{Brand} interact with the \texttt{Remote Client} and this last interacts with the \texttt{Remote Server} to process commands, such as query databases or power on/off machines.
+
+The \texttt{Admin} can Manage the Station, which includes Power On/Off Station, Manage Ads to Activate and Enable/Disable an Ad.
+It can also manage users, removing or modifying them. All these use cases are processed from the \texttt{Remote Client} and are requested to the \texttt{Remote Server}.
+
+The \texttt{Brand} can see Rented Ads, Rent Ads, See notifications and register. All these cases are also processed from the \texttt{Remote Client} and are requested to the \texttt{Remote Server}.
+
+There are some use cases that are common to the  \texttt{Admin} and to the \texttt{Brand}: Login and Logout.
+
+
+\begin{figure}[htb!]
+\centering
+    \includegraphics[width=0.9\columnwidth]{./img/use-cases-rc.png}
+  \caption{Use cases: remote client}%
+\label{fig:user-cases-rc}
+\end{figure}
+
 
 \subsubsection{Dynamic operation}
 \label{sec:dyn-oper-1}
