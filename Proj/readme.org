@@ -61,7 +61,7 @@ Using these other keywords to declare participants will change the shape of the 
 6) collections
 7) queue
 
-#+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/examples/decl-partic.png
+#+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/examples/decl-partic.png :exports both
   ' title PlantUML (comment)
 @startuml
 
@@ -95,7 +95,7 @@ You can change arrow style by several ways:
 5) add a final "o" at arrow head
 6) use bidirectional arrow <->
 
-#+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/examples/arrow-style.png
+#+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/examples/arrow-style.png :exports both
 @startuml
 ' comments as needed
 ' lost message
@@ -139,7 +139,7 @@ The end keyword is used to close the group.
 
 Note that it is possible to nest groups. 
 
-#+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/examples/group-msg.png
+#+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/examples/group-msg.png :exports both
   ' title PlantUML (comment)
 @startuml
 Alice -> Bob: Authentication Request
@@ -174,7 +174,7 @@ It is possible to put notes on message using the note left or note right keyword
 
 You can have a multi-line note using the end note keywords. 
 
-#+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/examples/notes-msgs.png
+#+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/examples/notes-msgs.png :exports both
 @startuml
 Alice->Bob : hello
 note left: this is a first note
@@ -198,7 +198,7 @@ end note
  If you want, you can split a diagram using == separator to divide your diagram
  into logical steps. 
 
-#+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/examples/divider.png
+#+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/examples/divider.png :exports both
 @startuml
 
 == Initialization ==
@@ -226,7 +226,7 @@ The activate and deactivate apply on the previous message.
 
 The =destroy= denote the end of the lifeline of a participant. 
 
-#+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/examples/lifeline.png
+#+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/examples/lifeline.png :exports both
 @startuml
 participant User
 
@@ -254,7 +254,10 @@ deactivate A
 [[file:diags/plantuml/seq-diag/examples/lifeline.png]]
 
 **** Participant creation
-#+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/examples/partic-creation.png
+ You can use the =create= keyword just before the first reception of a message
+ to emphasize the fact that this message is actually creating this new object. 
+
+#+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/examples/partic-creation.png :exports both
 @startuml
 Bob -> Alice : hello
 
@@ -279,7 +282,7 @@ You can use incoming or outgoing arrows if you want to focus on a part of the di
 Use square brackets to denote the left "[" or the right "]" side of the
 diagram. 
 
-#+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/examples/in-out-msgs.png
+#+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/examples/in-out-msgs.png :exports both
 @startuml
 [-> A: DoWork
 
@@ -304,7 +307,7 @@ deactivate A
  With =teoz= it is possible to add anchors to the diagram and use the anchors to
  specify duration time. 
 
-#+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/examples/anchors-duration.png
+#+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/examples/anchors-duration.png :exports both
 @startuml
 !pragma teoz true
 
@@ -333,7 +336,7 @@ It is possible to draw a box around some participants, using box and end box com
 You can add an optional title or a optional background color, after the box
 keyword. 
 
-#+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/examples/partic-encompass.png
+#+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/examples/partic-encompass.png :exports both
 @startuml
 
 box "Internal Service" #LightBlue
@@ -354,12 +357,11 @@ Alice -> Other : hello
 
 
 
-
 **** Remove foot boxes
       You can use the =hide footbox= keywords to remove the foot boxes of the
       diagram. 
 
-#+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/examples/remove-foot-box.png
+#+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/examples/remove-foot-box.png :exports both
 @startuml
 
 hide footbox
@@ -378,7 +380,7 @@ Bob --> Alice: Authentication Response
 To be conform to strict UML (for arrow style: emits triangle rather than sharp
 arrowheads), you can use: 
 
-#+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/examples/strict-uml.png
+#+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/examples/strict-uml.png :exports both
 @startuml
 skinparam style strictuml
 Bob -> Alice : hello
@@ -391,7 +393,7 @@ Alice -> Bob : ok
 
 **** Color a group message
 It is possible to color a group message: 
-#+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/examples/color-group-msg.png
+#+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/examples/color-group-msg.png :exports both
 @startuml
 Alice -> Bob: Authentication Request
 alt#Gold #LightBlue Successful case
@@ -413,7 +415,7 @@ You can use specify *fill* and *line* colors either:
    #RRGGBBaa
 4. using short HEX value (3 digits): #RGB
 
-#+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/examples/colors.png
+#+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/examples/colors.png :exports both
 @startuml
 actor Bob #Red/Yellow
 actor Alice #FF0000/FFFF00
