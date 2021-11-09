@@ -4,11 +4,11 @@
 In this section the local system is analyzed, considering its events, use cases,
 dynamic operation and the flow of events.
 %
-\subsubsection{User mockups}
+\subsubsection{User mock-ups}
 \label{sec:user-mockups}
 Fig.~\ref{fig:user-mockups-local} illustrates the user mockups for the local
 system. It intends to mimic the user interaction with the local system,
-clarifying the user actions (gestures) and the respectives responses, as well as
+clarifying the user actions (gestures) and the respective responses, as well as
 the workflow, comprising its four modes.
 %
 \begin{figure}[htb!]
@@ -56,7 +56,7 @@ to main menu --- or \texttt{Share} --- starting \texttt{Sharing mode}.
 \subsubsection{Events}%
 \label{sec:events}
 Table~\ref{tab:events-local} presents the most relevant events for the
-\texttt{Local system}, categorizing them by their source and synchronism and
+\texttt{Local system}, categorizing them by their source and synchrony and
 linking it to the system's intended response. A further division is done
 separating \emph{\gls{ui} events} from the remaining ones.
 
@@ -200,25 +200,29 @@ the transaction is written from the \texttt{TX transaction queue} to the
 \paragraph{\emph{Supervisor}}
 Fig.~\ref{fig:state-mach-local-superv} depicts the state machine diagram for the
 \texttt{Supervisor} component, comprising two tasks running in
-`parallel':
+`parallel' (Fig.~\ref{fig:state-mach-local-superv-main}):
 \begin{item-c}
 %
-\item \emph{\texttt{Request Handler}}: handles incoming requests from the
+\item \emph{\texttt{Request Handler}} (Fig.~\ref{fig:state-mach-local-superv-req}): handles incoming requests from the
   \texttt{Remote server}. When a request arrives, it is parsed, and, if valid,
   the appropriate callback is triggered, processing the request and returning
   its output.
 %  
-\item \emph{\texttt{Mode manager}}: Upon successful initialization the
+\item \emph{\texttt{Mode manager}} (Fig.~\ref{fig:state-mach-local-superv-mode}): Upon successful initialization the
   \texttt{Mode Manager} goes to \texttt{Idle}, and it is `awake' if it is time
   to play the advertisements or if a user is detected. If the former is
   verified--- \texttt{Normal mode} --- the device retrieves video
   and fragrance data from the \gls{db} and plays video and nebulizes
   fragrance. If the latter is verified --- \texttt{Interaction mode} the device
   turns on the camera and mirrors the feed on the display, waiting for a
-  recognizable gesture. If the \texttt{User} choose to select an image filter,
+  recognizable gesture.
+
+  If the \texttt{User} choose to select an image filter,
   take a picture or create a \gls{gif}, the device goes into \texttt{Multimedia
     mode}, returning back to \texttt{Interaction mode} after its exit condition
-  or after a timeout. Lastly, if the \texttt{User} chooses to share the image or
+  or after a timeout.
+
+  Lastly, if the \texttt{User} chooses to share the image or
   \gls{gif} created, it must select the social media network, edit the post to
   enter some message and confirm the sharing, returning to \texttt{Interaction
     mode}. If no user interaction happens for a while, the device returns back
@@ -226,11 +230,41 @@ Fig.~\ref{fig:state-mach-local-superv} depicts the state machine diagram for the
 %
 \end{item-c}
 %
+%\begin{figure}[htb!]
+%\centering
+%    \includegraphics[width=1.0\columnwidth]{./img/state-mach-local-superv.png}
+%  \caption{State machine diagram: local system --- Supervisor}%
+%\label{fig:state-mach-local-superv}
+%\end{figure}
+%
 \begin{figure}[htb!]
-\centering
-    \includegraphics[width=1.0\columnwidth]{./img/state-mach-local-superv.png}
+  \centering
+  % 
+  \begin{subfigure}[t]{.4\textwidth}
+  \includegraphics[width=\textwidth]{img/state-mach-local-superv-main.png}%
+  \caption{main}%
+  \label{fig:state-mach-local-superv-main}
+\end{subfigure}
+%
+\hspace{.05\textwidth}
+%
+  \begin{subfigure}[t]{.42\textwidth}
+  \includegraphics[width=\textwidth]{img/state-mach-local-superv-req.png}%
+  \caption{Request Handler}%
+  \label{fig:state-mach-local-superv-req}
+\end{subfigure}
+  %
+%
+%\vspace{.1\textwidth}
+%
+  \begin{subfigure}{.9\textwidth}
+  \includegraphics[width=\textwidth]{img/state-mach-local-superv-mode.png}%
+  \caption{Mode Manager}%
+  \label{fig:state-mach-local-superv-mode}
+\end{subfigure}
+  % 
   \caption{State machine diagram: local system --- Supervisor}%
-\label{fig:state-mach-local-superv}
+  \label{fig:state-mach-local-superv}
 \end{figure}
 %
 %
