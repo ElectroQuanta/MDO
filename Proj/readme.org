@@ -1,14 +1,48 @@
-#+TITLE: Report
+#+TITLE: Project
 #+AUTHOR: José Pires
 #+DATE: [2021-10-19 ter 11:25]
 #+EMAIL: a50178@alunos.uminho.pt
 
 * Preamble
-- This folder contains all the information about the project report writing.
+- This folder contains all the information about the project.
 - It is written incrementally, i.e., as the several project phases take place,
   the document versions pertaining to each phase are stored in the folder
   *submission*.
-
 * Versions [1/1]
 1. [X] Problem statement: deadline - <2021-10-28 qui>
 
+* Diagrams
+Diagrams can be drawn using [2/2]:
+- [X] draw.io
+  - User mockups
+  - State-machine
+- [X] [[id:03c3f7e2-18cd-4956-ad92-13e4a6cc1e60][PlantUML]] (stored in Proj/diags/plantuml)
+  - Sequence diagram
+  - Class diagram
+** PlantUML
+   :PROPERTIES:
+   :ID:       03c3f7e2-18cd-4956-ad92-13e4a6cc1e60
+   :END:
+[[https://plantuml.com/][PlantUML]] is a tool for quickly drawing diagrams from text based descriptions.
+It is specially adequate for sequence diagrams, as draw.io is not very fluid.
+*** Setup [0/6]
+1) [ ] Download PlantUML from the [[https://sourceforge.net/projects/plantuml/files/plantuml.jar/download][website]]: =plantuml.jar=
+2) [ ] Place the =plantuml.jar= file into a known directory and add it to the
+   path
+3) [ ] Write a diagram text file in an extension =.pu= (example input/test.pu) -
+   check the user manual for this
+4) [ ] Navigate to the =input= folder using cd
+5) [ ] Generate the diagram from the terminal using:
+    #+BEGIN_SRC bash
+    java -jar plantuml.jar test.pu -o ../output/
+    #+END_SRC
+6) [ ] Check the generate png file: =output/test.png=
+*** Workflow [0/4]
+1) [ ] Write a diagram text file in an extension =.pu= (example input/test.pu) -
+   check the user manual for this
+2) [ ] Navigate to the =input= folder using cd
+3) [ ] Generate the diagram from the terminal using:
+    #+BEGIN_SRC bash
+    java -jar plantuml.jar test.pu -o ../output/
+    #+END_SRC
+4) [ ] Check the generate png file: =output/test.png=
