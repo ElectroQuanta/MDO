@@ -199,15 +199,32 @@ the transaction is written from the \texttt{TX transaction queue} to the
 %
 \paragraph{\emph{Supervisor}}
 Fig.~\ref{fig:state-mach-local-superv} depicts the state machine diagram for the
-\texttt{Supervisor} component.
-Upon successful initialization the \texttt{DB Manager} goes to \texttt{Idle},
-waiting for incoming \gls{db} requests.
-When a request arrives, it is parsed, checking its validity. If the request is a
-\gls{db} query, a transaction is read from the respective \gls{db} to the
-\texttt{RX transaction queue} and the \texttt{Supervisor} is notified that there
-is a transaction to read. Otherwise, if the request is a \gls{db} update
-the transaction is written from the \texttt{TX transaction queue} to the
-\gls{db} and the \texttt{Supervisor} is notified that the \gls{db} was updated.
+\texttt{Supervisor} component, comprising two tasks running in
+`parallel':
+\begin{item-c}
+%
+\item \emph{\texttt{Request Handler}}: handles incoming requests from the
+  \texttt{Remote server}. When a request arrives, it is parsed, and, if valid,
+  the appropriate callback is triggered, processing the request and returning
+  its output.
+%  
+\item \emph{\texttt{Mode manager}}: Upon successful initialization the
+  \texttt{Mode Manager} goes to \texttt{Idle}, and it is `awake' if it is time
+  to play the advertisements or if a user is detected. If the former is
+  verified--- \texttt{Normal mode} --- the device retrieves video
+  and fragrance data from the \gls{db} and plays video and nebulizes
+  fragrance. If the latter is verified --- \texttt{Interaction mode} the device
+  turns on the camera and mirrors the feed on the display, waiting for a
+  recognizable gesture. If the \texttt{User} choose to select an image filter,
+  take a picture or create a \gls{gif}, the device goes into \texttt{Multimedia
+    mode}, returning back to \texttt{Interaction mode} after its exit condition
+  or after a timeout. Lastly, if the \texttt{User} chooses to share the image or
+  \gls{gif} created, it must select the social media network, edit the post to
+  enter some message and confirm the sharing, returning to \texttt{Interaction
+    mode}. If no user interaction happens for a while, the device returns back
+  to \texttt{Idle} mode.
+%
+\end{item-c}
 %
 \begin{figure}[htb!]
 \centering
@@ -216,8 +233,8 @@ the transaction is written from the \texttt{TX transaction queue} to the
 \label{fig:state-mach-local-superv}
 \end{figure}
 %
-
-\subsubsection{Flow of events}
+%
+\subsubsection{Flow of events}%
 \label{sec:flow-events}
 Sequence diagram
 
