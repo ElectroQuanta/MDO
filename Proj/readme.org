@@ -46,3 +46,380 @@ It is specially adequate for sequence diagrams, as draw.io is not very fluid.
     java -jar plantuml.jar test.pu -o ../output/
     #+END_SRC
 4) [ ] Check the generate png file: =output/test.png=
+*** Sequence diagrams
+**** Declaring participants
+If the keyword participant is used to declare a participant, more control on that participant is possible.
+
+The order of declaration will be the (default) order of display.
+
+Using these other keywords to declare participants will change the shape of the participant representation:
+1) actor
+2) boundary
+3) control
+4) entity
+5) database
+6) collections
+7) queue
+
+#+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/examples/decl-partic.png
+  ' title PlantUML (comment)
+@startuml
+
+participant Participant as Foo
+actor       Actor       as Foo1
+boundary    Boundary    as Foo2
+control     Control     as Foo3
+entity      Entity      as Foo4
+database    Database    as Foo5
+collections Collections as Foo6
+queue       Queue       as Foo7
+Foo -> Foo1 : To actor 
+Foo -> Foo2 : To boundary
+Foo -> Foo3 : To control
+Foo -> Foo4 : To entity
+Foo -> Foo5 : To database
+Foo -> Foo6 : To collections
+Foo -> Foo7: To queue
+
+@enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:diags/plantuml/seq-diag/examples/decl-partic.png]]
+**** Change arrow style
+You can change arrow style by several ways:
+1) add a final x to denote a lost message
+2) use \ or / instead of < or > to have only the bottom or top part of the arrow
+3) repeat the arrow head (for example, >> or //) head to have a thin drawing
+4) use -- instead of - to have a dotted arrow
+5) add a final "o" at arrow head
+6) use bidirectional arrow <->
+
+#+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/examples/arrow-style.png
+@startuml
+' comments as needed
+' lost message
+Bob ->x Alice 
+' sync message
+Bob -> Alice 
+' async message
+Bob ->> Alice
+Bob -\ Alice
+Bob \\- Alice
+Bob //-- Alice
+
+Bob ->o Alice
+Bob o\\-- Alice
+
+' bidirectional message
+Bob <-> Alice
+Bob <->o Alice
+@enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:diags/plantuml/seq-diag/examples/arrow-style.png]]
+
+**** Grouping messages
+([[https://plantuml.com/sequence-diagram#425ba4350c02142c][src]])
+
+It is possible to group messages together using the following keywords:
+1) alt/else
+2) opt
+3) loop
+4) par
+5) break
+6) critical
+7) group, followed by a text to be displayed
+
+It is possible to add a text that will be displayed into the header (for group,
+see next paragraph 'Secondary group label').
+
+The end keyword is used to close the group.
+
+Note that it is possible to nest groups. 
+
+#+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/examples/group-msg.png
+  ' title PlantUML (comment)
+@startuml
+Alice -> Bob: Authentication Request
+
+alt successful case
+
+    Bob -> Alice: Authentication Accepted
+
+else some kind of failure
+
+    Bob -> Alice: Authentication Failure
+    group My own label
+    Alice -> Log : Log attack start
+        loop 1000 times
+            Alice -> Bob: DNS Attack
+        end
+    Alice -> Log : Log attack end
+    end
+
+else Another type of failure
+
+   Bob -> Alice: Please repeat
+
+end
+@enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:diags/plantuml/examples/seq-diag/group-msg.png]]
+**** Notes on messages
+It is possible to put notes on message using the note left or note right keywords just after the message.
+
+You can have a multi-line note using the end note keywords. 
+
+#+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/examples/notes-msgs.png
+@startuml
+Alice->Bob : hello
+note left: this is a first note
+
+Bob->Alice : ok
+note right: this is another note
+
+Bob->Bob : I am thinking
+note left
+a note
+can also be defined
+on several lines
+end note
+@enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:diags/plantuml/seq-diag/examples/notes-msgs.png]]
+
+**** Divider or separator
+ If you want, you can split a diagram using == separator to divide your diagram
+ into logical steps. 
+
+#+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/examples/divider.png
+@startuml
+
+== Initialization ==
+
+Alice -> Bob: Authentication Request
+Bob --> Alice: Authentication Response
+
+== Repetition ==
+
+Alice -> Bob: Another authentication Request
+Alice <-- Bob: another authentication Response
+
+@enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:diags/plantuml/seq-diag/examples/divider.png]]
+
+**** Lifeline activation and destruction
+The =activate= and =deactivate= are used to denote participant activation.
+
+Once a participant is activated, its lifeline appears.
+
+The activate and deactivate apply on the previous message.
+
+The =destroy= denote the end of the lifeline of a participant. 
+
+#+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/examples/lifeline.png
+@startuml
+participant User
+
+User -> A: DoWork
+activate A
+
+A -> B: << createRequest >>
+activate B
+
+B -> C: DoWork
+activate C
+C --> B: WorkDone
+destroy C
+
+B --> A: RequestCreated
+deactivate B
+
+A -> User: Done
+deactivate A
+
+@enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:diags/plantuml/seq-diag/examples/lifeline.png]]
+
+**** Participant creation
+#+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/examples/partic-creation.png
+@startuml
+Bob -> Alice : hello
+
+create Other
+Alice -> Other : new
+
+create control String
+Alice -> String
+note right : You can also put notes!
+
+Alice --> Bob : ok
+
+@enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:diags/plantuml/seq-diag/examples/partic-creation.png]]
+
+**** Incoming and outgoing messages
+You can use incoming or outgoing arrows if you want to focus on a part of the diagram.
+
+Use square brackets to denote the left "[" or the right "]" side of the
+diagram. 
+
+#+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/examples/in-out-msgs.png
+@startuml
+[-> A: DoWork
+
+activate A
+
+A -> A: Internal call
+activate A
+
+A ->] : << createRequest >>
+
+A<--] : RequestCreated
+deactivate A
+[<- A: Done
+deactivate A
+@enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:diags/plantuml/seq-diag/examples/in-out-msgs.png]]
+
+**** Anchors and duration
+ With =teoz= it is possible to add anchors to the diagram and use the anchors to
+ specify duration time. 
+
+#+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/examples/anchors-duration.png
+@startuml
+!pragma teoz true
+
+{start} Alice -> Bob : start doing things during duration
+Bob -> Max : something
+Max -> Bob : something else
+{end} Bob -> Alice : finish
+
+{start} <-> {end} : some time
+
+@enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:diags/plantuml/seq-diag/examples/anchors-duration.png]]
+
+
+You can use the -Pcommand-line option to specify the pragma:
+#+BEGIN_SRC bash
+java -jar plantuml.jar -Pteoz=true
+#+END_SRC
+
+**** Participants encompass
+It is possible to draw a box around some participants, using box and end box commands.
+
+You can add an optional title or a optional background color, after the box
+keyword. 
+
+#+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/examples/partic-encompass.png
+@startuml
+
+box "Internal Service" #LightBlue
+participant Bob
+participant Alice
+end box
+participant Other
+
+Bob -> Alice : hello
+Alice -> Other : hello
+
+@enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:diags/plantuml/seq-diag/examples/partic-encompass.png]]
+
+
+
+
+
+**** Remove foot boxes
+      You can use the =hide footbox= keywords to remove the foot boxes of the
+      diagram. 
+
+#+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/examples/remove-foot-box.png
+@startuml
+
+hide footbox
+title Foot Box removed
+
+Alice -> Bob: Authentication Request
+Bob --> Alice: Authentication Response
+
+@enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:diags/plantuml/seq-diag/examples/remove-foot-box.png]]
+
+**** Style =strictuml=
+To be conform to strict UML (for arrow style: emits triangle rather than sharp
+arrowheads), you can use: 
+
+#+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/examples/strict-uml.png
+@startuml
+skinparam style strictuml
+Bob -> Alice : hello
+Alice -> Bob : ok
+@enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:diags/plantuml/seq-diag/examples/strict-uml.png]]
+
+**** Color a group message
+It is possible to color a group message: 
+#+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/examples/color-group-msg.png
+@startuml
+Alice -> Bob: Authentication Request
+alt#Gold #LightBlue Successful case
+    Bob -> Alice: Authentication Accepted
+else #Pink Failure
+    Bob -> Alice: Authentication Rejected
+end
+@enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:diags/plantuml/seq-diag/examples/color-group-msg.png]]
+
+**** Colors
+You can use specify *fill* and *line* colors either:
+1. with its standard name or CSS name
+2. using HEX value (6 digits): #RRGGBB
+3. using HEX value (8 digits) with alpha compositing or RGBA color model:
+   #RRGGBBaa
+4. using short HEX value (3 digits): #RGB
+
+#+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/examples/colors.png
+@startuml
+actor Bob #Red/Yellow
+actor Alice #FF0000/FFFF00
+Alice -> Bob : hello
+@enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:diags/plantuml/seq-diag/examples/colors.png]]
