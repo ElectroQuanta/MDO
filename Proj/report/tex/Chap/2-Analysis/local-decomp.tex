@@ -270,7 +270,38 @@ Fig.~\ref{fig:state-mach-local-superv} depicts the state machine diagram for the
 %
 \subsubsection{Flow of events}%
 \label{sec:flow-events}
-Sequence diagram
+The flow of events throughout the system is described using a sequence diagram,
+comprising the interactions between the most relevant system's entities. It is
+usually pictured as the visual representation of an use case. The main sequence
+diagrams are illustrated next.
+
+\paragraph{\emph{Interaction mode}}
+Fig.~\ref{fig:seq-local-interaction-mode} depicts the \texttt{Interaction
+  mode}'s sequence diagram. The blue area delimits the \texttt{\gls{mdo-l}}
+system, comprising the \texttt{Gesture Recognition Engine}, the \texttt{UI
+  engine} and the \texttt{Local System Back-End}.
+
+When the \texttt{User} is in range (asynchronous event), the camera is
+activated, and two parallel activities are executed:
+\begin{item-c}
+\item \emph{mirror camera feed}: while the \texttt{User} is in range and
+active, the \texttt{UI engine} will grab frame from the camera and display it on
+the window providing visual feedback to the \texttt{User}.
+\item \emph{gesture recognition and processing}: if a gesture is recognized by
+  the \texttt{Gesture Recognition Engine} it is dispatched to the \texttt{Local
+    System Back-End} which will process it according to the following cases:
+  \texttt{Select Image filter}, \texttt{Take Pic}, and \texttt{Create GIF},
+  showing the respective view in the \gls{ui} and triggering the associate
+  sequence diagram (indicated by the \texttt{ref} keyword).
+\end{item-c}
+%
+\begin{figure}[htb!]
+  \centering
+  \includegraphics[width=0.8\columnwidth]{./img/seq-local-interaction-mode.png}
+  \caption{Sequence diagram: local system --- Interaction mode}%
+\label{fig:seq-local-interaction-mode}
+\end{figure}
+%
 
 %%% Local Variables:
 %%% mode: latex

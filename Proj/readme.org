@@ -562,7 +562,7 @@ deactivate A
 [[file:diags/plantuml/seq-diag/examples/all-together.png]]
 **** Mine (to generate report)                           :noexport:Important:
 
-#+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/output/interaction-mode.png
+#+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/output/seq-local-interaction-mode.png
   @startuml
   ' ---------- SETUP ----------------
   ' strict uml style and hide footboxes
@@ -577,7 +577,7 @@ deactivate A
   box "MDO-L" #LightBlue
   boundary "Gesture Recognition Engine" as GRE
   control "UI Engine" as UIE
-  actor "Local System" as LS
+  actor "Local System \nBack-End" as LS
   endbox
   ' entity      Entity      as Foo4
   ' database    Database    as Foo5
@@ -599,35 +599,38 @@ deactivate A
   LS -> LS: activate camera
 
   par
-      loop while (user in range \n&& ! user_timeout)
-          LS -> UIE: grab frame from camera \nand display it on window
-	  activate UIE
-	  UIE -> User: visual feedback
-      end
-
-== Identify User gesture ==
-User ->> GRE: gesture
-activate GRE
-GRE -> LS: gesture recognized
-deactivate GRE
-LS -> LS: process gesture callback
-== Multimedia mode ==
-alt Select Image Filter
-LS -> UIE: show Image Filter view
-UIE -> User: visual feedback
-ref over User, GRE, UIE, LS: Image Filter
-else Take Pic
-LS -> UIE: show Pic view
-UIE -> User: visual feedback
-ref over User, GRE, UIE, LS: Picture mode
-else Create GIF
-LS -> UIE: show GIF view
-UIE -> User: visual feedback
-ref over User, GRE, UIE, LS: GIF mode
-'' LS -> LS: process gesture \ncallback
-'' LS -> UIE: provide output
-'' UIE -> User: visual feedback
-      
+    loop while (user in range && ! user_timeout)
+	LS -> UIE: grab frame from camera and display it on window
+	activate UIE
+	UIE -> User: visual feedback
+    end
+    == Identify User gesture ==
+    User ->> GRE: gesture
+    activate GRE
+    GRE -> LS: gesture recognized
+    deactivate GRE
+    LS -> LS: process gesture callback
+    == Multimedia mode ==
+    alt Select Image Filter
+    LS -> UIE: show Image Filter view
+    UIE -> User: visual feedback
+    ref over User, GRE, UIE, LS: Image Filter
+' -------
+    else Take Pic
+    LS -> UIE: show Pic view
+    UIE -> User: visual feedback
+    ref over User, GRE, UIE, LS: Picture mode
+' -------
+    else Create GIF
+    LS -> UIE: show GIF view
+    UIE -> User: visual feedback
+    ref over User, GRE, UIE, LS: GIF mode
+    '' LS -> LS: process gesture \ncallback
+    '' LS -> UIE: provide output
+    '' UIE -> User: visual feedback
+    ' end alt
+    end 
+' end par
   end
 		
 
@@ -635,4 +638,4 @@ ref over User, GRE, UIE, LS: GIF mode
 #+END_SRC
 
 #+RESULTS:
-[[file:diags/plantuml/seq-diag/output/interaction-mode.png]]
+[[file:diags/plantuml/seq-diag/output/seq-local-interaction-mode.png]]
