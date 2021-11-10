@@ -72,50 +72,51 @@ synchronism and linking it to the system’s intended response.
 \begingroup
 \renewcommand{\arraystretch}{0.7} % Default value: 1
 % Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
 % \usepackage{graphicx}
 \begin{table}[]
 \centering
 \caption{Events: remote client}
 \label{tab:events-rc}
 \resizebox{\textwidth}{!}{%
-\begin{tabular}{llll}
-\hline
+\begin{tabular}{@{}llll@{}}
+\toprule
 \textbf{Event} &
   \textbf{System response} &
   \textbf{Source} &
-  \textbf{Type} \\ \hline
+  \textbf{Type} \\ \midrule
 Login &
   \begin{tabular}[c]{@{}l@{}}The system verifies if the user credentials\\ are correct and what type of user is and\\ asks for data from databases\end{tabular} &
   User &
-  Asynchronous \\ \hline
+  Asynchronous \\ \midrule
 Verify internet connection &
   Periodically verify internet connection &
   Remote Client &
-  Synchronous \\ \hline
+  Synchronous \\ \midrule
 Statistics &
   \begin{tabular}[c]{@{}l@{}}Request to the Remote Server all the\\  information to show statistics from \\ all stations and brands\end{tabular} &
   User (Admin) &
-  Asynchronous \\ \hline
+  Asynchronous \\ \midrule
 Accept/Deny ad &
   \begin{tabular}[c]{@{}l@{}}Send information to the Remote \\ Server if the ad is either accepted\\ or denied and if so, why\end{tabular} &
   User (Admin) &
-  Asynchronous \\ \hline
+  Asynchronous \\ \midrule
 Power On/Off Station &
   \begin{tabular}[c]{@{}l@{}}Send command to Remote Server\\  to Power On/Off a certain station\end{tabular} &
   User (Admin) &
-  Asynchronous \\ \hline
+  Asynchronous \\ \midrule
 Rented &
   \begin{tabular}[c]{@{}l@{}}Request to the Remote Server all the\\  information to show statistics from \\ all stations the brand rented\end{tabular} &
   User (Brand) &
-  Asynchronous \\ \hline
+  Asynchronous \\ \midrule
 Rent &
   \begin{tabular}[c]{@{}l@{}}Send to the Remote Server all the \\ information of rent from the brand, \\ all the videos and the filter\end{tabular} &
   User (Brand) &
-  Asynchronous \\ \hline
+  Asynchronous \\ \midrule
 Forgot Password &
   \begin{tabular}[c]{@{}l@{}}Send e-mail to the user that has \\ forgotten his password\end{tabular} &
   User &
-  Asynchronous \\ \hline
+  Asynchronous \\ \bottomrule
 \end{tabular}%
 }
 \end{table}
@@ -140,7 +141,7 @@ There are some use cases that are common to the  \texttt{Admin} and to the \text
 
 \begin{figure}[htb!]
 \centering
-    \includegraphics[width=0.9\columnwidth]{./img/use-cases-rc.png}
+    \includegraphics[width=0.6\columnwidth]{./img/use-cases-rc.png}
   \caption{Use cases: remote client}%
 \label{fig:use-cases-rc}
 \end{figure}
@@ -148,32 +149,65 @@ There are some use cases that are common to the  \texttt{Admin} and to the \text
 
 \subsubsection{Dynamic operation}
 \label{sec:dyn-oper-1}
+
+Fig.~\ref{fig:state-mach-rc} depicts the state machine diagram for the
+\texttt{Remote Client}, illustrating its dynamic behavior. There are two main
+states:
+\begin{item-c}
+\item \emph{\texttt{Initialization}}: the app is initialized. The settings are loaded and if invalid they are restored. The WiFi communication is setup, signaling the communication status and if valid, an \gls{ip} address is returned.
+\item \emph{\texttt{Execution}}: after the initialization is successful, the system goes into the \texttt{Execution} macro composite state with several concurrent activities, modeled as composite states too. However, it should be noted that there is only one actual state for the device, although at the perceivable time scale they appear to happen simultaneously. These activities are communication management (\texttt{Comm Manager}) and application manager (\texttt{App Manager}), and are executed forever until system's power off. They are detailed next.
+\end{item-c}
+
 %
 \begin{figure}[htb!]
 \centering
-    \includegraphics[width=0.9\columnwidth]{./img/state-mach-rc.png}
+    \includegraphics[width=0.7\columnwidth]{./img/state-mach-rc.png}
   \caption{State Machine Diagram: remote client}%
 \label{fig:state-mach-rc}
 \end{figure}
 %
+
+\paragraph{\emph{Communication Manager}}
+Fig.~\ref{fig:state-mach-local-comm} depicts the state machine diagram for the
+\texttt{Comm Manager} component. Upon successful initialization the
+\texttt{Comm Manager} goes to \texttt{Idle}, listening for incoming
+connections. When a remote node tries to connects, it makes a connection request
+which can be accepted or denied. If the connection is accepted and the node
+authenticates successfully the \texttt{Comm Manager} is ready for bidirectional
+communication. When a message is received from the remote node, it is written to
+\texttt{TX msg queue} and the \texttt{Supervisor} is notified. When a message
+must be sent to the remote, it is read from the \texttt{TX msg queue} and sent
+to the recipient. If the connection goes down, it is restarted, going into
+\texttt{Idle} state again.
+
 \begin{figure}[htb!]
 \centering
-    \includegraphics[width=0.9\columnwidth]{./img/state-mach-rc-comm.png}
-  \caption{State Machine Diagram: remote client communication manager}%
+    \includegraphics[width=0.7\columnwidth]{./img/state-mach-rc-comm.png}
+  \caption{State Machine Diagram: remote client - Communication Manager}%
 \label{fig:state-mach-rc-comm}
 \end{figure}
 %
-\begin{figure}[htb!]
-\centering
-    \includegraphics[width=0.9\columnwidth]{./img/state-mach-rc-db.png}
-  \caption{State Machine Diagram: remote client database manager}%
-\label{fig:state-mach-rc-db}
-\end{figure}
+
+\paragraph{\emph{App Manager}}
+Fig.~\ref{fig:state-mach-rc-app-manag} depicts the state machine diagram for the
+\texttt{App Manager} component.
+Upon successful initialization the
+\texttt{App Manager} goes to \texttt{Login}, waiting for some action. 
+
+A user can try to register pressing the 'Register' button which leads to \texttt{Register} state, if it registers well, it come back again to \texttt{Login} state. 
+If the 'Login' button is pressed, the system goes to \texttt{Validation} state, where it validates wether the user is an admin or a brand.
+
+If it's \texttt{Admin Mode} state, the user has several states where it can see statistics (\texttt{Statistics}), manage all users (\texttt{Users}) and manage all ads to actvivate (\texttt{Ads To Activate}).
+If it's \texttt{Brand Mode} state, the user has several states where it can see all his ads (\texttt{Rented}), see notifications and messages (\texttt{Main Menu}) and rent new ads (\texttt{To Rent}). 
+Each two of the states end pressing the 'Log Out' button, which redirects to \texttt{Login}  state.
+
+In any state it can occur the unexpected quit of the application. If that happens, then all state machines come to an end.  
+
 %
 \begin{figure}[htb!]
 \centering
     \includegraphics[width=0.9\columnwidth]{./img/state-mach-rc-app-manag.png}
-  \caption{State Machine Diagram: remote client app manager}%
+  \caption{State Machine Diagram: remote client - App Manager}%
 \label{fig:state-mach-rc-app-manag}
 \end{figure}
 %
@@ -182,7 +216,19 @@ There are some use cases that are common to the  \texttt{Admin} and to the \text
 
 \subsubsection{Flow of events}
 \label{sec:flow-events-1}
-Sequence diagram
+The flow of events throughout the system is described using a sequence diagram, comprising the interactions between the most relevant system's entities.
+It is usually pictured as the visual representation of an use case. The main sequence diagram is illustrated next.
+
+\begin{figure}[htb!]
+\centering
+    \includegraphics[width=0.5\columnwidth]{./img/seq-rc.png}
+  \caption{Sequence Diagram: remote client}%
+\label{fig:seq-rc}
+\end{figure}
+
+As it can be seen, there's an alternate way to go to the user, that's because on the authentication the \texttt{Remote Client Back-End} will discover if the user is an \texttt{Admin} or a \texttt{Brand}.
+In both cases, it shows its main menu and it can end the sequence through the 'Logout'.
+In each one of the cases there's alternative sequences to occur, depending in what the \texttt{User} decides to do.
 
 %%% Local Variables:
 %%% mode: latex
