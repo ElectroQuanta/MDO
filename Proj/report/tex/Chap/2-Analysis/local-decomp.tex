@@ -62,35 +62,35 @@ separating \emph{\gls{ui} events} from the remaining ones.
 
 \begingroup
 \renewcommand{\arraystretch}{0.7} % Default value: 1
+\begin{table}[hbt!]
 % Please add the following required packages to your document preamble:
 % \usepackage{booktabs}
-\begin{table}[hbt!]
 \centering
 \caption{Events: local system}
 \label{tab:events-local}
 \begin{tabular}{@{}llll@{}}
 \toprule
-\textbf{Event}                         & \textbf{System response}                                                                              & \textbf{Source}   & \textbf{Type} \\ \midrule
-Power on                               & \begin{tabular}[c]{@{}l@{}}Initialize sensors and go \\ to Normal mode\end{tabular}                   & System maintainer & Asynchronous  \\ \midrule
-User detected                          & \begin{tabular}[c]{@{}l@{}}Turn on camera feed and \\ go to Interaction mode\end{tabular}             & User              & Asynchronous  \\ \midrule
-Command received                       & Parse it and respond                                                                                  & Remote Server     & Asynchronous  \\ \midrule
-Database update                        & \begin{tabular}[c]{@{}l@{}}Request update of internal \\ databases to Remote Server\end{tabular}      & Database manager  & Asynchronous  \\ \midrule
-Enable fragrance diffuser              & \begin{tabular}[c]{@{}l@{}}Enable fragrance diffusion for \\ a predefined period of time\end{tabular} & Local System      & Synchronous   \\ \midrule
-Video ended                            & \begin{tabular}[c]{@{}l@{}}Playback the next video \\ on the queue\end{tabular}                       & Local System      & Synchronous   \\ \midrule
-Check WiFi connection                  & Periodically check WiFi connection                                                                    & Local System      & Synchronous   \\ \midrule
-\multicolumn{1}{c}{\textbf{UI events}} &                                                                                                       &                   &               \\ \midrule
-Option selected                        & \begin{tabular}[c]{@{}l@{}}Track the option selected and \\ inform the UI engine\end{tabular}         & User              & Asynchronous  \\ \midrule
-Image filter pressed                   & Go to Image filter view                                                                               & User              & Asynchronous  \\ \midrule
-Filter selected                        & Detect User's face and apply filter                                                                   & User              & Asynchronous  \\ \midrule
-Pic pressed                            & Go to Picture mode                                                                                    & User              & Asynchronous  \\ \midrule
-Pic setup elapsed                      & Take picture                                                                                          & Local System      & Synchronous   \\ \midrule
-GIF pressed                            & Go to GIF mode                                                                                        & User              & Asynchronous  \\ \midrule
-GIF setup elapsed                      & Go to GIF operation                                                                                   & Local System      & Synchronous   \\ \midrule
-GIF operation elapsed                  & Finish GIF                                                                                            & Local System      & Synchronous   \\ \midrule
-Share mode pressed                     & Go to Sharing mode (selection)                                                                        & User              & Asynchronous  \\ \midrule
-Keyboard pressed                       & Give feedback to user                                                                                 & User              & Asynchronous  \\ \midrule
-Share post pressed                     & Upload post to designated social media                                                                & User              & Asynchronous  \\ \midrule
-Share post status                      & Inform user about shared post status                                                                  & Cloud             & Asynchronous  \\ \bottomrule
+\textbf{Event}            & \textbf{System response}                                                                              & \textbf{Source}   & \textbf{Type} \\ \midrule
+Power on                  & \begin{tabular}[c]{@{}l@{}}Initialize sensors and go \\ to Normal mode\end{tabular}                   & System maintainer & Asynchronous  \\ \midrule
+User detected             & \begin{tabular}[c]{@{}l@{}}Turn on camera feed and \\ go to Interaction mode\end{tabular}             & User              & Asynchronous  \\ \midrule
+Command received          & Parse it and respond                                                                                  & Remote Server     & Asynchronous  \\ \midrule
+Database update           & \begin{tabular}[c]{@{}l@{}}Request update of internal \\ databases to Remote Server\end{tabular}      & Database manager  & Asynchronous  \\ \midrule
+Enable fragrance diffuser & \begin{tabular}[c]{@{}l@{}}Enable fragrance diffusion for \\ a predefined period of time\end{tabular} & Local System      & Synchronous   \\ \midrule
+Video ended               & \begin{tabular}[c]{@{}l@{}}Playback the next video \\ on the queue\end{tabular}                       & Local System      & Synchronous   \\ \midrule
+Check WiFi connection     & Periodically check WiFi connection                                                                    & Local System      & Synchronous   \\ \midrule
+\multicolumn{4}{c}{\textbf{UI events}}                                                                                                                                \\ \midrule
+Option selected           & \begin{tabular}[c]{@{}l@{}}Track the option selected and \\ inform the UI engine\end{tabular}         & User              & Asynchronous  \\ \midrule
+Image filter pressed      & Go to Image filter view                                                                               & User              & Asynchronous  \\ \midrule
+Filter selected           & Detect User's face and apply filter                                                                   & User              & Asynchronous  \\ \midrule
+Pic pressed               & Go to Picture mode                                                                                    & User              & Asynchronous  \\ \midrule
+Pic setup elapsed         & Take picture                                                                                          & Local System      & Synchronous   \\ \midrule
+GIF pressed               & Go to GIF mode                                                                                        & User              & Asynchronous  \\ \midrule
+GIF setup elapsed         & Go to GIF operation                                                                                   & Local System      & Synchronous   \\ \midrule
+GIF operation elapsed     & Finish GIF                                                                                            & Local System      & Synchronous   \\ \midrule
+Share mode pressed        & Go to Sharing mode (selection)                                                                        & User              & Asynchronous  \\ \midrule
+Keyboard pressed          & Give feedback to user                                                                                 & User              & Asynchronous  \\ \midrule
+Share post pressed        & Upload post to designated social media                                                                & User              & Asynchronous  \\ \midrule
+Share post status         & Inform user about shared post status                                                                  & Cloud             & Asynchronous  \\ \bottomrule
 \end{tabular}
 \end{table}
 \endgroup
