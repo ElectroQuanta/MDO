@@ -1,14 +1,14 @@
-- [Preamble](#org3ca586c)
-- [Versions <code>[1/1]</code>](#orgd9f9cee)
-- [Diagrams](#org809be4e)
-  - [PlantUML](#org5aa9b04)
-    - [Setup <code>[0/6]</code>](#org23631b0)
-    - [Workflow <code>[0/4]</code>](#orgaeebfc4)
-    - [Sequence diagrams](#org47c9ebc)
+- [Preamble](#orgb0dac4b)
+- [Versions <code>[1/1]</code>](#orgbab4ba7)
+- [Diagrams](#orgee77cca)
+  - [PlantUML](#org676644c)
+    - [Setup <code>[0/6]</code>](#org01ca459)
+    - [Workflow <code>[0/4]</code>](#org9ebad83)
+    - [Sequence diagrams](#org7087bbc)
 
 
 
-<a id="org3ca586c"></a>
+<a id="orgb0dac4b"></a>
 
 # Preamble
 
@@ -16,14 +16,14 @@
 -   It is written incrementally, i.e., as the several project phases take place, the document versions pertaining to each phase are stored in the folder **submission**.
 
 
-<a id="orgd9f9cee"></a>
+<a id="orgbab4ba7"></a>
 
 # Versions <code>[1/1]</code>
 
 1.  [X] Problem statement: deadline - <span class="timestamp-wrapper"><span class="timestamp">&lt;2021-10-28 qui&gt;</span></span>
 
 
-<a id="org809be4e"></a>
+<a id="orgee77cca"></a>
 
 # Diagrams
 
@@ -32,19 +32,19 @@ Diagrams can be drawn using <code>[2/2]</code>:
 -   [X] draw.io
     -   User mockups
     -   State-machine
--   [X] [PlantUML](#org5aa9b04) (stored in Proj/diags/plantuml)
+-   [X] [PlantUML](#org676644c) (stored in Proj/diags/plantuml)
     -   Sequence diagram
     -   Class diagram
 
 
-<a id="org5aa9b04"></a>
+<a id="org676644c"></a>
 
 ## PlantUML
 
 [PlantUML](https://plantuml.com/) is a tool for quickly drawing diagrams from text based descriptions. It is specially adequate for sequence diagrams, as draw.io is not very fluid.
 
 
-<a id="org23631b0"></a>
+<a id="org01ca459"></a>
 
 ### Setup <code>[0/6]</code>
 
@@ -60,7 +60,7 @@ Diagrams can be drawn using <code>[2/2]</code>:
 6.  [ ] Check the generate png file: `output/test.png`
 
 
-<a id="orgaeebfc4"></a>
+<a id="org9ebad83"></a>
 
 ### Workflow <code>[0/4]</code>
 
@@ -74,7 +74,7 @@ Diagrams can be drawn using <code>[2/2]</code>:
 4.  [ ] Check the generate png file: `output/test.png`
 
 
-<a id="org47c9ebc"></a>
+<a id="org7087bbc"></a>
 
 ### Sequence diagrams
 
@@ -451,3 +451,141 @@ Diagrams can be drawn using <code>[2/2]</code>:
     ```
     
     ![img](diags/plantuml/seq-diag/examples/colors.png)
+
+15. All together     :Important:
+
+    This example tries to combine all the most important tips stated previously.
+    
+    ```plantuml
+    @startuml
+    ' ---------- SETUP ----------------
+    ' strict uml style and hide footboxes
+    skinparam style strictuml
+    hide footbox
+    ' for anchors and duration this may be required (uncomment)
+    ' !pragma teoz true
+    
+    
+    ' ---------- Declaring participants
+    participant Participant as Foo
+    actor       Actor       as Foo1
+    boundary    Boundary    as Foo2
+    control     Control     as Foo3
+    entity      Entity      as Foo4
+    database    Database    as Foo5
+    collections Collections as Foo6
+    queue       Queue       as Foo7
+    Foo -> Foo1 : To actor 
+    Foo -> Foo2 : To boundary
+    Foo -> Foo3 : To control
+    Foo -> Foo4 : To entity
+    Foo -> Foo5 : To database
+    Foo -> Foo6 : To collections
+    Foo -> Foo7: To queue
+    
+    ' -------- Grouping messages ------------------
+    ' divider or separator
+    ' Encompass actors
+    ' add colors to cases
+    ' add notes
+    == Initialization ==
+    
+    box "Internal Service" #LightBlue
+    participant Bob
+    participant Alice
+    end box
+    Alice -> Bob: Authentication Request
+    alt#Gold #LightBlue Successful case
+        Bob -> Alice: Authentication Accepted
+        note left: this is a first note
+    else #Pink Failure
+        Bob -> Alice: Authentication Rejected
+        note right: this is a 2nd note
+    end
+    
+    == Repetition ==
+    
+    Alice -> Bob: Another authentication Request
+    Alice <-- Bob: another authentication Response
+    
+    
+    Alice -> Bob: Authentication Request
+    
+    alt successful case
+    
+        Bob -> Alice: Authentication Accepted
+    
+    else some kind of failure
+    
+        Bob -> Alice: Authentication Failure
+        group My own label
+        Alice -> Log : Log attack start
+    	loop 1000 times
+    	    Alice -> Bob: DNS Attack
+    	end
+        Alice -> Log : Log attack end
+        end
+    
+    else Another type of failure
+    
+       Bob -> Alice: Please repeat
+    
+    ' ---------- Anchors and duration
+    {start} Alice -> Bob : start doing things during duration
+    Bob -> Max : something
+    Max -> Bob : something else
+    {end} Bob -> Alice : finish
+    
+    {start} <-> {end} : some time
+    
+    ' --------- Incoming and outgoing messages
+    [-> A: DoWork
+    
+    activate A
+    
+    A -> A: Internal call
+    activate A
+    
+    A ->] : << createRequest >>
+    
+    A<--] : RequestCreated
+    deactivate A
+    [<- A: Done
+    deactivate A
+    
+    ' -------  Participant creation ---------
+    Bob -> Alice : hello
+    
+    create Other
+    Alice -> Other : new
+    
+    create control String
+    Alice -> String
+    note right : You can also put notes!
+    
+    Alice --> Bob : ok
+    
+    '-------- Lifeline activation/deactivation
+    participant User
+    
+    User -> A: DoWork
+    activate A
+    
+    A -> B: << createRequest >>
+    activate B
+    
+    B -> C: DoWork
+    activate C
+    C --> B: WorkDone
+    destroy C
+    
+    B --> A: RequestCreated
+    deactivate B
+    
+    A -> User: Done
+    deactivate A
+    
+    @enduml
+    ```
+    
+    ![img](diags/plantuml/seq-diag/examples/all-together.png)
