@@ -1,0 +1,139 @@
+  @startuml
+  ' ---------- SETUP ----------------
+  ' strict uml style and hide footboxes
+  skinparam style strictuml
+  hide footbox
+  ' for anchors and duration this may be required (uncomment)
+  ' !pragma teoz true
+
+  ' ---------- Declaring participants
+  ' participant Participant as Foo
+  
+  actor User
+  box "MDO-RC" #LightBlue
+  boundary "UI" as UI
+  control "UI Engine" as UIE
+  actor "Remote Client \nBack-End" as RC
+  endbox
+  box "MDO-RS" #f9db8f
+  actor "Remote Server" as RS
+  database "User DB" as UserDB
+  endbox
+  ' entity      Entity      as Foo4
+  ' database    Database    as Foo5
+  ' collections Collections as Foo6
+  ' queue       Queue       as Foo7
+
+  ' async message
+  ' == Application start ==
+  ' activate User
+  ' User ->> UI: starts app 
+  ' deactivate User
+  ' activate UI
+  ' UI -> User: Show Login view
+  ' deactivate UI
+''
+  == Brand  ==
+  activate RC
+  'activate UserDB
+  'UserDB -> RS : Stations Data
+  'deactivate UserDB
+  'activate RS
+  'RS ->> RC : Sends data
+  'deactivate RS
+  'activate RC
+  'RC -> UIE : Stations Info
+  'activate UIE
+  'UIE -> UI : stations_view
+  'deactivate UIE
+  'activate UI
+  'UI -> User : show stations view
+  'deactivate UI
+  'activate User
+  alt Rented
+   activate User
+   User ->> UI : Press Rented
+   deactivate User
+   activate UI
+   UI -> UIE : rented_btn_pressed
+   deactivate UI
+   activate UIE
+   UIE -> RC : rented_ads(user)
+   deactivate UIE
+   RC ->> RS : rented_ads(user)
+   activate RS
+   RS -> UserDB : rented_ads(user)
+   deactivate RS
+   activate UserDB
+   UserDB -> RS : Send rented ads info
+   deactivate UserDB
+   activate RS
+   RS ->> RC : Send rented ads info
+   deactivate RS
+   RC -> UIE : Rented Ads info
+   activate UIE
+   UIE -> UI : Rented Ads view
+   deactivate UIE
+   activate UI
+   UI -> User : show Rented Ads view
+  else To Rent
+   activate User
+   User ->> UI : Press To Rent
+   deactivate User
+   activate UI
+   UI -> UIE : to_rent_btn_pressed
+   deactivate UI
+   activate UIE
+   UIE -> RC : get_to_rent()
+   deactivate UIE
+   RC ->> RS : get__to_rent()
+   activate RS
+   RS -> UserDB : get_to_rent()
+   deactivate RS
+   activate UserDB
+   UserDB -> RS : Send available rents info
+   deactivate UserDB
+   activate RS
+   RS ->> RC : Send available rents info
+   deactivate RS
+   RC -> UIE : Available Rents info
+   activate UIE
+   UIE -> UI : Available Rents view
+   deactivate UIE
+   activate UI
+   UI -> User : show Available Rents view
+   deactivate UI
+   activate User
+   User ->> UI : Rent Ad
+   deactivate User
+   activate UI
+   UI -> UIE : Rent_btn_pressed
+   deactivate UI
+   activate UIE
+   UIE -> RC : rent(ad)
+   deactivate UIE
+   RC ->> RS : rent(ad)
+   activate RS
+   RS -> UserDB : add(ad)
+   deactivate RS
+   activate UserDB
+   UserDB -> UserDB : Update 
+   deactivate UserDB
+  else Logout
+   activate User
+   User ->> UI : Press Logout
+   deactivate User
+   activate UI
+   UI -> UIE : logout_btn_pressed
+   deactivate UI
+   activate UIE
+   UIE -> RC : logout()
+   deactivate UIE
+   RC -> RC : logout()
+ end
+''
+  deactivate User
+  activate UI
+  deactivate UI
+  activate UIE
+@enduml

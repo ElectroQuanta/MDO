@@ -32,12 +32,15 @@
   activate UI
   UI -> User: Show Login view
   deactivate UI
-  activate User
 ''
   == Login ==
   activate User
   User ->> UI: input username and password
+  deactivate User
+  activate UI
   UI -> User: visual feedback
+  deactivate UI
+  activate User
   User ->> UI: User presses Login
 ''
   deactivate User
@@ -50,25 +53,51 @@
   activate RC
   RC -> RC : Encrypt password
   RC ->> RS : send(username, pass_crypt)
+  activate RS
   RS -> UserDB : transaction(username, pass_crypt)
+  activate UserDB
 '' DB transaction
   alt transaction success
     UserDB -> RS: User info
     RS ->> RC: User info
     RC -> RC: check type of User
     alt Admin user
-    RC -> UIE: admin user
-    UIE -> UI: admin_view
-    UI -> User: Show admin view
-    ref over RC, UIE, UI, User: Admin
+      RC -> UIE: admin user
+      activate UIE
+      UIE -> UI: admin_view
+      deactivate UIE
+      activate UI
+      UI -> User: Show admin view
+      activate User
+      deactivate UI
+      ref over RC, UIE, UI, User: Admin
+      deactivate User  
     else Brand user
-    RC -> UIE: brand user
-    UIE -> UI: brand_view
-    UI -> User: Show brand view
-    ref over RC, UIE, UI, User: Brand
+      RC -> UIE: brand user
+      activate UIE
+      UIE -> UI: brand_view
+      deactivate UIE
+      activate UI
+      UI -> User: Show brand view
+      activate User
+      deactivate UI
+      deactivate User
+      ref over RC, UIE, UI, User: Brand
     end
   else failure
   UserDB -> RS: empty
+  deactivate UserDB
+  RS ->> RC : empty
+  deactivate RS
+  RC -> UIE : login fail
+  activate UIE
+  UIE -> UI : login_fail_view
+  deactivate UIE
+  activate UI
+  UI -> User : Show login fail view
+  deactivate UI
+  activate User
+  deactivate User
   end
 ''
 ''  == User Authentication ==
