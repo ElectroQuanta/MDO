@@ -1,6 +1,8 @@
 %
 \subsection{Remote server}
 \label{sec:remote-serv-decomp}
+In this section the remote server is analyzed, considering its events, use
+cases, dynamic operation and the flow of events.
 
 \subsubsection{User mock-ups}
 \label{sec:user-mockups-2}
@@ -17,6 +19,19 @@ workflow, defining the \texttt{Remote Server} interface.
 \label{fig:user-mockups-rs}
 \end{figure}
 
+It consists of a \gls{cli} providing basic commands to authenticate an user,
+perform operations over a \gls{db} and test the operation of a designated
+\texttt{Local System} (only available to administrator users).
+
+To test the operation of a \texttt{Local System}, an \texttt{Admin} can:
+\begin{item-c}
+\item \emph{Normal mode}: add, delete, play or stop video, audio and fragrance;
+\item \emph{Interactive\& Multimedia modes} --- camera: turn on/off the camera, apply facial
+  recognition, use an image filter, take a picture or create a \gls{gif};
+\item \emph{Sharing mode}: share to a designated social media network a post,
+  containing a message and attachment (picture or \gls{gif}). 
+\end{item-c}
+%
 %The initial state of the \gls{mdo-l}'s~\gls{ui} is depicted in thick border
 %outline, after a \texttt{User} has been detected --- \texttt{Interaction
 %  mode}. On the left it is the camera feed and on the right the commands ribbon,
