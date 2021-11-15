@@ -17,7 +17,7 @@
   endbox
   box "MDO-RS" #f9db8f
   actor "Remote Server" as RS
-  database "User DB" as UserDB
+  database "Brands DB" as BrandDB
   endbox
   ' entity      Entity      as Foo4
   ' database    Database    as Foo5
@@ -34,26 +34,11 @@
   ' deactivate UI
 ''
   == Admin ==
-  'activate UserDB
-  'UserDB -> RS : Stations Data
-  'deactivate UserDB
-  'activate RS
-  'RS ->> RC : Sends data
-  'deactivate RS
-  'activate RC
-  'RC -> UIE : Stations Info
-  'activate UIE
-  'UIE -> UI : stations_view
-  'deactivate UIE
-  'activate UI
-  'UI -> User : show stations view
-  'deactivate UI
-  'activate User
   activate RC
   alt Statistics
-   ref over User, UI, UIE, RC, RS, UserDB: Statistics
+   ref over User, UI, UIE, RC, RS, BrandDB: Statistics
   else  Users
-   ref over User, UI, UIE, RC, RS, UserDB: Users
+   ref over User, UI, UIE, RC, RS, BrandDB: Users
   else Ads To Activate
    activate User
    User ->> UI : Press Ads To Activate
@@ -66,11 +51,11 @@
    deactivate UIE
    RC ->> RS : get_ads()
    activate RS
-   RS -> UserDB : get_ads()
+   RS -> BrandDB : get_ads()
    deactivate RS
-   activate UserDB
-   UserDB -> RS : Send ads to activate info
-   deactivate UserDB
+   activate BrandDB
+   BrandDB -> RS : Send ads to activate info
+   deactivate BrandDB
    activate RS
    RS ->> RC : Send ads to activate info
    deactivate RS
@@ -92,22 +77,22 @@
    deactivate UIE
    RC ->> RS : accept(ad)/deny(ad)
    activate RS
-   RS -> UserDB : modify(ad)
+   RS -> BrandDB : modify(ad)
    deactivate RS
-   activate UserDB
-   UserDB -> UserDB : Update 
-   deactivate UserDB
+   activate BrandDB
+   BrandDB -> BrandDB : Update
   else Logout
-   activate User
-   User ->> UI : Press Logout
-   deactivate User
-   activate UI
-   UI -> UIE : logout_btn_pressed
-   deactivate UI
-   activate UIE
-   UIE -> RC : logout()
-   deactivate UIE
-   RC -> RC : logout()
+    ref over User, UI, UIE, RC, RS, BrandDB: Logout
+   'activate User
+   'User ->> UI : Press Logout
+   'deactivate User
+   'activate UI
+   'UI -> UIE : logout_btn_pressed
+   'deactivate UI
+   'activate UIE
+   'UIE -> RC : logout()
+   'deactivate UIE
+   'RC -> RC : logout()
  end
 ''
   deactivate User

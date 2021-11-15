@@ -70,7 +70,7 @@
       UI -> User: Show admin view
       activate User
       deactivate UI
-      ref over RC, UIE, UI, User: Admin
+      ref over RC, UIE, UI, User, RS, UserDB: Admin
       deactivate User  
     else Brand user
       RC -> UIE: brand user
@@ -82,7 +82,7 @@
       activate User
       deactivate UI
       deactivate User
-      ref over RC, UIE, UI, User: Brand
+      ref over RC, UIE, UI, User, RS, UserDB: Brand
     end
   else failure
   UserDB -> RS: empty

@@ -155,13 +155,13 @@ Fig.~\ref{fig:state-mach-rc} depicts the state machine diagram for the
 states:
 \begin{item-c}
 \item \emph{\texttt{Initialization}}: the app is initialized. The settings are loaded and if invalid they are restored. The WiFi communication is setup, signaling the communication status and if valid, an \gls{ip} address is returned.
-\item \emph{\texttt{Execution}}: after the initialization is successful, the system goes into the \texttt{Execution} macro composite state with several concurrent activities, modeled as composite states too. However, it should be noted that there is only one actual state for the device, although at the perceivable time scale they appear to happen simultaneously. These activities are communication management (\texttt{Comm Manager}) and application manager (\texttt{App Manager}), and are executed forever until system's power off. They are detailed next.
+\item \emph{\texttt{Execution}}: after the initialization is successful, the system goes into the \texttt{Execution} macro composite state with several concurrent activities, modeled as composite states too. However, it should be noted that there is only one actual state for the device, although at the perceivable time scale they appear to happen simultaneously. These activities are communication management (\texttt{Comm Manager}), interface management (\texttt{\gls{ui} Engine}) and application manager (\texttt{App Manager}), and are executed forever until system's power off. They are detailed next.
 \end{item-c}
 
 %
 \begin{figure}[htb!]
 \centering
-    \includegraphics[width=0.7\columnwidth]{./img/state-mach-rc.png}
+    \includegraphics[width=0.9\columnwidth]{./img/state-mach-rc.png}
   \caption{State Machine Diagram: remote client}%
 \label{fig:state-mach-rc}
 \end{figure}
@@ -182,7 +182,7 @@ to the recipient. If the connection goes down, it is restarted, going into
 
 \begin{figure}[htb!]
 \centering
-    \includegraphics[width=0.7\columnwidth]{./img/state-mach-rc-comm.png}
+    \includegraphics[width=0.5\columnwidth]{./img/state-mach-rc-comm.png}
   \caption{State Machine Diagram: remote client - Communication Manager}%
 \label{fig:state-mach-rc-comm}
 \end{figure}
@@ -217,19 +217,48 @@ In any state it can occur the unexpected quit of the application. If that happen
 \subsubsection{Flow of events}
 \label{sec:flow-events-1}
 The flow of events throughout the system is described using a sequence diagram, comprising the interactions between the most relevant system's entities.
-It is usually pictured as the visual representation of an use case. The main sequence diagram is illustrated next.
+It is usually pictured as the visual representation of an use case. The main sequence diagrams are illustrated next.
 
 \begin{figure}[htb!]
 \centering
-    \includegraphics[width=0.7\columnwidth]{./img/seq-rc-login.png}
+    \includegraphics[width=1\columnwidth]{./img/seq-rc-login.png}
   \caption{Sequence Diagram: remote client - Login}%
 \label{fig:seq-rc-login}
 \end{figure}
 
-As it can be seen, the user interacts with the \texttt{\gls{ui} Engine} and then this last interacts with the \texttt{Remote Client Back-End} in order to process and execute all the information and commands needed. 
+\begin{figure}[htb!]
+\centering
+    \includegraphics[width=1\columnwidth]{./img/seq-rc-admin-statistics.png}
+  \caption{Sequence Diagram: remote client - admin statistics}%
+\label{fig:seq-rc-admin-statistics}
+\end{figure}
+
+\begin{figure}[htb!]
+\centering
+    \includegraphics[width=1\columnwidth]{./img/seq-rc-admin-users.png}
+  \caption{Sequence Diagram: remote client - admin users}%
+\label{fig:seq-rc-admin-users}
+\end{figure}
+
+\begin{figure}[htb!]
+\centering
+    \includegraphics[width=1\columnwidth]{./img/seq-rc-admin-ads-to-act.png}
+  \caption{Sequence Diagram: remote client - admin ads to activate}%
+\label{fig:seq-rc-admin-ads-to-act}
+\end{figure}
+
+\begin{figure}[htb!]
+\centering
+    \includegraphics[width=0.7\columnwidth]{./img/seq-rc-admin-logout.png}
+  \caption{Sequence Diagram: remote client - admin logout}%
+\label{fig:seq-rc-admin-logout}
+\end{figure}
+
+As it can be seen, the user interacts with the \texttt{\gls{ui}}, then this last interacts with the \texttt{\gls{ui} Engine}, interacting with the \texttt{Remote Client Back-End} in order to process and execute all the information and commands needed. 
 There's an alternate way to go to the user, that's because on the authentication the \texttt{Remote Client Back-End} will discover if the user is an \texttt{Admin} or a \texttt{Brand}.
 On both cases, it shows its main menu and it can end the sequence through the 'Logout'.
 In each one of the cases there's alternative sequences to occur, depending in what the \texttt{User} decides to do.
+Also, in each alternative choice, the \texttt{Remote Client} can interact with different \texttt{Databases}, either to update them or to ask some info.
 
 %%% Local Variables:
 %%% mode: latex

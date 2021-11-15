@@ -17,7 +17,7 @@
   endbox
   box "MDO-RS" #f9db8f
   actor "Remote Server" as RS
-  database "User DB" as UserDB
+  database "Users DB" as UserDB
   endbox
   ' entity      Entity      as Foo4
   ' database    Database    as Foo5
@@ -34,48 +34,8 @@
   ' deactivate UI
 ''
   == Admin ==
-  activate UserDB
-  UserDB -> RS : Stations Data
-  deactivate UserDB
-  activate RS
-  RS ->> RC : Sends data
-  deactivate RS
-  activate RC
-  RC -> UIE : Stations Info
-  activate UIE
-  UIE -> UI : stations_view
-  deactivate UIE
-  activate UI
-  UI -> User : show stations view
-  deactivate UI
   alt statistics
-   activate User
-   User ->> UI : Press statistics
-   deactivate User
-   activate UI
-   UI -> UIE : statistics_btn_pressed
-   deactivate UI
-   activate UIE
-   UIE -> RC : get_statistics(station)
-   deactivate UIE
-   RC ->> RS : get_statistics(station)
-   activate RS
-   RS -> UserDB : get_statistics(station)
-   deactivate RS
-   activate UserDB
-   UserDB -> RS : Send station statistics
-   deactivate UserDB
-   activate RS
-   RS ->> RC : Send station statistics
-   deactivate RS
-   RC -> UIE : Station Statistics
-   activate UIE
-   UIE -> UI : statistics view
-   deactivate UIE
-   activate UI
-   UI -> User : show statistics View
-   deactivate UI
-   activate User
+   ref over User, UI, UIE, RC, RS, UserDB : Statistics 
   else Users
    User ->> UI : Press Users
    deactivate User
@@ -117,8 +77,7 @@
    deactivate RS
    activate UserDB
    UserDB -> UserDB : Update DB
-   deactivate UserDB
-   
+   deactivate UserDB 
   else Ads To Activate
    ref over User, UI, UIE, RC, RS, UserDB : Ads To Activate
    'User ->> UI : Press Ads To Activate

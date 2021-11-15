@@ -76,6 +76,7 @@
    deactivate UIE
    activate UI
    UI -> User : show Rented Ads view
+   deactivate UI
   else To Rent
    activate User
    User ->> UI : Press To Rent
@@ -130,7 +131,14 @@
    UIE -> RC : logout()
    deactivate UIE
    RC -> RC : logout()
- end
+   RC -> UIE : get_login()
+   activate UIE
+   UIE -> UI : login_view
+   deactivate UIE
+   activate UI
+   UI -> User : show login view
+   activate User
+  end
 ''
   deactivate User
   activate UI
