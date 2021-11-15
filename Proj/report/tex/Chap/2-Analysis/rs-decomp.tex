@@ -7,6 +7,38 @@
 
 \subsubsection{Events}
 \label{sec:events-2}
+%
+Table~\ref{tab:events-rs} presents the most relevant events for the
+\texttt{Remote Server}, categorizing them by their source and synchrony and
+linking it to the system's intended response.
+
+\begingroup
+\renewcommand{\arraystretch}{0.7} % Default value: 1
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+\begin{table}[hbt!]
+\centering
+\caption{Events: Remote Server}
+\label{tab:events-rs}
+\begin{tabular}{@{}llll@{}}
+\toprule
+\textbf{Event}          & \textbf{System response}                                                                                                     & \textbf{Source}                                                 & \textbf{Type} \\ \midrule
+Power on                & Initialize RDBMS and go to Idle mode                                                                                         & System maintainer                                               & Asynchronous  \\ \midrule
+Connection Requested    & Accept/refuse connection                                                                                                     & Remote Client                                                   & Asynchronous  \\ \midrule
+Connection Accepted     & Start listening for commands                                                                                                 & Remote Client                                                   & Asynchronous  \\ \midrule
+Authenticate            & \begin{tabular}[c]{@{}l@{}}Query User DB to validate user credentials.\\ If valid, login user.\end{tabular}                  & Remote Client                                                   & Asynchronous  \\ \midrule
+Help                    & Send help information                                                                                                        & Remote Client                                                   & Asynchronous  \\ \midrule
+Logout                  & \begin{tabular}[c]{@{}l@{}}Logout user, close connection and go to\\ Idle mode\end{tabular}                                  & Remote Client                                                   & Asynchronous  \\ \midrule
+Check WiFi connection   & Periodically check WiFi connection                                                                                           & Remote Client                                                   & Synchronous   \\ \midrule
+Connection timeout      & \begin{tabular}[c]{@{}l@{}}Logout user, close connection and go to \\ Idle mode\end{tabular}                                 & Remote Server                                                   & Synchronous   \\ \midrule
+DB management           & Read/modify/add/delete data from DB                                                                                          & Remote Client                                                   & Asynchronous  \\ \midrule
+Update stations         & Update all ready-to-run stations with ads data                                                                               & Remote Server                                                   & Synchronous   \\ \midrule
+Command invalid         & Inform RC that command is invalid                                                                                            & Remote Server                                                   & Synchronous   \\ \midrule
+Station notification    & Store station notification into DB                                                                                           & Local System                                                    & Asynchronous  \\ \midrule
+Test Operation RC       & \begin{tabular}[c]{@{}l@{}}Parse command originated from RC and, if valid, \\ dispatch it to designated station\end{tabular} & \begin{tabular}[c]{@{}l@{}}Remote Client\\ (Admin)\end{tabular} & Asynchronous  \\ \midrule
+Test Operation Callback & Provide command dispatch to original RC                                                                                      & Local System                                                    & Asynchronous  \\ \bottomrule
+\end{tabular}
+\end{table}
 
 \subsubsection{Use cases}
 \label{sec:use-cases-2}
