@@ -2,8 +2,56 @@
 \subsection{Remote server}
 \label{sec:remote-serv-decomp}
 
-\subsubsection{User mockups}
+\subsubsection{User mock-ups}
 \label{sec:user-mockups-2}
+Fig.~\ref{fig:user-mockups-rs} illustrates the user mock-ups for the
+\texttt{Remote Server}. It intends to mimic the user interaction with the
+\texttt{Remote server} interface,
+clarifying the user actions and the respective responses, as well as the
+workflow, defining the \texttt{Remote Server} interface.
+%
+\begin{figure}[htb!]
+\centering
+    \includegraphics[width=1.0\columnwidth]{./img/user-mockups-rs.png}
+  \caption{User mock-ups: Remote Server}%
+\label{fig:user-mockups-rs}
+\end{figure}
+
+%The initial state of the \gls{mdo-l}'s~\gls{ui} is depicted in thick border
+%outline, after a \texttt{User} has been detected --- \texttt{Interaction
+%  mode}. On the left it is the camera feed and on the right the commands ribbon,
+%containing the hints to use the system and the available options. As it can
+%been, the \texttt{User} can choose an option by hovering with pointing finger
+%over the desired option for a designated amount of time (e.g., 3 seconds).
+%
+%The workflow can be as follows:
+%\begin{item-c}
+%\item If the \texttt{User} selects the \texttt{Image filter} option, the
+%  \texttt{Image filtering} view is shown, presenting the options to select
+%  filters (which can be scrolled through palm raising/lowering), to cancel or
+%  accept the image filter. If a filter is selected \texttt{filter1\_pressed}, it
+%  is applied, and if accepted it will return to \texttt{Interaction mode},
+%  keeping the filter on.
+%\item If the \texttt{User} selects the \texttt{Take Pic} option, \texttt{Picture
+%  mode} is started with a timer to allow the \texttt{User} to get ready before
+%actually taking the picture. The \texttt{User} can \texttt{Cancel} --- returning
+%to main menu --- or \texttt{Share} --- starting \texttt{Sharing mode}.
+%\item If the \texttt{User} selects the \texttt{Create GIF} option, \texttt{GIF
+%    mode (setup)} is started with a timer to allow the \texttt{User} to get
+%  ready before actually creating the \gls{gif}. After the \texttt{setup\_timer}
+%  is elapsed, the \texttt{GIF mode (operation)} starts, displaying a dial with
+%  the \gls{gif} duration until being complete. When the \texttt{gif\_timer}
+%  elapses, the \gls{gif} is created, enabling the \texttt{User} to
+%  \texttt{Cancel} --- returning to main menu --- or to \texttt{Share} ---
+%  starting \texttt{Sharing mode}.
+%\item Lastly, in the \texttt{Sharing mode}, the \texttt{User} can
+%  \texttt{Cancel} --- returning to main menu --- or select the
+%  social media network. After selecting the social media, the \texttt{User} can
+%  edit the post by entering its customized message and, if \texttt{Share} is
+%  pressed, a message box will appear displaying the status of the post sharing
+%  --- \texttt{Success} or \texttt{Error}.
+%\end{item-c}
+%
 
 \subsubsection{Events}
 \label{sec:events-2}
