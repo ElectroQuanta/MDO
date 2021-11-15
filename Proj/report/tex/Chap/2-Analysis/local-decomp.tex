@@ -276,6 +276,29 @@ usually pictured as the visual representation of an use case. The main sequence
 diagrams are illustrated next.
 
 \paragraph{\emph{Normal mode}}
+Fig.~\ref{fig:seq-local-normal-mode} depicts the \texttt{Normal
+  mode}'s sequence diagram. The blue area delimits the \texttt{\gls{mdo-l}}
+system, comprising the \texttt{Local System Back-End}.
+%
+\begin{figure}[htb!]
+  \centering
+  \includegraphics[width=0.5\columnwidth]{./img/seq-local-normal-mode.png}
+  \caption{Sequence diagram: local system --- Normal mode}%
+\label{fig:seq-local-normal-mode}
+\end{figure}
+
+When its time to play the advertisements, the \texttt{Normal} mode is activated,
+retrieving video, audio and fragrance from the internal \gls{db}. Then two
+parallel activities are executed:
+\begin{item-c}
+\item \emph{Video playback}: while its time to play the advertisements, a video
+  is played from the video list. When it finishes, it moves the next video in
+  the playback queue.
+\item \emph{Fragrance diffusion}: while there are timestamps for fragrance
+  diffusion, diffuse fragrance between start and stop times and sleep on the
+  other occasions.
+\end{item-c}
+%
 \paragraph{\emph{Interaction mode}}
 Fig.~\ref{fig:seq-local-interaction-mode} depicts the \texttt{Interaction
   mode}'s sequence diagram. The blue area delimits the \texttt{\gls{mdo-l}}
@@ -303,10 +326,10 @@ the window providing visual feedback to the \texttt{User}.
 \label{fig:seq-local-interaction-mode}
 \end{figure}
 %
+\paragraph{\emph{Multimedia mode}}
+\paragraph{\emph{Sharing mode}}
 
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "../../../dissertation"
 %%% End:
-\paragraph{\emph{Multimedia mode}}
-\paragraph{\emph{Sharing mode}}

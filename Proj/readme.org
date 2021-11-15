@@ -796,66 +796,54 @@ deactivate A
 
   ' ---------- Declaring participants
   ' participant Participant as Foo
-  actor User
+  ''actor User
   box "MDO-L" #LightBlue
-  boundary "Gesture Recognition Engine" as GRE
-  control "UI Engine" as UIE
-  actor "Local System \nBack-End" as LS
+  ''boundary "Gesture Recognition Engine" as GRE
+  ''control "UI Engine" as UIE
+  actor "Local System Back-End" as LS
   endbox
   ' entity      Entity      as Foo4
   ' database    Database    as Foo5
   ' collections Collections as Foo6
   ' queue       Queue       as Foo7
-  ' Foo -> Foo1 : To actor 
-  ' Foo -> Foo2 : To boundary
-  ' Foo -> Foo3 : To control
-  ' Foo -> Foo4 : To entity
-  ' Foo -> Foo5 : To database
-  ' Foo -> Foo6 : To collections
-  ' Foo -> Foo7: To queue
 
   ' async message
-== Activate camera feed ==
-  User ->> LS: User in range
-  activate User
   activate LS
-  LS -> LS: activate camera
-
+  LS -> LS: Ads time
+  LS -> LS: get video, audio and fragrance from internal DB
   par
-    loop while (user in range && ! user_timeout)
-	LS -> UIE: grab frame from camera and display it on window
-	activate UIE
-	UIE -> User: visual feedback
+  == Video playback ==
+    loop while != ads_time_stop
+	LS -> LS: get next video from videos playback queue
+	LS -> LS: play video
     end
-    == Identify User gesture ==
-    User ->> GRE: gesture
-    activate GRE
-    GRE -> LS: gesture recognized
-    deactivate GRE
-    LS -> LS: process gesture callback
-    == Multimedia mode ==
-    alt Select Image Filter
-    LS -> UIE: show Image Filter view
-    UIE -> User: visual feedback
-    ref over User, GRE, UIE, LS: Image Filter
-' -------
-    else Take Pic
-    LS -> UIE: show Pic view
-    UIE -> User: visual feedback
-    ref over User, GRE, UIE, LS: Picture mode
-' -------
-    else Create GIF
-    LS -> UIE: show GIF view
-    UIE -> User: visual feedback
-    ref over User, GRE, UIE, LS: GIF mode
-    '' LS -> LS: process gesture \ncallback
-    '' LS -> UIE: provide output
-    '' UIE -> User: visual feedback
-    ' end alt
-    end 
+    == Fragrance diffusion ==
+    loop while(1)
+	LS -> LS: diffuse := (get next start and stop times)
+	alt if(! diffuse)
+	  break
+	  end
+	else diffuse
+	  loop while(1)
+	    alt if(start_time)
+	      LS -> LS: start diffusion
+	    else if(stop_time)
+	      LS -> LS: stop diffusion
+	    else idle
+	      LS -> LS: sleep
+	      'end alt
+	    end
+	    ' end while(1)
+	  end
+	  'end diffuse'
+	end
+    end
 ' end par
   end
 		
 
   @enduml
 #+END_SRC
+
+#+RESULTS:
+[[file:diags/plantuml/seq-diag/output/seq-local-normal-mode.png]]
