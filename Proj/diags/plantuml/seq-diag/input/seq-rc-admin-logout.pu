@@ -16,7 +16,7 @@
   actor "Remote Client \nBack-End" as RC
   endbox
   box "MDO-RS" #f9db8f
-  'actor "Remote Server" as RS
+  actor "Remote Server" as RS
   'database "Brands DB" as BrandDB
   endbox
   ' entity      Entity      as Foo4
@@ -34,13 +34,14 @@
   ' deactivate UI
 ''
   == Admin ==
-  activate RC
   alt Statistics
-   ref over User, UI, UIE, RC: Statistics
+   ref over User, UI, UIE, RC, RS: Statistics
   else  Users
-   ref over User, UI, UIE, RC: Users
+   ref over User, UI, UIE, RC, RS: Users
   else Ads To Activate
-   ref over User, UI, UIE, RC: Ads To Activate 
+   ref over User, UI, UIE, RC, RS: Ads To Activate 
+  else Test Operation
+   ref over User, UI, UIE, RC, RS: Test Operation 
   else Logout
    activate User
    User ->> UI : Press Logout
@@ -51,8 +52,16 @@
    activate UIE
    UIE -> RC : logout()
    deactivate UIE
-   RC -> RC : logout()
+   activate RC
+   RC ->> RS : logout()
+   deactivate RC
+   activate RS
+   RS -> RS : logout()
+   RS ->> RC : connection closed
+   deactivate RS
+   activate RC
    RC -> UIE : get_login()
+   deactivate RC
    activate UIE
    UIE -> UI : login_view
    deactivate UIE

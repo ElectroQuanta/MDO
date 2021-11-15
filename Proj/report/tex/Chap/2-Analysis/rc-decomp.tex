@@ -71,9 +71,8 @@ synchronism and linking it to the system’s intended response.
 %
 \begingroup
 \renewcommand{\arraystretch}{0.7} % Default value: 1
-% Please add the following required packages to your document preamble:
-% \usepackage{booktabs}
-% \usepackage{graphicx}
+%
+%
 \begin{table}[]
 \centering
 \caption{Events: remote client}
@@ -112,6 +111,10 @@ Rented &
 Rent &
   \begin{tabular}[c]{@{}l@{}}Send to the Remote Server all the \\ information of rent from the brand, \\ all the videos and the filter\end{tabular} &
   User (Brand) &
+  Asynchronous \\ \midrule
+Test Operation &
+  \begin{tabular}[c]{@{}l@{}}The System dispatches the command\\ kine provided by the Remote Server\end{tabular} &
+  User (Admin) &
   Asynchronous \\ \midrule
 Forgot Password &
   \begin{tabular}[c]{@{}l@{}}Send e-mail to the user that has \\ forgotten his password\end{tabular} &
@@ -197,7 +200,7 @@ Upon successful initialization the
 A user can try to register pressing the 'Register' button which leads to \texttt{Register} state, if it registers well, it come back again to \texttt{Login} state. 
 If the 'Login' button is pressed, the system goes to \texttt{Validation} state, where it validates wether the user is an admin or a brand.
 
-If it's \texttt{Admin Mode} state, the user has several states where it can see statistics (\texttt{Statistics}), manage all users (\texttt{Users}) and manage all ads to actvivate (\texttt{Ads To Activate}).
+If it's \texttt{Admin Mode} state, the user has several states where it can see statistics (\texttt{Statistics}), manage all users (\texttt{Users}), manage all ads to actvivate (\texttt{Ads To Activate}) and test operations on the machines (\texttt{Test Operation}).
 If it's \texttt{Brand Mode} state, the user has several states where it can see all his ads (\texttt{Rented}), see notifications and messages (\texttt{Main Menu}) and rent new ads (\texttt{To Rent}). 
 Each two of the states end pressing the 'Log Out' button, which redirects to \texttt{Login}  state.
 
@@ -245,6 +248,13 @@ It is usually pictured as the visual representation of an use case. The main seq
     \includegraphics[width=1\columnwidth]{./img/seq-rc-admin-ads-to-act.png}
   \caption{Sequence Diagram: remote client - admin ads to activate}%
 \label{fig:seq-rc-admin-ads-to-act}
+\end{figure}
+
+\begin{figure}[htb!]
+\centering
+    \includegraphics[width=1\columnwidth]{./img/seq-rc-admin-test-op.png}
+  \caption{Sequence Diagram: remote client - admin test operation}%
+\label{fig:seq-rc-admin-test-op}
 \end{figure}
 
 \begin{figure}[htb!]

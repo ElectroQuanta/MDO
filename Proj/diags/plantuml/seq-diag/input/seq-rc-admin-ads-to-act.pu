@@ -34,7 +34,6 @@
   ' deactivate UI
 ''
   == Admin ==
-  activate RC
   alt Statistics
    ref over User, UI, UIE, RC, RS, BrandDB: Statistics
   else  Users
@@ -49,7 +48,9 @@
    activate UIE
    UIE -> RC : get_ads()
    deactivate UIE
+   activate RC
    RC ->> RS : get_ads()
+   deactivate RC
    activate RS
    RS -> BrandDB : get_ads()
    deactivate RS
@@ -59,7 +60,9 @@
    activate RS
    RS ->> RC : Send ads to activate info
    deactivate RS
+   activate RC
    RC -> UIE : Ads To Activate info
+   deactivate RC
    activate UIE
    UIE -> UI : Ads To Activate view
    deactivate UIE
@@ -72,15 +75,35 @@
    activate UI
    UI -> UIE : (accept/deny)_btn_pressed
    deactivate UI
-   activate UIE
-   UIE -> RC : accept(ad)/deny(ad)
-   deactivate UIE
-   RC ->> RS : accept(ad)/deny(ad)
-   activate RS
-   RS -> BrandDB : modify(ad)
-   deactivate RS
-   activate BrandDB
-   BrandDB -> BrandDB : Update
+   alt Accept Ad
+     activate UIE
+     UIE -> RC : accept(ad)
+     deactivate UIE
+     activate RC
+     RC ->> RS : accept(ad)
+     deactivate RC
+     activate RS
+     RS -> BrandDB : accept(ad)
+     deactivate RS
+     activate BrandDB
+     BrandDB -> BrandDB : Update
+     deactivate BrandDB
+   else Deny Ad
+     activate UIE
+     UIE -> RC : deny(ad, message)
+     deactivate UIE
+     activate RC
+     RC ->> RS : deny(ad, message)
+     deactivate RC
+     activate RS
+     RS -> BrandDB : deny(ad, message)
+     deactivate RS
+     activate BrandDB
+     BrandDB -> BrandDB : Update
+     deactivate BrandDB
+   end
+  else Test Operation
+    ref over User, UI, UIE, RC, RS, BrandDB: Test Operation 
   else Logout
     ref over User, UI, UIE, RC, RS, BrandDB: Logout
    'activate User
@@ -93,7 +116,7 @@
    'UIE -> RC : logout()
    'deactivate UIE
    'RC -> RC : logout()
- end
+  end
 ''
   deactivate User
   activate UI

@@ -17,7 +17,7 @@
   endbox
   box "MDO-RS" #f9db8f
   actor "Remote Server" as RS
-  database "Stations DB" as StationDB
+  'database "Brands DB" as BrandDB
   endbox
   ' entity      Entity      as Foo4
   ' database    Database    as Foo5
@@ -34,62 +34,41 @@
   ' deactivate UI
 ''
   == Admin ==
-  activate StationDB
-  StationDB -> RS : Stations Data
-  deactivate StationDB
-  activate RS
-  RS ->> RC : Sends data
-  deactivate RS
-  activate RC
-  RC -> UIE : Stations Info
-  deactivate RC
-  activate UIE
-  UIE -> UI : stations_view
-  deactivate UIE
-  activate UI
-  UI -> User : show stations view
-  deactivate UI
-  alt statistics
+  alt Statistics
+   ref over User, UI, UIE, RC, RS: Statistics
+  else  Users
+   ref over User, UI, UIE, RC, RS: Users
+  else Ads To Activate
+   ref over User, UI, UIE, RC, RS: Ads To Activate 
+  else Test Operation
    activate User
-   User ->> UI : Press statistics
+   User ->> UI : Press Test Operation
    deactivate User
    activate UI
-   UI -> UIE : statistics_btn_pressed
+   UI -> UIE : test_op_btn_pressed
    deactivate UI
    activate UIE
-   UIE -> RC : get_statistics(station)
+   UIE -> RC : get_test_op(station)
    deactivate UIE
    activate RC
-   RC ->> RS : get_statistics(station)
+   RC ->> RS : get_test_op(station)
    deactivate RC
    activate RS
-   RS -> StationDB : get_statistics(station)
-   deactivate RS
-   activate StationDB
-   StationDB -> RS : Send station statistics
-   deactivate StationDB
-   activate RS
-   RS ->> RC : Send station statistics
+   RS ->> RC : Send test operation usage
    deactivate RS
    activate RC
-   RC -> UIE : Station Statistics
+   RC -> UIE : test operation terminal
    deactivate RC
    activate UIE
-   UIE -> UI : statistics view
+   UIE -> UI : test operation terminal view
    deactivate UIE
    activate UI
-   UI -> User : show statistics View
+   UI -> User : show test operation\n terminal view
    deactivate UI
    activate User
-  else Users
-   ref over User, UI, UIE, RC, RS, StationDB : Users
- else Ads To Activate
-   ref over User, UI, UIE, RC, RS, StationDB : Ads To Activate
- else Test Operation
-  ref over User, UI, UIE, RC, RS, StationDB : Test Operation
- else Logout
-ref over User, UI, UIE, RC, RS, StationDB : Logout 
-  end
+  else Logout
+   ref over User, UI, UIE, RC, RS: Logout 
+ end
 ''
   deactivate User
   activate UI
