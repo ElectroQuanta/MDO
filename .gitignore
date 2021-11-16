@@ -27,6 +27,11 @@
 *.fdb_latexmk
 *.aux
 
+#ignore vim temp files
+*.swp
+*.save
+*.swo
+
 # ignore the designated subfolders
 auto/
 biblio/

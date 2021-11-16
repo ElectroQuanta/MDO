@@ -1,0 +1,86 @@
+  @startuml
+  ' ---------- SETUP ----------------
+  ' strict uml style and hide footboxes
+  skinparam style strictuml
+  hide footbox
+  ' for anchors and duration this may be required (uncomment)
+  ' !pragma teoz true
+
+  ' ---------- Declaring participants
+  ' participant Participant as Foo
+  actor User
+  box "MDO-L" #LightBlue
+  boundary "Gesture Recognition Engine" as GRE
+  control "UI Engine" as UIE
+  actor "Local System Back-End" as LS
+  endbox
+  actor "Image Filtering APIs" as IFA
+  ' entity      Entity      as Foo4
+  ' database    Database    as Foo5
+  ' collections Collections as Foo6
+  ' queue       Queue       as Foo7
+
+  ' async message
+''== Image filter ==
+activate User
+User ->> GRE: select filter gesture
+deactivate User
+activate GRE
+GRE -> UIE: select filter gesture recognized
+deactivate GRE
+activate UIE
+UIE -> LS: select_filt
+deactivate UIE
+activate LS
+LS -> LS: apply_facial_recognition
+LS -> LS: sel_filt(filt)
+group Apply filter
+    loop while (! filter_cancel && ! filter_accept)
+    ''ref over LS, IFA, UIE, User: apply filter
+	LS -> IFA: filter_selected
+	deactivate LS
+	activate IFA
+	IFA ->> LS: apply filter
+	deactivate IFA
+	activate LS
+	LS -> UIE: filter applied
+	deactivate LS
+	activate UIE
+	UIE -> User: show filter applied
+	deactivate UIE
+	activate User
+    end
+end
+alt filter_accept
+    activate User
+    User ->> GRE: accept filter gesture
+    deactivate User
+    activate GRE
+    GRE -> UIE: accept filter gesture recognized
+    deactivate GRE
+    activate UIE
+    UIE -> LS: filter_accepted
+    deactivate UIE
+    activate LS
+    LS -> LS: apply filter
+    deactivate LS
+    par
+    ref over User, IFA: Interaction mode
+    ref over User, IFA: Apply filter
+    end
+else filter_cancel
+    activate User
+    User ->> GRE: cancel filter gesture
+    deactivate User
+    activate GRE
+    GRE -> UIE: cancel filter gesture recognized
+    deactivate GRE
+    activate UIE
+    UIE -> LS: filter_canceled
+    deactivate UIE
+    activate LS
+    LS -> LS: cancel filter
+    deactivate LS
+    ref over User, LS: Interaction mode
+end
+  @enduml

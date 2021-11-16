@@ -115,7 +115,98 @@ Test Operation Callback & Provide command dispatch to original RC               
 
 \subsubsection{Dynamic operation}
 \label{sec:dyn-oper-2}
-State machine diagram
+Fig.~\ref{fig:state-mach-rs} depicts the state machine diagram for the
+\texttt{Local System}, illustrating its dynamic behavior. There are two main
+states:
+\begin{item-c}
+\item \emph{\texttt{Initialization}}: the \texttt{Remote Server} is initialized. The settings are
+  and \gls{db}s are loaded and if invalid they are restored. The WiFi
+  communication is setup, signaling the communication status and if valid, an
+  \gls{ip} address is returned. Lastly, the \gls{rdbms} is configured and started: if any error
+  occurs the device goes into the \texttt{Critical Error} state, dumping the
+  error to a log file and waiting for reset; otherwise, the initialization is
+  complete.
+\item \emph{\texttt{Execution}}: after the initialization is successful, the
+  system goes into the \texttt{Execution} macro composite state with several
+  concurrent activities, modeled as composite states too. However, it should be
+  noted that there is only one actual state for the device, although at the
+  perceivable time scale they appear to happen simultaneously. These activities
+  are communication management (\texttt{Comm Manager}), \gls{db} management
+  (\texttt{DB manager}), and request handling (\texttt{Request Handler}), and
+  are executed forever until system's power off. They are detailed next.
+\end{item-c}
+%
+\begin{figure}[htb!]
+\centering
+    \includegraphics[width=0.7\columnwidth]{./img/state-mach-rs.png}
+  \caption{State machine diagram: Remote server}%
+\label{fig:state-mach-rs}
+\end{figure}
+%
+%
+\paragraph{\emph{Communication Manager}}
+Fig.~\ref{fig:state-mach-rs-comm} depicts the state machine diagram for the
+\texttt{Comm Manager} component. Upon successful initialization the
+\texttt{Comm Manager} goes to \texttt{Idle}, listening for incoming
+connections. When a remote node tries to connects, it makes a connection request
+which can be accepted or denied. If the connection is accepted and the node
+authenticates successfully the \texttt{Comm Manager} is ready for bidirectional
+communication. When a message is received from the remote node, it is written to
+\texttt{TX msg queue} and the \texttt{Request Handler} is notified. When a message
+must be sent to the remote, it is read from the \texttt{TX msg queue} and sent
+to the recipient. If the connection goes down, it is restarted, going into
+\texttt{Idle} state again.
+%
+\begin{figure}[htb!]
+\centering
+    \includegraphics[width=0.6\columnwidth]{./img/state-mach-rs-comm.png}
+  \caption{State machine diagram: Remote Server --- Comm Manager}%
+\label{fig:state-mach-rs-comm}
+\end{figure}
+%
+%
+\paragraph{\emph{Database Manager}}
+Fig.~\ref{fig:state-mach-rs-db} depicts the state machine diagram for the
+\texttt{DB Manager} component. Upon successful initialization the
+\texttt{DB Manager} goes to \texttt{Idle}, waiting for incoming \gls{db}
+requests.
+%
+\begin{figure}[htb!]
+\centering
+    \includegraphics[width=0.7\columnwidth]{./img/state-mach-rs-db.png}
+  \caption{State machine diagram: Remote Server --- \gls{db} Manager}%
+\label{fig:state-mach-rs-db}
+\end{figure}
+%
+
+When a request arrives, it is parsed, checking its validity. If the request is a
+\gls{db} query, a transaction is read from the respective \gls{db} to the
+\texttt{RX transaction queue} and the \texttt{Supervisor} is notified that there
+is a transaction to read. Otherwise, if the request is a \gls{db} update
+the transaction is written from the \texttt{TX transaction queue} to the
+\gls{db} and the \texttt{Supervisor} is notified that the \gls{db} was updated.
+
+Alternatively, the \gls{rdbms} can be triggered to update a station
+(\texttt{update\_station} event), retrieving the station and operation data to
+update. A data frame is composed and a server request is created, signaling it
+to the \texttt{Request Handler} to process it.
+%
+\paragraph{\emph{Request Handler}}
+Fig.~\ref{fig:state-mach-rs-req} depicts the state machine diagram for the
+\texttt{Request Handler} component, which handles incoming requests from the
+  \texttt{Remote Client}, \texttt{Local System}, or internally (to update stations). When a request arrives, it is parsed, and, if valid,
+  the appropriate callback is triggered, processing the request and returning
+  its output.
+%  
+\begin{figure}[htb!]
+  \centering
+  \includegraphics[width=0.55\textwidth]{img/state-mach-rs-req.png}%
+  \caption{State machine diagram: Remote Server --- Request Handler}%
+  \label{fig:state-mach-rs-req}
+\end{figure}
+  %
+%
+%
 
 \subsubsection{Flow of events}
 \label{sec:flow-events-2}
