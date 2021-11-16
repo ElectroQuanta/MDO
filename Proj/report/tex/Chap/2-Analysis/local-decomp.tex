@@ -379,10 +379,43 @@ with the filter simultaneously on (\texttt{Apply filter}). Otherwise, it the
   \caption{Sequence diagram: local system --- Multimedia mode (create \gls{gif})}%
 \label{fig:seq-local-multimedia-mode-create-gif}
 \end{figure}
-
-
+%
 \paragraph{\emph{Sharing mode}}
+Fig.~\ref{fig:seq-local-sharing-mode} depicts the \texttt{Sharing
+  mode}'s sequence diagram.
+%The blue area delimits the \texttt{\gls{mdo-l}}
+%system, comprising the \texttt{Gesture Recognition Engine}, the \texttt{UI
+%  engine} and the \texttt{Local System Back-End}.
+%
+\begin{figure}[htb!]
+  \centering
+  \includegraphics[width=0.9\columnwidth]{./img/seq-local-sharing-mode.png}
+  \caption{Sequence diagram: local system --- Sharing mode}%
+\label{fig:seq-local-sharing-mode}
+\end{figure}
 
+The \texttt{User} starts by selecting the social media platform (with a
+gesture), which upon being recognized is dispatched to the \texttt{Local System
+  back-end} identifying the social media selected. Then, the social media
+parameters are configured and the \texttt{attachment} is set to the last
+multimedia file. After social media configuration, the \texttt{Post Edit} view
+is shown to the \texttt{User}.
+
+In the \texttt{Post editing} mode, while the \texttt{User} does not decide to
+share or cancel the post, the selected character from the virtual keyboard is
+visually feed back to the \texttt{User}.
+
+When the \texttt{User} decides to share or cancel the post, it will trigger
+\texttt{share\_post} or \texttt{cancel\_post} callbacks, with the latter going
+into \texttt{Interaction mode}.
+
+Upon triggering the \texttt{share\_post} callback, \texttt{Local System
+  back-end} tries to perform the login in the required social media platform,
+requesting it to one of its servers. If the login succeeds, the post is sent to
+\texttt{Social Media servers}, which will return its status. Upon completion a
+dialog box will be presented to the \texttt{User}, informing it of share post
+status: success or failure (in case the login or the post transmission fails).
+%
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "../../../dissertation"

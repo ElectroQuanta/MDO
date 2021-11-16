@@ -561,6 +561,9 @@ deactivate A
 #+RESULTS:
 [[file:diags/plantuml/seq-diag/examples/all-together.png]]
 **** Mine (to generate report)                           :noexport:Important:
+     :PROPERTIES:
+     :ID:       6e44c5fa-06a8-40bb-bef2-b1fbca2964fb
+     :END:
 
 *Interaction mode*
 #+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/output/seq-local-interaction-mode.png
@@ -1044,3 +1047,136 @@ deactivate LS
 
 #+RESULTS:
 [[file:diags/plantuml/seq-diag/output/seq-local-multimedia-mode-create-gif.png]]
+
+*Sharing mode*
+#+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/output/seq-local-sharing-mode.png
+  @startuml
+  ' ---------- SETUP ----------------
+  ' strict uml style and hide footboxes
+  skinparam style strictuml
+  hide footbox
+  ' for anchors and duration this may be required (uncomment)
+  ' !pragma teoz true
+
+  ' ---------- Declaring participants
+  ' participant Participant as Foo
+  actor User
+  box "MDO-L" #LightBlue
+  boundary "Gesture Recognition Engine" as GRE
+  control "UI Engine" as UIE
+  actor "Local System Back-End" as LS
+  endbox
+  actor "Social Media Servers" as SMS
+''  actor "Image Filtering APIs" as IFA
+  ' entity      Entity      as Foo4
+  ' database    Database    as Foo5
+  ' collections Collections as Foo6
+  ' queue       Queue       as Foo7
+
+  ' async message
+''== Sharing mode ==
+== Social media selection ==
+activate User
+User ->> GRE: select SM gesture
+deactivate User
+activate GRE
+GRE -> UIE: select SM gesture recognized
+deactivate GRE
+activate UIE
+UIE -> LS: sm_selected(sm)
+deactivate UIE
+activate LS
+LS -> LS: configure SM platform
+LS -> LS: attachment = last multimedia file
+LS -> UIE: post_edit
+deactivate LS
+activate UIE
+UIE -> User: show Post Edit view
+deactivate UIE
+activate User
+''deactivate User
+== Post editing ==
+loop while ( !share_post && !share_cancel)
+    ''activate User
+    User -> GRE: character selected gesture
+    deactivate User
+    activate GRE
+    GRE -> UIE: char selected gesture recognized
+    deactivate GRE
+    activate UIE
+    UIE -> UIE: get_input(char)
+    UIE -> User: show feedback
+    deactivate UIE
+    activate User
+end
+== Share decision ==
+alt share_post
+    activate User
+    User ->> GRE: share post gesture
+    deactivate User
+    activate GRE
+    GRE -> UIE: share post gesture recognized
+    deactivate GRE
+    activate UIE
+    UIE -> LS: post_share(message)
+    deactivate UIE
+    ref over User, LS: share_post
+else share_cancel
+    activate User
+    User ->> GRE: cancel post gesture
+    deactivate User
+    activate GRE
+    GRE -> UIE: cancel post gesture recognized
+    deactivate GRE
+    activate UIE
+    UIE -> LS: cancel_share
+    deactivate UIE
+    ref over User, LS: interaction mode
+    ''activate LS
+end
+''deactivate User
+== Share Post ==
+group share_post
+''activate LS
+LS -> LS ++: share_post(SM, message, attachment)
+LS ->> SMS: login
+deactivate LS
+activate SMS
+return login_status
+deactivate SMS
+activate LS
+alt if (login_status == fail)
+    ref over LS, SMS: share_fail
+    else success
+    LS ->> SMS: post_status = send(message, attachment)
+    deactivate LS
+    activate SMS
+    return post_status
+    activate LS
+    alt if(post_status == fail)
+	ref over LS, SMS: share_fail
+	deactivate LS
+    end
+end
+alt share_success
+    activate LS
+    LS -> UIE: share_success
+    deactivate LS
+    activate UIE
+    UIE -> User: show Share Success view
+    deactivate UIE
+else share_fail
+    activate LS
+    LS -> UIE: share_fail
+    deactivate LS
+    activate UIE
+    UIE -> User: show Share Failure view
+    deactivate UIE
+    activate User
+end
+end
+  @enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:diags/plantuml/seq-diag/output/seq-local-sharing-mode.png]]
