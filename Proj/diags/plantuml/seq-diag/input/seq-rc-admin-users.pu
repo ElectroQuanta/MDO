@@ -37,6 +37,7 @@
   alt statistics
    ref over User, UI, UIE, RC, RS, UserDB : Statistics 
   else Users
+   activate User
    User ->> UI : Press Users
    deactivate User
    activate UI
@@ -45,7 +46,9 @@
    activate UIE
    UIE -> RC : get_users()
    deactivate UIE
+   activate RC
    RC ->> RS : get_users()
+   deactivate RC
    activate RS
    RS -> UserDB : get_users()
    deactivate RS
@@ -55,7 +58,9 @@
    activate RS
    RS ->> RC : Send users info
    deactivate RS
+   activate RC
    RC -> UIE : Users info
+   deactivate RC
    activate UIE
    UIE -> UI : users view
    deactivate UIE
@@ -71,44 +76,20 @@
    activate UIE
    UIE -> RC : save(user)
    deactivate UIE
+   activate RC
    RC ->> RS : save(user)
+   deactivate RC
    activate RS
    RS -> UserDB : save(user)
    deactivate RS
    activate UserDB
-   UserDB -> UserDB : Update DB
-   deactivate UserDB 
+   UserDB -> UserDB : Update DB 
   else Ads To Activate
    ref over User, UI, UIE, RC, RS, UserDB : Ads To Activate
-   'User ->> UI : Press Ads To Activate
-   'deactivate User
-   'activate UI
-   'UI -> UIE : ads_to_act_btn_pressed
-   'deactivate UI
-   'activate UIE
-   'UIE -> RC : get_ads()
-   'deactivate UIE
-   'RC ->> RS : get_ads()
-   'activate RS
-   'RS -> UserDB : get_ads()
-   'deactivate RS
-   'activate UserDB
-   'UserDB -> RS : Send ads to activate info
-   'deactivate UserDB
-   'activate RS
-   'RS ->> RC : Send ads to activate info
-   'deactivate RS
-   'RC -> UIE : Ads To Activate info
-   'activate UIE
-   'UIE -> UI : Ads To Activate view
-   'deactivate UIE
-   'activate UI
-   'UI -> User : show Ads To Activate view
-   'deactivate UI
-   'activate User
-   'deactivate User  
+  else Test Operation
+   ref over User, UI, UIE, RC, RS, UserDB : Test Operation 
   else Logout
-ref over User, UI, UIE, RC, RS, UserDB : Logout 
+   ref over User, UI, UIE, RC, RS, UserDB : Logout 
   end
 ''
   deactivate User

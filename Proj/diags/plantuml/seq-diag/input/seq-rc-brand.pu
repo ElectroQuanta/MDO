@@ -34,22 +34,6 @@
   ' deactivate UI
 ''
   == Brand  ==
-  activate RC
-  'activate UserDB
-  'UserDB -> RS : Stations Data
-  'deactivate UserDB
-  'activate RS
-  'RS ->> RC : Sends data
-  'deactivate RS
-  'activate RC
-  'RC -> UIE : Stations Info
-  'activate UIE
-  'UIE -> UI : stations_view
-  'deactivate UIE
-  'activate UI
-  'UI -> User : show stations view
-  'deactivate UI
-  'activate User
   alt Rented
    activate User
    User ->> UI : Press Rented
@@ -60,7 +44,9 @@
    activate UIE
    UIE -> RC : rented_ads(user)
    deactivate UIE
+   activate RC
    RC ->> RS : rented_ads(user)
+   deactivate RC
    activate RS
    RS -> UserDB : rented_ads(user)
    deactivate RS
@@ -70,7 +56,9 @@
    activate RS
    RS ->> RC : Send rented ads info
    deactivate RS
+   activate RC
    RC -> UIE : Rented Ads info
+   deactivate RC
    activate UIE
    UIE -> UI : Rented Ads view
    deactivate UIE
@@ -87,7 +75,9 @@
    activate UIE
    UIE -> RC : get_to_rent()
    deactivate UIE
+   activate RC
    RC ->> RS : get__to_rent()
+   deactivate RC
    activate RS
    RS -> UserDB : get_to_rent()
    deactivate RS
@@ -97,7 +87,9 @@
    activate RS
    RS ->> RC : Send available rents info
    deactivate RS
+   activate RC
    RC -> UIE : Available Rents info
+   deactivate RC
    activate UIE
    UIE -> UI : Available Rents view
    deactivate UIE
@@ -113,7 +105,9 @@
    activate UIE
    UIE -> RC : rent(ad)
    deactivate UIE
+   activate RC
    RC ->> RS : rent(ad)
+   deactivate RC
    activate RS
    RS -> UserDB : add(ad)
    deactivate RS
@@ -130,8 +124,15 @@
    activate UIE
    UIE -> RC : logout()
    deactivate UIE
-   RC -> RC : logout()
+   RC ->> RS : logout()
+   deactivate RC
+   activate RS
+   RS -> RS : logout()
+   RS ->> RC : Connection closed
+   deactivate RS
+   activate RC
    RC -> UIE : get_login()
+   deactivate RC
    activate UIE
    UIE -> UI : login_view
    deactivate UIE
