@@ -1,0 +1,78 @@
+  @startuml
+  ' ---------- SETUP ----------------
+  ' strict uml style and hide footboxes
+  skinparam style strictuml
+  hide footbox
+  ' for anchors and duration this may be required (uncomment)
+  ' !pragma teoz true
+
+  ' ---------- Declaring participants
+  ' participant Participant as Foo
+  
+  'actor Admin
+  box "MDO-RC" #LightBlue
+  'boundary "UI" as UI
+  'control "UI Engine" as UIE
+  actor "Remote Client \nBack-End" as RC
+  endbox
+  box "MDO-RS" #f9db8f
+  actor "Remote Server" as RS
+  'database "Databases" as DB
+  endbox
+  'actor "Local System" as LS
+  ' entity      Entity      as Foo4
+  ' database    Database    as Foo5
+  ' collections Collections as Foo6
+  ' queue       Queue       as Foo7
+
+  ' async message
+  == Application start ==
+  activate RC
+  RC ->> RS : connection request
+  deactivate RC
+  activate RS
+  alt Accept
+   RS ->> RC : connection accepted:\nshow command line
+   deactivate RS
+   activate RC
+    alt Get Help
+     ref over RC, RS: Help 
+    else User Authentication
+     ref over RC, RS: Authenticate User
+    'else Manage DataBases
+    ' ref over RC, RS: Manage DBs
+    'else Operation Test
+    ' ref over RC, RS: Test Operation
+    else Logout from Server
+     ref over RC, RS: Logout
+    end
+  else Refuse
+   RS ->> RC : Connection denied
+   deactivate RS
+  end
+  '== Login ==
+   
+' =========================== ZE das couves ==============================='
+'  LS -> UIE: show Image Filter view
+'  UIE -> User: visual feedback
+'  ref over User, GRE, UIE, LS: Image Filter
+' -------
+'    else Take Pic
+'    LS -> UIE: show Pic view
+'    UIE -> User: visual feedback
+'    ref over User, GRE, UIE, LS: Picture mode
+' -------
+'    else Create GIF
+'    LS -> UIE: show GIF view
+'    UIE -> User: visual feedback
+'    ref over User, GRE, UIE, LS: GIF mode
+'    '' LS -> LS: process gesture \ncallback
+'    '' LS -> UIE: provide output
+'    '' UIE -> User: visual feedback
+'    ' end alt
+'    end 
+' end par
+'  end
+		
+
+  @enduml
