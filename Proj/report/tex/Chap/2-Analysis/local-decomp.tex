@@ -304,6 +304,13 @@ Fig.~\ref{fig:seq-local-interaction-mode} depicts the \texttt{Interaction
   mode}'s sequence diagram. The blue area delimits the \texttt{\gls{mdo-l}}
 system, comprising the \texttt{Gesture Recognition Engine}, the \texttt{UI
   engine} and the \texttt{Local System Back-End}.
+%
+\begin{figure}[htb!]
+  \centering
+  \includegraphics[width=0.8\columnwidth]{./img/seq-local-interaction-mode.png}
+  \caption{Sequence diagram: local system --- Interaction mode}%
+\label{fig:seq-local-interaction-mode}
+\end{figure}
 
 When the \texttt{User} is in range (asynchronous event), the camera is
 activated, and two parallel activities are executed:
@@ -319,14 +326,32 @@ the window providing visual feedback to the \texttt{User}.
   sequence diagram (indicated by the \texttt{ref} keyword).
 \end{item-c}
 %
+\paragraph{\emph{Multimedia mode}}
+Fig.~\ref{fig:seq-local-multimedia-mode-sel-filt} through
+Fig.~\ref{fig:seq-local-multimedia-mode-create-gif} depicts the
+\texttt{Multimedia mode}'s sequence diagrams. 
+%
 \begin{figure}[htb!]
   \centering
-  \includegraphics[width=0.8\columnwidth]{./img/seq-local-interaction-mode.png}
-  \caption{Sequence diagram: local system --- Interaction mode}%
-\label{fig:seq-local-interaction-mode}
+  \includegraphics[width=0.8\columnwidth]{./img/seq-local-multimedia-mode-sel-filt.png}
+  \caption{Sequence diagram: local system --- Multimedia mode (select image filter)}%
+\label{fig:seq-local-multimedia-mode-sel-filt}
 \end{figure}
 %
-\paragraph{\emph{Multimedia mode}}
+\begin{figure}[htb!]
+  \centering
+  \includegraphics[width=0.55\columnwidth]{./img/seq-local-multimedia-mode-take-pic.png}
+  \caption{Sequence diagram: local system --- Multimedia mode (take picture)}%
+\label{fig:seq-local-multimedia-mode-take-pic}
+\end{figure}
+%
+\begin{figure}[htb!]
+  \centering
+  \includegraphics[width=0.55\columnwidth]{./img/seq-local-multimedia-mode-create-gif.png}
+  \caption{Sequence diagram: local system --- Multimedia mode (create \gls{gif})}%
+\label{fig:seq-local-multimedia-mode-create-gif}
+\end{figure}
+
 \paragraph{\emph{Sharing mode}}
 
 %%% Local Variables:

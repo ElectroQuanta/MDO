@@ -593,7 +593,7 @@ deactivate A
   ' Foo -> Foo7: To queue
 
   ' async message
-== Activate camera feed ==
+  == Activate camera feed ==
   User ->> LS: User in range
   activate User
   activate LS
@@ -813,7 +813,7 @@ deactivate A
   LS -> LS: get video, audio and fragrance from internal DB
   par
   == Video playback ==
-    loop while != ads_time_stop
+    loop while (! ads_time_stop)
 	LS -> LS: get next video from videos playback queue
 	LS -> LS: play video
     end
@@ -847,3 +847,197 @@ deactivate A
 
 #+RESULTS:
 [[file:diags/plantuml/seq-diag/output/seq-local-normal-mode.png]]
+
+*Multimedia mode: Select filter*
+#+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/output/seq-local-multimedia-mode-sel-filt.png
+  @startuml
+  ' ---------- SETUP ----------------
+  ' strict uml style and hide footboxes
+  skinparam style strictuml
+  hide footbox
+  ' for anchors and duration this may be required (uncomment)
+  ' !pragma teoz true
+
+  ' ---------- Declaring participants
+  ' participant Participant as Foo
+  actor User
+  box "MDO-L" #LightBlue
+  boundary "Gesture Recognition Engine" as GRE
+  control "UI Engine" as UIE
+  actor "Local System Back-End" as LS
+  endbox
+  actor "Image Filtering APIs" as IFA
+  ' entity      Entity      as Foo4
+  ' database    Database    as Foo5
+  ' collections Collections as Foo6
+  ' queue       Queue       as Foo7
+
+  ' async message
+''== Image filter ==
+activate User
+User ->> GRE: select filter gesture
+deactivate User
+activate GRE
+GRE -> UIE: select filter gesture recognized
+deactivate GRE
+activate UIE
+UIE -> LS: select_filt
+deactivate UIE
+activate LS
+LS -> LS: apply_facial_recognition
+LS -> LS: sel_filt(filt)
+group Apply filter
+    loop while (! filter_cancel && ! filter_accept)
+    ''ref over LS, IFA, UIE, User: apply filter
+	LS -> IFA: filter_selected
+	deactivate LS
+	activate IFA
+	IFA ->> LS: apply filter
+	deactivate IFA
+	activate LS
+	LS -> UIE: filter applied
+	deactivate LS
+	activate UIE
+	UIE -> User: show filter applied
+	deactivate UIE
+	activate User
+    end
+end
+alt filter_accept
+    activate User
+    User ->> GRE: accept filter gesture
+    deactivate User
+    activate GRE
+    GRE -> UIE: accept filter gesture recognized
+    deactivate GRE
+    activate UIE
+    UIE -> LS: filter_accepted
+    deactivate UIE
+    activate LS
+    LS -> LS: apply filter
+    deactivate LS
+    ref over User, IFA: Apply filter
+else filter_cancel
+    activate User
+    User ->> GRE: cancel filter gesture
+    deactivate User
+    activate GRE
+    GRE -> UIE: cancel filter gesture recognized
+    deactivate GRE
+    activate UIE
+    UIE -> LS: filter_canceled
+    deactivate UIE
+    activate LS
+    LS -> LS: cancel filter
+    deactivate LS
+    ref over User, LS: Interaction mode
+end
+  @enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:diags/plantuml/seq-diag/output/seq-local-multimedia-mode-sel-filt.png]]
+
+*Multimedia mode: Take pic*
+#+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/output/seq-local-multimedia-mode-take-pic.png
+  @startuml
+  ' ---------- SETUP ----------------
+  ' strict uml style and hide footboxes
+  skinparam style strictuml
+  hide footbox
+  ' for anchors and duration this may be required (uncomment)
+  ' !pragma teoz true
+
+  ' ---------- Declaring participants
+  ' participant Participant as Foo
+  actor User
+  box "MDO-L" #LightBlue
+  boundary "Gesture Recognition Engine" as GRE
+  control "UI Engine" as UIE
+  actor "Local System Back-End" as LS
+  endbox
+''  actor "Image Filtering APIs" as IFA
+  ' entity      Entity      as Foo4
+  ' database    Database    as Foo5
+  ' collections Collections as Foo6
+  ' queue       Queue       as Foo7
+
+  ' async message
+''== Take Pic ==
+[->> LS: Picture mode initiated
+activate LS
+LS -> LS: Start pic timer
+loop while (! pic_timer_elapsed)
+    LS -> UIE: time_remaining
+    deactivate LS
+    activate UIE
+    UIE -> User: show time remaining
+    deactivate UIE
+    activate User
+end
+deactivate User
+activate LS
+LS -> LS: store picture
+deactivate LS
+  @enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:diags/plantuml/seq-diag/output/seq-local-multimedia-mode-take-pic.png]]
+
+*Multimedia mode: Create GIF*
+#+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/output/seq-local-multimedia-mode-create-gif.png
+  @startuml
+  ' ---------- SETUP ----------------
+  ' strict uml style and hide footboxes
+  skinparam style strictuml
+  hide footbox
+  ' for anchors and duration this may be required (uncomment)
+  ' !pragma teoz true
+
+  ' ---------- Declaring participants
+  ' participant Participant as Foo
+  actor User
+  box "MDO-L" #LightBlue
+  boundary "Gesture Recognition Engine" as GRE
+  control "UI Engine" as UIE
+  actor "Local System Back-End" as LS
+  endbox
+''  actor "Image Filtering APIs" as IFA
+  ' entity      Entity      as Foo4
+  ' database    Database    as Foo5
+  ' collections Collections as Foo6
+  ' queue       Queue       as Foo7
+
+  ' async message
+''== Create GIF ==
+[->> LS: GIF mode initiated
+activate LS
+LS -> LS: Start GIF setup timer
+loop while (! gif_setup_timer_elapsed)
+    LS -> UIE: time_remaining
+    deactivate LS
+    activate UIE
+    UIE -> User: show time remaining
+    deactivate UIE
+    activate User
+end
+deactivate User
+LS -> LS: Start GIF operation timer
+loop while (! gif_oper_timer_elapsed)
+    LS -> UIE: time_remaining
+    deactivate LS
+    activate UIE
+    UIE -> User: show time remaining in a dial
+    deactivate UIE
+    activate User
+end
+deactivate User
+activate LS
+LS -> LS: store GIF
+deactivate LS
+  @enduml
+#+END_SRC
+
+#+RESULTS:
+[[file:diags/plantuml/seq-diag/output/seq-local-multimedia-mode-create-gif.png]]
