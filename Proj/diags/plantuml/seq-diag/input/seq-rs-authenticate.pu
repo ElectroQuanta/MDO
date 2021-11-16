@@ -40,14 +40,14 @@
     deactivate UserDB
     activate RS
     RS -> RS : compare passwords
-    alt success
+    alt User Authenticated
      RS ->> RC : Authentication Success
      activate RC
       ref over RC, RS, UserDB: Manage DBs
      alt Admin
       ref over RC, RS, UserDB: Test Operation
      end
-    else fail
+    else User Not Authenticated
      RS ->> RC : Authentication Fail
     end
     deactivate RS
