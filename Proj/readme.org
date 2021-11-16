@@ -916,7 +916,10 @@ alt filter_accept
     activate LS
     LS -> LS: apply filter
     deactivate LS
+    par
+    ref over User, IFA: Interaction mode
     ref over User, IFA: Apply filter
+    end
 else filter_cancel
     activate User
     User ->> GRE: cancel filter gesture

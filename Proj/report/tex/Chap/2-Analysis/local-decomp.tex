@@ -329,7 +329,35 @@ the window providing visual feedback to the \texttt{User}.
 \paragraph{\emph{Multimedia mode}}
 Fig.~\ref{fig:seq-local-multimedia-mode-sel-filt} through
 Fig.~\ref{fig:seq-local-multimedia-mode-create-gif} depicts the
-\texttt{Multimedia mode}'s sequence diagrams. 
+\texttt{Multimedia mode}'s sequence diagrams, namely:
+\begin{item-c}
+\item \emph{\texttt{Select image filter}} (Fig.~\ref{fig:seq-local-multimedia-mode-sel-filt}): after the \texttt{Image
+  filter view} is presented to the \texttt{User}, he/she can make a gesture to
+select the filter, which upon being recognized by the \texttt{Gesture
+  Recognition Engine} it is dispatched by the \texttt{UI Engine} to the
+\texttt{Local System back-end}. Facial recognition is then applied, and while
+the filter is active, a request is made to \texttt{Image Filtering APIs} to
+apply the designated filter, showing it to the \texttt{User} --- \texttt{Apply
+  filter} reference.
+
+If the \texttt{User} accepts the filter, it returns to \texttt{Interaction mode}
+with the filter simultaneously on (\texttt{Apply filter}). Otherwise, it the
+\texttt{User} cancels it, it simply returns to \texttt{Interaction mode}.
+% 
+\item \emph{\texttt{Take picture}}: after \texttt{Picture mode} is initiated,
+  the \texttt{Local System back-end} starts a timer to allow the \texttt{User}
+  to get in position, and while the timer is running, the time remaining is
+  presented to the \texttt{User}. When the timer elapses the picture is stored
+  internally.
+%
+\item \emph{\texttt{Create GIF}}: after \texttt{\gls{gif} mode} is initiated,
+  the \texttt{Local System back-end} starts a timer to allow the \texttt{User}
+  to get in position, and while the timer (\texttt{gif\_setup\_timer}) is running, the time remaining is
+  presented to the \texttt{User}. When the timer elapses the \gls{gif} creation
+  can start, with another timer (\texttt{gif\_oper\_timer}) being started, and while the timer is running
+  the remaining time is shown to \texttt{User} but in a dial form. When this
+  timer elapses the \gls{gif} is stored internally.
+\end{item-c}
 %
 \begin{figure}[htb!]
   \centering
@@ -351,6 +379,7 @@ Fig.~\ref{fig:seq-local-multimedia-mode-create-gif} depicts the
   \caption{Sequence diagram: local system --- Multimedia mode (create \gls{gif})}%
 \label{fig:seq-local-multimedia-mode-create-gif}
 \end{figure}
+
 
 \paragraph{\emph{Sharing mode}}
 
