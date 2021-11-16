@@ -106,12 +106,21 @@ Test Operation Callback & Provide command dispatch to original RC               
 \subsubsection{Use cases}
 \label{sec:use-cases-2}
 
+Fig.~\ref{fig:use-cases-rs} depicts the use cases diagram for the \texttt{Remote Server}, describing how the system should respond under various conditions to a request from one of the stakeholders to deliver a specific
+goal.
+
 \begin{figure}[htb!]
 \centering
     \includegraphics[width=0.6\columnwidth]{./img/use-cases-rs.png}
   \caption{Use cases: remote server}%
 \label{fig:use-cases-rs}
 \end{figure}
+
+As it can be seen, the \texttt{Remote Client} can interact through various modes: \texttt{Help}, \texttt{Authenticate User}, \texttt{Interact with databases}, \texttt{Test Operation} and \texttt{Disconnect}.
+When interacting with the databases, it is possible to read, modify, add or delete some field from a \texttt{Database}.
+When testing the operation of the \texttt{Local System}, it is possible to \texttt{manage audio, video, fragrance and camera} and it is also possible to test the \texttt{share} option.
+Between the \texttt{Manage Camera} option, there is \texttt{Turn On/Off, facial recognition, take GIF, take picture} and \texttt{filter}.
+Note that only the \texttt{Admin} can use the \texttt{Test Operation}.
 
 \subsubsection{Dynamic operation}
 \label{sec:dyn-oper-2}
@@ -210,8 +219,61 @@ Fig.~\ref{fig:state-mach-rs-req} depicts the state machine diagram for the
 
 \subsubsection{Flow of events}
 \label{sec:flow-events-2}
-Sequence diagram
 
+The flow of events throughout the system is described using a sequence diagram, comprising the interactions between the most relevant system's entities.
+It is usually pictured as the visual representation of an use case. The main sequence diagrams are illustrated next.
+%
+%
+\begin{figure}[htb!]
+  \centering
+  \includegraphics[width=0.4\textwidth]{img/seq-rs-general.png}%
+  \caption{Sequence diagram: Remote Server}%
+  \label{fig:seq-rs-general}
+\end{figure}
+%
+\begin{figure}[htb!]
+  \centering
+  \includegraphics[width=0.55\textwidth]{img/seq-rs-authenticate.png}%
+  \caption{Sequence diagram: Remote Server --- Authentication}%
+  \label{fig:seq-rs-authenticate}
+\end{figure}
+
+\begin{figure}[htb!]
+  \centering
+  \includegraphics[width=0.55\textwidth]{img/seq-rs-manage-dbs.png}%
+  \caption{Sequence diagram: Remote Server --- Manage Databases}%
+  \label{fig:seq-rs-manage-dbs}
+\end{figure}
+
+\begin{figure}[htb!]
+  \centering
+  \includegraphics[width=0.8\textwidth]{img/seq-rs-test-op.png}%
+  \caption{Sequence diagram: Remote Server --- Test Operation}%
+  \label{fig:seq-rs-test-op}
+\end{figure}
+
+\begin{figure}[htb!]
+  \centering
+  \includegraphics[width=0.4\textwidth]{img/seq-rs-logout.png}%
+  \caption{Sequence diagram: Remote Server --- logout}%
+  \label{fig:seq-rs-logout}
+\end{figure}
+
+The main interaction in all diagrams occurs between the \texttt{Remote Client} and the \texttt{Remote System}.
+
+In first place, Fig.~\ref{fig:seq-rs-general} shows the \texttt{Application Start}, starting with a connection request that it can be either accepted or denied.
+
+In second place, Fig.~\ref{fig:seq-rs-authenticate} shows the \texttt{Authentication} process, where the \texttt{Remote Client} sends the username and the password to the \texttt{Remote Server}.
+This last search for the username in the \texttt{User DB}, if it is not found, the authentications fails, else, the \texttt{Remote Server} compares the passwords and Sends the authentication success or fail for the cases where the password is equal or not equal, respectively.
+It is only possible to access the \texttt{Manage DBs} and the \texttt{Test Operation} if the authentication succeeds.
+
+In Fig.~\ref{fig:seq-rs-manage-dbs} the \texttt{Remote Client} requests to interact with some field of some \texttt{Database} to \texttt{Remote Server}.
+The \texttt{Remote Server} makes the request to the specific \texttt{Database}, receive the response and responds to the \texttt{Remote Client}.
+
+In Fig.~\ref{fig:seq-rs-test-op} it can be seen the \texttt{Test Operation}.
+As said previously, only the admin can access this part, where it can test the functionality of any \texttt{Local System}.
+The \texttt{Admin} sends the request to the \texttt{Remote Client} that then sends it to the \texttt{Remote Server} with the specific station.
+Then, the \texttt{Remote Server} interacts with the specific station, making the specific \texttt{Local System} acts according to the command that was sent.  
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "../../../dissertation"
