@@ -17,7 +17,6 @@
   endbox
   box "MDO-RS" #f9db8f
   actor "Remote Server" as RS
-  database "Databases" as DB
   endbox
   box "MDO-LS" #aabbcc
   actor "Local System" as LS
@@ -30,64 +29,77 @@
   ' async message
   '== Application start == 
   'Test Operation (if Admin)
-    alt Video, Audio and Fragrance
+    alt Test Normal Mode
      activate Admin
      Admin ->> RC --++ : video/audio/fragrance\nadd/delete/play/stop\n<station>
      'deactivate Admin
      'activate RC
-     RC ->> RS :  video/audio/fragrance\nadd/delete/play/stop\n<station>
+     RC ->> RS :  video/audio/fragrance\nadd/delete/play/stop<station>
      deactivate RC
      activate RS
      activate LS
-     RS ->> LS : v/a/f a/d/p/s \n <fname>/<option>\n<station>
+     RS ->> LS : v/a/f a/d/p/s \n <fname><option>
      deactivate RS
-     deactivate LS
-    else Camera
-     alt Turn On/Off
-      activate Admin
-      Admin ->> RC --++ : turn_on/turn_off camera
-      RC ->> RS --++ : turn_on/turn_off(station)
-      activate LS
-      RS ->> LS -- : 0/1 <station>
-      deactivate LS      
-     else Facial Recognition
-      activate Admin
-      Admin ->> RC --++ : apply face recognition
-      RC ->> RS --++ : facial_rec()
-      activate LS
-      RS ->> LS -- : f
-      deactivate LS
-     else Image Filter
-      activate Admin
-      Admin ->> RC --++: select/apply/reject\nfilter
-      RC ->> RS --++: select/apply/reject\n<filter> <station>
-      activate LS
-      RS ->> LS -- : i s/a/r <name> <filter>
-      deactivate LS
-     else Take Picture
-      activate Admin
-      Admin ->> RC --++ : Take Picture
-      RC ->> RS --++ : take_pic(station, filename)
-      RS ->> LS --++ : p <fname> <station>
-      activate DB 
-      LS ->> DB -- : save <fname>
-      deactivate DB
-     else Create GIF
-      activate Admin
-      Admin ->> RC --++ : Take GIF
-      RC ->> RS --++ : take_gif(station, filename)
-      RS ->> LS --++ : g <fname> <station>
-      activate DB 
-      LS ->> DB -- : save <fname>
-      deactivate DB
-     end
-    else Share
-     activate Admin
-     Admin ->> RC --++ : Share Post
-     RC ->> RS --++ : share(station, SM_opt,\n msg, attachement)
-     RS ->> LS --++ : s <SM_opt> <msg>\n <attachement> <station>  
-     LS -> LS : share  
+     ref over Admin, RC, RS, LS: command feedback
+     'deactivate LS
+    else  CameraTesting
+     'alt On/Off Testing
+     ref over Admin, RC, RS, LS: Test Camera
+     ' activate Admin
+     ' Admin ->> RC --++ : enable/disable camera
+     ' RC ->> RS --++ : camera(enable, station)
+     ' activate LS
+     ' RS ->> LS -- : c <enable>
+     ' deactivate LS      
+     'else Facial Recognition Testing
+     ' ref over Admin, RC, RS, LS: Test Facial Recognition
+     ' activate Admin
+     ' Admin ->> RC --++ : apply face recognition
+     ' RC ->> RS --++ : facial_rec()
+     ' activate LS
+     ' RS ->> LS -- : f
+     ' deactivate LS
+     'else Image Filter Testing
+     ' ref over Admin, RC, RS, LS: Test Image Filter
+      'activate Admin
+      'Admin ->> RC --++: select/apply/reject\nfilter
+      'RC ->> RS --++: select/apply/reject\n<filter> <station>
+      'activate LS
+      'RS ->> LS -- : i s/a/r <name> <filter>
+      'deactivate LS
+     'else Take Picture Testing
+     ' ref over Admin, RC, RS, LS: Test Take Picture
+      'activate Admin
+      'Admin ->> RC --++ : Take Picture
+      'RC ->> RS --++ : take_pic(station, filename)
+      'activate LS
+      'RS ->> LS -- : p <fname>
+      'deactivate LS
+     'else Create GIF Testing
+      'ref over Admin, RC, RS, LS: Test Create GIF
+      'activate Admin
+      'Admin ->> RC --++ : Creat GIF
+      'RC ->> RS --++ : create_gif(station, filename)
+      'activate LS
+      'RS ->> LS -- : g <fname>
+      'deactivate LS 
+     'end
+    else Sharing Mode Testing
+     ref over Admin, RC, RS, LS: Test Sharing Mode
+     'activate Admin
+     'Admin ->> RC --++ : Share Post
+     'RC ->> RS --++ : share(station, SM_opt,\n msg, attachement)
+     'RS ->> LS --++ : s <SM_opt> <msg>\n <attachement>  
+     'LS -> LS : share  
    end
+
+Group command feedback
+'code here
+activate LS
+LS ->> RS --++: send_feedback(msg, status)
+RS ->> RC --++ : send_feedback(msg, status)
+RC ->> Admin --++ : show_feedback(msg, status)
+end 
    
 ' =========================== ZE das couves ==============================='
 '  LS -> UIE: show Image Filter view

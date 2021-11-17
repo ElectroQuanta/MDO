@@ -247,9 +247,23 @@ It is usually pictured as the visual representation of an use case. The main seq
 
 \begin{figure}[htb!]
   \centering
-  \includegraphics[width=0.8\textwidth]{img/seq-rs-test-op.png}%
+  \includegraphics[width=0.7\textwidth]{img/seq-rs-test-op.png}%
   \caption{Sequence diagram: Remote Server --- Test Operation}%
   \label{fig:seq-rs-test-op}
+\end{figure}
+
+\begin{figure}[htb!]
+  \centering
+  \includegraphics[width=0.8\textwidth]{img/seq-rs-test-op-camera.png}%
+  \caption{Sequence diagram: Remote Server --- Test Operation Camera}%
+  \label{fig:seq-rs-test-op-camera}
+\end{figure}
+
+\begin{figure}[htb!]
+  \centering
+  \includegraphics[width=0.7\textwidth]{img/seq-rs-test-op-sharing.png}%
+  \caption{Sequence diagram: Remote Server --- Test Operation Share}%
+  \label{fig:seq-rs-test-op-sharing}
 \end{figure}
 
 \begin{figure}[htb!]
@@ -270,10 +284,12 @@ It is only possible to access the \texttt{Manage DBs} and the \texttt{Test Opera
 In Fig.~\ref{fig:seq-rs-manage-dbs} the \texttt{Remote Client} requests to interact with some field of some \texttt{Database} to \texttt{Remote Server}.
 The \texttt{Remote Server} makes the request to the specific \texttt{Database}, receive the response and responds to the \texttt{Remote Client}.
 
-In Fig.~\ref{fig:seq-rs-test-op} it can be seen the \texttt{Test Operation}.
-As said previously, only the admin can access this part, where it can test the functionality of any \texttt{Local System}.
+In Fig.~\ref{fig:seq-rs-test-op}, Fig.~\ref{fig:seq-rs-test-op-camera} and Fig.~\ref{fig:seq-rs-test-op-sharing} it can be seen the \texttt{Test Operation}.
+As said previously, only the \texttt{Admin} can access this part, where it can test the functionality of any \texttt{Local System}.
 The \texttt{Admin} sends the request to the \texttt{Remote Client} that then sends it to the \texttt{Remote Server} with the specific station.
-Then, the \texttt{Remote Server} interacts with the specific station, making the specific \texttt{Local System} acts according to the command that was sent.  
+Then, the \texttt{Remote Server} interacts with the specific station, making the specific \texttt{Local System} acts according to the command that was sent.
+For every test operation there's always a command feedback for the user to know if the command was valid.
+The references \texttt{Apply Filter}, \texttt{Take Picture} and \texttt{Create GIF} in Fig.~\ref{fig:seq-rs-test-op-camera} and \texttt{Sharing Mode} in Fig.~\ref{fig:seq-rs-test-op-sharing} are from the responsibility of the \texttt{Local System} part and will be explained there.
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "../../../dissertation"
