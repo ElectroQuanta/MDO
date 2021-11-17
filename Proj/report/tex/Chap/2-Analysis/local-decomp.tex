@@ -127,10 +127,19 @@ from the \texttt{Remote server} which will sent appropriate commands for this pu
 \subsubsection{Dynamic operation}
 \label{sec:dyn-oper}
 Fig.~\ref{fig:state-mach-local} depicts the state machine diagram for the
-\texttt{Local System}, illustrating its dynamic behavior. There are two main
-states:
+\texttt{Local System}, illustrating its dynamic behavior.
+%
+\begin{figure}[htb!]
+\centering
+    \includegraphics[width=0.7\columnwidth]{./img/state-mach-local.png}
+  \caption{State machine diagram: local system}%
+\label{fig:state-mach-local}
+\end{figure}
+%
+
+There are two main states:
 \begin{item-c}
-\item \emph{\texttt{Initialization}}: the device is initialized. The settings are
+\item \emph{\texttt{Initialization}}: the device is initialized. The settings
   and \gls{db}s are loaded and if invalid they are restored. The WiFi
   communication is setup, signaling the communication status and if valid, an
   \gls{ip} address is returned. Lastly, the \gls{hw} is initialized, checking
@@ -147,14 +156,6 @@ states:
   (\texttt{DB manager}), and application supervision (\texttt{Supervisor}), and
   are executed forever until system's power off. They are detailed next.
 \end{item-c}
-%
-\begin{figure}[htb!]
-\centering
-    \includegraphics[width=0.7\columnwidth]{./img/state-mach-local.png}
-  \caption{State machine diagram: local system}%
-\label{fig:state-mach-local}
-\end{figure}
-%
 %
 \paragraph{\emph{Communication Manager}}
 Fig.~\ref{fig:state-mach-local-comm} depicts the state machine diagram for the
