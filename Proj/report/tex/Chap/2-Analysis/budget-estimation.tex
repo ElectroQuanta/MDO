@@ -1,14 +1,17 @@
 %
 \section{Budget estimation}
 \label{sec:budget-estimation}
+Table~\ref{tab:budget-estimation} presents the budget estimation for the
+project.
+
 % Please add the following required packages to your document preamble:
 % \usepackage{booktabs}
 % \usepackage{multirow}
 % \usepackage[table,xcdraw]{xcolor}
-
 \begingroup
 \renewcommand{\arraystretch}{1.1} % Default value: 1
 \begin{table}[!hbt]
+% src:  https://stackoverflow.com/a/56037108
 \addtolength{\tabcolsep}{-2pt}
 \footnotesize
 \centering
@@ -17,7 +20,7 @@
 \begin{tabular}{llrlr}
 \hline
                                                                                                                    & \multicolumn{2}{c}{\textbf{Scale-model Prototype}}                            & \multicolumn{2}{c}{\textbf{Real-scale Prototype}}                                                       \\ \hline
-                                                                                                                   & \textbf{Item}                       & \multicolumn{1}{l}{\textbf{Cost (€) *}} & \textbf{Item}                                                 & \multicolumn{1}{l}{\textbf{Cost (€) *}} \\ \hline
+                                                                                                                   & \multicolumn{1}{c}{\textbf{Item}}   & \multicolumn{1}{c}{\textbf{Cost (€) *}} & \multicolumn{1}{c}{\textbf{Item}}                             & \multicolumn{1}{c}{\textbf{Cost (€) *}} \\ \hline
 \rowcolor[HTML]{FFCE93} 
 \cellcolor[HTML]{FFCE93}                                                                                           & Raspberry Pi 4B                     & 50                                      & \cellcolor[HTML]{FFDBB0}Raspberry Pi 4B                       & \cellcolor[HTML]{FFDBB0}50              \\ \cline{2-5} 
 \rowcolor[HTML]{FFCE93} 
@@ -49,12 +52,12 @@
 \rowcolor[HTML]{FFFE8A} 
                                                                                                                    & \textbf{SW development cost}        & \textbf{18000}                          & \cellcolor[HTML]{FFFFC7}\textbf{SW development cost}          & \cellcolor[HTML]{FFFFC7}\textbf{18000}  \\ \hline
 \rowcolor[HTML]{D5FBFC} 
-\cellcolor[HTML]{D5FBFC}                                                                                           & Local System power consumption **** & 0                                       & \cellcolor[HTML]{E2FEFF}Local System power consumption ****   & \cellcolor[HTML]{E2FEFF}0               \\ \cline{2-5} 
+\cellcolor[HTML]{D5FBFC}                                                                                           & Local System power consumption **** & 26,28                                   & \cellcolor[HTML]{E2FEFF}Local System power consumption ****   & \cellcolor[HTML]{E2FEFF}197,1           \\ \cline{2-5} 
 \rowcolor[HTML]{D5FBFC} 
 \multirow{-2}{*}{\cellcolor[HTML]{D5FBFC}\textbf{\begin{tabular}[c]{@{}l@{}}Operational \\ costs\end{tabular}}}    & Server operation cost *****         & 420                                     & \cellcolor[HTML]{E2FEFF}Server operation cost *****           & \cellcolor[HTML]{E2FEFF}420             \\ \hline
 \rowcolor[HTML]{D5FBFC} 
-                                                                                                                   & \textbf{Yearly Operational cost}    & \textbf{420}                            & \cellcolor[HTML]{E2FEFF}\textbf{Yearly Operational cost}      & \cellcolor[HTML]{E2FEFF}\textbf{420}    \\ \cline{2-5} 
-                                                                                                                   & \textbf{Total cost}                 & \textbf{18608}                          & \textbf{Total cost}                                           & \textbf{20460}                          \\ \cline{2-5} 
+                                                                                                                   & \textbf{Yearly Operational cost}    & \textbf{446.28}                         & \cellcolor[HTML]{E2FEFF}\textbf{Yearly Operational cost}      & \cellcolor[HTML]{E2FEFF}\textbf{617.1}  \\ \cline{2-5} 
+                                                                                                                   & \textbf{Total cost}                 & \textbf{18634.28}                       & \textbf{Total cost}                                           & \textbf{20657.1}                        \\ \cline{2-5} 
 \multicolumn{2}{l}{* tax included}                                                                                                                       & \multicolumn{1}{l}{}                    &                                                               & \multicolumn{1}{l}{}                    \\
 \multicolumn{2}{l}{** considering the most expensive option}                                                                                             & \multicolumn{1}{l}{}                    &                                                               & \multicolumn{1}{l}{}                    \\
 \multicolumn{2}{l}{*** 10 €/h}                                                                                                                           & \multicolumn{1}{l}{}                    &                                                               & \multicolumn{1}{l}{}                    \\
@@ -63,6 +66,37 @@
 \end{tabular}
 \end{table}
 \endgroup
+
+Two classes of prototypes were considered, scale-model and real-scale,
+due to project feasibility concerns: the real-scale prototype envisions a large
+display (55 inch) whose cost is prohibitive; thus, a trade-off between
+functionality and cost needed to be performed.
+
+Additionally, several types of costs were assessed, namely:
+\begin{item-c}
+\item \emph{physical prototype cost} --- comprises \gls{hw} and mechanical structure of
+  the device: all estimation costs were made as a mean value between all
+  trustworthy suppliers.
+The physical prototype cost for the scale-model prototype is about 188 EUR,
+while for the real-scale prototype is about 2,040 EUR, with the main difference
+being due to the 55 inch display cost (1,500 EUR) and the full HW packaging (350 EUR).
+\item \emph{\gls{sw} development cost}: the development cost for all software
+  components, namely \texttt{Remote Client}, \texttt{Remote Server}, and
+  \texttt{Local System}, yielding 18 000 hours of development, which represents
+  about 3 months of work for a two people team. This cost is the same for both
+  prototypes as the scale factor is only associated to \gls{hw}.
+\item \emph{operational costs} --- comprises power consumption and server
+  operation costs on a yearly basis. The server operation is the same for both
+  prototypes, but the power consumption is more than 7 times more.
+\item \emph{total cost}: sum of physical prototype, \gls{sw} development and
+  operational costs. The total cost for the scale-model prototype is about
+  18,635 EUR, while for the real-scale one it is about 20,657 EUR, with the main
+  difference being due to \gls{hw} and power consumption costs.
+\end{item-c}
+
+Retail price and break-even analysis were not assessed at this point, as several
+business models may be used for that purpose.
+%
 % 
 %%% Local Variables:
 %%% mode: latex
