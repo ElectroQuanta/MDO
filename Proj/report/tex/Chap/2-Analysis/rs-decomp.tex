@@ -26,7 +26,7 @@ perform operations over a \gls{db} and test the operation of a designated
 To test the operation of a \texttt{Local System}, an \texttt{Admin} can:
 \begin{item-c}
 \item \emph{Normal mode}: add, delete, play or stop video, audio and fragrance;
-\item \emph{Interactive\& Multimedia modes} --- camera: turn on/off the camera, apply facial
+\item \emph{Interactive \& Multimedia modes} --- camera: turn on/off the camera, apply facial
   recognition, use an image filter, take a picture or create a \gls{gif};
 \item \emph{Sharing mode}: share to a designated social media network a post,
   containing a message and attachment (picture or \gls{gif}). 
@@ -105,7 +105,7 @@ Test Operation Callback & Provide command dispatch to original RC               
 
 \subsubsection{Use cases}
 \label{sec:use-cases-2}
-
+%
 Fig.~\ref{fig:use-cases-rs} depicts the use cases diagram for the \texttt{Remote Server}, describing how the system should respond under various conditions to a request from one of the stakeholders to deliver a specific
 goal.
 
@@ -116,11 +116,16 @@ goal.
 \label{fig:use-cases-rs}
 \end{figure}
 
-As it can be seen, the \texttt{Remote Client} can interact through various modes: \texttt{Help}, \texttt{Authenticate User}, \texttt{Interact with databases}, \texttt{Test Operation} and \texttt{Disconnect}.
+As it can be seen, the \texttt{Remote Client} can interact through various
+modes: \texttt{Help}, \texttt{Authenticate User}, \texttt{Interact with
+  databases}, \texttt{Test Operation} and \texttt{Disconnect}.
+
 When interacting with the databases, it is possible to read, modify, add or delete some field from a \texttt{Database}.
-When testing the operation of the \texttt{Local System}, it is possible to \texttt{manage audio, video, fragrance and camera} and it is also possible to test the \texttt{share} option.
-Between the \texttt{Manage Camera} option, there is \texttt{Turn On/Off, facial recognition, take GIF, take picture} and \texttt{filter}.
-Note that only the \texttt{Admin} can use the \texttt{Test Operation}.
+The operation of the \texttt{Local System} can be tested --- \texttt{Test
+  Operation} --- if the \texttt{User} is an \texttt{Admin}, namely:
+\texttt{manage audio, video, fragrance and camera} and test the \texttt{share} option.
+
+The \texttt{Manage Camera} use case is subdivided into: \texttt{Turn On/Off, facial recognition, take GIF, take picture} and \texttt{filter}.
 
 \subsubsection{Dynamic operation}
 \label{sec:dyn-oper-2}
@@ -221,19 +226,20 @@ Fig.~\ref{fig:state-mach-rs-req} depicts the state machine diagram for the
 \label{sec:flow-events-2}
 
 The flow of events throughout the system is described using a sequence diagram, comprising the interactions between the most relevant system's entities.
-It is usually pictured as the visual representation of an use case. The main sequence diagrams are illustrated next.
+It is usually pictured as the visual representation of an use case. The main
+sequence diagrams are illustrated next (Fig.~\ref{fig:seq-rs-general} through Fig.~\ref{fig:seq-rs-logout}).
 %
 %
 \begin{figure}[htb!]
   \centering
-  \includegraphics[width=0.4\textwidth]{img/seq-rs-general.png}%
+  \includegraphics[width=0.35\textwidth]{img/seq-rs-general.png}%
   \caption{Sequence diagram: Remote Server}%
   \label{fig:seq-rs-general}
 \end{figure}
 %
 \begin{figure}[htb!]
   \centering
-  \includegraphics[width=0.55\textwidth]{img/seq-rs-authenticate.png}%
+  \includegraphics[width=0.6\textwidth]{img/seq-rs-authenticate.png}%
   \caption{Sequence diagram: Remote Server --- Authentication}%
   \label{fig:seq-rs-authenticate}
 \end{figure}
@@ -254,21 +260,21 @@ It is usually pictured as the visual representation of an use case. The main seq
 
 \begin{figure}[htb!]
   \centering
-  \includegraphics[width=0.8\textwidth]{img/seq-rs-test-op-camera.png}%
+  \includegraphics[width=0.75\textwidth]{img/seq-rs-test-op-camera.png}%
   \caption{Sequence diagram: Remote Server --- Test Operation Camera}%
   \label{fig:seq-rs-test-op-camera}
 \end{figure}
 
 \begin{figure}[htb!]
   \centering
-  \includegraphics[width=0.7\textwidth]{img/seq-rs-test-op-sharing.png}%
+  \includegraphics[width=0.6\textwidth]{img/seq-rs-test-op-sharing.png}%
   \caption{Sequence diagram: Remote Server --- Test Operation Share}%
   \label{fig:seq-rs-test-op-sharing}
 \end{figure}
 
 \begin{figure}[htb!]
   \centering
-  \includegraphics[width=0.4\textwidth]{img/seq-rs-logout.png}%
+  \includegraphics[width=0.3\textwidth]{img/seq-rs-logout.png}%
   \caption{Sequence diagram: Remote Server --- logout}%
   \label{fig:seq-rs-logout}
 \end{figure}
@@ -278,18 +284,23 @@ The main interaction in all diagrams occurs between the \texttt{Remote Client} a
 In first place, Fig.~\ref{fig:seq-rs-general} shows the \texttt{Application Start}, starting with a connection request that it can be either accepted or denied.
 
 In second place, Fig.~\ref{fig:seq-rs-authenticate} shows the \texttt{Authentication} process, where the \texttt{Remote Client} sends the username and the password to the \texttt{Remote Server}.
-This last search for the username in the \texttt{User DB}, if it is not found, the authentications fails, else, the \texttt{Remote Server} compares the passwords and Sends the authentication success or fail for the cases where the password is equal or not equal, respectively.
+The latter searches for the username in the \texttt{User DB}, if it is not
+found, the authentications fails, otherwise, the \texttt{Remote Server} compares
+the passwords and sends the authentication status to the \texttt{Remote Client}.
 It is only possible to access the \texttt{Manage DBs} and the \texttt{Test Operation} if the authentication succeeds.
 
-In Fig.~\ref{fig:seq-rs-manage-dbs} the \texttt{Remote Client} requests to interact with some field of some \texttt{Database} to \texttt{Remote Server}.
-The \texttt{Remote Server} makes the request to the specific \texttt{Database}, receive the response and responds to the \texttt{Remote Client}.
+In Fig.~\ref{fig:seq-rs-manage-dbs} the \texttt{Remote Client} requests to the
+\texttt{Remote Server} to manage a \texttt{Database}'s field.
+The \texttt{Remote Server} makes the request to the specific \texttt{Database},
+receives the response and returns it to the \texttt{Remote Client}.
 
 In Fig.~\ref{fig:seq-rs-test-op}, Fig.~\ref{fig:seq-rs-test-op-camera} and Fig.~\ref{fig:seq-rs-test-op-sharing} it can be seen the \texttt{Test Operation}.
 As said previously, only the \texttt{Admin} can access this part, where it can test the functionality of any \texttt{Local System}.
 The \texttt{Admin} sends the request to the \texttt{Remote Client} that then sends it to the \texttt{Remote Server} with the specific station.
-Then, the \texttt{Remote Server} interacts with the specific station, making the specific \texttt{Local System} acts according to the command that was sent.
-For every test operation there's always a command feedback for the user to know if the command was valid.
-The references \texttt{Apply Filter}, \texttt{Take Picture} and \texttt{Create GIF} in Fig.~\ref{fig:seq-rs-test-op-camera} and \texttt{Sharing Mode} in Fig.~\ref{fig:seq-rs-test-op-sharing} are from the responsibility of the \texttt{Local System} part and will be explained there.
+Then, the \texttt{Remote Server} interacts with the specific station, making the specific \texttt{Local System} act according to the command that was sent.
+For every test operation there's always a command feedback to indicate to the
+\texttt{User} its execution status.
+The references \texttt{Apply Filter}, \texttt{Take Picture} and \texttt{Create GIF} in Fig.~\ref{fig:seq-rs-test-op-camera} and \texttt{Sharing Mode} in Fig.~\ref{fig:seq-rs-test-op-sharing} are the responsibility of the \texttt{Local System} part and will be explained there.
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "../../../dissertation"
