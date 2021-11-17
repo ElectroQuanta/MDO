@@ -1,0 +1,32 @@
+,Scale-model Prototype,,Real-scale Prototype,
+,Item,Cost (€) *,Item,Cost (€) *
+HW,Raspberry Pi 4B,50,Raspberry Pi 4B,50
+,User Detection sensor,3,User Detection sensor mesh (4),12
+,LCD display 10” (non-touch),55,LCD display 55” Full HD (non-touch),1500
+,Fragrance diffusion actuator,5,Fragrance diffusion actuator mesh (4),20
+,Camera 8 MP,32,Camera 8 MP,32
+,Speakers,5,Speakers,30
+,Power supply,10,Power supply,30
+,PCB,8,PCB,16
+Mechanical Structure,3D printed + screws,20,Built-in with display + HW packaging,100
+,,,Full HW packaging,350
+,Physical Prototype cost,188,Physical Prototype cost **,2040
+SW development,Remote Client: 500 h ***,5000,Remote Client: 500 h ***,5000
+,Remote Server: 300 h ***,3000,Remote Server: 300 h ***,3000
+,Local system: 1000 h ***,10000,Local system: 1000 h ***,10000
+,SW development cost,18000,SW development cost,18000
+Operational costs,Local System power consumption ****,0,Local System power consumption ****,0
+,Server operation cost *****,420,Server operation cost *****,420
+,Yearly Operational cost,420,Yearly Operational cost,420
+,Total cost,18608,Total cost,20460
+* tax included,,,,
+** considering the most expensive option,,,,
+*** 10 €/h,,,,
+**** 24h/7d for 1 year,,,,
+***** yearly cost ,,,,
+,,,,
+* tax included,,,,
+** considering the most expensive option,,,,
+*** 10 €/h,,,,
+**** 24h/7d for 1 year,20W * 24h / 1000 * 0.15€/kWh * 365,"26,28",150 W * 24h / 1000 * 0.15€/kWh * 365,"197,1"
+***** yearly cost ,https://www.servermania.com/kb/articles/how-much-does-a-server-cost-for-a-small-business/,,,

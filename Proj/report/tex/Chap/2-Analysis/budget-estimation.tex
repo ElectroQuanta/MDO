@@ -1,8 +1,69 @@
 %
 \section{Budget estimation}
 \label{sec:budget-estimation}
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+% \usepackage{multirow}
+% \usepackage[table,xcdraw]{xcolor}
 
-
+\begingroup
+\renewcommand{\arraystretch}{1.1} % Default value: 1
+\begin{table}[!hbt]
+\addtolength{\tabcolsep}{-2pt}
+\footnotesize
+\centering
+\caption{Budget estimation}
+\label{tab:budget-estimation}
+\begin{tabular}{llrlr}
+\hline
+                                                                                                                   & \multicolumn{2}{c}{\textbf{Scale-model Prototype}}                            & \multicolumn{2}{c}{\textbf{Real-scale Prototype}}                                                       \\ \hline
+                                                                                                                   & \textbf{Item}                       & \multicolumn{1}{l}{\textbf{Cost (€) *}} & \textbf{Item}                                                 & \multicolumn{1}{l}{\textbf{Cost (€) *}} \\ \hline
+\rowcolor[HTML]{FFCE93} 
+\cellcolor[HTML]{FFCE93}                                                                                           & Raspberry Pi 4B                     & 50                                      & \cellcolor[HTML]{FFDBB0}Raspberry Pi 4B                       & \cellcolor[HTML]{FFDBB0}50              \\ \cline{2-5} 
+\rowcolor[HTML]{FFCE93} 
+\cellcolor[HTML]{FFCE93}                                                                                           & User Detection sensor               & 3                                       & \cellcolor[HTML]{FFDBB0}User Detection sensor mesh (4)        & \cellcolor[HTML]{FFDBB0}12              \\ \cline{2-5} 
+\rowcolor[HTML]{FFCE93} 
+\cellcolor[HTML]{FFCE93}                                                                                           & LCD display 10” (non-touch)         & 55                                      & \cellcolor[HTML]{FFDBB0}LCD display 55” Full HD (non-touch)   & \cellcolor[HTML]{FFDBB0}1500            \\ \cline{2-5} 
+\rowcolor[HTML]{FFCE93} 
+\cellcolor[HTML]{FFCE93}                                                                                           & Fragrance diffusion actuator        & 5                                       & \cellcolor[HTML]{FFDBB0}Fragrance diffusion actuator mesh (4) & \cellcolor[HTML]{FFDBB0}20              \\ \cline{2-5} 
+\rowcolor[HTML]{FFCE93} 
+\cellcolor[HTML]{FFCE93}                                                                                           & Camera 8 MP                         & 32                                      & \cellcolor[HTML]{FFDBB0}Camera 8 MP                           & \cellcolor[HTML]{FFDBB0}32              \\ \cline{2-5} 
+\rowcolor[HTML]{FFCE93} 
+\cellcolor[HTML]{FFCE93}                                                                                           & Speakers                            & 5                                       & \cellcolor[HTML]{FFDBB0}Speakers                              & \cellcolor[HTML]{FFDBB0}30              \\ \cline{2-5} 
+\rowcolor[HTML]{FFCE93} 
+\cellcolor[HTML]{FFCE93}                                                                                           & Power supply                        & 10                                      & \cellcolor[HTML]{FFDBB0}Power supply                          & \cellcolor[HTML]{FFDBB0}30              \\ \cline{2-5} 
+\rowcolor[HTML]{FFCE93} 
+\multirow{-8}{*}{\cellcolor[HTML]{FFCE93}\textbf{HW}}                                                              & PCB                                 & 8                                       & \cellcolor[HTML]{FFDBB0}PCB                                   & \cellcolor[HTML]{FFDBB0}16              \\ \hline
+\rowcolor[HTML]{FFCE93} 
+\cellcolor[HTML]{FFCE93}                                                                                           & 3D printed + screws                 & 20                                      & \cellcolor[HTML]{FFDBB0}Built-in with display + HW packaging  & \cellcolor[HTML]{FFDBB0}100             \\ \cline{2-5} 
+\rowcolor[HTML]{FFCE93} 
+\multirow{-2}{*}{\cellcolor[HTML]{FFCE93}\textbf{\begin{tabular}[c]{@{}l@{}}Mechanical \\ Structure\end{tabular}}} &                                     &                                         & \cellcolor[HTML]{FFDBB0}Full HW packaging                     & \cellcolor[HTML]{FFDBB0}350             \\ \hline
+\rowcolor[HTML]{FFCE93} 
+                                                                                                                   & \textbf{Physical Prototype cost}    & \textbf{188}                            & \cellcolor[HTML]{FFDBB0}\textbf{Physical Prototype cost **}   & \cellcolor[HTML]{FFDBB0}\textbf{2040}   \\ \hline
+\rowcolor[HTML]{FFFE8A} 
+\cellcolor[HTML]{FFFE8A}                                                                                           & Remote Client: 500 h ***            & 5000                                    & \cellcolor[HTML]{FFFFC7}Remote Client: 500 h ***              & \cellcolor[HTML]{FFFFC7}5000            \\ \cline{2-5} 
+\rowcolor[HTML]{FFFE8A} 
+\cellcolor[HTML]{FFFE8A}                                                                                           & Remote Server: 300 h ***            & 3000                                    & \cellcolor[HTML]{FFFFC7}Remote Server: 300 h ***              & \cellcolor[HTML]{FFFFC7}3000            \\ \cline{2-5} 
+\rowcolor[HTML]{FFFE8A} 
+\multirow{-3}{*}{\cellcolor[HTML]{FFFE8A}\textbf{\begin{tabular}[c]{@{}l@{}}SW \\ development\end{tabular}}}       & Local system: 1000 h ***            & 10000                                   & \cellcolor[HTML]{FFFFC7}Local system: 1000 h ***              & \cellcolor[HTML]{FFFFC7}10000           \\ \hline
+\rowcolor[HTML]{FFFE8A} 
+                                                                                                                   & \textbf{SW development cost}        & \textbf{18000}                          & \cellcolor[HTML]{FFFFC7}\textbf{SW development cost}          & \cellcolor[HTML]{FFFFC7}\textbf{18000}  \\ \hline
+\rowcolor[HTML]{D5FBFC} 
+\cellcolor[HTML]{D5FBFC}                                                                                           & Local System power consumption **** & 0                                       & \cellcolor[HTML]{E2FEFF}Local System power consumption ****   & \cellcolor[HTML]{E2FEFF}0               \\ \cline{2-5} 
+\rowcolor[HTML]{D5FBFC} 
+\multirow{-2}{*}{\cellcolor[HTML]{D5FBFC}\textbf{\begin{tabular}[c]{@{}l@{}}Operational \\ costs\end{tabular}}}    & Server operation cost *****         & 420                                     & \cellcolor[HTML]{E2FEFF}Server operation cost *****           & \cellcolor[HTML]{E2FEFF}420             \\ \hline
+\rowcolor[HTML]{D5FBFC} 
+                                                                                                                   & \textbf{Yearly Operational cost}    & \textbf{420}                            & \cellcolor[HTML]{E2FEFF}\textbf{Yearly Operational cost}      & \cellcolor[HTML]{E2FEFF}\textbf{420}    \\ \cline{2-5} 
+                                                                                                                   & \textbf{Total cost}                 & \textbf{18608}                          & \textbf{Total cost}                                           & \textbf{20460}                          \\ \cline{2-5} 
+\multicolumn{2}{l}{* tax included}                                                                                                                       & \multicolumn{1}{l}{}                    &                                                               & \multicolumn{1}{l}{}                    \\
+\multicolumn{2}{l}{** considering the most expensive option}                                                                                             & \multicolumn{1}{l}{}                    &                                                               & \multicolumn{1}{l}{}                    \\
+\multicolumn{2}{l}{*** 10 €/h}                                                                                                                           & \multicolumn{1}{l}{}                    &                                                               & \multicolumn{1}{l}{}                    \\
+\multicolumn{2}{l}{**** 24h/7d for 1 year}                                                                                                               & \multicolumn{1}{l}{}                    &                                                               & \multicolumn{1}{l}{}                    \\
+\multicolumn{2}{l}{***** yearly cost}                                                                                                                    & \multicolumn{1}{l}{}                    &                                                               & \multicolumn{1}{l}{}                    \\ \hline
+\end{tabular}
+\end{table}
+\endgroup
+% 
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "../../../dissertation"
