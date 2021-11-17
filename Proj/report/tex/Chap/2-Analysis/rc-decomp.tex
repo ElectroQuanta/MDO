@@ -286,6 +286,22 @@ sequence diagrams are illustrated next (Fig.~\ref{fig:seq-rc-login} through Fig.
 \label{fig:seq-rc-admin-logout}
 \end{figure}
 
+<<<<<<< HEAD
+\begin{figure}[htb!]
+\centering
+    \includegraphics[width=0.9\columnwidth]{./img/seq-rc-brand.png}
+  \caption{Sequence Diagram: remote client - brand}%
+\label{fig:seq-rc-brand}
+\end{figure}
+
+As it can be seen in Fig.~\ref{fig:seq-rc-login} to Fig.~\ref{fig:seq-rc-brand}, the user interacts with the \texttt{\gls{ui}}, then this last interacts with the \texttt{\gls{ui} Engine}, interacting with the \texttt{Remote Client Back-End} in order to process and execute all the information and commands needed. 
+There's an alternate way to go to the user, that's because on the authentication the \texttt{Remote Client Back-End} will discover if the user is an \texttt{Admin} or a \texttt{Brand}.
+On both cases, it shows its main menu and it can end the sequence through the 'Logout'.
+In each one of the cases there's alternative sequences to occur, depending in what the \texttt{User} decides to do.
+Also, in each alternative choice, the \texttt{Remote Client} can interact with different \texttt{Databases}, either to update them or to ask some info.
+
+
+=======
 As it can be seen, the \texttt{user} interacts with the \texttt{\gls{ui}}, whose events
 are tracked by the \texttt{\gls{ui} Engine} triggering the appropriate callback
 and dispatching data to the \texttt{Remote
@@ -300,6 +316,7 @@ In each one of the cases there's alternative sequences to occur, depending of wh
 Also, in each alternative choice, the \texttt{Remote Client} can interact with
 different \texttt{Databases}, either to query or update them.
 %
+>>>>>>> 1b64a1fa2e419d79801eaaa806f4d9675f06902e
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "../../../dissertation"
