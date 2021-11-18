@@ -3,12 +3,12 @@
 #+DATE: [2021-10-19 ter 11:25]
 #+EMAIL: a50178@alunos.uminho.pt
 
-* Preamble
+* Preamble                                                         :noexport:
 - This folder contains all the information about the project.
 - It is written incrementally, i.e., as the several project phases take place,
   the document versions pertaining to each phase are stored in the folder
   *submission*.
-* Versions [1/1]
+* Versions [1/1]                                                   :noexport:
 1. [X] Problem statement: deadline - <2021-10-28 qui>
 
 * Diagrams
@@ -34,7 +34,7 @@ It is specially adequate for sequence diagrams, as draw.io is not very fluid.
 4) [ ] Navigate to the =input= folder using cd
 5) [ ] Generate the diagram from the terminal using:
     #+BEGIN_SRC bash
-    java -jar plantuml.jar test.pu -o ../output/
+    java -jar plantuml.jar test.pu -o ../out java -jar plantuml.jar test.puput/
     #+END_SRC
 6) [ ] Check the generate png file: =output/test.png=
 *** Workflow [0/4]
