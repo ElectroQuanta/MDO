@@ -32,7 +32,7 @@ activate UIE
 UIE -> LS: select_filt
 deactivate UIE
 activate LS
-LS -> LS: apply_facial_recognition
+LS -> LS: apply_facial_detection
 LS -> LS: sel_filt(filt)
 group Apply filter
     loop while (! filter_cancel && ! filter_accept)

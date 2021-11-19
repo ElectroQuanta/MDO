@@ -118,7 +118,7 @@
        3) create GIFs
        4) share them
      - This mode requires:
-       - Facial recognition for image filter application
+       - Facial detection for image filter application
        - Hand gesture recognition for navigating the menus and activating
          options
        - A virtual keyboard (non-touch) will be provided for user input, by
@@ -131,7 +131,7 @@
          of the brand awareness.
        - Additionally, brands can also monitor this by checking their social
          media accounts.
-     
+ 
 *** Technologies [0/11]
 1. [ ] Computer vision for facial and gesture recognition (OpenCV)
 2. [ ] Database for marketing digital outdoor management (SQL)

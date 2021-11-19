@@ -51,10 +51,10 @@
      ' activate LS
      ' RS ->> LS -- : c <enable>
      ' deactivate LS      
-     'else Facial Recognition Testing
-     ' ref over Admin, RC, RS, LS: Test Facial Recognition
+     'else Facial Detection Testing
+     ' ref over Admin, RC, RS, LS: Test Facial Detection
      ' activate Admin
-     ' Admin ->> RC --++ : apply face recognition
+     ' Admin ->> RC --++ : apply face detection
      ' RC ->> RS --++ : facial_rec()
      ' activate LS
      ' RS ->> LS -- : f
