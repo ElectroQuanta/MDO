@@ -1,29 +1,323 @@
-- [Preamble](#orgb0dac4b)
-- [Versions <code>[1/1]</code>](#orgbab4ba7)
-- [Diagrams](#orgee77cca)
-  - [PlantUML](#org676644c)
-    - [Setup <code>[0/6]</code>](#org01ca459)
-    - [Workflow <code>[0/4]</code>](#org9ebad83)
-    - [Sequence diagrams](#org7087bbc)
+- [Notes](#org576445b)
+  - [Requirements](#orgd3a3031)
+  - [Problem statement](#org4ae1270)
+  - [Research](#org8ca96a5)
+    - [Topics <code>[0/3]</code>](#org5dd12ce)
+    - [Selection](#orgf8477b5)
+  - [Report](#org80d2441)
+    - [Outline <code>[1/7]</code>](#org01ee9a9)
+  - [Marketing Digital Outdoor](#org18e49a8)
+    - [Topics](#orgbed4e07)
+    - [Technologies <code>[0/11]</code>](#orgc39868d)
+    - [Problem statement](#orgcaa470b)
+    - [Market research <code>[3/3]</code>](#orga2f78bd)
+    - [Project planning](#org7a63604)
+    - [Analysis](#org210ba59)
+    - [Theoretical foundations <code>[3/16]</code>](#org797078b)
+- [Diagrams](#org312afa2)
+  - [PlantUML](#orgd7aae06)
+    - [Setup <code>[0/6]</code>](#org22d798a)
+    - [Workflow <code>[0/4]</code>](#org4903b99)
+    - [Sequence diagrams](#orgeb7c78d)
 
 
 
-<a id="orgb0dac4b"></a>
+<a id="org576445b"></a>
 
-# Preamble
-
--   This folder contains all the information about the project.
--   It is written incrementally, i.e., as the several project phases take place, the document versions pertaining to each phase are stored in the folder **submission**.
+# Notes     :Important:
 
 
-<a id="orgbab4ba7"></a>
+<a id="orgd3a3031"></a>
 
-# Versions <code>[1/1]</code>
+## Requirements
 
-1.  [X] Problem statement: deadline - <span class="timestamp-wrapper"><span class="timestamp">&lt;2021-10-28 qui&gt;</span></span>
+-   buildroot
+-   c/c++ (both)
+-   Device drivers
+-   Linux/Raspberry Pi
+-   CPS: Cyber-physical systems
+-   Makefiles
 
 
-<a id="orgee77cca"></a>
+<a id="org4ae1270"></a>
+
+## Problem statement
+
+Think about the project and deliver a document about it.
+
+
+<a id="org8ca96a5"></a>
+
+## Research
+
+
+<a id="org5dd12ce"></a>
+
+### Topics <code>[0/3]</code>
+
+-   [ ] Cyber-physical systems characteristics: <span class="underline">identify the required features for the system</span>
+-   [ ] Analyze previous projects to understand what is feasible in terms of Real-time systems using device drivers with Raspberry Pi: <span class="underline">gives an overall idea of what can be achieved</span>
+-   [ ] Situate the project requirements, the project constraints
+
+
+<a id="orgf8477b5"></a>
+
+### Selection
+
+-   [Marketing digital Outdoor](readme.md)
+
+
+<a id="org80d2441"></a>
+
+## Report
+
+
+<a id="org01ee9a9"></a>
+
+### Outline <code>[1/7]</code>
+
+1.  [X] Introduction
+    1.  Motivation and context
+    2.  Problem statement
+    3.  Market research
+    4.  Goals
+    5.  Project planning
+    6.  Report outline
+2.  [ ] Analysis
+    1.  Background and state of the art
+    2.  Requirements and constraints
+    3.  System overview
+    4.  System architecture
+        1.  HW architecture
+        2.  SW architecture
+    5.  Subsystems decomposition
+        1.  Events
+        2.  Use cases
+        3.  State machine diagram
+        4.  Sequence diagram
+    6.  Budget
+    7.  Theoretical foundations
+3.  [ ] Design
+    1.  HW specification
+        1.  Block diagram with COTS components, if possible
+        2.  List of constraints of functions to be implemented in HW or SW
+    2.  HW interfaces definition
+        1.  I/O ports
+        2.  HW registers
+        3.  Memory addresses for shared or I/O by memory mapping
+        4.  HW interrupts
+    3.  SW specification
+        1.  Identify main subsystems
+        2.  System tasks
+    4.  SW interfaces definition
+        
+        -   Define the APIs in detail:
+        
+        -   header files with:
+            -   functions prototypes
+            -   data structure declarations
+            -   class declarations
+    5.  Start-up/shutdown process specification
+    6.  Error Handling specification
+4.  [ ] Implementation
+5.  [ ] Testing
+6.  [ ] Verification/Validation
+7.  [ ] Conclusions
+
+
+<a id="org18e49a8"></a>
+
+## Marketing Digital Outdoor     :Important:
+
+
+<a id="orgbed4e07"></a>
+
+### Topics
+
+1.  Motivation and context
+    -   Scenting marketing is a great approach to draw people into stores.
+    -   Scent sense is the fastest way to the brain, thus, providing an exceptional opportunity for marketing.
+    -   Combining that with additional stimuli, like eye and earing, can significantly boost the marketing outcome.
+        
+        > -   Knowing your target audience it is critical for the success of stores.
+        > -   Marketing can be used to collect, analyse, investigate and decide the best politics for addressing a specific target audience, understanding the its behavioral patterns.
+        > -   To understand behavioral patterns <span class="underline">machine-learning models</span> can be used.
+2.  Concept
+    -   Offer a marketing digital outdoor for brands to advertise and captivate customers
+    -   Brands can buy advertisement space and time by sending the following data:
+        
+        |                         |               |           |          |              |      |
+        |------------------------ |-------------- |---------- |--------- |------------- |----- |
+        | Digital Outdoor location | Fragrance name | Start Time | Stop Time | Audio Message | Video |
+        
+        -   The brands can send the data to our company database through our website/application.
+        -   The data will then be sent to the marketing digital outdoor using a wireless communication technology.
+    -   The advertisement data will be exposed into a display, an audio message transmitted, as well as the indicate fragrance between the designated time interval.
+    -   COVID pandemics changed the perspectives about user interaction with the surroundings, with non touch interfaces being preferred. Thus, a non touch user interface is a must have.
+    -   When a user approaches the marketing digital outdoor, a proximity sensor will detect it and activate the <span class="underline">user interaction mode</span>.
+        -   When activating this mode the camera is started mirroring the user into the display and providing additional options.
+        -   In this mode, the user can:
+            1.  apply image filters related to the brand
+            2.  take pics
+            3.  create GIFs
+            4.  share them
+        -   This mode requires:
+            -   Facial detection for image filter application
+            -   Hand gesture recognition for navigating the menus and activating options
+            -   A virtual keyboard (non-touch) will be provided for user input, by mapping the screen to the keys and waiting for a designated time before accepting it.
+            -   A set of hand gestures to be used in user interaction
+        -   Several sharing platforms shall be provided namely social media and email.
+            -   Tracking the nr of shares provides feedback for the brands in respect of the brand awareness.
+            -   Additionally, brands can also monitor this by checking their social media accounts.
+
+
+<a id="orgc39868d"></a>
+
+### Technologies <code>[0/11]</code>
+
+1.  [ ] Computer vision for facial and gesture recognition (OpenCV)
+2.  [ ] Database for marketing digital outdoor management (SQL)
+3.  [ ] Website/Application for brands communication to our database
+4.  [ ] Wireless communication technology for remote communication with digital outdoors
+5.  [ ] Image filter application
+6.  [ ] Infrared detection
+7.  [ ] Camera recording
+8.  [ ] Audio output
+9.  [ ] Nebulizer technology for scenting
+10. [ ] Screen mapping to keys for virtual keyboard
+11. [ ] Social media and e-mail sharing APIs
+
+
+<a id="orgcaa470b"></a>
+
+### ✔ DONE Problem statement
+
+
+<a id="orga2f78bd"></a>
+
+### ✔ DONE Market research <code>[3/3]</code>
+
+1.  [X] Scenting marketing: trends, market value
+2.  [X] Digital Outdoors: quantity, market value
+3.  [X] Combined marketing: are they digital outdoor + scenting?
+
+
+<a id="org7a63604"></a>
+
+### Project planning
+
+1.  Gantt diagram <code>[0/8]</code>
+
+    1.  [ ] Planning
+        -   [ ] Kick-off meeting
+        -   [ ] Problem Statement
+        -   [ ] Market Research
+        -   [ ] Project Planning
+    2.  [ ] Analysis
+        -   [ ] System overview
+        -   [ ] Requirements and constraints
+        -   [ ] System architecture
+        -   [ ] System Analysis
+        -   [ ] Estimated budgets
+        -   [ ] Subsystem decomposition
+            -   [ ] Events
+            -   [ ] Use-cases
+            -   [ ] Dynamic operation: state-machine diagram
+            -   [ ] Flow of events: sequence diagram
+    3.  [ ] Design
+        -   [ ] Analysis review
+        -   [ ] HW specification
+        -   [ ] Component shipping
+        -   [ ] Software specification
+            -   [ ] Remote client
+            -   [ ] Remote server + database
+            -   [ ] Local system
+    4.  [ ] Implementation
+        -   [ ] HW testing
+        -   [ ] SW implementation
+            -   [ ] Remote client
+            -   [ ] Remote server + database
+            -   [ ] Local system
+        -   [ ] HW implementation
+            -   [ ] Breadboard
+            -   [ ] PCB design
+        -   [ ] System configuration
+    5.  [ ] Testing
+        1.  [ ] SW unit testing
+        2.  [ ] SW integrated testing
+        3.  [ ] HW unit testing
+        4.  [ ] HW integrated testing
+        5.  [ ] Functional testing
+    6.  [ ] Verification/Validation
+        1.  [ ] Verification
+        2.  [ ] Validation
+    7.  [ ] Report Writing
+        1.  [ ] Problem statement
+        2.  [ ] Analysis
+        3.  [ ] Design
+        4.  [ ] Implementation
+        5.  [ ] Final
+    8.  [ ] Documentation
+        1.  [ ] Problem statement
+        2.  [ ] Analysis
+        3.  [ ] Design
+        4.  [ ] Implementation
+        5.  [ ] Testing
+
+2.  Required HW <code>[3/7]</code>
+
+    Research link: <https://www.one-tab.com/page/TZxmVAXJTO6nVyNO593ARA>
+    
+    -   [X] Raspberry Pi 4: 52 EUR
+    -   [X] HDMI screen: 50 EUR - <https://shorturl.at/oyAOR>
+    -   [ ] Relay/Transistor + Ultrassonic actuator for nebulizing fragrance
+    -   [ ] Audio output
+    -   [ ] Power supply
+    -   [ ] Mechanical structure
+    -   [X] Camera: 14 EUR - <https://shorturl.at/gnpCU>
+
+
+<a id="org210ba59"></a>
+
+### Analysis
+
+1.  System architecture
+
+    **Example**
+    
+    > BRAND -> DB RC -> RS: q brand Nestle RS -> DB: query brand Nestle DS -> RS: Nestle milka.mp4 milka.wav Chocolate RS -> RC: Nestle milka.mp4 milka.wav Chocolate
+    > 
+    > COMPANY -> MDO-L Staff member login RC -> RS: q mdo systems RS -> DB: query mdo-systems DB -> RS: std::<vector> mdo<sub>systems</sub> for(i = 0; i < mdo<sub>systems.size</sub>(); i++ ) RS -> RC: mdo<sub>systems</sub>[i] RC -> RC: Select MDO-L machine Send command RC -> RS: mdo <nr> <command> (mdo 1 get mode) RS -> RS: parse command RS -> RS: get mdo<sub>nr</sub> IP (query mdo-systems 1 IP) RS -> MDO-L: connect IP:port MDO-L -> RS: connected RS -> MDO-L: get mode MDO-L -> RS: normal mode (example) RS -> RC: normal
+
+
+<a id="org797078b"></a>
+
+### Theoretical foundations <code>[3/16]</code>
+
+1.  [X] **Project methodology: Waterfall model**
+2.  [X] **Multitasking and Pthreads**
+3.  [X] **Client-Server architecture & TCP/IP & OSI model**
+4.  [ ] *Daemons*
+5.  [ ] *Device drivers*
+6.  [ ] **Nebulizer technology for scenting**
+7.  [ ] **Gesture recognition algorithms using computer vision**
+8.  [ ] **Face detection algorithms using computer vision**
+9.  [ ] **RDBMS (Relational Database management system) (SQL)**
+10. [ ] *User detection technologies: IR, ultrasonic*
+11. [ ] *Camera recording and codecs*
+12. [ ] *Image filtering APIs*
+13. [ ] *GIFs generation*
+14. [ ] **Social media and e-mail sharing APIs**
+15. [ ] *UI framework: Qt*
+16. [ ] *File transfer protocols*
+
+Legend:
+
+-   **Ze**
+-   *Hugo*
+
+
+<a id="org312afa2"></a>
 
 # Diagrams
 
@@ -32,19 +326,19 @@ Diagrams can be drawn using <code>[2/2]</code>:
 -   [X] draw.io
     -   User mockups
     -   State-machine
--   [X] [PlantUML](#org676644c) (stored in Proj/diags/plantuml)
+-   [X] [PlantUML](#orgd7aae06) (stored in Proj/diags/plantuml)
     -   Sequence diagram
     -   Class diagram
 
 
-<a id="org676644c"></a>
+<a id="orgd7aae06"></a>
 
 ## PlantUML
 
 [PlantUML](https://plantuml.com/) is a tool for quickly drawing diagrams from text based descriptions. It is specially adequate for sequence diagrams, as draw.io is not very fluid.
 
 
-<a id="org01ca459"></a>
+<a id="org22d798a"></a>
 
 ### Setup <code>[0/6]</code>
 
@@ -55,12 +349,12 @@ Diagrams can be drawn using <code>[2/2]</code>:
 5.  [ ] Generate the diagram from the terminal using:
     
     ```bash
-    java -jar plantuml.jar test.pu -o ../output/
+    java -jar plantuml.jar test.pu -o ../out java -jar plantuml.jar test.puput/
     ```
 6.  [ ] Check the generate png file: `output/test.png`
 
 
-<a id="org9ebad83"></a>
+<a id="org4903b99"></a>
 
 ### Workflow <code>[0/4]</code>
 
@@ -74,7 +368,7 @@ Diagrams can be drawn using <code>[2/2]</code>:
 4.  [ ] Check the generate png file: `output/test.png`
 
 
-<a id="org7087bbc"></a>
+<a id="orgeb7c78d"></a>
 
 ### Sequence diagrams
 
@@ -181,18 +475,18 @@ Diagrams can be drawn using <code>[2/2]</code>:
     
     alt successful case
     
-        Bob -> Alice: Authentication Accepted
+    	Bob -> Alice: Authentication Accepted
     
     else some kind of failure
     
-        Bob -> Alice: Authentication Failure
-        group My own label
-        Alice -> Log : Log attack start
-    	loop 1000 times
-    	    Alice -> Bob: DNS Attack
+    	Bob -> Alice: Authentication Failure
+    	group My own label
+    	Alice -> Log : Log attack start
+    		loop 1000 times
+    			Alice -> Bob: DNS Attack
+    		end
+    	Alice -> Log : Log attack end
     	end
-        Alice -> Log : Log attack end
-        end
     
     else Another type of failure
     
@@ -424,9 +718,9 @@ Diagrams can be drawn using <code>[2/2]</code>:
     @startuml
     Alice -> Bob: Authentication Request
     alt#Gold #LightBlue Successful case
-        Bob -> Alice: Authentication Accepted
+    	Bob -> Alice: Authentication Accepted
     else #Pink Failure
-        Bob -> Alice: Authentication Rejected
+    	Bob -> Alice: Authentication Rejected
     end
     @enduml
     ```
@@ -496,11 +790,11 @@ Diagrams can be drawn using <code>[2/2]</code>:
     end box
     Alice -> Bob: Authentication Request
     alt#Gold #LightBlue Successful case
-        Bob -> Alice: Authentication Accepted
-        note left: this is a first note
+    	Bob -> Alice: Authentication Accepted
+    	note left: this is a first note
     else #Pink Failure
-        Bob -> Alice: Authentication Rejected
-        note right: this is a 2nd note
+    	Bob -> Alice: Authentication Rejected
+    	note right: this is a 2nd note
     end
     
     == Repetition ==
@@ -513,18 +807,18 @@ Diagrams can be drawn using <code>[2/2]</code>:
     
     alt successful case
     
-        Bob -> Alice: Authentication Accepted
+    	Bob -> Alice: Authentication Accepted
     
     else some kind of failure
     
-        Bob -> Alice: Authentication Failure
-        group My own label
-        Alice -> Log : Log attack start
-    	loop 1000 times
-    	    Alice -> Bob: DNS Attack
+    	Bob -> Alice: Authentication Failure
+    	group My own label
+    	Alice -> Log : Log attack start
+    		loop 1000 times
+    			Alice -> Bob: DNS Attack
+    		end
+    	Alice -> Log : Log attack end
     	end
-        Alice -> Log : Log attack end
-        end
     
     else Another type of failure
     
