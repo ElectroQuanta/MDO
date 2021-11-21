@@ -91,6 +91,102 @@ existed. Thus, a standard and portable implementation was required, leading to
 standardization of the \gls{posix} threads API --- Pthreads --- by the POSIX.1c
 in 1995~\cite{kerrisk2010linux}.
 
+Pthreads is a standardized model for dividing a program into subtasks whose
+execution can be interleaved or run in parallel~\cite{buttlar1996pthreads}.
+
+\subsubsection{Thread creation}
+\label{sec:thread-creation}
+When a program is started, the resulting process consists of a single thread,
+called the initial or main thread. Additional threads can be created using the
+function \texttt{pthread\_create()}~\cite{kerrisk2010linux}:
+\lstinputlisting[language=c,firstline=1, lastline=3,
+caption={},
+%label=lst:kf-main-short,
+style=customc]{./listing/pthreads_api.c}
+% 
+%\begin{lstlisting}[language=C,
+%%caption={Hello},label=lst:kf-main-short,
+%style=customc, mathescape=true]
+%#include <pthread.h>
+%int pthread_create(pthread_t *thread, const pthread_attr_t *attr,
+%                   void *(*start)(void*), void *arg);
+%\end{lstlisting}
+%
+This function takes as arguments a pointer to a buffer of type
+\texttt{pthread\_t} --- into which the unique identifier for this thread is
+copied (thread ID) before \texttt{pthread\_create()} returns, the thread attributes, a function pointer containing
+the so called \texttt{worker} function, and the \texttt{worker} function
+arguments.
+
+The new thread then starts execution by calling the function
+identified by \texttt{start} with the argument \texttt{arg} (i.e,
+\texttt{start(args)}). The thread that calls \texttt{pthread\_create()}
+continues execution with the next statement that follows the call. The
+\texttt{arg} argument is declared as \texttt{void *}, allowing generic data to
+be passed to the \texttt{worker} function. This function returns \texttt{0} on
+success, or a positive number indicating the error occurred. 
+%
+\subsubsection{Thread termination}
+\label{sec:thread-termination}
+The execution of a thread terminates in one of the following
+ways~\cite{kerrisk2010linux}:
+\begin{item-c}
+\item the thread's worker function performs a \texttt{return} specifying a
+  return value for the thread;
+\item the thread calls \texttt{pthread\_exit()};
+\item the thread is canceled using \texttt{pthread\_cancel()};
+\item any of the thread calls \texttt{exit()}, or the main thread performs a
+  return, causing all threads in the process to terminate immediately.
+\end{item-c}
+
+The \texttt{pthread\_exit()} function terminates the calling thread and returns a
+value via \texttt{retval} that is available to another thread in the same
+process that calls \texttt{pthread\_join()}.
+\lstinputlisting[language=c,firstline=5, lastline=6,
+caption={},
+%label=lst:kf-main-short,
+style=customc]{./listing/pthreads_api.c}
+
+\subsubsection{Joining with a terminated thread}
+\label{sec:join-with-term}
+The \texttt{pthread\_join()} function waits for the thread identified by
+\texttt{thread} to terminate~\cite{kerrisk2010linux}.
+%
+\lstinputlisting[language=c,firstline=8, lastline=9,
+caption={},
+%label=lst:kf-main-short,
+style=customc]{./listing/pthreads_api.c}
+%
+It is important to note that:
+\begin{item-c}
+\item if the thread has already terminated, \texttt{pthread\_join()} returns
+  immediately;
+\item calling \texttt{pthread\_join()} for ta thread ID that has been previously
+  joined can lead to unpredictable behavior;
+\item if a thread is not detached, it must be joined with
+  \texttt{pthread\_join()}, otherwise it produces a `zombie' thread, wasting
+  system resources.
+\end{item-c}
+
+\subsubsection{Detaching a thread}
+\label{sec:detaching-thread}
+By default, a thread is joinable, meaning that when it terminates, another
+thread can obtain its return status using \texttt{pthread\_join()}.
+Sometimes, the thread’s return status is irrelevant: one simply wants the system
+to automatically clean up and remove the thread when it terminates.
+In this case, the thread can be detached,
+by making a call to \texttt{pthread\_detach()} specifying the thread’s identifier in thread~\cite{kerrisk2010linux}.
+%
+\lstinputlisting[language=c,firstline=11, lastline=12,
+caption={},
+%label=lst:kf-main-short,
+style=customc]{./listing/pthreads_api.c}
+Once a thread has been detached, it is no longer possible to use \texttt{pthread\_join()}
+to obtain its return status, and the thread can't be made joinable again.
+Another important note is that \texttt{pthread\_detach()} only controls what
+happens after a thread terminates, not how or when it terminates. If another
+thread calls \texttt{exit()} or the main thread returns, 
+all threads in the process are immediately terminated, regardless of whether they are joinable or detached.
 
 %%% Local Variables:
 %%% mode: latex
