@@ -1,0 +1,39 @@
+%
+\section{Computer vision}
+\label{sec:computer-vision}
+
+\subsection{OpenCV}
+\label{sec:opencv}
+
+\subsection{Face detection}
+\label{sec:face-detection}
+Face detection has been studied for decades in the computer
+vision literature. Modern face detection algorithms can
+be categorized into four categories:
+cascade based methods [2, 10, 15, 16, 21],
+part based methods [19, 23, 30], channel feature based methods [25, 24], and
+neural network based methods [6, 14, 25, 28].
+
+Here we highlight a few notable studies.
+A detailed survey can be found in [27, 29].
+The seminal work by Viola and Jones [21] introduces inte-
+gral image to compute Haar-like features in constant time.
+These features are then used to learn AdaBoost classifier
+with cascade structure for face detection. Various later stud-
+ies follow a similar pipeline. Among those variants, SURF
+cascade [15] achieves competitive performance. Chen et al. [2] learn face
+detection and alignment jointly in the same cascade framework and obtain promising detection performance.
+
+One of the well-known part based methods is deformable
+part models (DPM) [7]. Deformable part models define
+face as a collection of parts and model the connections
+of parts through Latent Support Vector Machine. The
+
+\subsection{Hand gesture recognition}
+\label{sec:hand-gest-recogn}
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../../../dissertation"
+%%% End:

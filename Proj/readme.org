@@ -3,12 +3,12 @@
 #+DATE: [2021-10-19 ter 11:25]
 #+EMAIL: a50178@alunos.uminho.pt
 
-* Preamble                                                         :noexport:
+* Preamble
 - This folder contains all the information about the project.
 - It is written incrementally, i.e., as the several project phases take place,
   the document versions pertaining to each phase are stored in the folder
   *submission*.
-* Versions [1/1]                                                   :noexport:
+* Versions [1/1]
 1. [X] Problem statement: deadline - <2021-10-28 qui>
 
 * Notes                                                           :Important:
@@ -256,7 +256,7 @@ Send command
     MDO-L -> RS: normal mode (example)
     RS -> RC: normal
 #+END_QUOTE
-*** Theoretical foundations [3/16]  
+*** Theoretical foundations [3/15]  
     :PROPERTIES:
     :ATTACH_DIR: /home/zmpl/OneDrive - Universidade do Minho/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/sec/img/
     :END:
@@ -266,16 +266,18 @@ Send command
 4) [ ] /Daemons/
 5) [ ] /Device drivers/
 6) [ ] *Nebulizer technology for scenting*
-7) [ ] *Gesture recognition algorithms using computer vision*
-8) [ ] *Face detection algorithms using computer vision*
-9) [ ] *RDBMS (Relational Database management system) (SQL)*
-10) [ ] /User detection technologies: IR, ultrasonic/
-11) [ ] /Camera recording and codecs/
-12) [ ] /Image filtering APIs/
-13) [ ] /GIFs generation/
-14) [ ] *Social media and e-mail sharing APIs*
-15) [ ] /UI framework: Qt/
-16) [ ] /File transfer protocols/
+7) [ ] *Computer Vision*
+   1) [ ] *OpenCV*
+   2) [ ] *Gesture recognition algorithms*
+   3) [ ] *Face detection algorithms*
+8) [ ] *RDBMS (Relational Database management system) (SQL)*
+9) [ ] /User detection technologies: IR, ultrasonic/
+10) [ ] /Camera recording and codecs/
+11) [ ] /Image filtering APIs/
+12) [ ] /GIFs generation/
+13) [ ] *Social media and e-mail sharing APIs*
+14) [ ] /UI framework: Qt/
+15) [ ] /File transfer protocols/
 
 Legend:
 - *Ze*
