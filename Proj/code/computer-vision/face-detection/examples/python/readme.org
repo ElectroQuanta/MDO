@@ -1,0 +1,193 @@
+#+TITLE: Face detection in Python using OpenCV
+#+AUTHOR: José Pires
+#+DATE: [2021-11-22 seg 15:20]
+#+EMAIL: a50178@alunos.uminho.pt
+
+* Preamble
+This file explains how to perform face detection in Python using OpenCV for [0/2]:
+- [ ] *Haar cascades*: extremely fast but less accurate (ideal for embedded
+systems) - see [[id:040e4c19-80ab-4550-9378-34a79f3e6b3b][doc]] and [[file:haar-cascades][haar-code]]
+- [ ] *DNN face detector*: good balance between speed and accuracy - see [[id:77902678-3fa4-475c-a6a2-6cb0fffd6ba4][doc]] [[file:face-detection-with-OpenCV-and-DNN-master][dnn-code]]
+
+* Python
+** Anaconda
+ [[https://stackoverflow.com/a/45421527][Anaconda vs miniconda]]:
+ - *Conda* is the _package manager_ (e.g. conda list displays all
+   installed packages in the environment)
+   - A package manager is a tool that automates the process of installing,
+     updating, and removing packages.
+ - *Anaconda* and *Miniconda* are _distributions_. 
+   - A software distribution is a collection of packages, pre-built and
+     pre-configured, that can be installed and used on a system. 
+     - Anaconda is a full distribution of the central software in the PyData
+       ecosystem, and includes Python itself along with the binaries for several
+       hundred third-party open-source projects. 
+     - Miniconda is essentially an installer for an empty conda environment,
+       containing only Conda, its dependencies, and Python.
+
+ Once Conda is installed, you can then install whatever package you need from
+ scratch along with any desired version of Python.
+
+*** Installation
+ I installed miniconda from [[https://docs.conda.io/en/latest/miniconda.html][here]].
+ 1. Download =.sh= file
+ 2. Make it executable: =chmod +x Miniconda*=
+ 3. Run it: =./Miniconda*= 
+ 4. Agree to the terms
+
+*** Usage
+ ([[https://thedatafrog.com/en/articles/install-anaconda-data-science-python/][src]])
+
+ You can use the command line to:
+ 1) create conda environments
+ 2) select the version of python you want
+ 3) install the packages you need.
+
+ I usually do everything in one go like this:
+ #+BEGIN_SRC bash
+ conda create -n testenv python=3.7 ipython
+ #+END_SRC
+
+ This creates a new environment called testenv based on python 3.7, and with the ipython package.
+
+ You can then activate the environment, and test that things are as you expect: 
+
+ #+BEGIN_SRC bash
+ conda activate testenv
+ conda list 
+ #+END_SRC
+
+* OpenCV
+** Python installation
+   :PROPERTIES:
+   :ID:       0d44aa2a-3e28-470a-8408-ddb034d0dc53
+   :END:
+Using conda, the openCV can be installed as follows:
+#+BEGIN_SRC bash
+conda install opencv
+#+END_SRC
+
+But do to a conflict with python 3.8, the following needed to be done:
+https://stackoverflow.com/a/55753666
+#+BEGIN_SRC bash
+# remove opencv
+conda remove opencv
+# create new environment
+conda create -n openCV python=3.7
+# activate it
+conda activate openCV
+# install opencv
+pip install opencv-contrib-python
+#+END_SRC
+
+If the following error shows up, then downgrade openCV ([[https://www.programmersought.com/article/20797211182/][src]]):
+#+BEGIN_QUOTE
+QObject::moveToThread: Current thread (0x5651ebdaa180) is not the object’s thread (0x5651eba7e2a0).
+Cannot move to target thread (0x5651ebdaa180)
+#+END_QUOTE
+
+#+BEGIN_SRC bash
+# always remember to activate the environment
+# uninstall newest opencv
+pip uninstall opencv-contrib-python
+# reinstall version 4.1.2.30
+pip install opencv-contrib-python==4.1.2.30
+#+END_SRC
+** Human detection video
+   :PROPERTIES:
+   :ID:       1ef78abb-13bf-47db-8864-1f7f50747b92
+   :END:
+([[https://thedatafrog.com/en/articles/human-detection-video/][src]])
+ 
+In this post, you will learn:
+1) How to install OpenCV, which provides simple tools for video input and
+   output, and for machine learning;
+2) How to write a small script to perform person detection in a video stream
+   from your webcam, or in one of your movies, with the HOG algorithm
+   (Histograms of Oriented Gradients);
+3) How HOG works.
+
+*** Install dependencies
+After installing openCV as indicated [[id:0d44aa2a-3e28-470a-8408-ddb034d0dc53][here]], install, in the same environment the
+following:
+#+BEGIN_SRC bash
+conda install numpy matplotlib
+#+END_SRC
+
+*** Test camera
+Paste the following code ([[file:~/miniconda3/envs/openCV/src/test_cam.py][test_cam.py]])
+#+BEGIN_SRC python
+import numpy as np
+import cv2
+
+cv2.startWindowThread()
+cap = cv2.VideoCapture(0)
+
+while(True):
+    # reading the frame
+    ret, frame = cap.read()
+    # displaying the frame
+    cv2.imshow('frame',frame)
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        # breaking the loop if the user types q
+        # note that the video window must be highlighted!
+        break
+
+cap.release()
+cv2.destroyAllWindows()
+# the following is necessary on the mac,
+# maybe not on other platforms:
+cv2.waitKey(1)
+#+END_SRC
+
+and run with with python:
+#+BEGIN_SRC bash
+python test_cam.py
+#+END_SRC
+
+and one should see a window pop-up with camera feed.
+
+*** Manipulate the video feed
+Now let's try and manipulate the video stream. 
+- The video is read frame by frame, so we can edit the frame before displaying
+  it.
+- Add the following lines before displaying the frame: 
+#+BEGIN_SRC python
+# turn to greyscale:
+    frame = cv2.cvtColor(frame, cv2.COLOR_RGB2GRAY)
+    # apply threshold. all pixels with a level larger than 80 are shown in white. the others are shown in black:
+    ret,frame = cv2.threshold(frame,80,255,cv2.THRESH_BINARY)
+#+END_SRC
+
+*** People detection
+OpenCV features an implementation for a very fast human detection method, called HOG (Histograms of Oriented Gradients).
+
+This method is trained to detect pedestrians, which are human mostly standing up, and fully visible. So do not expect it to work well in other cases.
+
+Before discussing this method, we'll give it a try. Modify your script as
+follows: see [[file:~/miniconda3/envs/openCV/src/people_detect.py][people_detect.py]] 
+
+Now run the script.
+
+With these parameters, the detection is done almost in real time on my
+machine. You will see that the detector works better if the person is not too
+close to the camera. If the person is close, several overlapping boxes are often
+shown. 
+
+** Face detection
+*** Haar cascades
+    :PROPERTIES:
+    :ID:       040e4c19-80ab-4550-9378-34a79f3e6b3b
+    :END:
+- [[https://www.pyimagesearch.com/2021/04/05/opencv-face-detection-with-haar-cascades/][src]]
+- [[file:haar-cascades][haar-code]]
+
+*** DNN 
+    :PROPERTIES:
+    :ID:       77902678-3fa4-475c-a6a2-6cb0fffd6ba4
+    :END:
+- [[https://www.one-tab.com/page/n8tu3L61RxSKP7f09Q8ipw][research]]
+- [[https://www.pyimagesearch.com/2018/02/26/face-detection-with-opencv-and-deep-learning/][src]]
+- [[https://github.com/sr6033/face-detection-with-OpenCV-and-DNN][code repo]]
+ 
+

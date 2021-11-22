@@ -1,0 +1,7 @@
+#+TITLE: Haar cascades
+#+AUTHOR: José Pires
+#+DATE: [2021-11-22 seg 12:38]
+#+EMAIL: a50178@alunos.uminho.pt
+
+* Preamble
+[[https://www.pyimagesearch.com/2021/04/05/opencv-face-detection-with-haar-cascades/][src]]

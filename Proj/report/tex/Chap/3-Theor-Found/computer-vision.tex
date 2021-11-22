@@ -92,7 +92,7 @@ built to provide a common infrastructure for computer vision applications and
 accelerate the use of machine perception in commercial products.
 OpenCV was designed for computational efficiency and with a strong focus on
 real-time applications. It is written in optimized C++ and can take advantage of
-multicore processors, with wrappers written in Python, Java, Matlab, etc., and
+multicore processors, with wrappers written in Python, Java, and Matlab, and
 supporting Windows, Linux, Android and Mac OS.
 The library has more than 2500 optimized algorithms, including a comprehensive
 set of both classic and state-of-the-art computer vision and machine learning algorithms.
@@ -151,33 +151,34 @@ selecting a face detection method~\cite{pyimage-face-bestpractices}:
 \begin{enum-c}
 \item \emph{OpenCV's Haar cascades}:
       Use OpenCV's Haar cascades when speed is your primary concern (e.g., when
-      you're using an embedded device like the Raspberry Pi). Haar cascades
-      aren't as accurate as their HOG + Linear SVM and deep learning-based
-      counterparts, but they make up for it in raw speed. Just be aware there
-      will certainly be some false-positive detections and parameter tuning
-      required when calling detectMultiScale.
-\item \emph{HOG + linear SVM detector}:
-    Use dlib's HOG + Linear SVM detector when Haar cascades are not accurate
-    enough, but you cannot commit to the computational requirements of a deep
-    learning-based face detector. The HOG + Linear SVM object detector is a
-    classic algorithm in the computer vision literature that is still relevant
-    today. The dlib library does a fantastic job implementing it. Just be aware
-    that running HOG + Linear SVM on a CPU will likely be too slow for your
+      considering an embedded device like the Raspberry Pi). Haar cascades
+      aren't as accurate as their \gls{hog} + Linear \gls{svm} and deep learning-based
+      counterparts, but they compensate it in raw speed. False-positive
+      detections is highly likely and parameter tuning is required when calling
+      \texttt{detectMultiScale}.
+\item \emph{\gls{hog} + linear \gls{svm} detector}:
+    Use \texttt{dlib's \gls{hog} + Linear \gls{svm}} detector when Haar cascades are not
+    accurate enough, but you cannot commit to the computational requirements of
+    a deep learning-based face detector.
+    The \gls{hog} + Linear \gls{svm} object detector is a classic algorithm in the computer
+    vision literature that is still relevant today.
+    However, running \gls{hog} + Linear \gls{svm} on a \gls{cpu} will likely be too slow for an
     embedded device.
   \item \emph{CNN face detection}:
-    Use dlib's CNN face detection when you need super-accurate face
+    Use dlib's \gls{cnn} face detection when requiring extremely accurate face
     detections.
-   However, there is a tradeoff — with
-    higher accuracy comes slower run-time. This method cannot run in real-time
-    on a laptop/desktop CPU, and even with GPU acceleration, you'll struggle to
-    hit real-time performance.
+   However, there is a tradeoff --- with
+   higher accuracy comes slower run-time.
+   This method cannot run in real-time on a laptop/desktop \gls{cpu}, and even with
+   \gls{gpu} acceleration, you'll struggle to hit real-time performance.
   \item \emph{DNN face detector}:
     Use OpenCV's DNN face detector as a good balance. As a deep learning-based
-    face detector, this method is accurate — and since it's a shallow network
-    with an SSD backbone, it's easily capable of running in real-time on a
-    CPU. Furthermore, since you can use the model with OpenCV's cv2.dnn module,
-    that also implies that (1) you can increase speed further by using a GPU or
-    (2) utilizing the Movidius NCS on your embedded device.
+    face detector, this method is accurate --- and since it's a shallow network
+    with an single-shot detector backbone, it's easily capable of running in
+    real-time on a \gls{cpu}. Furthermore, since you can use the model with
+    OpenCV's \texttt{cv2.dnn} module, that also implies that (1) you can
+    increase speed further by using a \gls{gpu} or (2) utilizing the Movidius
+    NCS on your embedded device.
 \end{enum-c}
 
 % src: https://www.one-tab.com/page/1OS-OWq1RSKsGPIIvOj2JQ
