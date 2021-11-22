@@ -191,7 +191,73 @@ selecting a face detection method~\cite{pyimage-face-bestpractices}:
 %algorithm. Additionally, this algorithm comes built-in the major computer vision
 %frameworks.
 
+\subsubsection{Haar cascade classifier}
+\label{sec:haar-casc-class}
+Object detection using Haar feature-based cascade classifiers is an effective
+method proposed by Viola and Jones~\cite{viola2001rapid}. It is a machine
+learning based approach where a cascade function is trained from a lot of
+positive and negative images. It is then used to detect objects in other images~\cite{opencv-haar-classif}.
 
+The algorithm can be explained in four stages~\cite{haar-classif-explained}:
+\begin{enum-c}
+\item \emph{Calculating Haar Features}: the first step is to collect the Haar features. A Haar feature is essentially calculations that are performed on
+adjacent rectangular regions at a specific location in a detection window. The
+calculation involves summing the pixel intensities in each region and
+calculating the differences between the sums. Some
+examples of Haar features are illustrated in Fig.~\ref{fig:haar-features}.
+\item \emph{Creating Integral Images}: instead of computing at every
+pixel, sub-rectangles and its array references are created, which are then used
+to compute the Haar features (see Fig.~\ref{fig:haar-integral}).
+\item \emph{Using Adaboost}: to determine the best features from the hundreds of
+  thousands of Haar features, one requires a machine learning model.
+  Adaboost essentially chooses the best features and trains the classifiers to
+  use them. It uses a combination of `weak classifiers' to create a `strong classifier' that the algorithm can use to detect objects.
+Weak learners are created by moving a window over the input image, and computing Haar features for each
+subsection of the image. This difference is compared to a learned threshold that
+separates non-objects from objects. Because these are `weak classifiers', a large number of Haar features is needed for accuracy to form
+a strong classifier (see Fig.~\ref{fig:boosting}). 
+\item \emph{Implementing Cascading Classifiers}:
+The cascade classifier is made up of a series of stages, where each stage is a
+collection of weak learners (see Fig.~\ref{fig:cascade-implem}).
+Weak learners are trained using boosting, which allows for a highly accurate
+classifier from the mean prediction of all weak learners.
+
+Based on this prediction, the classifier either decides to indicate an object
+was found (positive) or move on to the next region (negative). Stages are designed to reject negative samples as fast as possible, because a
+majority of the windows do not contain anything of interest.
+
+It's important to maximize a low false negative rate, because classifying an object as a non-object will
+severely impair your object detection algorithm, so it is critical to tune hyperparameters accordingly when training your model.
+\end{enum-c}
+%
+\begin{figure}[htb!]
+\centering
+    \includegraphics[width=0.4\columnwidth]{./img/haar-features.jpg}
+  \caption{Examples of Haar features (withdrawn from~\cite{opencv-haar-classif})}%
+\label{fig:haar-features}
+\end{figure}
+%
+\begin{figure}[htb!]
+\centering
+    \includegraphics[width=0.4\columnwidth]{./img/haar-integral.png}
+  \caption{Integral image creation illustration (withdrawn from~\cite{haar-classif-explained})}%
+\label{fig:haar-integral}
+\end{figure}
+%
+\begin{figure}[htb!]
+\centering
+    \includegraphics[width=0.6\columnwidth]{./img/boosting.jpeg}
+  \caption{Illustration of a boosting algorithm (withdrawn from~\cite{haar-classif-explained})}%
+\label{fig:boosting}
+\end{figure}
+%
+\begin{figure}[htb!]
+\centering
+    \includegraphics[width=1.0\columnwidth]{./img/cascade-implem.png}
+  \caption{Flowchart of a cascade classifiers (withdrawn from~\cite{haar-classif-explained})}%
+\label{fig:cascade-implem}
+\end{figure}
+%
 \subsection{Hand gesture recognition}
 \label{sec:hand-gest-recogn}
 

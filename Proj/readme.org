@@ -270,6 +270,7 @@ Send command
    1) [ ] *OpenCV*
    2) [ ] *Gesture recognition algorithms*
    3) [ ] *Face detection algorithms*
+      1) see [[file:biblio/OpenCV3_Computer-Vision-in-C++-with-the-OpenCV-Library.pdf][openCV3 book]] (pg. 883)
 8) [ ] *RDBMS (Relational Database management system) (SQL)*
 9) [ ] /User detection technologies: IR, ultrasonic/
 10) [ ] /Camera recording and codecs/
