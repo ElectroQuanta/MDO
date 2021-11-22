@@ -18,9 +18,95 @@ In this section, computer vision frameworks/libraries are listed, with special
 focus on OpenCV, and computer vision algorithms for face detection and hand
 gesture recognition are analyzed.
 %
-\subsection{OpenCV}
-\label{sec:opencv}
 
+\subsection{Computer vision frameworks}
+\label{sec:comp-visi-fram}
+There are several noteworthy computer vision frameworks, namely~\cite{cv-frameworks-2020}:
+\begin{enum-c}
+\item \emph{Google Cloud's Vision API}:
+it is an easy-to-use image recognition technology that
+lets developers understand the content of an image by applying powerful machine
+learning models. It enables key vision
+detection features within an application ---  face, and landmark
+detection, image labeling, \gls{ocr}, and explicit
+content tagging --- and image classification into millions of predefined
+categories.
+\item \emph{YOLOv3}:
+YOLO (You Only Look Once) is a state-of-the-art, real-time object detection
+system among the most widely used deep learning-based object detection methods. It considers object detection as a regression problem,
+directly predicting the class probabilities and bounding box offsets from full
+images with a single feed-forward \gls{cnn}.
+YOLOv3 eliminates region proposal generation and feature
+resampling and encapsulates all stages in a single network to form a true
+end-to-end detection system.
+\item \emph{TensorFlow}:
+it is a free, open-source framework for creating algorithms to develop a
+user-friendly Graphical Framework called TensorFlow Graphical Framework
+(TF-GraF) for object detection API, which is widely applied to solve complex
+tasks efficiently in agriculture, engineering, and medicine.
+The TF-GraF provides independent virtual environments for amateurs and beginners
+to design, train, and deploy machine intelligence models without coding or
+\gls{cli} in the client-side.
+\item \emph{libfacedetection}:
+it is an open-source library for face detection in images. It uses a pre-trained
+\gls{cnn}, enabling face detection on inputs with a size greater than 10×10
+pixels. The source code is not dependant on any other libraries. A C++ compiler
+is required to compile the source under various platforms, such as Windows,
+Linux, ARM, etc..
+\item \emph{Raster Vision}:
+it is an open-source Python framework to build computer vision models on
+satellite, aerial, and other large sets of images (including oblique drone
+imagery), using deep learning or machine learning models.
+It has built-in support for chip classification, object detection, and semantic
+segmentation with backbends using PyTorch and Tensorflow.
+The framework is also extensible to new data sources, tasks (e.g., object
+detection), backend (e.g., TF Object Detection API), and cloud providers.
+\item \emph{SOD}:
+it is an embedded, modern cross-platform computer vision and machine learning
+software library.
+It exposes a set of APIs for deep-learning, advanced media analysis, and
+processing, including real-time, multi-class object detection, and model
+training on embedded systems with limited computational resource and \gls{iot}
+devices.
+Designed for computational efficiency and with a strong focus on real-time
+applications, SOD includes a comprehensive set of both classic and
+state-of-the-art deep-neural networks with their pre-trained models.
+Although it is open source, the pre-trained models are charged (one time fee
+only -- up to 30 \gls{usd}).
+\item \emph{Face\_recognition}:
+  it is a facial recognition API for Python and the command line, built with
+  deep learning using dlib60‘s state-of-the-art face recognition.
+  The model has an accuracy of 99.38\% on the Labeled Faces in the Wild
+  benchmark.
+\item \emph{JeelizFaceFilter}:
+it is a lightweight and robust face tracking library, designed for augmented reality face filters.
+This JavaScript library can detect and track the face in real-time from the
+webcam video feed captured, enabling the developers to solve computer-vision
+problems directly from the browser.
+The key features include face detection, face tracking, face rotation
+detection, mouth opening detection, multiple face detection, and tracking, video
+acquisition with \gls{hd} video ability, etc.
+\item \emph{OpenCV}:
+it is an open-source computer vision and machine learning software library,
+built to provide a common infrastructure for computer vision applications and
+accelerate the use of machine perception in commercial products.
+OpenCV was designed for computational efficiency and with a strong focus on
+real-time applications. It is written in optimized C++ and can take advantage of
+multicore processors, with wrappers written in Python, Java, Matlab, etc., and
+supporting Windows, Linux, Android and Mac OS.
+The library has more than 2500 optimized algorithms, including a comprehensive
+set of both classic and state-of-the-art computer vision and machine learning algorithms.
+These algorithms can be used to detect and recognize faces, identify objects,
+classify human actions in videos, track camera movements, track moving objects,
+extract 3D models of objects and produce 3D point clouds from stereo cameras.
+It can stitch images together to produce a high-resolution image of an entire
+scene, find similar images from an image database, remove red eyes from images
+taken using flash, follow eye movements, recognize scenery and establish markers to overlay it with augmented reality.
+\end{enum-c}
+%
+%\subsubsection{OpenCV}
+%\label{sec:opencv}
+%
 \subsection{Face detection}
 \label{sec:face-detection}
 Face detection has been studied for decades in the computer
