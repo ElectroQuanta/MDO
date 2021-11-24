@@ -3,6 +3,7 @@
 #+DATE: [2021-10-19 ter 11:25]
 #+EMAIL: a50178@alunos.uminho.pt
 
+#+LATEX_COMPILER: xelatex
 * Preamble
 - This folder contains all the information about the project.
 - It is written incrementally, i.e., as the several project phases take place,
@@ -266,10 +267,10 @@ Send command
 4) [ ] /Daemons/
 5) [ ] /Device drivers/
 6) [ ] *Nebulizer technology for scenting*
-7) [ ] *Computer Vision*
-   1) [ ] *OpenCV*
+7) [-] *Computer Vision*
+   1) [X] *OpenCV*
    2) [ ] *Gesture recognition algorithms*
-   3) [ ] *Face detection algorithms*
+   3) [X] *Face detection algorithms*
       1) see [[file:biblio/OpenCV3_Computer-Vision-in-C++-with-the-OpenCV-Library.pdf][openCV3 book]] (pg. 883)
 8) [ ] *RDBMS (Relational Database management system) (SQL)*
 9) [ ] /User detection technologies: IR, ultrasonic/
@@ -1453,3 +1454,49 @@ end
 
 #+RESULTS:
 [[file:diags/plantuml/seq-diag/output/seq-local-sharing-mode.png]]
+* Gesture recognition                                              :noexport:
+** Research [0/6]
+1) [ ] [[https://techvidvan.com/tutorials/hand-gesture-recognition-tensorflow-opencv/][Real-time Hand Gesture Recognition using TensorFlow & OpenCV]]
+   1) MediaPipe: a customizable ML frameworks developed by Google which
+      comes with some pre-trained models such as face detection and object
+      recognition
+      1) Recognize hand and the hand key points
+   2) TensorFlow: neural networks for ML and DL
+      1) These keypoints are fed into a pre-trained gesture recognizer network
+	 to recognize the hand pose
+   3) Steps:
+      1) Import necessary packages.
+      2) Initialize models.
+      3) Read frames from a webcam.
+      4) Detect hand keypoints.
+      5) Recognize hand gestures.
+2) [ ] [[https://gogul.dev/software/hand-gesture-recognition-p1][Hand gesture recognition using Python and OpenCV]]
+   1) Background segmentation
+   2) Motion detection and thresholding
+   3) Contour extraction
+3) [ ] [[file:~/OneDrive%20-%20Universidade%20do%20Minho/Univ/MI_Electro/Sem7/SEC/2021-22/repo/research/gesture-recognition/Hand_gesture_recognition_on_python_and_opencv.pdf][Hand gesture recognition on python and openCV (overview)]]
+   1) Hand segmentation
+   2) Track gesture of hand using Haar-Cascade Classifier
+   3) Region of Interest
+   4) Convex-Hull Transform
+4) [ ] [[https://github.com/mahaveerverma/hand-gesture-recognition-opencv][Hand gesture recognition in Python using openCV]]
+   1) Background subtraction
+   2) Histogram
+   3) Threshold
+   4) Contour and convex hull
+      #+BEGIN_EXAMPLE
+During setup, first a background model is generated when the user presses 'b'. Then, a histogram is generated when the user provides his hand as a sample by pressing 'c'. When the setup is completed, the program goes into an infinite while loop which does as follows.
+
+Camera input frame is saved to a numpy array. A mask is generated based on background model and applied on the frame. This removes background from the captured frame. Now the frame containing only the foreground is converted to HSV color space, followed by histogram comparison (generating back projection). This leaves us with the detected hand. Morphology and smoothening is applied to get a proper hand shape out of the frame. A threshold converts this into a binary image.
+
+Next, we find contours of the binary image obtained, look for the largest contour and find its convex hull.
+
+Using points from the largest contour we determine center of the palm by finding the largest circle inscribed inside the contour and then the dimension of palm. Using the center of palm as reference, we eliminate all points from the convex hull which do not seem to be part of hand. Also, nearby convex hull points are eliminated so that we are left with exactly only those many points as the number of fingers stretched out.
+
+Using the positions of fingers and palm dimensions, we model our hand.
+
+Then we compare the model with a dictionary of Gestures defined in GestureAPI.py to determine presence of gestures.
+      #+END_EXAMPLE
+5) [ ] [[https://towardsdatascience.com/training-a-neural-network-to-detect-gestures-with-opencv-in-python-e09b0a12bdf1][Training a Neural Network to Detect Gestures with OpenCV in Python]]
+   1) [[https://docs.google.com/presentation/d/1UY3uWE5sUjKRfV7u9DXqY0Cwk6sDNSalZoI2hbSD1o8/edit#slide=id.g49b784d7df_0_2205][Presentation (Summary)]]
+6) [ ] [[https://circuitdigest.com/microcontroller-projects/hand-gesture-recognition-using-raspberry-pi-and-opencv][Hand Gesture Recognition using Raspberry Pi and OpenCV]] 
