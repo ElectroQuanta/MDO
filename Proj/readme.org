@@ -257,7 +257,7 @@ Send command
     MDO-L -> RS: normal mode (example)
     RS -> RC: normal
 #+END_QUOTE
-*** Theoretical foundations [3/15]  
+*** Theoretical foundations [4/15]  
     :PROPERTIES:
     :ATTACH_DIR: /home/zmpl/OneDrive - Universidade do Minho/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/sec/img/
     :END:
@@ -267,9 +267,9 @@ Send command
 4) [ ] /Daemons/
 5) [ ] /Device drivers/
 6) [ ] *Nebulizer technology for scenting*
-7) [-] *Computer Vision*
+7) [X] *Computer Vision*
    1) [X] *OpenCV*
-   2) [ ] *Gesture recognition algorithms*
+   2) [X] *Gesture recognition algorithms*
    3) [X] *Face detection algorithms*
       1) see [[file:biblio/OpenCV3_Computer-Vision-in-C++-with-the-OpenCV-Library.pdf][openCV3 book]] (pg. 883)
 8) [ ] *RDBMS (Relational Database management system) (SQL)*
@@ -1455,7 +1455,7 @@ end
 #+RESULTS:
 [[file:diags/plantuml/seq-diag/output/seq-local-sharing-mode.png]]
 * Gesture recognition                                              :noexport:
-** Research [0/6]
+** Research [0/7]
 1) [ ] [[https://techvidvan.com/tutorials/hand-gesture-recognition-tensorflow-opencv/][Real-time Hand Gesture Recognition using TensorFlow & OpenCV]]
    1) MediaPipe: a customizable ML frameworks developed by Google which
       comes with some pre-trained models such as face detection and object
@@ -1499,4 +1499,211 @@ Then we compare the model with a dictionary of Gestures defined in GestureAPI.py
       #+END_EXAMPLE
 5) [ ] [[https://towardsdatascience.com/training-a-neural-network-to-detect-gestures-with-opencv-in-python-e09b0a12bdf1][Training a Neural Network to Detect Gestures with OpenCV in Python]]
    1) [[https://docs.google.com/presentation/d/1UY3uWE5sUjKRfV7u9DXqY0Cwk6sDNSalZoI2hbSD1o8/edit#slide=id.g49b784d7df_0_2205][Presentation (Summary)]]
-6) [ ] [[https://circuitdigest.com/microcontroller-projects/hand-gesture-recognition-using-raspberry-pi-and-opencv][Hand Gesture Recognition using Raspberry Pi and OpenCV]] 
+   2) Notes:
+      1) Train your model on images that are as close as possible to the images
+         it is likely to see in the real world - build your own dataset
+      2) Extract the gesture: background subtraction + thresholding
+      3) Build new dataset: 550 silhouette images for each of the 5 gestures
+         using openCV to capture it from webcam and save it with unique
+         filenames
+      4) Training the new model: built a CNN using Keras & TensorFlow - started
+         out with VGG-16 pre-trained model, and added 4 dense layers along with
+         a dropout layer on top.
+      5) Validation: cross-validation applying same gesture extraction to images
+         from Kaggle - results: 98% F1 score, 98% precision and accuracy
+6) [ ] [[https://circuitdigest.com/microcontroller-projects/hand-gesture-recognition-using-raspberry-pi-and-opencv][Hand Gesture Recognition using Raspberry Pi and OpenCV]]
+   1) OpenCV + TensorFlow
+   2) Steps:
+      1) Data gathering: 800 images belonging to 4 classes (200 each) 
+	 1) Rock
+	 2) Paper
+	 3) Nothing: so that the Raspberry Pi doesnt make unnecessary gestures
+	 4) Scissors
+	    #+BEGIN_SRC bash
+	    python3 image.py 200
+	    # press:
+	    # - a: to start the process
+	    # - r: rock
+	    # - p: paper
+	    # - s: scissors
+	    # - n: nothing
+	    #+END_SRC
+
+	    #+BEGIN_SRC python
+	      import cv2
+	      import os
+	      import sys
+	      num_samples = int(sys.argv[1])
+	      IMG_SAVE_PATH = 'images'
+	      try:
+		  os.mkdir(IMG_SAVE_PATH)
+	      except FileExistsError:
+		  pass
+	      # place hands inside rectangle
+	      cv2.rectangle(frame, (10, 30), (310, 330), (0, 255, 0), 2)
+	      k = cv2.waitKey (1)
+	      if k == ord('r'):
+		  name = 'rock'
+		  IMG_CLASS_PATH = os.path.join(IMG_SAVE_PATH, name)
+		  os.mkdir(IMG_CLASS_PATH)               
+	      if k == ord('p'):
+		  name = 'paper'
+		  IMG_CLASS_PATH = os.path.join(IMG_SAVE_PATH, name)
+		  os.mkdir(IMG_CLASS_PATH)
+	      if k == ord('s'):
+		  name = 'scissors'
+		  IMG_CLASS_PATH = os.path.join(IMG_SAVE_PATH, name)
+		  os.mkdir(IMG_CLASS_PATH)
+	      if k == ord('n'):
+		  name = 'nothing'
+		  IMG_CLASS_PATH = os.path.join(IMG_SAVE_PATH, name)
+		  os.mkdir(IMG_CLASS_PATH)
+	      # create a ROI around the rectangle we created earlier and save to designated path
+	      roi = frame[25:335, 8:315]
+	      save_path = os.path.join(IMG_CLASS_PATH, '{}.jpg'.format(counter + 1))
+	      print(save_path)
+	      cv2.imwrite(save_path, roi)
+	      counter += 1
+	      font = cv2.FONT_HERSHEY_SIMPLEX
+	      cv2.putText(frame,"Collecting {}".format(counter),
+			  (10, 20), font, 0.7, (0, 255, 255), 2, cv2.LINE_AA)
+	      cv2.imshow("Collecting images", frame)
+	    #+END_SRC
+      2) Training the model
+	 #+BEGIN_SRC bash
+	 python3 training.py 
+	 #+END_SRC
+	 #+BEGIN_SRC python
+	   IMG_SAVE_PATH = 'images'
+	   CLASS_MAP = {
+	       "rock": 0,
+	       "paper": 1,
+	       "scissors": 2,
+	       "nothing": 3
+	   }
+
+	   #Now in the next lines construct the head of the model that will be placed on top of the base model. The
+	   #AveragePooling2D layer calculates the average output of each feature map in the previous layer. To prevent
+	   #over-feeding, we have a 50% dropout rate.
+	   def get_model():
+	       model = Sequential([
+		   SqueezeNet(input_shape=(227, 227, 3), include_top=False),
+		   Dropout(0.5),
+		   Convolution2D(NUM_CLASSES, (1, 1), padding='valid'),
+		   Activation('relu'),
+		   GlobalAveragePooling2D(),
+		   Activation('softmax')
+	       ])
+
+	   #Now, Loop over the image directory and load all the images to python script so that we can begin the
+	   #training. Pre-processing steps include converting the images to RGB from BGR, resizing the images to
+	   #227×227 pixels, converting them to array format.
+	   for directory in os.listdir(IMG_SAVE_PATH):
+	       path = os.path.join(IMG_SAVE_PATH, directory)
+	       if not os.path.isdir(path):
+		   continue
+	       for item in os.listdir(path):
+		   if item.startswith("."):
+		       continue
+		   img = cv2.imread(os.path.join(path, item))
+		   img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+		   img = cv2.resize(img, (227, 227))
+		   dataset.append([img, directory])
+
+	   # Now, we will call the get model function and compile the model with the Adam optimizer.
+	   model = get_model()
+	   model.compile(
+	       optimizer=Adam(lr=0.0001),
+	       loss='categorical_crossentropy',
+	       metrics=['accuracy']
+	   )
+
+	   #After this, start training the model and once training is finished save the model as “game-model.h5”.
+	   model.fit(np.array(data), np.array(labels), epochs=15)
+	   model.save("game-model.h5")
+	 #+END_SRC
+      3) Gesture detection
+	 #+BEGIN_SRC bash
+	 python3 game.py 
+	 #+END_SRC
+	 #+BEGIN_SRC python
+	   #Same as the training.py script this script also starts with importing the required packages. The next lines
+	   #after importing the packages are used to create a reverse class-map function.
+	   REV_CLASS_MAP = {
+	       0: "rock",
+	       1: "paper",
+	       2: "scissors",
+	       3: "nothing"
+	   }
+
+	   #The calculate_winner function takes user’s move and Pi’s move as input and then decides the winner out
+	   #of it.  It uses Rock, Paper, and Scissors game rules to decide the winner.
+	   def calculate_winner(user_move, Pi_move):
+	       if user_move == Pi_move:
+		   return "Tie"
+	       elif user_move == "rock" and Pi_move == "scissors":
+		   return "You"
+	       elif user_move == "rock" and Pi_move == "paper":
+		   return "Pi"
+	       elif user_move == "scissors" and Pi_move == "rock":
+		   return "Pi"
+	       elif user_move == "scissors" and Pi_move == "paper":
+		   return "You"
+	       elif user_move == "paper" and Pi_move == "rock":
+		   return "You"
+	       elif user_move == "paper" and Pi_move == "scissors":
+		   return "Pi"
+
+	   # Then in the next line load the trained model and start the video stream
+	   model = load_model("game-model.h5")
+	   cap = cv2.VideoCapture(0)
+
+	   #Inside the loop, create two rectangles on the left and right sides of the frame. The left side rectangle is for the
+	   #user’s move and the right side rectangle is for Pi’s move. After that extract, the region of the image within
+	   #the user rectangle converts it to RGB format and resizes it to 227×227.
+	   cv2.rectangle(frame, (10, 70), (300, 340), (0, 255, 0), 2)
+	   cv2.rectangle(frame, (330, 70), (630, 370), (255, 0, 0), 2)
+	   roi = frame[70:300, 10:340]
+	   img = cv2.cvtColor(roi, cv2.COLOR_BGR2RGB)
+	   img = cv2.resize(img, (227, 227))
+
+	   #Now, use the model that we trained earlier and predict the gesture. Compare the predicted code with the class map and get the user move name.
+	   pred = model.predict(np.array([img]))
+	   move_code = np.argmax(pred[0])
+	   user_move_name = mapper(move_code)
+
+	   #In the next line check if users move is nothing or not. If not then allow Raspberry Pi to make its own random
+	   #move and then use calculate_winner function to decide the winner. If the user move is ‘nothing’ then wait for the user to make a move.
+	   if prev_move != user_move_name:
+	       if user_move_name != "nothing":
+		   computer_move_name = choice(['rock', 'paper', 'scissors'])
+		   winner = calculate_winner(user_move_name, computer_move_name)
+	       else:
+		   computer_move_name = "nothing"
+		   winner = "Waiting..."
+	       prev_move = user_move_name
+
+
+	   #In these lines, we have used cv2.putText function to display Users move, Pi’s move, and the winner on the frame.
+	   font = cv2.FONT_HERSHEY_SIMPLEX
+	   cv2.putText(frame, "Your Move: " + user_move_name,
+		       (10, 50), font, 1, (255, 255, 255), 2, cv2.LINE_AA)
+	   cv2.putText(frame, "Pi's Move: " + computer_move_name,
+		       (330, 50), font, 1, (255, 255, 255), 2, cv2.LINE_AA)
+	   cv2.putText(frame, "Winner: " + winner,
+		       (100, 450), font, 2, (0, 255, 0), 4, cv2.LINE_AA)
+
+	   #Now, we will display the Pi’s move inside the rectangle that we created earlier. Pi will randomly choose an image stored in the ‘test_img’ directory.
+	   if computer_move_name != "nothing":
+	       icon = cv2.imread("test_img/{}.png".format(computer_move_name))
+	       icon = cv2.resize(icon, (300, 300))
+	       frame[70:370, 330:630] = icon
+	 #+END_SRC
+7) [ ] [[pdfview:/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/biblio/A-systematic-review-on-hand-gesture-recognition-techniques,-challenges-and-applications.pdf::1][A systematic review on hand gesture recognition techniques, challenges
+   and applications]]
+   1) Scholar overview about hand gesture recognition
+** Screenshots                                                     :noexport:
+   :PROPERTIES:
+   :ATTACH_DIR: /home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/sec/img/
+   :END:
+[[file:sec/img/hand-gesture-recog-procedure.png]]

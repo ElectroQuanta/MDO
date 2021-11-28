@@ -18,7 +18,7 @@ In this section, computer vision frameworks/libraries are listed, with special
 focus on OpenCV, and computer vision algorithms for face detection and hand
 gesture recognition are analyzed.
 %
-
+%
 \subsection{Computer vision frameworks}
 \label{sec:comp-visi-fram}
 There are several noteworthy computer vision frameworks, namely~\cite{cv-frameworks-2020}:
@@ -260,6 +260,92 @@ severely impair your object detection algorithm, so it is critical to tune hyper
 %
 \subsection{Hand gesture recognition}
 \label{sec:hand-gest-recogn}
+Human communication naturally relies on hand gestures for clarification of
+intentions, thus making a viable bridge for interchanging information between
+humans and computers~\cite{aashni2017international}.
+The most notable applications of hand gesture recognition are: sign language
+comprehension, robotics control, assisting disabled people, creation of
+contactless user interfaces, game industry (e.g. Kinect), home automation,
+clinical and health, virtual environments,
+etc.~\cite{yasen2019systematic}.
+
+However, the computational performance of recognizing hand gestures is affected
+by the environmental surroundings (such as light, background, distance, skin
+color) and the position and direction of
+hand~\cite{vaibhavi2014review}. Additionally, hand gestures applications require
+users to be well trained at employing and understanding the meaning of different
+gestures, as for each application, a different group of gestures is used to
+perform its operations~\cite{yasen2019systematic}.
+
+In this section the hand gesture recognition process is explored, concerning
+its workflow and most relevant methods.
+
+The basic hand gesture recognition procedure is illustrated in Fig.~\ref{fig:hand-gesture-recog-procedure}, comprising
+the following stages~\cite{yasen2019systematic}:
+\begin{item-c}
+\item \emph{image frame acquisition}:
+  capture the human gesture image by
+  computer, usually performed using a web camera or depth
+  camera~\cite{choudhury2015review}.
+  Special tools
+  can be used such as wired or wireless gloves to detect hand movements, and
+  motion sensing input devices (e.g., Kinect, Leap Motion, etc.) to capture the
+  hand gestures and motions.
+\item \emph{Hand tracking}:
+  is the ability of the computer to trace the user
+  hand and separate it from the background and from the surroundings
+  objects~\cite{choudhury2015review}. This can be done using multi-scale color
+  feature hierarchies that gives the users hand and the background different
+  shades of colors to be able to identify and remove the background ---
+  background subtraction and thresholding, or by using clustering algorithms
+  that are capable of treating each finger as a cluster and removing the empty
+  spaces in-between them~\cite{yasen2019systematic}.
+\item \emph{Feature extraction}:
+  The features vary depending on the application, with the most common being:
+  fingers status, thumb status, skin color, alignments of fingers, and the palm
+  position~\cite{choudhury2015review}. Several feature extraction methods can be
+  used, such as Fourier descriptor method for capturing the palm, the fingers
+  and the finger tips, or the centroid method which captures the essential
+  structure of the hand~\cite{yasen2019systematic}.
+\item \emph{Classification}: The features extracted are then sent to training
+  and testing the classification algorithm
+  (such as \gls{ann}, \gls{knn}, \gls{nb}, \gls{svm}, etc.)
+  to reach the output gesture. A simple
+  case of an output gesture can contain two classes to detect only two gestures
+  such as open and closed hand gestures~\cite{yasen2019systematic}.
+\end{item-c}
+% HG procedure
+\begin{figure}[!hbt]
+\centering
+    \includegraphics[width=0.6\textwidth]{./img/hand-gesture-recog-procedure.png}
+  \caption{Basic steps of hand gesture recognition (withdrawn from~\cite{yasen2019systematic})}%
+\label{fig:hand-gesture-recog-procedure}
+\end{figure}
+
+Fig.~\ref{fig:hand-gesture-procedure-simplified} illustrates an hand gesture
+recognition workflow, materializing the aforementioned procedure, namely:
+building a gesture dataset, tracking the hand and extracting the gesture by
+creating a \gls{roi} and applying background subtraction and binary
+thresholding, training the model with the new dataset, and perform the hand
+gesture recognition using the predictive model.
+%
+\begin{figure}[!hbt]
+\centering
+    \includegraphics[width=1.0\textwidth]{./img/hand-gesture-procedure-simplified.png}
+  \caption{Hand gesture recognition workflow illustrated: example --- adapted from~\cite{trainingNN4GestureDetection}~and~\cite{oudah2020hand}}%
+\label{fig:hand-gesture-procedure-simplified}
+\end{figure}
+
+
+%\subsubsection{\emph{Hand gesture recognition techniques}}
+%\label{sec:hand-gest-recogn-1}
+%
+%\paragraph{\textbf{Gesture acquisition methods}}
+%
+%\paragraph{\textbf{Feature extraction}}
+%
+%\paragraph{\textbf{Classification of hand gestures}}
+
 
 
 %%% Local Variables:
