@@ -1,31 +1,32 @@
 \section{Daemons}
 \label{sec:daemons}
-
+In this section daemons are introduced, showing how to create them, handle
+possible errors and how to communicate with them.
+%
 \subsection{What is a Daemon?}
-A Daemon is a background process that runs without user input and usually provides some service, either for the system as a whole or for user programs.
+A daemon is a background process that runs without user input and usually provides some service, either for the system as a whole or for user programs.
 
-Normally, Daemons are started when a system boots and, unless forcibly terminated, run until system shutdown.
-Because a Daemon does not have a controlling terminal, any output,
+Normally, daemons are started when a system boots and, unless forcibly terminated, run until system shutdown.
+Because a daemon does not have a controlling terminal, any output,
 either to \textit{stderr} or \textit{stdout}, requires special handling.
 They often run with \texttt{superuser privilege} because they use privileges
 ports (1 - 1024) or because they have access to some sort of privileged resource.
-Generally, Daemons are process group leaders and session leaders, a Daemon's parent is the \texttt{init} process, which has the PID of 1 (Daemon is an orphan process inherited by init).
+Generally, daemons are process group leaders and session leaders, a daemon's parent is the \texttt{init} process, which has the PID of 1 (daemon is an orphan process inherited by init).
 
 \subsection{How to create a Daemon}
-Although a Daemon may seems mysterious and difficult to program, it is really simple if one keeps a few rules in mind and knows the key function calls to make.
-The simple steps to follow to create a Daemon are:
-
-\begin{enumerate}
+The steps to create a daemon are:
+%
+\begin{enum-c}
 \item \texttt{Fork} and exit in the parent process;
 \item Create a new session in the child using the \texttt{setsid} call;
 \item Make the root directory, "\texttt{/}", the child process's working directory;
 \item Change the child process's umask to 0;
 \item Close any unneeded file descriptor the child inherited.
-\end{enumerate}
+\end{enum-c}
 
 \paragraph{\textbf{Fork and exit in the parent process}}
-
-A Daemon is started from a shell script or the command line.
+%
+A daemon is started from a shell script or the command line.
 Daemons are unlike application programs because they are not interactive, i.e., they run in the background and, as a result, do not have the controlling terminal.
 
 The parent forks and exits as the first step toward getting rid of the controlling terminal (they only need a terminal interface long enough to get started).
@@ -36,9 +37,9 @@ caption={},
 style=customc]{./listing/daemon_ex.c}
 
 \paragraph{\textbf{Create a new session in the child using the setsid call}}
-
+%
 Calling \texttt{setsid} accomplishes several things:
-\begin{itemize}
+\begin{item-c}
 %
 \item It creates a new session if the calling process is not a process group leader, making the calling process the session leader of the new session;
 \item It makes the calling process the process group leader of the new process group;
@@ -53,10 +54,10 @@ style=customc]{./listing/daemon_ex.c}
 \item Each process is a member of a process group, which is a collection of one or more processes generally associated with each other for the purposes of job control (\textit{\# cat ship-inventory.txt | grep booty | sort}).
 \item When a new user first logs into a machine, the login process creates a new session that consists of a single process, the user’s login shell. The login shell functions as the session leader.
 %
-\end{itemize}
+\end{item-c}
 
 \paragraph{\textbf{Make the root directory, "/", the child process's working directory}}
-
+%
 This is necessary because any process whose current directory is on a mounted file system will prevent that file system from being unmounted.
 
 Making "/" a daemon's working directory is a safe way to avoid this possibility.
@@ -69,13 +70,13 @@ style=customc]{./listing/daemon_ex.c}
 
 \paragraph{\textbf{Change the child process's umask to 0}}
 
-This step is necessary to prevent the Daemon's inherited umask from interfering with the creation of files and directories.
+This step is necessary to prevent the daemon's inherited umask from interfering with the creation of files and directories.
 
 Consider the following scenario:
-\begin{itemize}
-\item A Daemon inherits a umask of 055, which masks out read and execute permissions for group and other. 
+\begin{item-c}
+\item A daemon inherits a umask of 055, which masks out read and execute permissions for group and other. 
 \item Resetting the daemon’s umask to 0 prevents such situation.
-\end{itemize}
+\end{item-c}
 %
 \lstinputlisting[language=c,firstline=31, lastline=35,
 caption={},
@@ -84,7 +85,7 @@ style=customc]{./listing/daemon_ex.c}
 %
 
 \paragraph{\textbf{Close any unneeded file descriptor the child inherited}}
-
+%
 This is simply a common sense step. There is no reason for a child to keep open descriptors inherited from parent.
 The list of potential file descriptors to close includes at least stdin, stdout and \texttt{stderr}.
 %
@@ -95,14 +96,14 @@ style=customc]{./listing/daemon_ex.c}
 %
 
 \subsection{How to handle errors}
+%
+There's the \textbf{problem} that once a daemon calls \texttt{setsid}, it no longer has the controlling terminal an so it has nowhere to send output that would normally go to \texttt{stdout} or \texttt{stderr} (such as error messages).
 
-There's the \textbf{problem} that once a Daemon calls \texttt{setsid}, it no longer has the controlling terminal an so it has nowhere to send output that would normally go to \texttt{stdout} or \texttt{stderr} (such as error messages).
-
-The \textbf{solution} is that, fortunately, the standard utility for this purpose is the \texttt{syslog} service, provided by the system logging Daemon, \texttt{syslogd}.
+The \textbf{solution} is that, fortunately, the standard utility for this purpose is the \texttt{syslog} service, provided by the system logging daemon, \texttt{syslogd}.
 
 \paragraph{\textbf{Handling Errors with syslog}}
-
-\texttt{syslogd} is a Daemon that allow to save log messages from other Daemons or applications.
+%
+\texttt{syslogd} is a daemon that allow to save log messages from other daemons or applications.
 The relevant interface is defined in \texttt{<syslog.h>} header file.
 The \gls{api} is simple, \texttt{openlog} opens the log, \texttt{syslog} writes a message to it, and
 \texttt{closelog} close the log.
@@ -116,12 +117,12 @@ style=customc]{./listing/daemon_ex.c}
 %
 
 \subsection{Communicating with a Daemon}
-
-To communicate with a Daemon, you send a it signals that cause it to respond in a given way.
+%
+To communicate with a daemon, you send a it signals that cause it to respond in a given way.
 For example, it is typically necessary to force a daemon to reread its configuration file.
 The most common way to do this is to send a \texttt{SIGHUP} signal to the daemon.
 
-When you execute the command \textit{"kill PID"} on command line, the signal \texttt{SIGINT} is sent to Daemon to terminate the Daemon execution.
+When you execute the command \textit{"kill PID"} on command line, the signal \texttt{SIGINT} is sent to daemon to terminate the daemon execution.
 
 %%% Local Variables:
 %%% mode: latex
