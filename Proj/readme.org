@@ -1707,3 +1707,6 @@ Then we compare the model with a dictionary of Gestures defined in GestureAPI.py
    :ATTACH_DIR: /home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/sec/img/
    :END:
 [[file:sec/img/hand-gesture-recog-procedure.png]]
+* RDBMS                                                            :noexport:
+** SQLite vs MySQL
+1) https://www.hostinger.com/tutorials/sqlite-vs-mysql-whats-the-difference/

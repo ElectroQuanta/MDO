@@ -1,10 +1,62 @@
 %
 \section{RDBMS}
 \label{sec:rdbms}
-aaaaaaaa
+An \acrfull{rdbms} is a software program used to create, maintain and manage
+relational databases.
+A database is a collection of well-organized related data. Examples of databases
+include employee records, library management system, bus, railway, and airline
+reservation systems~\cite{rdbmsDbmsDiff}.
+
+\gls{rdbms} is a subset of \gls{dbms} with relationship between tables
+and rows. It follows the relational model, introduced by E.F. Codd in 1970~\cite{ramakrishnan2003database},
+instead of navigational model, where in the data is stored in multiple tables.
+The tables are related to each other
+using primary and foreign keys. It is the most used database model widely used
+by enterprises and developers for storing complex and huge amounts of
+data~\cite{rdbmsDbmsDiff}. Some examples of \gls{rdbms} are Oracle Database,
+MySQL, IBM DB2, SQLite, PostgreSQL, and MariaDB.
+
+Arguably, the most widely used form
+of concurrent programming is the concurrent execution of database programs
+(called transactions). Users write programs as if they are to be run by
+themselves, and the responsibility for running them concurrently is given to the
+\gls{dbms}~\cite{ramakrishnan2003database}.
+
+From the users' application standpoint, a \gls{rdbms} is a management system
+for databases, but is useless unless it provides an efficient and easy method to
+pose questions involving the data stored in the databases. These questions are
+called queries~\cite{ramakrishnan2003database}. A \gls{dbms} provides a
+specialized language --- query language --- in which queries can be performed.
+The \gls{sql} for relational databases, is now the standard.
+
+In this section an overview is presented about \gls{rdbms} foundations:
+relational model, levels of abstraction in a \gls{dbms}, transaction management,
+and the structure of a \gls{dbms}. Additionally, a brief overview over \gls{sql}
+and a C++ interface is presented.
+
+\subsection{Relational model}
+\label{sec:relational-model}
+
+\subsection{Levels of abstraction in a DBMS}
+\label{sec:levels-abstr-dbms}
+
+\subsection{Transaction management}
+\label{sec:trans-manag}
+
+\subsection{Structure of a RDBMS}
+\label{sec:structure-rdbms}
+
+\subsection{SQL}
+\label{sec:sql}
+
+\subsection{SQL C++ interface}
+\label{sec:sql-c++-interface}
 
 
-%%% Local Variables:
-%%% mode: latex
-%%% TeX-master: "../../../dissertation"
-%%% End:
+
+
+
+%% Local Variables:
+%% mode: latex
+%% TeX-master: "../../../dissertation"
+%% End:
