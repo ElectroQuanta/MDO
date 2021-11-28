@@ -9,6 +9,15 @@
 - It is written incrementally, i.e., as the several project phases take place,
   the document versions pertaining to each phase are stored in the folder
   *submission*.
+** Screenshots                                                     :noexport:
+   :PROPERTIES:
+   :ATTACH_DIR: /home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/sec/img/
+   :END:
+[[file:sec/img/hand-gesture-recog-procedure.png]]
+
+[[file:sec/img/dbms-abstraction-levels.png]]
+
+[[file:sec/img/dbms-struct.png]]
 * Versions [1/1]
 1. [X] Problem statement: deadline - <2021-10-28 qui>
 
@@ -1702,11 +1711,6 @@ Then we compare the model with a dictionary of Gestures defined in GestureAPI.py
 7) [ ] [[pdfview:/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/biblio/A-systematic-review-on-hand-gesture-recognition-techniques,-challenges-and-applications.pdf::1][A systematic review on hand gesture recognition techniques, challenges
    and applications]]
    1) Scholar overview about hand gesture recognition
-** Screenshots                                                     :noexport:
-   :PROPERTIES:
-   :ATTACH_DIR: /home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/sec/img/
-   :END:
-[[file:sec/img/hand-gesture-recog-procedure.png]]
 * RDBMS                                                            :noexport:
 ** SQLite vs MySQL
 1) https://www.hostinger.com/tutorials/sqlite-vs-mysql-whats-the-difference/
