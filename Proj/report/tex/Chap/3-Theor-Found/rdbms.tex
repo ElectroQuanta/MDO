@@ -18,7 +18,7 @@ instead of navigational model, where in the data is stored in multiple tables.
 The tables are related to each other
 using primary and foreign keys. It is the most used database model widely used
 by enterprises and developers for storing complex and huge amounts of
-data~\cite{rdbmsDbmsDiff}. Some examples of \gls{rdbms} are Oracle Database,
+data~\cite{ramakrishnan2003database}. Some examples of \gls{rdbms} are Oracle Database,
 MySQL, IBM DB2, SQLite, PostgreSQL, and MariaDB.
 
 From the users' application standpoint, a \gls{rdbms} is a management system
@@ -252,8 +252,149 @@ It is comprised of~\cite{ramakrishnan2003database}:
   memory.
 \end{item-c}
 
-\subsection{Entity-Relationshiop model}
+\subsection{Database design overview}
+\label{sec:datab-design-overv}
+%
+The database design process can be divided into six steps, namely~\cite{ramakrishnan2003database}:
+\begin{enum-c}
+\item \emph{Requirements Analysis}:
+  the requirements for the database
+  application are elicited and analyzed assessing what data is to be stored in
+  the database, what applications must be built on top of it, and what operations are most frequent and subject to performance
+  requirements.
+Several methodologies have been proposed for organizing and presenting the
+information gathered in this step, and some automated tools have been developed
+to support this process.
+\item \emph{Conceptual Database Design}:
+the information gathered in the previous step is used to develop a high-level
+description of the data to be stored in the database, along with the constraints that are known to hold over this data. This
+step is often carried out using the \gls{er} model, or a similar high-level data model.
+\item \emph{Logical Database Design}:
+  A DBMS must be chosen to implement the database
+design, and convert the conceptual database design -- \gls{er} schema --- into a database schema in the
+data model of the chosen DBMS --- relational schema.
+\item \emph{Schema Refinement}:
+  Next, the collection of relations in the relation database schema are analyzed
+  to identify potential problems, and to refine it. This is performed by
+  normalizing relations, restructuring them to ensure some desirable
+  properties.
+\item \emph{Physical Database Design}:
+  In this step, the typical expected workloads that the database must support
+  are analyzed and further refine the database design to ensure that it meets
+  desired performance criteria. This may simply involve building indexes on some tables and clustering some tables, or it may involve a substantial
+  redesign of parts of the database schema obtained from the earlier design steps.
+\item \emph{Security Design}:
+  Lastly, the different user groups and different
+roles played by various users are identified (e.g., the development team for a
+product, the customer support representatives, the product manager).
+For each role and user group, the permitted and forbidden parts of the database
+are identified and the policies are enforced to ensure this. A DBMS provides
+several mechanisms to assist in this step.
+\end{enum-c}
+%
+\subsection{Entity-Relationship model}
 \label{sec:entity-relat-model}
+%
+The \acrfull{er} data model enables the description of the data involved in a
+real-world enterprise in terms of entities and their relationships and is widely
+used to develop an initial database design. The \gls{er} model is most relevant
+to the first three steps of the database
+design~\cite{ramakrishnan2003database}~(see Section~\ref{sec:datab-design-overv}).
+In this section are presented the
+key concepts for the \gls{er} model as a database design modeling tool.
+%
+
+\subsubsection{Key concepts}
+\label{sec:key-concepts}
+It is important to understand some key concepts for the \gls{er} model, namely~\cite{ramakrishnan2003database}:
+\begin{item-c}
+\item \emph{Entity}: is an object in the real world that is distinguishable from
+  other objects, e.g., the Pokemon toy, the toy department, the manager of the
+  toy department, etc.
+\item \emph{Entity set}: collection of entities. They do not need to be
+  disjoint, i.e., entities can simultaneously belong to different entity
+  sets. For example, one can define an entity set called \texttt{Employees} that
+  contain both the toy and appliance department employee sets.
+  An entity set is represented by a rectangle in the \gls{er} model.
+\item \emph{Attributes}: an entity is described using a set of attributes. All
+  entities in a given entity set have the same attributes. For example, the
+  \texttt{Employees} entity set could use \texttt{name}, social security number
+  (\texttt{ssn}) and parking lot (\texttt{lot}) as attributes.
+  An attribute is represented by an oval in the \gls{er} model.
+\item \emph{Domain}: for each attribute associated with a set, one must identify
+  a domain of possible values. For example, the domain associated with the
+  attribute \texttt{name} of \texttt{Employees} might be the set of 20-character
+  strings.
+  The domain information can be listed along the attribute name.
+\item \emph{Key}: minimal set of attributes whose values uniquely identify an
+  entity in the set. There could be more than one \emph{candidate} key: if so,
+  one designate one of them as the \emph{primary} key.
+  Each attribute in the primary key is underlined in the \gls{er} model. The
+  \emph{foreign key} is(are) the
+  attribute(s) which in a relationship one-to-many is(are) primary key(s) in the
+  entity of the side \texttt{one} and integrates the set of attributes of the
+  entity in the side \texttt{many} of that relationship
+\item \emph{Relationship}: association between two or more entities.
+  For example, one may have the relationship that Joe works in the pharmacy
+  department.
+  A relationship is represented by a straight line in the \gls{er} model and may
+  also have \emph{descriptive attributes}.
+\item \emph{Relationship set}: collection of similar relationships.
+\item \emph{Key constraints}: restrictions over entities.
+  For example, the restriction that each department has at most one manager, and
+  is denoted by using an arrow from the entity to the relationship.
+\item \emph{Participation constraints}: states the participation of an entity
+  set in the relationship. It can be \emph{partial} or \emph{total}.
+  For example, if every department is required to have a manager, the
+  participation of the entity set \texttt{Departments} in the relationship set
+  \texttt{Manages} is said to be \emph{total}.
+\item \emph{Class hierarchies}: classification of entities in an entity set into
+  subclasses, using the relationship \emph{is a}. For example, a \texttt{Car}
+  \texttt{is a} \texttt{Vehicle} and a \texttt{Truck} \texttt{is a}
+  \texttt{Vehicle} too. 
+\item \emph{Aggregation}: indicates that a relationship set (identified through
+  a dashed box) participates in another relationship set.
+\end{item-c}
+
+The \glspl{erd} use a graphical conventional to quickly and clearly depict the
+entities involved and how they relate to each other. In a \gls{erd} entities are
+represented by rectangles, attributes by ellipses, and the relationships as
+lines between entities. In the rectangles and ellipses are placed the names of
+the different entities and attributes. The relationships have cardinalities --- \texttt{1:1}
+(one-to-one), \texttt{1:M} (one-to-many), and \texttt{M:N} (many-to-many) ---
+and may be mandatory or optional --- e.g., a vehicle may not have any parking
+space assigned, but to each parking space is assigned one, and one only,
+vehicle.
+
+Several notations can be used, namely, crow's foot, \gls{uml}, Chen, Barker,
+etc~\cite{crowsfootNotation}.
+In crow's foot notation:
+\begin{item-c}
+\item A multiplicity of one and a mandatory relationship is represented by a
+  straight line perpendicular to the relationship line.
+\item A multiplicity of many is represented by the three-pronged `crow-foot'
+  symbol.
+\item An optional relationship is represented by an empty circle.
+\end{item-c}
+
+Fig.~\ref{fig:erd-example} illustrates an example of an \acrfull{erd} using
+crow's foot notation for an a company. There are three entity sets ---
+\texttt{Customers}, \texttt{Orders}, and \texttt{Shipments}. Within each of
+these are the attributes, with the primary key being underlined. Additionally it
+also indicates the foreign key that resolves the \texttt{one-to-many}
+relationship. Thus, a customer can place \texttt{0} or \texttt{many} orders, which, in
+turn, can have \texttt{0} or \texttt{many} shipment methods.
+
+%
+\begin{figure}[htb!]
+\centering
+    \includegraphics[width=0.8\columnwidth]{./img/erd-example.png}
+  \caption{Example of an \gls{erd}}%
+\label{fig:erd-example}
+\end{figure}
+%
+
+
 
 
 \subsection{SQL}
