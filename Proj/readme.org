@@ -18,6 +18,13 @@
 [[file:sec/img/dbms-abstraction-levels.png]]
 
 [[file:sec/img/dbms-struct.png]]
+
+[[file:sec/img/sql-dll.png]]
+
+[[file:sec/img/sql-dml-1.png]]
+
+[[file:sec/img/sql-dml-2.png]]
+
 * Versions [1/1]
 1. [X] Problem statement: deadline - <2021-10-28 qui>
 

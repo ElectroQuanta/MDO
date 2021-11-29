@@ -399,6 +399,51 @@ turn, can have \texttt{0} or \texttt{many} shipment methods.
 
 \subsection{SQL}
 \label{sec:sql}
+Ideally, a database language allows the creation of a database and table
+structures, the execution of basic data management tasks (add, delete, and
+modify), and the execution of complex queries designed to transform the raw data
+into useful information. Moreover, it must provide a clear and easy suntax, it
+must be portable and conform to some basic standard. \gls{sql} complies well to
+these requirements~\cite{coronel2016database}.
+
+\gls{sql} functions fit into two broad categories~\cite{coronel2016database}:
+\begin{enum-c}
+\item It is a \emph{\gls{ddl}}: SQL includes commands to create database objects
+  such as tables, indexes, and views, as well as commands to define access
+  rights to those database objects (see Fig.~\ref{fig:sql-dll}).
+\item It is a \emph{\gls{dml}}: SQL includes commands to insert, update, delete,
+  and retrieve data within the database tables (see Fig.~\ref{fig:sql-dml}).
+\end{enum-c}
+%
+\begin{figure}[htb!]
+\centering
+    \includegraphics[width=0.9\columnwidth]{./img/sql-dll.png}
+  \caption{SQL data definition commands --- withdrawn from~\cite{coronel2016database}}%
+  \label{fig:sql-dll}
+\end{figure}
+%
+\begin{figure}[htb!]
+  \centering
+  % 
+  \begin{subfigure}[t]{.9\textwidth}
+  \includegraphics[width=\textwidth]{img/sql-dml-1.png}%
+  %\caption{main}%
+  %\label{fig:state-mach-local-superv-main}
+\end{subfigure}
+%
+%\vspace{-0.1\textwidth}
+%
+  \begin{subfigure}{.9\textwidth}
+  \includegraphics[width=\textwidth]{img/sql-dml-2.png}%
+  %\caption{Mode Manager}%
+  %\label{fig:state-mach-local-superv-mode}
+\end{subfigure}
+  % 
+  \caption{SQL data manipulation commands --- withdrawn from~\cite{coronel2016database}}%
+  \label{fig:sql-dml}
+\end{figure}
+%
+
 
 \subsection{SQL C++ interface}
 \label{sec:sql-c++-interface}
