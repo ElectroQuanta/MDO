@@ -530,10 +530,39 @@ these requirements~\cite{coronel2016database}.
 %
 
 
-\subsection{MySQL C/C++ interfaces}
-\label{sec:sql-c++-interface}
+\subsection{MySQL Interfaces}
+\label{sec:sql-interfaces}
+\texttt{MySQL} works under the client--server paradigm. It has several client
+interfaces that can interact with the server, through connectors and
+\glspl{api}, i.e., the drivers and libraries that one can use to connect
+applications in different programming languages to \texttt{MySQL} database
+servers.
+The application and database server can be on the same machine, or communicate
+across the network~\cite{MysqlConnAPIs}.
+The following interfaces are available: \texttt{Java}, \texttt{Python},
+\texttt{JavaScript}, \texttt{C++}, \texttt{C},
+\texttt{C\#},
+\texttt{PHP},
+\texttt{OBDC}, \texttt{NBD Cluster},
+\texttt{MySQL Shell}, and \texttt{X DevAPI}.
 
-
+\subsubsection{C++ connector}
+\label{sec:c++-connector}
+From the list of available interfaces, the most well suited to interface the
+\gls{rdbms} are the \texttt{C \gls{api}} and the \texttt{C++ connector}, as they
+are the most well known programming languages by the authors and the better ones
+in terms of performance.
+However, the \texttt{C++ connector} was chosen because it offers the following
+benefits over the MySQL C API provided by the MySQL client library~\cite{MysqlConnC++Intro}:
+\begin{item-c}
+\item Convenience of pure C++.
+\item Support for the object-oriented programming paradigm.
+\item Support for these application programming interfaces: X DevAPI, X DevAPI
+  for C, Legacy JDBC 4.0-based API.
+\item Reduced development time.
+\item Licensed under the GPL with the FLOSS License Exception.
+\item Available under a commercial license upon request.
+\end{item-c}
 
 
 
