@@ -399,9 +399,10 @@ turn, can have \texttt{0} or \texttt{many} shipment methods.
 
 \subsection{Choice of the RDBMS}
 \label{sec:choice-rdbms}
-In this section are presented the most relevant \glspl{rdbms}, focusing
-specially on the open-source (and free) systems, namely \texttt{MySQL} and
-\texttt{SQLite}.
+In this section are presented the most relevant \glspl{rdbms}, its advantages
+and disadvantages, and the best use case, which can help the database designer
+to appropriately choose a \gls{rdbms}. Special focus is given to the free
+systems, namely \texttt{MySQL} and\texttt{SQLite}, due to budget restrictions.
 
 The most relevant \glspl{rdbms} are~\cite{modernDBChoice}:
 % src: https://www.xplenty.com/blog/which-database/
@@ -451,9 +452,36 @@ records.
       but are operating under strict budget constraints. It is an extremely
       powerful and reliable modern RDBMS with a free tier.
   \end{itemize}
-\item \textbf{SQLite}:
+\item \textbf{SQLite}~\cite{MysqlVsSqlite}: it is a C-language library that
+  implements a small, fast, self-contained SQL database engine --- 
+  an embedded \gls{db} --- which means the \gls{db} engine runs as a part of the
+  app.
+    \begin{itemize}
+    \item \emph{Advantages}: it is open-source, free of charge (freeware), a
+      server-less and file-based database, and self-contained. It has a small
+      storage footprint (the \texttt{SQLite} library is 250 KB in size, while the \texttt{MySQL}
+      server is about 600 MB). It directly stores information into a single
+      file, making it easy to copy, and no configuring is required.
+    \item \emph{Disadvantages}: it lacks user management (not suitable for
+      multiple users) and security features (the database can be accessed by
+      anyone). It is not easily scalable and cannot be customized.
+    \item \emph{Best use case}: \texttt{SQLite} is best suited for developing
+      small standalone apps or smaller projects which do not require much
+      scalability.
+  \end{itemize}
 \end{item-c}
-
+%
+\paragraph{\textbf{Summary}}
+\texttt{Oracle Database} and \texttt{Microsoft SQL server} are proprietary
+solutions, specially suited for large organizations, and can be very
+expensive. On the other hand, \texttt{MySQL} and \texttt{SQLite} are open-source
+and freeware solutions, which can be used to quickly test and iterate the
+\gls{db} design before moving into production. However, \texttt{SQLite} does not
+have user authentication or security features, and it is not easily
+scalable. Thus, \texttt{MySQL} arises as the best option, suited for distributed
+architectures, as a trade-off between cost, ease of use, scalability, security
+and user management.
+%
 \subsection{SQL}
 \label{sec:sql}
 Ideally, a database language allows the creation of a database and table
@@ -502,7 +530,7 @@ these requirements~\cite{coronel2016database}.
 %
 
 
-\subsection{SQL C++ interface}
+\subsection{MySQL C/C++ interfaces}
 \label{sec:sql-c++-interface}
 
 
