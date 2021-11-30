@@ -1721,3 +1721,102 @@ Then we compare the model with a dictionary of Gestures defined in GestureAPI.py
 * RDBMS                                                            :noexport:
 ** SQLite vs MySQL
 1) https://www.hostinger.com/tutorials/sqlite-vs-mysql-whats-the-difference/
+** mySQL
+*** Installation [1/1]
+1) [X] Add APT repository (see [[id:8fe4ac7c-a9d3-4841-aba2-27b609f6b29c][here]])
+2) [ ] Install server (see [[id:e9eeae7e-2396-41c6-925a-5ad2fa36acf0][here]])
+3) [X] Install client (see [[id:9cd276fc-a3d9-4826-8c8d-929055b3c3ef][here]])
+**** ✔ DONE Add APT repository [4/4]
+     :PROPERTIES:
+     :ID:       8fe4ac7c-a9d3-4841-aba2-27b609f6b29c
+     :END:
+     :LOGBOOK:
+     - State "✔ DONE"     from              [2021-11-30 ter 01:58]
+     :END:
+  1) [X] Download APT repository: from [[https://dev.mysql.com/downloads/repo/apt/][here]]
+  2) [X] Install APT repository using ([[https://dev.mysql.com/doc/mysql-apt-repo-quick-guide/en/#apt-repo-setup][src]]):
+     #+BEGIN_SRC bash
+     sudo dpkg -i /PATH/version-specific-package-name.deb
+     # example
+     # sudo dpkg -i /PATH/version-specific-package-name.deb
+     #+END_SRC
+  3) [X] During the installation, you'll be asked what components to install.
+     1) Choose =none=
+     2) Press =ok= to finish
+  4) [X] Update package info from APT repository (this step is mandatory):
+     #+BEGIN_SRC bash
+     sudo apt get update
+     #+END_SRC
+*** Server
+**** Installation [2/5]
+     :PROPERTIES:
+     :ID:       e9eeae7e-2396-41c6-925a-5ad2fa36acf0
+     :END:
+  1) [X] Install mySQL server
+     #+BEGIN_SRC bash
+    sudo apt install mysql-server 
+     #+END_SRC
+  2) [X] Protect the server before deploying: perform secure installation
+     #+BEGIN_SRC bash
+     sudo mysql_secure_installation
+     # say yes to validate with password
+     y
+     # select security level of password: medium
+     1
+     # input password
+     ESRG-MDO-Hugo-Ze@2021
+     # continue with the password provided: yes
+     y
+     # Remove annonymous users from DB: yes (they can be added back later)
+     y
+     # disable root login remotely: yes
+     y
+     # Remove test database: yes
+     y
+     # Reload privilege tables: yes
+     y
+     #+END_SRC
+  3) [ ] Enable MySQL to run at boot
+     #+BEGIN_SRC bash
+    sudo systemctl enable --now mysql.service 
+     #+END_SRC
+  4) [ ] Check the status of the service
+     #+BEGIN_SRC bash
+    systemctl status mysql.service 
+     #+END_SRC
+  5) [ ] Whitelist mySQL service through firewall
+     1) Check firewall status
+	#+BEGIN_SRC bash
+       sudo ufw status 
+	#+END_SRC
+	1) No rule should be active, and so, it should only show =status: active=
+     2) Whitelist it
+	#+BEGIN_SRC bash
+       sudo ufw allow mysql
+	#+END_SRC
+     3) Check firewall status
+	#+BEGIN_SRC bash
+       sudo ufw status 
+	#+END_SRC
+	1) A rule should be active (mySQL), and available at port =3306= (the
+           default for mySQL)
+*** Shell
+ MySQL Shell provides an interactive code execution mode, where you type code at
+ the MySQL Shell prompt and each entered statement is processed, with the result
+ of the processing printed onscreen. Unicode text input is supported if the
+ terminal in use supports it. Color terminals are supported. ([[https://dev.mysql.com/doc/mysql-shell/8.0/en/mysql-shell-features.html][src]])
+
+Multiple-line code can be written using a command, enabling MySQL Shell to cache
+multiple lines and then execute them as a single statement. For more information
+see Multiple-line Support. 
+**** ✔ DONE Installation [1/1]
+     :PROPERTIES:
+     :ID:       9cd276fc-a3d9-4826-8c8d-929055b3c3ef
+     :END:
+     :LOGBOOK:
+     - State "✔ DONE"     from              [2021-11-30 ter 01:58]
+     :END:
+1) [X] Install using terminal ([[   https://dev.mysql.com/doc/mysql-shell/8.0/en/mysql-shell-install-linux-quick.html][src]])
+   #+BEGIN_SRC bash
+   sudo apt install mysql-shell
+   #+END_SRC

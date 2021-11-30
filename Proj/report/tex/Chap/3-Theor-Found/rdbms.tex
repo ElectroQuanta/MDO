@@ -12,7 +12,7 @@ information about the following~\cite{ramakrishnan2003database}:
 
 An \acrfull{dbms} is a software designed to assist in maintaining and utilizing
 large collections of data.
-\acrfull{rdbms} is a subset of \gls{dbms} with relationship between tables (entities)
+A \acrfull{rdbms} is a subset of \gls{dbms} with relationship between tables (entities)
 and rows (entities' attributes). It follows the relational model, introduced by E.F. Codd in 1970~\cite{ramakrishnan2003database},
 instead of navigational model, where in the data is stored in multiple tables.
 The tables are related to each other
@@ -396,6 +396,63 @@ turn, can have \texttt{0} or \texttt{many} shipment methods.
 
 
 
+
+\subsection{Choice of the RDBMS}
+\label{sec:choice-rdbms}
+In this section are presented the most relevant \glspl{rdbms}, focusing
+specially on the open-source (and free) systems, namely \texttt{MySQL} and
+\texttt{SQLite}.
+
+The most relevant \glspl{rdbms} are~\cite{modernDBChoice}:
+% src: https://www.xplenty.com/blog/which-database/
+\begin{item-c}
+\item \textbf{Oracle Database}: 
+Oracle has provided high-quality database solutions since the 1970s. The most
+recent version of Oracle Database was designed to integrate with cloud-based
+systems, and it allows you to manage massive databases with billions of
+records.
+    \begin{itemize}
+    \item \emph{Advantages}: the most advanced technology and a wide range of
+    solutions.
+    \item \emph{Disadvantages}: an expensive solution and system upgrades might be
+    required ---  many businesses have to upgrade their hardware before using Oracle
+    solutions.
+    \item \emph{Best use case}: if you're a large organization that needs to manage
+    a massive amount of data, Oracle could be the ideal choice.
+  \end{itemize}
+\item \textbf{Microsoft SQL Server}: it is a database engine that is compatible
+  with, both, on-site and cloud-based servers, and supports Windows and Linux
+  OSes.
+    \begin{itemize}
+    \item \emph{Advantages}: it is mobile: this database engine allows you to
+      access dashboard graphics and visuals via mobile devices. It integrates
+      with Microsoft products.  It is fast and stable.
+    \item \emph{Disadvantages}: an expensive solution and requires a lot of
+      \gls{hw} resources.
+    \item \emph{Best use case}: if you're an enterprise-level corporation that
+      relies heavily on Microsoft products, the speed, agility, and reliability
+      of Microsoft SQL Server could be an excellent choice.
+  \end{itemize}
+\item \textbf{MySQL}: MySQL is a free, open-source RDBMS solution that Oracle
+  owns and manages. Even though it's freeware, MySQL benefits from frequent
+  security and features updates. Large enterprises can upgrade to paid versions of MySQL to benefit from additional features and user support.
+    \begin{itemize}
+    \item \emph{Advantages}: it is open-source, free of charge (freeware) and
+      highly compatible with many other database systems.
+    \item \emph{Disadvantages}: lacking features common to other \glspl{rdbms}:
+      because MySQL prioritizes speed and agility over features, some of the
+      standard features found in other solutions may be missing, e.g., the
+      ability to create incremental backups. Challenges getting quality support:
+      The free version of MySQL does not come with on-demand support. However,
+      MySQL does have an active volunteer community, useful forums, and a lot of
+      documentation.
+    \item \emph{Best use case}: MySQL is a particularly valuable RDBMS solution
+      for businesses that need a solution with enterprise-level capabilities,
+      but are operating under strict budget constraints. It is an extremely
+      powerful and reliable modern RDBMS with a free tier.
+  \end{itemize}
+\item \textbf{SQLite}:
+\end{item-c}
 
 \subsection{SQL}
 \label{sec:sql}
