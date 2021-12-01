@@ -53,7 +53,7 @@
 *** Selection
 - [[file:readme.org][Marketing digital Outdoor]]
 ** Report
-*** Outline [1/7]
+*** Outline [2/8]
 1. [X] Introduction
    1. Motivation and context
    2. Problem statement
@@ -61,7 +61,7 @@
    4. Goals
    5. Project planning
    6. Report outline
-2. [ ] Analysis
+2. [X] Analysis
    1. Background and state of the art
    2. Requirements and constraints
    3. System overview
@@ -74,8 +74,8 @@
       3. State machine diagram
       4. Sequence diagram
    6. Budget
-   7. Theoretical foundations
-3. [ ] Design
+3. [ ] Theoretical foundations
+4. [ ] Design
    1. HW specification
       1. Block diagram with COTS components, if possible
       2. List of constraints of functions to be implemented in HW or SW
@@ -95,10 +95,10 @@
 	  - class declarations
    5. Start-up/shutdown process specification
    6. Error Handling specification
-4. [ ] Implementation
-5. [ ] Testing
-6. [ ] Verification/Validation
-7. [ ] Conclusions
+5. [ ] Implementation
+6. [ ] Testing
+7. [ ] Verification/Validation
+8. [ ] Conclusions
 ** Marketing Digital Outdoor                                      :Important:
 *** Topics
 1. Motivation and context
@@ -273,14 +273,14 @@ Send command
     MDO-L -> RS: normal mode (example)
     RS -> RC: normal
 #+END_QUOTE
-*** Theoretical foundations [4/15]  
+*** Theoretical foundations [6/16]  
     :PROPERTIES:
     :ATTACH_DIR: /home/zmpl/OneDrive - Universidade do Minho/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/sec/img/
     :END:
 1) [X] *Project methodology: Waterfall model*
 2) [X] *Multitasking and Pthreads*
 3) [X] *Client-Server architecture & TCP/IP & OSI model*
-4) [ ] /Daemons/
+4) [X] /Daemons/
 5) [ ] /Device drivers/
 6) [ ] *Nebulizer technology for scenting*
 7) [X] *Computer Vision*
@@ -288,7 +288,7 @@ Send command
    2) [X] *Gesture recognition algorithms*
    3) [X] *Face detection algorithms*
       1) see [[file:biblio/OpenCV3_Computer-Vision-in-C++-with-the-OpenCV-Library.pdf][openCV3 book]] (pg. 883)
-8) [ ] *RDBMS (Relational Database management system) (SQL)*
+8) [X] *RDBMS (Relational Database management system) (SQL)*
 9) [ ] /User detection technologies: IR, ultrasonic/
 10) [ ] /Camera recording and codecs/
 11) [ ] /Image filtering APIs/
@@ -296,6 +296,7 @@ Send command
 13) [ ] *Social media and e-mail sharing APIs*
 14) [ ] /UI framework: Qt/
 15) [ ] /File transfer protocols/
+16) [ ] *Makefiles*
 
 Legend:
 - *Ze*
@@ -1820,3 +1821,8 @@ see Multiple-line Support.
    #+BEGIN_SRC bash
    sudo apt install mysql-shell
    #+END_SRC
+*** C++ connector
+**** Introduction
+[[https://dev.mysql.com/doc/connector-cpp/8.0/en/connector-cpp-introduction.html][src]]
+**** Usage examples
+src

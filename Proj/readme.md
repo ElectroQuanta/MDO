@@ -1,30 +1,30 @@
-- [Preamble](#orgb2b23e9)
-- [Versions <code>[1/1]</code>](#org7aae8fc)
-- [Notes](#orgf22cb98)
-  - [Requirements](#org21f3f9c)
-  - [Problem statement](#orgc25e105)
-  - [Research](#org3a52cc0)
-    - [Topics <code>[0/3]</code>](#org3c01ca5)
-    - [Selection](#org2a61126)
-  - [Report](#orged5b1a0)
-    - [Outline <code>[1/7]</code>](#org18257c1)
-  - [Marketing Digital Outdoor](#org7674816)
-    - [Topics](#orgd6a7abe)
-    - [Technologies <code>[0/11]</code>](#org5df378b)
-    - [Problem statement](#org2eae198)
-    - [Market research <code>[3/3]</code>](#org9251980)
-    - [Project planning](#org439f6c6)
-    - [Analysis](#org1c036f5)
-    - [Theoretical foundations <code>[3/15]</code>](#org031d6dc)
-- [Diagrams](#org32cff34)
-  - [PlantUML](#org9652f3e)
-    - [Setup <code>[0/6]</code>](#orgc0ba881)
-    - [Workflow <code>[0/4]</code>](#orgf6716dc)
-    - [Sequence diagrams](#orgf132027)
+- [Preamble](#org4b498a4)
+- [Versions <code>[1/1]</code>](#orgf7312a6)
+- [Notes](#org830b72e)
+  - [Requirements](#org3a7c142)
+  - [Problem statement](#org02394ae)
+  - [Research](#org43a8877)
+    - [Topics <code>[0/3]</code>](#orge44e6b0)
+    - [Selection](#org571b8cb)
+  - [Report](#orgdaa3e1a)
+    - [Outline <code>[2/8]</code>](#org2444e41)
+  - [Marketing Digital Outdoor](#orge2c821c)
+    - [Topics](#orgdcc11af)
+    - [Technologies <code>[0/11]</code>](#orgba5f9d3)
+    - [Problem statement](#orgc193cda)
+    - [Market research <code>[3/3]</code>](#orgb243dfa)
+    - [Project planning](#orgbb14e58)
+    - [Analysis](#org03be830)
+    - [Theoretical foundations <code>[6/16]</code>](#orgc1a3483)
+- [Diagrams](#org59c02b1)
+  - [PlantUML](#orge57752d)
+    - [Setup <code>[0/6]</code>](#orgc235b1d)
+    - [Workflow <code>[0/4]</code>](#org09873a4)
+    - [Sequence diagrams](#org55b3803)
 
 
 
-<a id="orgb2b23e9"></a>
+<a id="org4b498a4"></a>
 
 # Preamble
 
@@ -32,19 +32,19 @@
 -   It is written incrementally, i.e., as the several project phases take place, the document versions pertaining to each phase are stored in the folder **submission**.
 
 
-<a id="org7aae8fc"></a>
+<a id="orgf7312a6"></a>
 
 # Versions <code>[1/1]</code>
 
 1.  [X] Problem statement: deadline - <span class="timestamp-wrapper"><span class="timestamp">&lt;2021-10-28 qui&gt;</span></span>
 
 
-<a id="orgf22cb98"></a>
+<a id="org830b72e"></a>
 
 # Notes     :Important:
 
 
-<a id="org21f3f9c"></a>
+<a id="org3a7c142"></a>
 
 ## Requirements
 
@@ -56,19 +56,19 @@
 -   Makefiles
 
 
-<a id="orgc25e105"></a>
+<a id="org02394ae"></a>
 
 ## Problem statement
 
 Think about the project and deliver a document about it.
 
 
-<a id="org3a52cc0"></a>
+<a id="org43a8877"></a>
 
 ## Research
 
 
-<a id="org3c01ca5"></a>
+<a id="orge44e6b0"></a>
 
 ### Topics <code>[0/3]</code>
 
@@ -77,21 +77,21 @@ Think about the project and deliver a document about it.
 -   [ ] Situate the project requirements, the project constraints
 
 
-<a id="org2a61126"></a>
+<a id="org571b8cb"></a>
 
 ### Selection
 
 -   [Marketing digital Outdoor](readme.md)
 
 
-<a id="orged5b1a0"></a>
+<a id="orgdaa3e1a"></a>
 
 ## Report
 
 
-<a id="org18257c1"></a>
+<a id="org2444e41"></a>
 
-### Outline <code>[1/7]</code>
+### Outline <code>[2/8]</code>
 
 1.  [X] Introduction
     1.  Motivation and context
@@ -100,7 +100,7 @@ Think about the project and deliver a document about it.
     4.  Goals
     5.  Project planning
     6.  Report outline
-2.  [ ] Analysis
+2.  [X] Analysis
     1.  Background and state of the art
     2.  Requirements and constraints
     3.  System overview
@@ -113,8 +113,8 @@ Think about the project and deliver a document about it.
         3.  State machine diagram
         4.  Sequence diagram
     6.  Budget
-    7.  Theoretical foundations
-3.  [ ] Design
+3.  [ ] Theoretical foundations
+4.  [ ] Design
     1.  HW specification
         1.  Block diagram with COTS components, if possible
         2.  List of constraints of functions to be implemented in HW or SW
@@ -134,18 +134,18 @@ Think about the project and deliver a document about it.
                 -   class declarations
     5.  Start-up/shutdown process specification
     6.  Error Handling specification
-4.  [ ] Implementation
-5.  [ ] Testing
-6.  [ ] Verification/Validation
-7.  [ ] Conclusions
+5.  [ ] Implementation
+6.  [ ] Testing
+7.  [ ] Verification/Validation
+8.  [ ] Conclusions
 
 
-<a id="org7674816"></a>
+<a id="orge2c821c"></a>
 
 ## Marketing Digital Outdoor     :Important:
 
 
-<a id="orgd6a7abe"></a>
+<a id="orgdcc11af"></a>
 
 ### Topics
 
@@ -186,7 +186,7 @@ Think about the project and deliver a document about it.
             -   Additionally, brands can also monitor this by checking their social media accounts.
 
 
-<a id="org5df378b"></a>
+<a id="orgba5f9d3"></a>
 
 ### Technologies <code>[0/11]</code>
 
@@ -203,12 +203,12 @@ Think about the project and deliver a document about it.
 11. [ ] Social media and e-mail sharing APIs
 
 
-<a id="org2eae198"></a>
+<a id="orgc193cda"></a>
 
 ### ✔ DONE Problem statement
 
 
-<a id="org9251980"></a>
+<a id="orgb243dfa"></a>
 
 ### ✔ DONE Market research <code>[3/3]</code>
 
@@ -217,7 +217,7 @@ Think about the project and deliver a document about it.
 3.  [X] Combined marketing: are they digital outdoor + scenting?
 
 
-<a id="org439f6c6"></a>
+<a id="orgbb14e58"></a>
 
 ### Project planning
 
@@ -292,7 +292,7 @@ Think about the project and deliver a document about it.
     -   [X] Camera: 14 EUR - <https://shorturl.at/gnpCU>
 
 
-<a id="org1c036f5"></a>
+<a id="org03be830"></a>
 
 ### Analysis
 
@@ -305,21 +305,22 @@ Think about the project and deliver a document about it.
     > COMPANY -> MDO-L Staff member login RC -> RS: q mdo systems RS -> DB: query mdo-systems DB -> RS: std::<vector> mdo<sub>systems</sub> for(i = 0; i < mdo<sub>systems.size</sub>(); i++ ) RS -> RC: mdo<sub>systems</sub>[i] RC -> RC: Select MDO-L machine Send command RC -> RS: mdo <nr> <command> (mdo 1 get mode) RS -> RS: parse command RS -> RS: get mdo<sub>nr</sub> IP (query mdo-systems 1 IP) RS -> MDO-L: connect IP:port MDO-L -> RS: connected RS -> MDO-L: get mode MDO-L -> RS: normal mode (example) RS -> RC: normal
 
 
-<a id="org031d6dc"></a>
+<a id="orgc1a3483"></a>
 
-### Theoretical foundations <code>[3/15]</code>
+### Theoretical foundations <code>[6/16]</code>
 
 1.  [X] **Project methodology: Waterfall model**
 2.  [X] **Multitasking and Pthreads**
 3.  [X] **Client-Server architecture & TCP/IP & OSI model**
-4.  [ ] *Daemons*
+4.  [X] *Daemons*
 5.  [ ] *Device drivers*
 6.  [ ] **Nebulizer technology for scenting**
-7.  [ ] **Computer Vision**
-    1.  [ ] **OpenCV**
-    2.  [ ] **Gesture recognition algorithms**
-    3.  [ ] **Face detection algorithms**
-8.  [ ] **RDBMS (Relational Database management system) (SQL)**
+7.  [X] **Computer Vision**
+    1.  [X] **OpenCV**
+    2.  [X] **Gesture recognition algorithms**
+    3.  [X] **Face detection algorithms**
+        1.  see [openCV3 book](biblio/OpenCV3_Computer-Vision-in-C++-with-the-OpenCV-Library.pdf) (pg. 883)
+8.  [X] **RDBMS (Relational Database management system) (SQL)**
 9.  [ ] *User detection technologies: IR, ultrasonic*
 10. [ ] *Camera recording and codecs*
 11. [ ] *Image filtering APIs*
@@ -327,6 +328,7 @@ Think about the project and deliver a document about it.
 13. [ ] **Social media and e-mail sharing APIs**
 14. [ ] *UI framework: Qt*
 15. [ ] *File transfer protocols*
+16. [ ] **Makefiles**
 
 Legend:
 
@@ -334,7 +336,7 @@ Legend:
 -   *Hugo*
 
 
-<a id="org32cff34"></a>
+<a id="org59c02b1"></a>
 
 # Diagrams
 
@@ -343,19 +345,19 @@ Diagrams can be drawn using <code>[2/2]</code>:
 -   [X] draw.io
     -   User mockups
     -   State-machine
--   [X] [PlantUML](#org9652f3e) (stored in Proj/diags/plantuml)
+-   [X] [PlantUML](#orge57752d) (stored in Proj/diags/plantuml)
     -   Sequence diagram
     -   Class diagram
 
 
-<a id="org9652f3e"></a>
+<a id="orge57752d"></a>
 
 ## PlantUML
 
 [PlantUML](https://plantuml.com/) is a tool for quickly drawing diagrams from text based descriptions. It is specially adequate for sequence diagrams, as draw.io is not very fluid.
 
 
-<a id="orgc0ba881"></a>
+<a id="orgc235b1d"></a>
 
 ### Setup <code>[0/6]</code>
 
@@ -371,7 +373,7 @@ Diagrams can be drawn using <code>[2/2]</code>:
 6.  [ ] Check the generate png file: `output/test.png`
 
 
-<a id="orgf6716dc"></a>
+<a id="org09873a4"></a>
 
 ### Workflow <code>[0/4]</code>
 
@@ -385,7 +387,7 @@ Diagrams can be drawn using <code>[2/2]</code>:
 4.  [ ] Check the generate png file: `output/test.png`
 
 
-<a id="orgf132027"></a>
+<a id="org55b3803"></a>
 
 ### Sequence diagrams
 

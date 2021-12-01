@@ -564,7 +564,32 @@ benefits over the MySQL C API provided by the MySQL client library~\cite{MysqlCo
 \item Available under a commercial license upon request.
 \end{item-c}
 
+Listing~\ref{lst:mysql-cpp-example} illustrates an application to connect
+to the \texttt{MySQL} server using the \texttt{C++} connector~\cite{MysqlConnC++Example1}. Starting from the
+line 24 the application tries to connect to the \texttt{MySQL} database and
+execute a query and, if any exception is thrown, it is caught by the
+\texttt{catch} block at line 50.
+Looking into more detail at the \texttt{try} block, the pointers to objects \texttt{sql::Driver},
+\texttt{sql::Connection}, \texttt{sql::Statement} and \texttt{sql::ResultSet}
+are instantiated for later usage. A connection to the \texttt{MySQL server} is
+established  at line 32 --- via \texttt{driver} --- using the \texttt{TCP/IP}
+protocol at \texttt{localhost} address and port \texttt{3306} (the default for \texttt{MySQL server}), and passing the
+username and the password. Next, the specific database --- \texttt{test} --- is
+defined for access.
 
+Then, at line 36, a statement is created to execute a query (line 37), with the
+result being captured by \texttt{res} (the \texttt{sql::ResultSet} object). A
+loop is performed to retrieve all data, and lines 41 and 44 illustrate different
+methods to access the column data --- by column name or by numeric offset,
+respectively. Finally, all objects dynamically allocated are released (lines
+46-48) and, if everything works well, the application returns successfully (line
+61).
+%
+\lstinputlisting[language=c++,
+%firstline=1, lastline=3,%
+caption={MySQL Connector example --- adapted from~\cite{MysqlConnC++Example1}},
+label=lst:mysql-cpp-example,
+style=custom-cpp]{./listing/mysql_c++_example.cpp}
 
 %% Local Variables:
 %% mode: latex
