@@ -334,7 +334,9 @@ align=left, leftmargin=*} %,label=$\star$
 %import the necessary package with some options
 % nopostdot does not work in the end of the \usepackage definition (WHY?)
 \usepackage{siunitx}% SI units
-\usepackage[symbols,acronyms,nopostdot,automake]{glossaries}
+\usepackage[symbols,acronyms,nopostdot,automake,%
+% src: https://tex.stackexchange.com/a/281772
+indexonlyfirst]{glossaries}
 \loadglsentries[\acronymtype]{./sec/acronyms}
 
 % For the list of symbols
@@ -371,8 +373,9 @@ align=left, leftmargin=*} %,label=$\star$
 % src: https://tex.stackexchange.com/a/426409
 %\renewcommand*\entryname{Name}
 %\renewcommand*\descriptionname{Bedeutung}
+\renewcommand*\pagelistname{First used on page nr.}
 \setglossarystyle{long3colheader}
-\addtolength{\glspagelistwidth}{0.6cm}
+\addtolength{\glspagelistwidth}{4.6cm}
 \addtolength{\glsdescwidth}{-2.5cm}
 %%%%%%%
 
