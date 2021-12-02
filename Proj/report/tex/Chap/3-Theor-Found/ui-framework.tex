@@ -2,8 +2,8 @@
 \section{UI framework}
 \label{sec:ui-framework}
 
-For the development of the \texttt{Remote Client}, it is necessary to use a \gls{ui} Framework, in order to develop a \gls{ui} to the users, making it more user friendly and interactive.
-There are several frameworks that can be used, such as:
+For the development of the \texttt{Local System} and the \texttt{Remote Client}, it is necessary to use a \gls{ui} Framework, in order to develop a \gls{ui}, making it more user friendly and interactive.
+There are several frameworks that can be used in Linux, such as~\cite{ui-lists}:
 %
 \begin{item-c}
 \item Qt;
@@ -13,6 +13,25 @@ There are several frameworks that can be used, such as:
 \item GTK+;
 \item and so on.
 \end{item-c}
+
+\subsection{Qt}
+
+The Qt framework contains a comprehensive set of highly intuitive and modularized C++ library classes and is loaded with APIs to simplify application development~\cite{qt-site}.
+
+\subsubsection{Signals and slots}
+
+In Qt, there's an alternative to the callback technique, using \texttt{signals and slots}. A \texttt{signal} is emitted when a particular event occurs and a \texttt{slot} is a function that is called in response to a particular signal~\cite{qt-signals-slots}.
+
+\begin{itemize}
+\item\emph{Signals}: Are emitted by an object when its internal state has changed in some way that might be interesting to the object's client or owner. Signals are also public access functions and can be emitted from anywhere~\cite{qt-signals-slots}.
+\item\emph{Slots}: A slot is called when a signal connected to it is emitted. Slots are normal C++ functions and can be called normally; their only special feature is that signals can be connected to them~\cite{qt-signals-slots}.
+\end{itemize}
+
+Compared to callbacks, signals and slots are slightly slower because of the increased flexibility they provide, although the difference for real applications is insignificant~\cite{qt-signals-slots}.
+
+\subsubsection{Usage Example}
+
+
 
 For this project, \texttt{Qt} was chosen due to the following reasons:
 \begin{item-c}
