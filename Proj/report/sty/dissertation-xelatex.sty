@@ -789,3 +789,99 @@ indexonlyfirst]{glossaries}
   \small	
   \textbf{\textit{Palavras-chave ---}} #1
 }%
+%
+\newcommand{\mylatex}{\textrm{\LaTeX}}%
+
+% --- color definitions ---
+\definecolor{mktext}    {RGB}{000, 043, 054}
+\definecolor{mktarget}  {RGB}{211, 054, 130}
+\definecolor{mkstring}  {RGB}{000, 127, 127}
+\definecolor{mkvariable}{RGB}{038, 139, 210}
+\definecolor{mkkeyword} {RGB}{133, 153, 000}
+\definecolor{mklinecont}{RGB}{220, 050, 047}
+\definecolor{mkcomment} {RGB}{088, 110, 117}
+\definecolor{mkcommand} {RGB}{042, 161, 152}
+
+% --- auxiliary macros for styles ---
+\newcommand\mktextstyle{\color{mktext}}
+\newcommand\mktargetstyle{\color{mktarget}}
+\newcommand\mkstringstyle{\color{mkstring}}
+\newcommand\mkvariablestyle{\color{mkvariable}}
+\newcommand\mkkeywordstyle{\color{mkkeyword}}
+\newcommand\mklinecontstyle{\color{mklinecont}}
+\newcommand\mkcommentstyle{\slshape\color{mkcomment}}
+\newcommand\mkcommandstyle{\color{mkcommand}}
+
+\makeatletter
+% --- context switches ---
+\newif\iftarget@make@
+\newif\iflinecont@make@
+
+% --- hook into listings to keep track of context ---
+\lst@AddToHook{InitVarsBOL}
+{%
+  \iflinecont@make@%
+    \global\target@make@false%
+  \else
+    \global\target@make@true%
+  \fi
+  \global\linecont@make@false%
+}
+
+\lst@AddToHook{Output}
+{%
+  \ifnum\lst@mode=\lst@Pmode%
+      \iftarget@make@%
+        \gdef\globalstyle@make{\the@lststyle}%
+        \def\lst@thestyle{\mktargetstyle}%
+      \fi
+    \fi
+  \ifnum\lst@mode=\lst@Pmode% only test for keyword if we're in "processing" mode
+    \lsthk@DetectKeywords%
+  \fi
+}
+
+% --- helper macros ---
+\newcommand\closingparen@make{{\mkvariablestyle)}}
+
+\newcommand\processEqual@make
+{%
+  \lst@DefSaveDef{`=}\equal@make%
+  {%
+    \equal@make%
+    \global\target@make@false%
+    \def\lst@thestyle{\globalstyle@make}%
+  }%
+}
+
+\newcommand\processColon@make
+{%
+  \lst@DefSaveDef{`:}\colon@make%
+  {%
+    \colon@make%
+    \global\target@make@false%
+    \def\lst@thestyle{\globalstyle@make}%
+  }%
+}
+
+\newcommand\processBackslash@make
+{%
+  \lst@DefSaveDef{`\\}\backslash@make%
+  {%
+    \backslash@make%
+    \ifnum\lst@mode=\lst@Pmode%
+      \global\linecont@make@true%
+      \def\lst@thestyle{\globalstyle@make}%
+    \fi
+  }%
+}
+
+\newcommand\processTab@make
+{%
+  \lst@DefSaveDef{`^^I}\tabchar@make%
+  {%
+    \tabchar@make%
+    \global\target@make@false%
+  }%
+}
+\makeatother

@@ -134,7 +134,8 @@
   numberstyle={\tiny},
   numbers=left,
   numberblanklines=false,
-  stepnumber=5,
+  % firstnumber=1,
+  %stepnumber=5,
   backgroundcolor=\color{sbase3}, 
   frame=tlb
 }
@@ -156,7 +157,8 @@
   numberstyle={\tiny},
   numbers=left,
   numberblanklines=false,
-  stepnumber=5,
+  %firstnumber=1,
+  %stepnumber=5,
   backgroundcolor=\color{sbase3}, 
   frame=tlb
 }
@@ -212,3 +214,69 @@
 	backgroundcolor=\color{yellow!10}, 
     frame=L,
   }
+  % Makefiles
+  % src: https://tex.stackexchange.com/a/101730
+\definecolor{keycolor}{RGB}{172, 42, 42}
+\definecolor{mbleu}{RGB}{64,96,127}
+\definecolor{vimvert}{RGB}{46, 139, 87}
+\lstdefinestyle{makefile}{
+  language={[gnu] make},
+  tabsize = 2, %% set tab space width
+  numbers = left, %% display line numbers on the left
+  breaklines = true, %% enable line breaking
+  numberstyle = \tiny,
+  % firstnumber=1,
+  stepnumber=5,
+  xleftmargin=\parindent,
+  basicstyle=\ttfamily\scriptsize\color{black!90},%
+  stringstyle=\itshape\color{magenta},%
+  showstringspaces=false,%
+  keywordstyle={[1]\bfseries\color{keycolor}},%
+  keywordstyle={[2]\bfseries\color{mbleu}},%
+  commentstyle=\color{blue}\slshape,%
+  %framexleftmargin=1mm,%
+  frame=L,
+  backgroundcolor=\color{black!2},%
+  otherkeywords={.SUFFIXES},
+  alsoletter={:},
+  morekeywords=[1]{SUFFIX, CPP_}, morekeywords=[2]{vasp:,makeparam:,zgemmtest:,dgemmtest:,ffttest:,kpoints:,clean:},  
+morecomment=[l][commentstyle]{\#},%
+emphstyle={\color{vimvert}},%
+moredelim=[s][\color{vimvert}]{\$(}{)}%
+}
+%
+\lstdefinestyle{make-pretty}
+{
+  tabsize = 2, %% set tab space width
+  numbers = left, %% display line numbers on the left
+  breaklines = true, %% enable line breaking
+  numberstyle = \tiny,
+  % firstnumber=1,
+  stepnumber=5,
+  xleftmargin=\parindent,
+  upquote=true,
+  showstringspaces=false,
+  basicstyle=\ttfamily\scriptsize\mktextstyle,
+  sensitive=true,
+  alsoletter=.-,
+  keywords = {.CC,.CFLAGS,.PHONY,.SUFFIXES,SUFFIX,CPP_},
+  keywordstyle = \mkkeywordstyle,
+  moredelim=[is][\mkvariablestyle(\aftergroup\closingparen@make]{(}{)},
+  moredelim=*[l][\mkcommandstyle]{\^^I},
+  morestring=[b]',
+  morestring=[b]",
+  stringstyle=\mkstringstyle,
+  literate =
+    {\%}{{{\mkvariablestyle\%}}}1
+    {\$}{{{\mkvariablestyle\$}}}1
+    {\$*}{{{\mkvariablestyle\$*}}}2
+    {\\}{{{\mklinecontstyle\lstum@backslash}}}1,
+  MoreSelectCharTable =
+    \processColon@make
+    \processEqual@make
+    \processBackslash@make
+    \processTab@make,
+  morecomment = [l]{\#},
+  commentstyle = \mkcommentstyle,
+}
+\lstset{escapechar=@,style=make-pretty}

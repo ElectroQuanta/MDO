@@ -273,7 +273,7 @@ Send command
     MDO-L -> RS: normal mode (example)
     RS -> RC: normal
 #+END_QUOTE
-*** Theoretical foundations [6/16]  
+*** Theoretical foundations [7/17]  
     :PROPERTIES:
     :ATTACH_DIR: /home/zmpl/OneDrive - Universidade do Minho/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/sec/img/
     :END:
@@ -296,7 +296,8 @@ Send command
 13) [ ] *Social media and e-mail sharing APIs*
 14) [ ] /UI framework: Qt/
 15) [ ] /File transfer protocols/
-16) [ ] *Makefiles*
+16) [X] *Makefiles*
+17) [ ] *Source code documentation*: Doxygen
 
 Legend:
 - *Ze*
