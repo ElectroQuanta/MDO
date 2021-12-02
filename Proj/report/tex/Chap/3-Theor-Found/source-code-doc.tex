@@ -10,8 +10,54 @@ systems is to document the source code, making it readable and easily understood
 by other people.
 
 Source code documentation aims to describe how the code works instead of what it
-does, and it is useful for the following reasons~\cite{sourceCodeDocBestPractices}: 
+does, and it is useful for the following
+reasons~\cite{sourceCodeDocBestPractices}:
+\begin{item-c}
+\item \emph{Knowledge transfer}: not all code is equally obvious. There might be
+  some complex algorithms or custom workarounds that are not clear enough for
+  other developers.
+\item \emph{Troubleshooting}: if there are any problems with the product after
+  it's released, having proper documentation can speed up the resolution
+  time. Finding out product details and architecture specifics is a
+  time-consuming task, which results in the additional costs.
+\item \emph{Integration}: product documentation
+ describes dependencies between system modules and third-party tools. Thus, it
+ may be needed for integration purposes.
+\item \emph{Code style enforcement}: the source code documentation tools
+  requires specific comment syntax, which forces the developer to follow a
+  strict code style. Having a code style standard is specially useful on large
+  project teams.
+\end{item-c}
 
+There are some key ideas to write good documentation~\cite{sourceCodeDocBestPractices}:
+\begin{item-c}
+\item  
+\emph{Simple and concise}. Follow the DRY (Don't Repeat Yourself)
+principle. Use comments to explain something that requires detailed information.
+\item
+  \emph{Up to date at all times}: the code should be documented when it's being
+  written or modified.
+\item
+  \emph{Document any changes to the code}. Documenting new features or add-ons is pretty obvious. However,
+ you should also document deprecated features, capturing any change in the
+ product.
+\item
+ \emph{Simple language and proper formatting}: Code documents are typically written in English so that any
+ developer could read the comments, regardless of their native language. The best practices for
+ documentation writing require using the Imperative mood, Present tenses, preferably active voice, and
+ second person.
+\end{item-c}
+
+There are several automatic source code documentation tools, typically
+language-specific, namely~\cite{sourceCodeDocBestPractices}:
+\begin{item-c}
+\item \emph{\texttt{Doxygen}}: C, C++, C\#, Java, Objective-C, PHP, Python
+\item \emph{\texttt{GhostDoc}}: C\#, Visual Basic, C++, JavaScript
+\item \emph{\texttt{Javadoc}}: Java only
+\item \emph{\texttt{Docurium} or \emph{YARD}}: Ruby
+\item \emph{\texttt{jsdoc}}: Javascript
+\item \emph{\texttt{Sphinx}}: Python, C/C++, Ruby, etc.
+\end{item-c}
 
 \subsection{Doxygen}
 \label{sec:doxygen}
