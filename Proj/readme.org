@@ -25,6 +25,18 @@
 
 [[file:sec/img/sql-dml-2.png]]
 
+[[file:sec/img/doxygen-out1.png]]
+
+[[file:sec/img/doxygen-out2.png]]
+
+[[file:sec/img/doxygen-out3.png]]
+
+[[file:sec/img/doxygen-out4.png]]
+
+[[file:sec/img/doxygen-out5.png]]
+
+[[file:sec/img/doxygen-out6.png]]
+
 * Versions [1/1]
 1. [X] Problem statement: deadline - <2021-10-28 qui>
 
