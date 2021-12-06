@@ -1979,89 +1979,89 @@ src
   then, transmitted to the 16 micro-porous piezoelectric transducers.
 ***** Firmware
 ***** Software
-**** PCB for ultrasonic diffusion
+*** PCB for ultrasonic diffusion
+    :PROPERTIES:
+    :ATTACH_DIR: /home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/sec/img/
+    :END:
+[[file:sec/img/pcb-diffusion.png]]
+**** Product
+ - [[https://i.ebayimg.com/images/g/fRkAAOSwmglgpkut/s-l1600.jpg][img]]
+ - [[https://pg-cdn-a2.datacaciques.com/00/NDAy/21/05/20/pet8ub8udrf456m1/357cc097418e66bc.jpg][detailed explanation about PCB]]
+
+
+*Product introduction*:
+- Circuit board parameters:
+- Circuit board product voltage: DV 5V
+- Current: 300mA
+- Power: 2W
+- Frequency 108KHz, fixed frequency single-chip microcomputer
+- Driver board size: 35*20*17mm (L*W*H) (there will be slight errors)
+- Strong versatility, large amount of fog, stable performance, the chip has an
+  automatic timing shutdown function (4 hours of continuous work will
+  automatically shut down protection, if you need to turn on again, press the
+  power on again).
+- 5V USB power supply mode, can be powered by MICRO charging cable.
+ 
+*Atomizing film parameters*:
+- The net diameter of the atomized steel sheet is 16mm, the outer diameter of
+  the silicone ring is 20mm, and the wire length is 8cm.
+- Product voltage DV 5V, current 300mA, power 2W, frequency 108KHz, hole number
+  740, hole diameter 5um
+- The microporous atomized sheet produced by us is coated with a special glaze
+  protective layer on the surface of the ceramic sheet, which is resistant to
+  acid and alkali and prevents the silver layer from being corroded and oxidized
+  by the liquid.
+ 
+*Package Included*:
+- Circuit board X1
+- Atomization film X1
+- Absorbent cotton core X1
+**** Electronics
+- [[https://www.one-tab.com/page/zX4Un1IBQjG93WQ-tEbv-Q][Research]]
+**** Theory
+- [[https://www.one-tab.com/page/bRupBzoYSFq4NClOIc90iw][Research]]
+*** Ultrasonic diffusion
+**** Theory explanation
      :PROPERTIES:
      :ATTACH_DIR: /home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/sec/img/
      :END:
- [[file:sec/img/pcb-diffusion.png]]
-***** Product
-  - [[https://i.ebayimg.com/images/g/fRkAAOSwmglgpkut/s-l1600.jpg][img]]
-  - [[https://pg-cdn-a2.datacaciques.com/00/NDAy/21/05/20/pet8ub8udrf456m1/357cc097418e66bc.jpg][detailed explanation about PCB]]
+***** Great Scott ([[https://www.youtube.com/watch?v=aKhPj7uFD0Y][link]])
+ Piezoelectric actuators are reciprocating actuators as they: 
+ - respond to electric stimuli by generating mechanical displacement which, in
+   turn, produces waves. 
+ - respond to mechanical displacement (applied force) by generating an electrical
+   voltage signal.
 
-
- *Product introduction*:
- - Circuit board parameters:
- - Circuit board product voltage: DV 5V
- - Current: 300mA
- - Power: 2W
- - Frequency 108KHz, fixed frequency single-chip microcomputer
- - Driver board size: 35*20*17mm (L*W*H) (there will be slight errors)
- - Strong versatility, large amount of fog, stable performance, the chip has an
-   automatic timing shutdown function (4 hours of continuous work will
-   automatically shut down protection, if you need to turn on again, press the
-   power on again).
- - 5V USB power supply mode, can be powered by MICRO charging cable.
- 
- *Atomizing film parameters*:
- - The net diameter of the atomized steel sheet is 16mm, the outer diameter of
-   the silicone ring is 20mm, and the wire length is 8cm.
- - Product voltage DV 5V, current 300mA, power 2W, frequency 108KHz, hole number
-   740, hole diameter 5um
- - The microporous atomized sheet produced by us is coated with a special glaze
-   protective layer on the surface of the ceramic sheet, which is resistant to
-   acid and alkali and prevents the silver layer from being corroded and oxidized
-   by the liquid.
- 
- *Package Included*:
- - Circuit board X1
- - Atomization film X1
- - Absorbent cotton core X1
-***** Electronics
- - [[https://www.one-tab.com/page/zX4Un1IBQjG93WQ-tEbv-Q][Research]]
-***** Theory
- - [[https://www.one-tab.com/page/bRupBzoYSFq4NClOIc90iw][Research]]
-**** Ultrasonic diffusion
-***** Theory explanation
+ In the present case, one is more interested in the first phenomena.
+ - Piezoelectric actuators have a ressonant frequency, which means they will go
+   into a natural oscillation state.
+ - Thus, stimulating the piezoelectric actuator with a AC signal at the ressonant
+   frequency produces a strong mechanical oscillation, generating waves.
+ - For small ressonant frequencies, the liquid, e.g. water, can easily follow the
+   mechanical oscillation produced.
+ - However, when the ressonant frequency is about 1.7 MHz, the water particles
+   cannot follow the oscillating surface, thus creating momentary vaccum, due to
+   the negative amplitudes, which therefore creates air bubbles. Then, on
+   positive amplitudes these air bubbles are pushed across the surface,
+   catapulting water dropplets into the air, quickly dissipating and turning into
+   vapor form.
+     [[file:sec/img/diffuser-theory-explained.png]]
+ - Thus, one needs to generate an AC signal at the ressonant frequency (1.7 MHz).
+**** Reverse engineering PCB 
+***** Great scott (link)
       :PROPERTIES:
       :ATTACH_DIR: /home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/sec/img/
       :END:
-****** Great Scott ([[https://www.youtube.com/watch?v=aKhPj7uFD0Y][link]])
-  Piezoelectric actuators are reciprocating actuators as they: 
-  - respond to electric stimuli by generating mechanical displacement which, in
-    turn, produces waves. 
-  - respond to mechanical displacement (applied force) by generating an electrical
-    voltage signal.
+[[file:sec/img/pcb-reverse-eng.png]]
 
-  In the present case, one is more interested in the first phenomena.
-  - Piezoelectric actuators have a ressonant frequency, which means they will go
-    into a natural oscillation state.
-  - Thus, stimulating the piezoelectric actuator with a AC signal at the ressonant
-    frequency produces a strong mechanical oscillation, generating waves.
-  - For small ressonant frequencies, the liquid, e.g. water, can easily follow the
-    mechanical oscillation produced.
-  - However, when the ressonant frequency is about 1.7 MHz, the water particles
-    cannot follow the oscillating surface, thus creating momentary vaccum, due to
-    the negative amplitudes, which therefore creates air bubbles. Then, on
-    positive amplitudes these air bubbles are pushed across the surface,
-    catapulting water dropplets into the air, quickly dissipating and turning into
-    vapor form.
-      [[file:sec/img/diffuser-theory-explained.png]]
-  - Thus, one needs to generate an AC signal at the ressonant frequency (1.7 MHz).
-***** Reverse engineering PCB 
-****** Great scott (link)
-       :PROPERTIES:
-       :ATTACH_DIR: /home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/sec/img/
-       :END:
- [[file:sec/img/pcb-reverse-eng.png]]
-
- List part: Ebay:
- - 1x NE555: http://rover.ebay.com/rover/1/711-53200-19255-0/1?...
- - 1x IRLZ44N: http://rover.ebay.com/rover/1/711-53200-19255-0/1?...
- - 1x 113kHz Piezoelectric Disc: http://rover.ebay.com/rover/1/711-53200-19255-0/1?...
- - 1x 5kΩTrimmer: http://rover.ebay.com/rover/1/711-53200-19255-0/1?...
- - 1x 10Ω Resistor: http://rover.ebay.com/rover/1/711-53200-19255-0/1?...
- - 1x 220µH Inductor: http://rover.ebay.com/rover/1/711-53200-19255-0/1?...
- - 2x 100nF, 1x 10nF Capacitor: http://rover.ebay.com/rover/1/711-53200-19255-0/1?...
+List part: Ebay:
+- 1x NE555: http://rover.ebay.com/rover/1/711-53200-19255-0/1?...
+- 1x IRLZ44N: http://rover.ebay.com/rover/1/711-53200-19255-0/1?...
+- 1x 113kHz Piezoelectric Disc: http://rover.ebay.com/rover/1/711-53200-19255-0/1?...
+- 1x 5kΩTrimmer: http://rover.ebay.com/rover/1/711-53200-19255-0/1?...
+- 1x 10Ω Resistor: http://rover.ebay.com/rover/1/711-53200-19255-0/1?...
+- 1x 220µH Inductor: http://rover.ebay.com/rover/1/711-53200-19255-0/1?...
+- 2x 100nF, 1x 10nF Capacitor: http://rover.ebay.com/rover/1/711-53200-19255-0/1?...
 *** [[pdfview:/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/biblio/fragrance-diffusion/A-Novel-Olfactory-Displays'-Scent-Dispersing-Module.pdf::2][A novel olfactory displays' scent dispersing module]]
 **** Intro
 - Focus on controlled atomization of a liquid based scent while guaranteeing:
