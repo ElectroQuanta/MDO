@@ -156,6 +156,33 @@ in the cotton core is diffused through the aforementioned effect.
 
 \subsubsection{Driving circuit}
 \label{sec:driving-circuit}
+There are several commercially available \glspl{pcb} to drive micro-porous
+piezoelectric transducers. Fig.~\ref{fig:pcb-diffusion} illustrates a commercial
+\gls{pcb} to drive piezoelectric transducer of 113 kHz resonance frequency.
+%
+\begin{figure}[htb!]
+\centering
+    \includegraphics[width=0.4\columnwidth]{./img/pcb-diffusion.png}
+  \caption{Commercial \gls{pcb} for driving micro-porous mesh piezoelectric transducers~\cite{ebayPiezo}}%
+\label{fig:pcb-diffusion}
+\end{figure}
+
+As aforementioned, piezoelectric transducers for diffusion require an \gls{ac}
+signal at the resonance frequency. Fig.~\ref{fig:pcb-reverse-eng} illustrates a
+possible driving circuit for these transducers. A 555-timer \gls{ic} is used in
+astable mode to generate a square wave at the resonance frequency that drives a
+gate of power \gls{mosfet}. This \gls{mosfet} which feeds an resonant circuit to
+generate an \gls{ac} signal which stimulates the piezoelectric transducer,
+producing mechanical oscillations at the resonance frequency. This application
+requires a fast-switching power \gls{mosfet}, like the IRLZ44N, as the
+piezoelectric transducer consumes up to 300 mA of current. 
+%
+\begin{figure}[htb!]
+\centering
+    \includegraphics[width=0.6\columnwidth]{./img/pcb-reverse-eng.png}
+  \caption{Schematic of a driving circuit for micro-porous mesh piezoelectric transducers~\cite{piezoSchematic}}%
+\label{fig:pcb-reverse-eng}
+\end{figure}
 
 
 
