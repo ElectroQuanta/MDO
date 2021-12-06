@@ -63,7 +63,99 @@ diffusion process will be detailed in the following section.
 
 \subsection{Ultrasonic diffusion}
 \label{sec:ultrasonic-diffusion}
+Ultrasonic diffusion uses high frequency stimuli to brake down water molecules
+into droplets, producing mist, diffusing the oils into the air. The high
+frequency stimuli is above 20 kHz, the upper threshold
+for audible human hearing --- thus the ultrasonic naming --- and it's
+accomplished using micro-mesh piezoelectric transducers.
 
+Piezoelectric transducers are reciprocating transducers as they:
+\begin{item-c}
+\item respond to electric stimuli by generating mechanical displacement which,
+  in turn, produces waves --- \emph{inverse-piezoelectricity}.
+\item respond to mechanical displacement (applied force) by generating an
+  electrical voltage signal --- \emph{piezoelectricity}.
+\end{item-c}
+
+In the present case, one is more interested in the first
+phenomena. Piezoelectric transducers have a ressonant frequency, which means
+they will go into a natural oscillation state, amplifying oscillations. Thus,
+stimulating the piezoelectric actuator with a \gls{ac} signal at the resonant
+frequency produces a strong mechanical oscillation, generating waves.
+For small ressonant frequencies, the liquid, e.g. water, can easily follow the
+mechanical oscillation produced.
+However, when the ressonant frequency is high enough (hundreds of kHz or MHz),
+the water particles cannot follow the oscillating surface, thus creating
+momentary vacuum, due to the negative amplitudes, which therefore creates air
+bubbles.
+Then, on positive amplitudes these air bubbles are pushed across the surface,
+catapulting water droplets into the air, quickly dissipating and turning into
+vapor form.
+
+Fig.~\ref{fig:piezo-transducer} illustrates a type of piezoelectric transducer
+for ultrasonic diffusion --- the micro-porous mesh. It is comprised of~\cite{wen2019development}:
+\begin{item-c}
+\item \emph{rubber gasket}: used to isolate electric conduction from other
+  conducting materials and as cushion against vibration;
+\item \emph{metal substrate}: it has a micro-porous metal mesh in the center
+  with a high number of trumpet-shaped cylinder micro-pores, in which the upper
+  cylindrical surface is smaller than the bottom.
+\item \emph{ring-shaped piezoelectric plate}: a contact is attached to the
+  piezoelectric plate, so that the power wire and ground wire can be connected
+  between the piezoelectric plate and the metal substrate, enabling its
+  electrical stimulation.
+\end{item-c}
+%
+\begin{figure}[htb!]
+\centering
+    \includegraphics[width=0.55\columnwidth]{./img/piezo-transducer.png}
+  \caption{Micro-porous mesh piezoelectric transducer for ultrasonic diffusion --- withdrawn from~\cite{wen2019development}}%
+\label{fig:piezo-transducer}
+\end{figure}
+
+This micro-porous piezoelectric transducer is driven by an \gls{ac} signal at a
+frequency of around 113 kHz and converts electric energy into kinetic energy due
+to inverse-piezoelectricity~\cite{wen2019development}. The metal substrate
+vibrates along with the vibration of the ring-shaped piezoelectric plate, and
+the mesh in the center of the metal substrate smashes the liquid beneath the
+transducer. Some liquid flows through those micro-pores and is emitted in
+micro-droplet form, due to the momentary vacuum created.
+
+The rationale behind the micro-porous piezoelectric is due to its
+versatility regarding voltage supply, small size, easy control, low power
+consumption and variety of fluids that it can diffuse.
+A list of micro-porous piezoelectric film properties are listed below~\cite{wen2019development}:
+\begin{enum-c}
+\item Diameter: 13.8 mm.
+\item Low driving voltage: 3--12 V.
+\item High conversion efficiency, spray volume.
+\item Exit aperture is very small 4 µm.
+\item Frequency: 113 kHz ± 5 kHz.
+\item Capacitance: 2700 PF ± 15\%.
+\item Power: 1.5--2.0 W.
+\item Spray volume 30 ml/h.
+\item Can atomize essential oils, perfume, water based perfumes or even mixture
+  of the mentioned materials.
+\item life of more than 3000 hours.
+\end{enum-c}
+
+Abid et al.~\cite{abid2015novel} proposed a novel olfactory displays' scent
+dispersing module based on this type of transducer
+(Fig.~\ref{fig:novel-olfactory-scent-elem}). It contains a refillable fragrance
+reservoir, a cotton core and the housing for the micro-porous piezoelectric
+film. The fragrance ascends to the cotton core via capillary effect,
+impregnating it. When the micro-porous electric film is stimulated the fragrance
+in the cotton core is diffused through the aforementioned effect.
+%
+\begin{figure}[htb!]
+\centering
+    \includegraphics[width=0.65\columnwidth]{./img/novel-olfactory-scent-elem.png}
+  \caption{Micro-porous mesh piezoelectric-based scent dispense module --- withdrawn from~\cite{abid2015novel}}%
+\label{fig:novel-olfactory-scent-elem}
+\end{figure}
+
+\subsubsection{Driving circuit}
+\label{sec:driving-circuit}
 
 
 
