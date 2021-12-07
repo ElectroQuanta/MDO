@@ -285,7 +285,7 @@ Send command
     MDO-L -> RS: normal mode (example)
     RS -> RC: normal
 #+END_QUOTE
-*** Theoretical foundations [9/17]  
+*** Theoretical foundations [12/17]  
     :PROPERTIES:
     :ATTACH_DIR: /home/zmpl/OneDrive - Universidade do Minho/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/sec/img/
     :END:
@@ -294,19 +294,19 @@ Send command
 3) [X] *Client-Server architecture & TCP/IP & OSI model*
 4) [X] /Daemons/
 5) [X] /Device drivers/
-6) [ ] *Nebulizer technology for scenting*
+6) [X] *Nebulizer technology for scenting*
 7) [X] *Computer Vision*
    1) [X] *OpenCV*
    2) [X] *Gesture recognition algorithms*
    3) [X] *Face detection algorithms*
       1) see [[file:biblio/OpenCV3_Computer-Vision-in-C++-with-the-OpenCV-Library.pdf][openCV3 book]] (pg. 883)
 8) [X] *RDBMS (Relational Database management system) (SQL)*
-9) [ ] /User detection technologies: IR, ultrasonic/
+9) [X] /User detection technologies: IR, ultrasonic/
 10) [ ] /Camera recording and codecs/
 11) [ ] /Image filtering APIs/
 12) [ ] /GIFs generation/
 13) [ ] *Social media and e-mail sharing APIs*
-14) [ ] /UI framework: Qt/
+14) [X] /UI framework: Qt/
 15) [ ] /File transfer protocols/
 16) [X] *Makefiles*
 17) [X] *Source code documentation*: Doxygen
@@ -1846,7 +1846,7 @@ src
    :END:
 ** Doxyfile
 [[file:~/OneDrive-UM/Univ/MI_Electro/Sem3/ATC1/Trab/code/Doxyfile][src]]
-* Fragrance diffusion
+* Fragrance diffusion                                              :noexport:
 ** Research
 [[file:~/OneDrive-UM/Work/Ambientador][Ambientador]] 
 *** [[pdfview:/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/biblio/fragrance-diffusion/Development_of_a_Piezoelectric-Based_Odor_Reproduc.pdf::1][Development of a Piezoelectric-Based Odor Reproduction system]]
