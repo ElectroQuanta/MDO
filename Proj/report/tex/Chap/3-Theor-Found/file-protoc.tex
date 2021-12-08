@@ -43,30 +43,30 @@ Here are examples on how to configure a connection fot file transfers and also h
 \subsubsection{Configuring HTTP Connection Characteristics for File Transfers}
 The following task is used to customize the connection characteristics for your network to specify a username and password, connection preferences, a remote proxy server, and the source interface to be used. These are the summary steps (that are then explained on Fig. and Fig.):
 
-\begin{enumerate-c}
+\begin{enum-c}
 \item enable;
 \item configure terminal;
-\item ip http client connection {forceclose | idletimeout$seconds$ | timeout$seconds$};
-\item ip http client username $username$;
-\item ip http client password $password$;
-\item ip http client proxy-server {$proxy-name$ | $ip-address$} [proxy-port$port-number$];
+\item ip http client connection {forceclose | idletimeout \texttt{seconds} | timeout \texttt{seconds}};
+\item ip http client username <\texttt{username}>;
+\item ip http client password \texttt{password};
+\item ip http client proxy-server {$proxy-name$ | $ip-address$} [proxy-port $port-number$];
 \item ip http client source-interface $interface-id$;
 \item do copy running-config startup-config;
 \item end.
-\end{enumerate-c}
+\end{enum-c}
 
 
 \subsubsection{Downloading a File from a Remote Server Using HTTP or HTTPS}
 Perform this task to download a file from a remote HTTP server using HTTP or HTTPs. The copy command helps you to copy any file from a source to a destination. These are the summary steps (that are then explained on Fig. and Fig.):
 
-\begin{enumerate-c}
+\begin{enum-c}
 \item enable;
 \item Do one of the following:
 	\begin{item-c}
 	\item copy [/erase] [/noverify] http://$remote-source-urllocal-destination-url$;
 	\item copy https:// $remote-source-url local-destination-url$.
 	\end{item-c}
-\end{enumerate-c}
+\end{enum-c}
 
 %%% Local Variables:
 %%% mode: latex

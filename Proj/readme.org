@@ -285,7 +285,7 @@ Send command
     MDO-L -> RS: normal mode (example)
     RS -> RC: normal
 #+END_QUOTE
-*** Theoretical foundations [12/17]  
+*** Theoretical foundations [13/17]  
     :PROPERTIES:
     :ATTACH_DIR: /home/zmpl/OneDrive - Universidade do Minho/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/sec/img/
     :END:
@@ -302,7 +302,7 @@ Send command
       1) see [[file:biblio/OpenCV3_Computer-Vision-in-C++-with-the-OpenCV-Library.pdf][openCV3 book]] (pg. 883)
 8) [X] *RDBMS (Relational Database management system) (SQL)*
 9) [X] /User detection technologies: IR, ultrasonic/
-10) [ ] /Camera recording and codecs/
+10) [X] /Camera recording and codecs/
 11) [ ] /Image filtering APIs/
 12) [ ] /GIFs generation/
 13) [ ] *Social media and e-mail sharing APIs*
@@ -314,6 +314,35 @@ Send command
 Legend:
 - *Ze*
 - /Hugo/
+*** Design
+
+Next Thursday, December 16th, we will have the presentations for the Design Phase.
+Submit the *presentation* and *report* until Wednesday 15th, 23:00h.
+
+Design Phase must include (some specifications may vary according to your project):
+1) *Hardware Specification* [0/6]:
+   - [ ] Architecture
+   - [ ] Hardware Component Specification
+   - [ ] Peripherals Pinout/Mapping/Connection Layout
+   - [ ] Test Cases
+   - [ ] PCB layout (when applicable)
+   - [ ] Tools
+2) *Software Specification* [0/11]:
+   - [ ] Entity Relations Diagram
+   - [ ] Classes Diagram
+   - [ ] Data Formats
+   - [ ] Flowcharts
+   - [ ] Tasks Division (accurate plan)
+   - [ ] Thread Priorities
+   - [ ] GUI Layouts
+   - [ ] Test Cases
+   - [ ] Software COTs
+   - [ ] Third-party Libraries/apps
+   - [ ] Tools
+
+It is compulsory to show/identify which/where all class topics are going to be implemented and used by you! Also third-party Libraries/apps must be identified so you can use other's software and materials with our consent. 
+
+
 
 * Diagrams
 Diagrams can be drawn using [2/2]:
