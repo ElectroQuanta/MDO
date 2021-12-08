@@ -29,7 +29,7 @@ popular ones, namely~\cite{rakutenTop10SMApis, ayrshareTop10SMApis}:
     billion monthly active users, making it the most popular social media
     platform in the world.
   \item \emph{Price}:
-    The Facebook APIs --- Graph API --- are provided for free,
+    The Facebook APIs --- Graph API --- are provided for free.
   \item \emph{Ease of use}:
     Apart from its detailed documentation, Facebook has an active
 developer community with members who are always willing to assist each other
@@ -303,9 +303,24 @@ to~\cite{twitterManageTweetQuickStart}:
         \end{verbatim}
     \end{quote}
     \vspace{-7mm}
-\end{enum-c}
+  \end{enum-c}
+
+  
 
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "../../../dissertation"
 %%% End:
+
+\subsubsection{C++ libraries and APIs}
+\label{sec:c++-libraries-apis}
+The Twitter \gls{api} is a \gls{rest}ful \gls{api}, which, in practical terms,
+means that \gls{http} headers can be used to send (\texttt{POST}) and retrieve
+data (\texttt{GET}) from the Twitter platform.
+
+Thus, one only requires an wrapper around these \gls{http} `methods' to
+interface Twitter. One such tool, as aforementioned, it's \texttt{cURL} ---
+client \gls{url}, a
+command-line utility for transferring data with \glspl{url}. It is a free,
+open-source tool developed in C++, first released in 1997. cURL offers `\texttt{libcurl}', a library, and `\texttt{curl}', a command-line tool, and is often used to retrieve data from Twitter~.
+
