@@ -1,9 +1,72 @@
 %
 \section{Camera recording and codecs}
 \label{sec:camera-record-codecs}
-aaaaaaaa
 
+In this project's local system (\gls{mdo-l}), the \texttt{Interaction Mode} is composed by an interaction made through video between the machine and the user.
+To make possible that interaction through video, it is necessary to know how to record and show the frames captured by the camera using the Raspberry Pi. 
 
+The process of recording is just simply capture several frames in a specific period and then when all frames are joined together it creates a video.
+The more frames are captured per second, the more fluid the video becomes, that's why it is normal to talk about \gls{fps} when talking about video recording or playing.
+
+\subsection{Camera recording}
+\label{sub-sec:camera-record}
+It is possible to capture video from the raspberry using its camera module (V2) with the help of the \texttt{OpenCV} library.
+With a simple code in C++, it is possible to capture frames and show them in loop, in order to always refresh what the camera is recording:
+%
+\lstinputlisting[language=C++,firstline=1,
+caption={Example of camera frames acquisition (withdrawn from \cite{camera-example})},
+label=lst:camera-example,
+style=custom-cpp]{./listing/camera-example.cpp}
+
+\subsection{Video files encoding (codecs) and formats}
+\label{sub-sec:codecs-and-formats}
+Video encoding formats, also called video file formats, are methods of optimizing digital video files for different platforms, programs, and devices.
+There are many different kinds of video encoding formats, but each is composed of two main parts: a \texttt{codec} and a \texttt{container}~\cite{video-encoding}. But firstly, it is necessary to know how video encoding works.
+
+Video encoding is the process of turning uncompressed video input into a form that can be stored and played by a variety of devices and thisi envolves two main processes: \texttt{compression} and \texttt{transcoding}~\cite{video-encoding}.
+%
+\begin{item-c}
+\item \emph{Compression}: decreases the size of a video file so that it is more manageable. Without proper compression, most files would be far too large to upload easily, load quickly, or play smoothly on users' devices.
+\item \emph{Transcoding}: refers to the total audio and video conversion process from one video format to another. It ensures that a video file is compatible with the video player and/or platform it is using. Without transcoding, users would not be able to watch the video file at all.
+\end{item-c}
+
+On-demand streaming video is encoded so that it can be sent over the Internet and played on a variety of user devices. During live streaming, the video stream is segmented, compressed, and encoded in real time~\cite{video-encoding}.
+
+\subsubsection{What is a codec?}
+A codec (coder/decoder) is a method for compressing and decompressing data so that it can be easily transported and received by different applications. Separate codecs are used to compress audio and video files, but they generally work in the same way~\cite{video-encoding}.
+Codecs encode files using either lossy compression or lossless compression. Lossy compression simplifies the data in a video file and only keeps the essential parts. This is why a video using lossy compression may look pixelated or "fuzzy"~\cite{video-encoding}. 
+
+\subsubsection{What is a container?}
+A container combines an encoded audio stream (audio codec), encoded video stream (video codec), and metadata in a single video file. The metadata tells the video player how to coordinate different audio and video codecs and may also provide additional elements, such as subtitles or alternate audio streams~\cite{video-encoding}.
+Each container supports a different range of video codecs. Some containers only work with a single type of codec and video player, which drastically limits playback options. Other containers are compatible with many types of video codecs and players~\cite{video-encoding}.
+
+\subsubsection{Most common types of video formats}
+There are many types of video encoding formats and they are not compatible with the same platforms, browsers and devices.
+These are the most common video formats~\cite{video-encoding}:
+\begin{item-c}
+\item \emph{MP4}: is a video file format created by the Motion Picture Expert Group. It compresses audio and video separately, which allows MP4 files to retain relatively high video quality after compression. Most browsers and iOS/Android devices are compatible with MP4 files.
+%
+\item \emph{MOV}: is a video file format created by Apple. Although it can run on both Mac OS and Windows OS, it is only compatible with QuickTime video players. It preserves video quality, but does not offer as much file compression as other common video formats, such as MP4.
+%
+\item \emph{AVI}: is a video file format created by Microsoft. It is one of the oldest video file container specifications. AVI works with a number of different codecs, which can affect how well it is supported by different operating systems and browsers. It prioritizes video quality over compression, meaning that video files are larger and better quality overall.
+%
+\item \emph{FLV}: is a video file format created by Adobe Flash. A clear advantage of FLV is its ability to compress video files without severe loss of video quality. However, it is far less compatible across devices and OSes than other file formats: Though it is supported by most browsers and Android devices, it cannot be used to play any video files on iOS devices like iPhones or iPads. Browsers have dropped support for Adobe Flash because it is considered to be insecure, and Adobe no longer supports Flash.
+%
+\item \emph{WebM}: is a video file format developed by Google. It is a subset of the open-standard Matroska Video Container (MKV) format, which is highly adaptive to most video and audio codecs and compatible with a wide range of platforms and devices. WebM is a web-friendly, open-source alternative to MP4 that maintains high video quality after compression.
+\end{item-c}
+
+\subsection{Video players for Raspberry Pi}
+\label{sub-sec:video-player}
+It is necessary to have a video player in the Raspberry Pi, in order to play the video that are encoded.
+The more extendable the player is, the more easier and practical it is to use.
+There are two main video players that can be used on Raspberry~\cite{video-player-rasp}:
+%
+\begin{item-c}
+\item \emph{VLC}: is one of the best video players that one can install on the Raspberry Pi. It will play almost any video and audio format that one throws at it. This means that it's not needed to spend time finding particular codecs to get videos or music playing on Raspberry Pi.
+\item \emph{OMXPlayer}: is a video player for the Raspberry Pi that can run completely from the terminal. This video player has been heavily optimized for the Raspberry Pi's hardware and was designed originally as a testbed for the Kodi media player. While OMXPlayer does not have as a wide range of support as VLC, it still has its uses for those who don't want a full-blown video player.
+\end{item-c}
+
+In conclusion, for this project the best video player that can be used is the \texttt{OMXPlayer} for its capability of running completely in the terminal, which can be a very useful feature in several cases such as testing through the \texttt{Admin Remote Client} the operation of the \gls{mdo-l}.
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "../../../dissertation"

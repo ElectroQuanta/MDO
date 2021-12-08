@@ -1,7 +1,72 @@
 %
 \section{File transfer protocols}
 \label{sec:file-transf-prot}
-aaaaaaaa
+Sometimes during the operation of all the system, it is necessary to transfer file between machines, for example, when a brand wants to upload video advertisements to its rent, or even when the admin wants to download that ad to verify its reliability.
+
+\subsection{Protocols Overview}
+\label{sub-sec:prot-overview}
+
+There are various file transfer protocols to use, with different features and types of security and reliability. Throughout this various protocols, these are the most common ones~\cite{file-transf-protoc}:
+%
+\begin{item-c}
+\item \emph{FTP}: it is a popular file transfer method that has been around for decades. FTP exchanges data using two separate channels known as the \texttt{command channel} to authenticate the user, and the \texttt{data channel} to transfer the files.
+With FTP, both channels are \texttt{unencrypted}, leaving any data sent over these channels vulnerable to being taken advantage of. However, it does require an authenticated username and password for access.
+%
+\item \emph{FTPS}: it is a secure file transfer protocol that allows you to transfer files securely with trading partners, customers, and users. The transfers can be authenticated through FTPS-supported methods like client certificates, server certificates, and passwords.
+%
+\item \emph{SFTP}: it is a secure FTP protocol and a great alternative to unsecure FTP tools or manual scripts. SFTP exchanges data over an SSH connection and provides organizations with a high level of protection for file transfers shared between their systems, trading partners, employees, and the cloud.
+%
+\item \emph{SCP}: it is a network protocol that supports file transfers between hosts on a computer network. It's somewhat similar to FTP, however, SCP supports encryption and authentication features.
+%
+\item \emph{HTTP}: it is the foundation of data communication. It defines the format of messages through which web browsers and web servers communicate and defines how a web browser should response to a web request. HTTP uses \gls{tcp} as an underlying transport and is a stateless protocol. This means each command is executed independently and no session information is retained by the receiver.
+%
+\item \emph{HTTPS}: it is the secure version of HTTP where communications are encrypted by TLS or SSL.
+\end{item-c}
+
+\subsection{Which protocol is more efficient?}
+\label{sub-sec:prot-effic}
+
+In this case, \texttt{security} is one of the main goals, which means that all data must be sent in the best secure way possible. Thus, all file transfers must have \texttt{authentications} and \texttt{encryption}.
+%
+In conclusion, the better choice to this system is to chose the \texttt{HTTPS} protocol for several reasons:
+\begin{item-c}
+\item The communications between subsystems are made through \gls{tcp}/\gls{ip}, this is also used in this protocol, which is an advantage;
+\item The data is transferred only with authentications (request and responses) which makes it more secure;
+\item all communication is encrypted, which makes it even more secure.
+\end{item-c} 
+
+\subsection{Example of how to transfer files}
+\label{sub-sec:file-transf-ex}
+
+Here are examples on how to configure a connection fot file transfers and also how to download a file from a remote server using HTTPS.
+
+\subsubsection{Configuring HTTP Connection Characteristics for File Transfers}
+The following task is used to customize the connection characteristics for your network to specify a username and password, connection preferences, a remote proxy server, and the source interface to be used. These are the summary steps (that are then explained on Fig. and Fig.):
+
+\begin{enumerate-c}
+\item enable;
+\item configure terminal;
+\item ip http client connection {forceclose | idletimeout$seconds$ | timeout$seconds$};
+\item ip http client username $username$;
+\item ip http client password $password$;
+\item ip http client proxy-server {$proxy-name$ | $ip-address$} [proxy-port$port-number$];
+\item ip http client source-interface $interface-id$;
+\item do copy running-config startup-config;
+\item end.
+\end{enumerate-c}
+
+
+\subsubsection{Downloading a File from a Remote Server Using HTTP or HTTPS}
+Perform this task to download a file from a remote HTTP server using HTTP or HTTPs. The copy command helps you to copy any file from a source to a destination. These are the summary steps (that are then explained on Fig. and Fig.):
+
+\begin{enumerate-c}
+\item enable;
+\item Do one of the following:
+	\begin{item-c}
+	\item copy [/erase] [/noverify] http://$remote-source-urllocal-destination-url$;
+	\item copy https:// $remote-source-url local-destination-url$.
+	\end{item-c}
+\end{enumerate-c}
 
 %%% Local Variables:
 %%% mode: latex
