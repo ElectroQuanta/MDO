@@ -1,7 +1,309 @@
 \section{Social media sharing APIs}
 \label{sec:social-media-sharing}
-aaaaaaaa
+Social media platforms are great contact points to target customers and to
+increase brand awareness, which is highly desirable for digital marketing. These
+platforms provide a set of functionalities to external agents interact with them
+in a programmatic way, enabling automation of tasks like content sharing,
+scheduling, search, etc.
+These functionalities are exposed by \glspl{api}, providing a custom and
+well-defined interface that can be explored by developers to build custom
+applications that leverages on them.
 
+There are several social media platforms, but here one focuses on the most
+popular ones, namely~\cite{rakutenTop10SMApis, ayrshareTop10SMApis}:
+\begin{enum-c}
+\item \emph{Facebook}:
+  Facebook is a social networking platform that allows users to communicate
+  using messages, photos, comments, videos, news, and other interactive content.
+  \begin{itemize}
+  \item \emph{API features}:
+    Facebook provides various \glspl{api} and \glspl{sdk} that allow developers to access its
+    data and extend the capabilities of their applications. The Facebook Graph
+    API is an \gls{http}--based API that provides the main way of accessing the
+    platform's data. With the API, one can query data, post images, access
+    pages, create new stories, and carry out other tasks. Furthermore, the
+    Facebook Marketing API allows one to create applications for automatically
+    marketing one's products and services on the platform.
+  \item \emph{Popularity}:
+    At the end of 2018, Facebook was boasting of more than 2.2
+    billion monthly active users, making it the most popular social media
+    platform in the world.
+  \item \emph{Price}:
+    The Facebook APIs --- Graph API --- are provided for free.
+  \item \emph{Ease of use}:
+    Apart from its detailed documentation, Facebook has an active
+developer community with members who are always willing to assist each other
+make the most of them. The API is large, documentation decent and leans towards
+PHP, and requires the developer to create a video or screencast to be approved.
+\item \emph{Registration process}: the developer needs to register its app, and if for
+  commercial purposes, register its business. This includes verifying his/her legal entity and address.
+  \end{itemize}
+%
+\item \emph{Instagram}:
+Instagram is a Facebook-owned social networking platform that lets users share
+photos and videos.
+%
+\begin{itemize}
+\item \emph{API features}:
+  Facebook offers many APIs to allow developers to create tools that enhance
+  users' experience on the Instagram platform. With the APIs, one can enable
+  users to share their favorite stories and daily highlights from one's
+  application to Instagram. Furthermore, there is the Instagram Graph API that
+  allows developers to access the data of businesses operating Instagram
+  accounts. With the Graph API, one can conveniently manage and publish media
+  objects, discover other businesses, track mentions, analyze valuable metrics,
+  moderate comments, and search hashtags.
+\item \emph{Popularity}:
+  At the end of 2018, Instagram had more than 1 billion monthly active users.
+\item \emph{Price}:
+  The APIs are offered for free.
+\item \emph{Ease of use}:
+  The Instagram APIs are easy to use. Facebook has done good
+  work in providing detailed documentation to assist developers in easily
+  implementing the APIs into their applications.
+\item \emph{Registration process}: subject to the same terms of Facebook
+  registration process. Additionally, the API allows the developer to pull data, but it can
+  not post via the API unless he's/she's a `Partner'. The partner
+ program started in 2018 and isn't open to new partners unless Instagram asks
+ one to join.  
+\end{itemize}
+%
+\item \emph{Twitter}:
+Twitter is a popular social media service that allows users to find the latest
+world events and interact with other users using various types of messaging
+content (called tweets). Twitter can be accessed via its website interface,
+applications installed on mobile devices, or a short message service (SMS).
+\begin{itemize}
+\item \emph{API features}:
+  Twitter provides various API endpoints for completing various tasks. For example, one can use the Search API to retrieve historical tweets, the Account Activity API to access account activities, the Direct Message API to send direct messages, Ads API to create advertisement campaigns, and Embed API to insert tweets on one's web application.
+\item \emph{Popularity}:
+Twitter is a very popular social media networking service that can assist in enhancing the engagement of one's application. At the end of 2018, it had more than 335 million monthly active users.
+\item \emph{Price}:
+Twitter provides its APIs for free. However, if one want a high level of access and reliability, one’ll need to contact them for paid API versions.
+\item \emph{Ease of use}:
+Ease of use: The Twitter APIs are very easy to use. Twitter provides
+comprehensive documentation to assist one in flawlessly integrating any of its
+APIs into one's specific use case. Some API wrappers are also available in
+several programming languages. The new Twitter developer site no longer allows
+localhost in their approved callback URLs, so one’ll need to use \texttt{ngrok} or an equivalent tunnel to test locally.
+\item \emph{Registration process}: it requires the application to be registered as a
+  new project (using Twitter's Developer interface) and the developer can get a
+  permanent access token. Much easier than for the other two platforms.
+\end{itemize}
+\end{enum-c}
+
+The social media \glspl{api} are specific to each platform. Thus, developing a
+custom interface for each of these platforms is a very time consuming
+task. Instead, one will focus only on one social media platform, and its
+associated \gls{api}. The chosen platform is \textbf{Twitter} as it's the less
+extent and more easy to implement and its registration process is the least cumbersome.
+
+\subsection{Twitter API}
+\label{sec:twitter-api}
+The Twitter API can be used to programmatically retrieve and analyze Twitter
+data, as well as build for the conversation on Twitter. Over the years, the
+Twitter API has grown by adding more levels of access for developers and
+academic researchers to be able to scale their access to enhance and research
+the public conversation. Recently, the Twitter API v2 has been released,
+including a modern foundation, new and advanced features, and quick on-boarding
+to Essential access~\cite{twitterAbout}.
+
+To get access to the Twitter \gls{api}, the developer needs to~\cite{twitterAPIGettingStarted}:
+\begin{enum-c}
+\item
+  \emph{Sign up for a developer account}: After signing-up, one will create a
+  Project and an associated developer App during the on-boarding process, which
+  will provide a set of credentials that will be used to authenticate all
+  requests to the API.
+\item
+  \emph{Save the Application's keys and tokens and keep them secure}:
+After completing step 1, one will be able to find or generate the following
+credentials within one's developer App:
+\begin{itemize}
+\item 
+    \emph{API Key and Secret}: Essentially the username and password for one's App. One
+    will use these to authenticate requests that require OAuth 1.0a User
+    Context, or to generate other tokens such as user Access Tokens or an
+    app-only Bearer Token.
+  \item 
+    \emph{A set of user Access Tokens}: In general, Access Tokens represent the user
+    that one are making the request on behalf of. The ones that one can generate
+    via the developer portal represent the user that owns the App. One will use
+    these to authenticate requests that require OAuth 1.0a User Context. If one
+    would like to make requests on behalf of another user, one will need to use
+    the 3-legged OAuth flow for them to be authorized. 
+  \item 
+    \emph{Bearer Token}: One will use this token when making a request to an endpoint that requires OAuth 2.0 Bearer Token.
+\end{itemize}
+
+\item
+  \emph{Make the first request}: after completing the first two steps, one can
+  use the \gls{api} to interact with the Twitter platform.
+\item
+  \emph{Apply for additional access}:
+  With Essential access, one is only able to make requests to the Twitter API v2
+  endpoints, and not the v1.1 or enterprise endpoints.  One is limited to 500K Tweets/month, and unable to take advantage of certain developer portal functionality such as teams and access to additional App environments. 
+
+If one wants to access the standard v1.1, premium v1.1, or enterprise endpoints,
+or if one wants to take advantage of an increased Tweet cap and developer portal
+functionality, one needs to apply for Elevated or Academic Research access. 
+\end{enum-c}
+
+It is important to note that the Twitter \gls{api} is a \gls{rest}
+(a.k.a. \gls{rest}ful) \gls{api}, which means that when a client request is made
+through it, it transfers a representation of the state of the resource to the
+requester or endpoint. This information, or representation, is delivered in one
+of several formats via \gls{http}: \gls{json}, \gls{html}, XLT (Excel
+Templates), Python, PHP, or plain text. The Twitter API uses \gls{json} --- the most
+generally popular file format to use, because, despite its name, it’s language-agnostic, as well
+as readable by both humans and machines~\cite{whatsRestApi}.
+
+\gls{rest} is a set of architectural constraints, not a protocol or a
+standard. API developers can implement \gls{rest} in a variety of ways, making
+REST APIs faster and more lightweight, with increased scalability --- perfect
+for \gls{iot} applications and mobile app development~\cite{whatsRestApi}.
+
+Another important note about RESTful APIs: headers and parameters are also important in the HTTP methods of a RESTful API HTTP request, as they contain important identifier information as to the request's metadata, authorization, uniform resource identifier (URI), caching, cookies, and more. There are request headers and response headers, each with their own HTTP connection information and status codes~\cite{whatsRestApi}.
+
+For an API to be considered RESTful, it has to conform to the following
+criteria~\cite{whatsRestApi}:
+\begin{item-c}
+\item A client-server architecture made up of clients, servers, and resources,
+  with requests managed through HTTP.
+\item Stateless client-server communication, meaning no client information is
+  stored between get requests and each request is separate and unconnected.
+\item Cacheable data that streamlines client-server interactions.
+\item A uniform interface between components so that information is transferred
+  in a standard form. This requires that:
+  \begin{itemize}
+    \item resources requested are identifiable and separate from the
+      representations sent to the client.
+    \item resources can be manipulated by the client via the representation they
+      receive because the representation contains enough information to do so.
+    \item self-descriptive messages returned to the client have enough
+      information to describe how the client should process it.
+    \item hypertext/hypermedia is available, meaning that after accessing a
+      resource the client should be able to use hyperlinks to find all other
+      currently available actions they can take.
+  \end{itemize}
+\item A layered system that organizes each type of server (those responsible for
+  security, load-balancing, etc.) involved the retrieval of requested
+  information into hierarchies, invisible to the client.
+\item Code-on-demand (optional): the ability to send executable code from the
+  server to the client when requested, extending client functionality.
+\end{item-c}
+
+To interact with the \texttt{Twitter} platform, one can make a request and
+retrieve its response by following these steps~\cite{twitterAPIMakeFirstRequest}:
+\begin{enum-c}
+\item \emph{Select the end-point}: several actions can be performed on the
+  Twitter website on mobile application, varying its interface.
+\item \emph{Select a tool to make the request}: one can use command line tools,
+  driver programs or libraries in several programming languages, or tools like
+  Postman and Imsonia --- visual tools to make requests to \gls{rest} endpoints.
+%
+  For example, here is a \texttt{cURL} example for the user lookup endpoint.
+  To use this request the \texttt{BEARER\_TOKEN} and \texttt{USERNAME} with
+  Bearer Token and Twitter handle of the developer, and execute it in the
+  command line.
+  \begin{quote}
+      \onehalfspacing
+\begin{verbatim}
+curl "https://api.twitter.com/2/users/by/username/$USERNAME" -H 
+"Authorization: Bearer $BEARER_TOKEN"
+\end{verbatim}
+  \end{quote}
+    \vspace{-2mm}
+  %
+\item \emph{Review the response}:
+  Once a successful request has been made, a payload will be received with
+  metadata related to the request.
+  \begin{itemize}
+  \item 
+  If you used an endpoint that utilizes a GET HTTP method, you will receive
+  metadata related to the resource (Tweet, user, List, Space, etc) that you made
+  the request to in JSON format. Review the different fields that returned and
+  see if you can map the information that you requested to the content on
+  Twitter.
+\item 
+If you used an endpoint that utilizes a POST, PUT, or DELETE HTTP method, you performed an action on Twitter. Go to Twitter.com or the mobile app and see if you can track down that action. 
+  \end{itemize}
+%
+\item \emph{Adjust the request using parameters}:
+  Each endpoint has a different set of parameters that can be used to alter the
+  request. For example, additional metadata fields can be requested when using
+  GET endpoints with the fields and expansions parameters.
+\end{enum-c}
+
+\subsubsection{Manage Tweets example}
+\label{sec:manage-tweets-exampl}
+Creating and deleting Tweets using the Twitter API is essential for engaging
+with the public conversation. There are two available methods to manage Tweets~\cite{twitterManageTweetIntro}:
+\begin{enum-c}
+\item \emph{\texttt{POST}}: it allows one to post polls, quote Tweets, Tweet
+  with reply settings, Tweet with geo, Tweet with media and tag users, and Tweet to Super Followers, in addition to other
+  features. It can be further customized using parameters.
+There is a user rate limit of 200 requests per 15 minutes for the POST
+method.
+\item \emph{\texttt{DELETE}}: allows to delete a specific Tweet.
+It has a rate limit of 50 requests per 15 minutes.
+\end{enum-c}
+
+Since one is making requests on behalf of a user with all manage Tweets
+endpoints, one must authenticate with OAuth 1.0a User Context and use the Access
+Tokens associated with a user that has authorized one's App. The Access Tokens
+can be generated using the 3-legged OAuth flow.
+
+As an example let's focus on the \textbf{post tweet} feature. For this purpose, one needs
+to~\cite{twitterManageTweetQuickStart}:
+\begin{enum-c}
+\item \emph{Select a tool or library to make the request}:
+  Postman, Imsonia,
+  driver programs or libraries in several programming languages. In this case,
+  one will consider \texttt{cURL} and the command line.
+\item \emph{Authenticate the request}:
+  To make a successful request to this endpoint, one will need to use OAuth 1.0a
+  User Context. To do this, the following keys and tokens must be added to the
+  shell environment by exporting the following variables:
+  \begin{itemize}
+    \item \texttt{consumer\_key} with your API Key
+    \item \texttt{consumer\_secret} with your API Key Secret
+    \item \texttt{access\_token} with your Access Token
+    \item \texttt{token\_secret} with your Access Token Secret
+    \end{itemize}
+  \item \emph{Configure the request with parameters}: one can inspect the
+    \texttt{POST /2/tweets} API call to understand its usage and
+    configuration~\cite{twitterAPIRefPostTweet}. Some relevant parameters are:
+    \texttt{text} --- a string containing the text of the Tweet; \texttt{media}
+    --- a \gls{json} object containing the media information being attached to
+    the tweet. Here, one will use just the first.
+  \item \emph{Make the request}: using \texttt{cURL} one has:
+    \begin{quote}
+      \onehalfspacing
+        \begin{verbatim}
+        curl -X POST https://api.twitter.com/2/tweets -H 
+        "Authorization: OAuth \$OAUTH_SIGNATURE" -H 
+        "Content-type: application/json" -d '{"text": "Hello World!"}'
+        \end{verbatim}
+    \end{quote}
+    \vspace{-7mm}
+%
+  \item \emph{Analyze the response}: an example response can be the following
+    \gls{json} object,
+    containing the \texttt{id} and the \texttt{text} of the newly created tweet.
+    \begin{quote}
+      \onehalfspacing
+        \begin{verbatim}
+        {
+            "data": {
+                "id": "1445880548472328192",
+                "text": "Hello world!"
+            }
+        }
+        \end{verbatim}
+    \end{quote}
+    \vspace{-7mm}
+\end{enum-c}
 
 %%% Local Variables:
 %%% mode: latex
