@@ -11,7 +11,9 @@ The more frames are captured per second, the more fluid the video becomes, that'
 \subsection{Camera recording}
 \label{sub-sec:camera-record}
 It is possible to capture video from the raspberry using its camera module (V2) with the help of the \texttt{OpenCV} library.
-With a simple code in C++, it is possible to capture frames and show them in loop, in order to always refresh what the camera is recording:
+With a simple code in C++, it is possible to capture frames and show them in loop, in order to always refresh what the camera is recording.
+Listing \ref{lst:camera-example} implements how to show what is being captured by the camera. Basically it is created a variable \texttt{frame} to read the frames of the camera and the \texttt{cap} refers to the camera (which in this case has 0 that represents the camera ID).
+Then, basically it is just needed to verify if the camera is opened and if so read the frame from the camera and show it. This last two steps are executed in a infinite loop until a key is pressed to stop the execution. 
 %
 \lstinputlisting[language=C++,firstline=1,
 caption={Example of camera frames acquisition (withdrawn from \cite{camera-example})},
@@ -67,6 +69,34 @@ There are two main video players that can be used on Raspberry~\cite{video-playe
 \end{item-c}
 
 In conclusion, for this project the best video player that can be used is the \texttt{OMXPlayer} for its capability of running completely in the terminal, which can be a very useful feature in several cases such as testing through the \texttt{Admin Remote Client} the operation of the \gls{mdo-l}.
+
+\subsection{Playing video in C++}
+\label{sub-sec:play-video-cpp}
+Although there's already a solution to play videos through terminal, it is also necessary to play videos in the \gls{ui} and for that case it is mandatory to have a library that can do video playback.
+
+One library that is very useful to do playback is the \texttt{OpenCV} library, having the advantage that this is already used in other subsystems of the project.
+This library has also the advantage of working compatibly with the chosen \texttt{ui} (explained later on section \ref{sec:ui-framework}). 
+
+\subsubsection{Example of video playback}
+Here's an example on how to play a video using this library in C++:
+
+Firstly, the definition of the \texttt{Player()} class that handles the video playback.
+Listing \ref{lst:video-play-cpp-class} shows the \texttt{Player()} class that needs the \texttt{frame} to do the acquisition of the frames of the video, the \texttt{frameRate} to know the video frame rate and the \texttt{img} that is used to show the frame.
+%
+\lstinputlisting[language=C++,firstline=1,
+caption={Example of video playback in OpenCV uisng C++ - Player class (withdrawn from \cite{video-play-cpp})},
+label=lst:video-play-cpp-class,
+style=custom-cpp]{./listing/video-play-class.cpp}
+%
+Then, listing \ref{lst:video-play-cpp} shows the implementation of the main member functions.
+Firstly, the \texttt{loadVideo} function loads the video and reads the framerate of the video.
+Then, the \texttt{run} function reads the frame from the video, attributes it to the \texttt{img} to be then showed on the widget and finally waits the specific time to show the next frame in order to respect the video's frame rate, all this execution occurs while the video doesn't stop.
+Lastly, the \texttt{updatePlayerUI} puts the image on the widget using the functions that \texttt{Qt} already gives.
+%
+\lstinputlisting[language=C++,firstline=1,
+caption={Example of video playback in OpenCV uisng C++ - Player class implementation(withdrawn from \cite{video-play-cpp})},
+label=lst:video-play-cpp,
+style=custom-cpp]{./listing/video-play.cpp}
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "../../../dissertation"
