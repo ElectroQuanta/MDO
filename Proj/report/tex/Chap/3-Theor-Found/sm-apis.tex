@@ -321,6 +321,43 @@ data (\texttt{GET}) from the Twitter platform.
 Thus, one only requires an wrapper around these \gls{http} `methods' to
 interface Twitter. One such tool, as aforementioned, it's \texttt{cURL} ---
 client \gls{url}, a
-command-line utility for transferring data with \glspl{url}. It is a free,
-open-source tool developed in C++, first released in 1997. cURL offers `\texttt{libcurl}', a library, and `\texttt{curl}', a command-line tool, and is often used to retrieve data from Twitter~.
+command-line utility for transferring data with \glspl{url}~\cite{curl}. It is a free,
+open-source tool developed in C++, first released in 1997. cURL offers
+`\texttt{libcurl}', a library, and `\texttt{curl}', a command-line tool, and is
+often used to retrieve data from Twitter~\cite{twitterCreatingLibsC}.
 
+Several C++ \glspl{api} are available for Twitter, although not officially
+recommended by Twitter:
+\begin{enum-c}
+\item \texttt{kQOAuth} by Johan Paul --- a Qt based OAuth Library;
+\item \texttt{libOAuth} by Robin Gareus --- a collection of POSIX-C functions implementing OAuth;
+\item \texttt{QTweetLib} by Toni Jovanoski --- a Qt based Twitter API library;
+\item \texttt{Twitcurl} by Mahesh --- a Twitter API library;
+\end{enum-c}
+
+There are two \texttt{Qt} based libraries, thus making it
+highly-dependent on the \texttt{Qt} platform, a collection of POSIX-C functions
+implementing only the authentication mechanism, and a pure C++ \gls{api} library
+for Twitter. Hence, from the above two options arise for building the
+\texttt{Local System}'s interface for Twitter:
+\begin{enum-c}
+\item \emph{\texttt{libcurl}}: a free and easy-to-use client-side URL transfer library
+  with a C \gls{api}~\cite{libcurl}. One could then write a C++ wrapper around it to follow
+  \gls{oop} paradigm or use the one of the recommended wrappers ---
+  \texttt{curlpp}, \texttt{curlcpp}, or \texttt{C++ Requests} --- and then write
+  a wrapper to handle Twitter requests~\cite{libcurlBindings};
+\item \emph{\texttt{Twitcurl}}~\cite{twitcurlGithub}: use a pure C++ \gls{api} to interface \texttt{Twitter},
+  providing a straightforward mechanism to handle requests. It uses
+  \texttt{cURL} for handling HTTP requests and responses and it works well on
+  any \gls{os} that supports \texttt{cURL}. It supports:
+  \begin{itemize}
+  \item v1.1 Twitter REST APIs: timeline, status, user, direct message,
+    friendship, social graph, account, favorite, block, saved search and trend
+    methods;
+  \item \texttt{OAuth}: authentication methods for Twitter
+  \end{itemize}
+  \texttt{twitcurl} returns JSON responses from \texttt{twitter.com} as it
+  is. Thus, a C++ JSON parser is required to parse the responses.
+\end{enum-c}
+
+\emph{Thus, for practicality reasons, \texttt{twitcurl} is preferred option}.
