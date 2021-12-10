@@ -94,6 +94,28 @@ Perform this task to download a file from a remote HTTP server using HTTP or HTT
   \caption{Downloading a File using HTTP - 2(withdrawn from~\cite{http-example-cisco})}%
 \label{fig:download-http-2}
 \end{figure}
+
+\subsection{File Transfer Protocol \gls{api}s}
+\label{sub-sec:ftp-apis}
+There are several \gls{api}s that allow to develop applications in order to transfer files between two distinct points using file transfer protocols. The most common is \texttt{libcurl}, however, this is used in C language and it is necessary to use a wrapper to follow /gls{oop} paradigm, as it was previously said on subsection \ref{sec:c++-libraries-apis}.
+
+In this case, it will be used one of the wrappers previously mentioned \texttt{curlpp}.
+
+In Listing \ref{lst:http-post-ex} is an example on how does an HTTP POST is done. Basically it is crated an \texttt{easy} object that will handle all the POST request, inserting the \gls{url}, the header and the POST's field and size, then it is just needed to perform the request.
+%
+\lstinputlisting[language=C++, firstline=1,
+caption={POST example using <curlpp.h>},
+label=lst:http-post-ex,
+style= custom-cpp]{./listing/http-post-ex.cpp}
+
+\subsubsection{Third-party applications}
+
+To make the file transfer more easier, it will be used a third-party application named \texttt{transfer.sh}. This application has easy-to-use commands in order to transfer files with a \gls{url}, there is unlimited upload, it can encrypt files and it is also possible to limit the amount of downloads and days available of downloading~\cite{transfer-sh}.
+
+With a simple command like \texttt{curl --upload-file <path-to-the-file> https://transfer.sh/<name-that-you-want>} the file is uploaded to the site and it generates a \gls{url} to transfer that file using the command \texttt{curl <generated-url> -o <name-you-want>}.
+And with this simple steps it is possible to easily transfer files between two nodes.
+
+Using the library \texttt{curlpp} with the \texttt{transfer.sh} \gls{api}, it is possible to create a program to transfer files between nodes automatically when requested from the user, without the user needs to decorate or do such commands.
 %
 %%% Local Variables:
 %%% mode: latex
