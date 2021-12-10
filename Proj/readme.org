@@ -322,7 +322,14 @@ Submit the *presentation* and *report* until Wednesday 15th, 23:00h.
 Design Phase must include (some specifications may vary according to your project):
 1) *Hardware Specification* [0/6]:
    - [ ] Architecture
-   - [ ] Hardware Component Specification
+   - [ ] Hardware Component Specification [0/7]
+     1) [ ] Raspberry Pi
+     2) [ ] Power supply module
+     3) [ ] Ultrasonic sensor
+     4) [ ] Fragrance diffuser actuator: https://shorturl.at/hlxFQ
+     5) [ ] LCD display: https://shorturl.at/dnoIZ
+     6) [ ] Raspberry Pi Camera
+     7) [ ] Colunas
    - [ ] Peripherals Pinout/Mapping/Connection Layout
    - [ ] Test Cases
    - [ ] PCB layout (when applicable)

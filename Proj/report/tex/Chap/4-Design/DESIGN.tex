@@ -6,183 +6,34 @@ In the design phase, the product development starts, specifying the system in
 terms of hardware and software and its associated interfaces, the error handling
 required, and the design verification.
 %
-  \vspace{-5mm}
-%  
-\section{Hardware specification}
-\label{sec:hw-specs}
-The first step for system design is the \gls{hw} specification. This can be
-pictured as a block diagram, ideally with \gls{cots}
-components. Fig.~\ref{fig:block-diag} depicts the overall information flow and
-the TV remote block diagram: the \texttt{User} interacts with
-the TV remote by pressing buttons which triggers the emission of \gls{ir} codes
-to the TV, containing the \gls{ir} receiver. As supported by the market research
-seen in
-Section~\ref{sec:market-research}, the block diagram of the TV remote control
-can be taught of a physical input interface --- the pushbuttons, a processing
-interface --- a microprocessor --- to determine which keys are pressed and the
-resulting \gls{ir} codes to be emitted, and a \gls{ir} transmitter circuit as
-the output where the IR LED also works as a visual output. Usually, there will
-be also a digital interface, to handle the large amount of keys as a
-\gls{io} expander with serial interface, e.g. the Microchip MCP23008/MCP23S08~\cite{microchip}, which is considered here for future expansibility of the device,
-thus making it scalable. This can be especially useful when using
-microprocessor units with lower I/O inputs. A tradeoff between the inclusion of
-the multiplexer versus future redesign must be performed. The system is powered
-by batteries.
-
-The microprocessor chosen depends on various factors, such as: architecture,
-throughput, memory, processing power, power efficiency, toolchain availability
-and programming easiness, etc. Additionally, one may consider the usage of a
-microcontroller, due to added peripherals, easing the \gls{sw} burden. For
-example, the usage of the \gls{pca} peripheral in the 8051 \gls{mcu} can free the processor from the
-job of bit-banging the IR transmitter circuitry or the \gls{i2c} or \gls{spi} peripherals to
-interface the I/O expander. With that said, the choice
-relied on the 8051 MCU due to its small footprint, clock speed of up to 48 MHz,
-low power usage on idle, the acquaintance with the toolchain and the
-programming, and for the inclusion of the PCA, SPI and I2C peripherals.  
+%1) *Hardware Specification* [0/6]:
+%   - [ ] Architecture
+%   - [ ] Hardware Component Specification
+%   - [ ] Peripherals Pinout/Mapping/Connection Layout
+%   - [ ] Test Cases
+%   - [ ] PCB layout (when applicable)
+%   - [ ] Tools
+%2) *Software Specification* [0/11]:
+%   - [ ] Entity Relations Diagram
+%   - [ ] Classes Diagram
+%   - [ ] Data Formats
+%   - [ ] Flowcharts
+%   - [ ] Tasks Division (accurate plan)
+%   - [ ] Thread Priorities
+%   - [ ] GUI Layouts
+%   - [ ] Test Cases
+%   - [ ] Software COTs
+%   - [ ] Third-party Libraries/apps
+%   - [ ] Tools
 %
-  \vspace{-5mm}
-%  
-%- Block diagram with COTS components, if possible
-%- List of constraints of functions to be implemented in HW or SW
-%  - Inclusion of a multiplexer may reduce SW burden
-%  - CPU peripherals:
-%  - PCA for wave generation
-%  
-\begin{figure}[htb!]
-\centering
-    \includegraphics[width=0.7\columnwidth]{./img/block-diagram.png}
-  \caption{Overall information flow and TV remote block diagram}%
-\label{fig:block-diag}
-\end{figure}
-%
-  \vspace{-5mm}
-%  
-\section{Hardware interfaces definition}
-\label{sec:hw-interf-def}
-After specifying the \gls{hw}, it is important to define its interfaces. The
-TV remote control is clearly an event-driven asynchronous system, thus using HW
-interrupts. When a user presses a pushbutton that event should be signaled to
-the \gls{cpu} of the MCU via an external interrupt, ``waking'' it up. The CPU
-handles that interrupt via an \gls{isr}, processing it and actuating, if
-required. The system then goes back to sleep.
+%It is compulsory to show/identify which/where all class topics are going to be implemented and used by you! Also third-party Libraries/apps must be identified so you can use other's software and materials with our consent.
 
-The 8051 MCU only contains 2 external interrupts sources --- \texttt{INTO} and
-\texttt{INT1} --- thus limitting the direct connection of the pushbuttons to the
-MCU, even with the pull-up circuitry. This is where the serial I/O expander
-becomes most useful, as it can be connected to TV remote keys (up to 8 in this
-case) and connected to a single external interrupt pin, being then read via
-\gls{i2c} or \gls{spi} interface. Thus, the keys can be connected through
-pull-up circuitry to the I/O expander and the output is then connected to
-\texttt{INTO} on the 8051 MCU. The communication protocol chosen is \gls{i2c} as
-it is more expandable
+% Proj methodology
+\input{./tex/Chap/4-Design/hw-spec.tex}
+% Proj methodology
+\input{./tex/Chap/4-Design/sw-spec.tex}
 
-Concerning the output, the 8051 PCA peripheral is connected to the IR
-transmitter circuitry, for IR code emission. The HW interfaces of the system are
-depicted in Fig.~\ref{fig:hw-interfaces}.
-%
-  \vspace{-5mm}
-%  
-\begin{figure}[htb!]
-\centering
-    \includegraphics[width=1.0\columnwidth]{./img/hw-interfaces.jpg}
-  \caption{HW interfaces of the system}%
-\label{fig:hw-interfaces}
-\end{figure}
-%
-%
-  \vspace{-5mm}
-%  
-\section{Software specification}
-\label{sec:sw-specs}
-Next, the \gls{sw} responsible for system operation is specified. As this system
-is an event-driven asynchronous one it can be more easily specified using a
-state machine diagram as illustrated in Fig.~\ref{fig:state-mach}. At program
-startup --- \texttt{Idle} state --- the peripherals are initialized (interrupts, PCA, I2C, timer for tick
-generated interrupts) and the program waits for events, going into sleep
-mode.
-
-When a key is pressed, the external interrupt \texttt{INTO} signals this
-event right away to the CPU awaking it up triggering the execution of
-\texttt{ISR\_Key\_Press}. This ISR checks which key was pressed by reading it
-from the I/O expander via I2C, pushes the associated code to
-\texttt{keycode\_fifo} --- a circular \gls{fifo} buffer --- and flags it to the CPU, enabling \texttt{keycode\_avail}.
-
-The CPU is awaked regularly to check if any keycode is available. If it is, it
-triggers the execution of \texttt{ISR\_IR\_emit}, clearing the flag
-\texttt{keycode\_avail}, popping the keycode from \texttt{keycode\_fifo} and
-sending it via IR circuitry (\texttt{ir\_send(keycode)}).
-%
-  \vspace{-5mm}
-%  
-\begin{figure}[htb!]
-\centering
-    \includegraphics[width=0.7\columnwidth]{./img/state-mach.png}
-  \caption{TV remote state machine diagram}%
-\label{fig:state-mach}
-\end{figure}
-
-Fig.~\ref{fig:i2cread-flow} presents the flowchart for reading from the I/O expander via i2c
-
-\begin{figure}[htb!]
-\centering
-    \includegraphics[width=0.7\columnwidth]{./img/i2c_read_flowchart.png}
-  \caption{I2C Read Flowchart}%
-\label{fig:i2cread-flow}
-\end{figure}
-%
-  \vspace{-5mm}
-%  
-\section{Software interfaces definition}
-\label{sec:sw-interf-def}
-%- Define the APIs in detail:
-%  - header files with:
-%    - functions prototypes
-%    - data structure declarations
-%    - class declarations
-%
-From the state machine diagram (Fig.~\ref{fig:state-mach}) the softwares modules
-and data structures can be infered. The data structure is \texttt{keycode\_fifo},
-a circular buffer to manage the keycodes produced and consumed. The modules are
-\texttt{i2c}, \texttt{ir} and \texttt{fifo} for determing the key pressed,
-transmitting the keycode and managing the \gls{fifo} buffer. Enumerations are
-added for keycodes and errors listing.
-
-An example of the \gls{api} can be seen in Listing~\ref{lst:api}, using builtin documentation.
-%
-\lstinputlisting[language=c, firstline=1,caption={\gls{api} example with
-  builtin documentation},label=lst:api,
-style=customc]{./listing/api.h}%
-
-\section{Start-up/shutdown process specification}
-\label{sec:startup-shutdown}
-As highlighted in Fig.~\ref{fig:state-mach}, the process starts with battery
-power being supplied to the system, going into sleep mode and waiting for
-events, minimizing power consumption. However, there is still residual power
-being drawn. This could be overcome by placing a power button for the remote
-itself, but with the inconvenience of MCU reset and the initial delays
-associated. The shutdown results from batteries disconnection.
-%
-  \vspace{-5mm}
-%  
-\section{Error handling specification}
-\label{sec:error-handling-specification}
-Every system is prone to glitches, bugs and errors, thus, requiring it to be
-handled. Errors should be handled gracefully by creating error handling
-routines, which try to circumvent them and provide feedback.
-
-For extreme cases, where this is not possible, the watchdog timer should be
-enabled to help the system recover from crashes. However, this is a last resort,
-as constant reboots --- sign of a bad design --- are inadmissible and will
-frustrate the user.
-
-The error handling routines can be built into the design by considering return
-codes and asserts from function calls, e.g., \texttt{int i2c\_read(char *byte)},
-where \texttt{0} signals success and otherwise an error was encountered. Thus,
-good design eases error-handling specification and should be an aspect to keep
-in mind in this phase.
-%
-  \vspace{-5mm}
 %%% Local Variables:
 %%% mode: latex
-%%% TeX-master: "../../dissertation"
+%%% TeX-master: "../../../dissertation"
 %%% End:

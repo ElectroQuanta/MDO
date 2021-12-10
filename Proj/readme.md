@@ -1,30 +1,33 @@
-- [Preamble](#org4b498a4)
-- [Versions <code>[1/1]</code>](#orgf7312a6)
-- [Notes](#org830b72e)
-  - [Requirements](#org3a7c142)
-  - [Problem statement](#org02394ae)
-  - [Research](#org43a8877)
-    - [Topics <code>[0/3]</code>](#orge44e6b0)
-    - [Selection](#org571b8cb)
-  - [Report](#orgdaa3e1a)
-    - [Outline <code>[2/8]</code>](#org2444e41)
-  - [Marketing Digital Outdoor](#orge2c821c)
-    - [Topics](#orgdcc11af)
-    - [Technologies <code>[0/11]</code>](#orgba5f9d3)
-    - [Problem statement](#orgc193cda)
-    - [Market research <code>[3/3]</code>](#orgb243dfa)
-    - [Project planning](#orgbb14e58)
-    - [Analysis](#org03be830)
-    - [Theoretical foundations <code>[6/16]</code>](#orgc1a3483)
-- [Diagrams](#org59c02b1)
-  - [PlantUML](#orge57752d)
-    - [Setup <code>[0/6]</code>](#orgc235b1d)
-    - [Workflow <code>[0/4]</code>](#org09873a4)
-    - [Sequence diagrams](#org55b3803)
+- [Preamble](#orgbf77998)
+- [Versions <code>[1/1]</code>](#org0465e30)
+- [Notes](#orgcbb3c87)
+  - [Requirements](#orgcddb13b)
+  - [Problem statement](#org70f0b64)
+  - [Research](#org26d40db)
+    - [Topics <code>[0/3]</code>](#orge7a787a)
+    - [Selection](#org7c97fdc)
+  - [Report](#org9d95e8e)
+    - [Outline <code>[2/8]</code>](#org1c361cb)
+  - [Marketing Digital Outdoor](#org32652b1)
+    - [Topics](#orgda771d7)
+    - [Technologies <code>[0/11]</code>](#orgdb48755)
+    - [Problem statement](#org1bff18a)
+    - [Market research <code>[3/3]</code>](#orgfc8a35e)
+    - [Project planning](#org33086e6)
+    - [Analysis](#org4b5c42b)
+    - [Theoretical foundations <code>[13/17]</code>](#orgf0f052e)
+    - [Design](#org3971242)
+- [Diagrams](#orga53520b)
+  - [PlantUML](#orgcd438d8)
+    - [Setup <code>[0/6]</code>](#org143beee)
+    - [Workflow <code>[0/4]</code>](#orgc0233e8)
+    - [Sequence diagrams](#org842f672)
+- [GIF generation](#org349f8ef)
+  - [C++ libraries and APIs <code>[0/1]</code>](#org8c1439d)
 
 
 
-<a id="org4b498a4"></a>
+<a id="orgbf77998"></a>
 
 # Preamble
 
@@ -32,19 +35,19 @@
 -   It is written incrementally, i.e., as the several project phases take place, the document versions pertaining to each phase are stored in the folder **submission**.
 
 
-<a id="orgf7312a6"></a>
+<a id="org0465e30"></a>
 
 # Versions <code>[1/1]</code>
 
 1.  [X] Problem statement: deadline - <span class="timestamp-wrapper"><span class="timestamp">&lt;2021-10-28 qui&gt;</span></span>
 
 
-<a id="org830b72e"></a>
+<a id="orgcbb3c87"></a>
 
 # Notes     :Important:
 
 
-<a id="org3a7c142"></a>
+<a id="orgcddb13b"></a>
 
 ## Requirements
 
@@ -56,19 +59,19 @@
 -   Makefiles
 
 
-<a id="org02394ae"></a>
+<a id="org70f0b64"></a>
 
 ## Problem statement
 
 Think about the project and deliver a document about it.
 
 
-<a id="org43a8877"></a>
+<a id="org26d40db"></a>
 
 ## Research
 
 
-<a id="orge44e6b0"></a>
+<a id="orge7a787a"></a>
 
 ### Topics <code>[0/3]</code>
 
@@ -77,19 +80,19 @@ Think about the project and deliver a document about it.
 -   [ ] Situate the project requirements, the project constraints
 
 
-<a id="org571b8cb"></a>
+<a id="org7c97fdc"></a>
 
 ### Selection
 
 -   [Marketing digital Outdoor](readme.md)
 
 
-<a id="orgdaa3e1a"></a>
+<a id="org9d95e8e"></a>
 
 ## Report
 
 
-<a id="org2444e41"></a>
+<a id="org1c361cb"></a>
 
 ### Outline <code>[2/8]</code>
 
@@ -140,12 +143,12 @@ Think about the project and deliver a document about it.
 8.  [ ] Conclusions
 
 
-<a id="orge2c821c"></a>
+<a id="org32652b1"></a>
 
 ## Marketing Digital Outdoor     :Important:
 
 
-<a id="orgdcc11af"></a>
+<a id="orgda771d7"></a>
 
 ### Topics
 
@@ -186,7 +189,7 @@ Think about the project and deliver a document about it.
             -   Additionally, brands can also monitor this by checking their social media accounts.
 
 
-<a id="orgba5f9d3"></a>
+<a id="orgdb48755"></a>
 
 ### Technologies <code>[0/11]</code>
 
@@ -203,12 +206,12 @@ Think about the project and deliver a document about it.
 11. [ ] Social media and e-mail sharing APIs
 
 
-<a id="orgc193cda"></a>
+<a id="org1bff18a"></a>
 
 ### ✔ DONE Problem statement
 
 
-<a id="orgb243dfa"></a>
+<a id="orgfc8a35e"></a>
 
 ### ✔ DONE Market research <code>[3/3]</code>
 
@@ -217,7 +220,7 @@ Think about the project and deliver a document about it.
 3.  [X] Combined marketing: are they digital outdoor + scenting?
 
 
-<a id="orgbb14e58"></a>
+<a id="org33086e6"></a>
 
 ### Project planning
 
@@ -292,7 +295,7 @@ Think about the project and deliver a document about it.
     -   [X] Camera: 14 EUR - <https://shorturl.at/gnpCU>
 
 
-<a id="org03be830"></a>
+<a id="org4b5c42b"></a>
 
 ### Analysis
 
@@ -305,30 +308,31 @@ Think about the project and deliver a document about it.
     > COMPANY -> MDO-L Staff member login RC -> RS: q mdo systems RS -> DB: query mdo-systems DB -> RS: std::<vector> mdo<sub>systems</sub> for(i = 0; i < mdo<sub>systems.size</sub>(); i++ ) RS -> RC: mdo<sub>systems</sub>[i] RC -> RC: Select MDO-L machine Send command RC -> RS: mdo <nr> <command> (mdo 1 get mode) RS -> RS: parse command RS -> RS: get mdo<sub>nr</sub> IP (query mdo-systems 1 IP) RS -> MDO-L: connect IP:port MDO-L -> RS: connected RS -> MDO-L: get mode MDO-L -> RS: normal mode (example) RS -> RC: normal
 
 
-<a id="orgc1a3483"></a>
+<a id="orgf0f052e"></a>
 
-### Theoretical foundations <code>[6/16]</code>
+### Theoretical foundations <code>[13/17]</code>
 
 1.  [X] **Project methodology: Waterfall model**
 2.  [X] **Multitasking and Pthreads**
 3.  [X] **Client-Server architecture & TCP/IP & OSI model**
 4.  [X] *Daemons*
-5.  [ ] *Device drivers*
-6.  [ ] **Nebulizer technology for scenting**
+5.  [X] *Device drivers*
+6.  [X] **Nebulizer technology for scenting**
 7.  [X] **Computer Vision**
     1.  [X] **OpenCV**
     2.  [X] **Gesture recognition algorithms**
     3.  [X] **Face detection algorithms**
         1.  see [openCV3 book](biblio/OpenCV3_Computer-Vision-in-C++-with-the-OpenCV-Library.pdf) (pg. 883)
 8.  [X] **RDBMS (Relational Database management system) (SQL)**
-9.  [ ] *User detection technologies: IR, ultrasonic*
-10. [ ] *Camera recording and codecs*
+9.  [X] *User detection technologies: IR, ultrasonic*
+10. [X] *Camera recording and codecs*
 11. [ ] *Image filtering APIs*
 12. [ ] *GIFs generation*
 13. [ ] **Social media and e-mail sharing APIs**
-14. [ ] *UI framework: Qt*
+14. [X] *UI framework: Qt*
 15. [ ] *File transfer protocols*
-16. [ ] **Makefiles**
+16. [X] **Makefiles**
+17. [X] **Source code documentation**: Doxygen
 
 Legend:
 
@@ -336,7 +340,45 @@ Legend:
 -   *Hugo*
 
 
-<a id="org59c02b1"></a>
+<a id="org3971242"></a>
+
+### Design
+
+Next Thursday, December 16th, we will have the presentations for the Design Phase. Submit the **presentation** and **report** until Wednesday 15th, 23:00h.
+
+Design Phase must include (some specifications may vary according to your project):
+
+1.  **Hardware Specification** <code>[0/6]</code>:
+    -   [ ] Architecture
+    -   [ ] Hardware Component Specification <code>[0/7]</code>
+        1.  [ ] Raspberry Pi
+        2.  [ ] Power supply module
+        3.  [ ] Ultrasonic sensor
+        4.  [ ] Fragrance diffuser actuator: <https://shorturl.at/hlxFQ>
+        5.  [ ] LCD display: <https://shorturl.at/dnoIZ>
+        6.  [ ] Raspberry Pi Camera
+        7.  [ ] Colunas
+    -   [ ] Peripherals Pinout/Mapping/Connection Layout
+    -   [ ] Test Cases
+    -   [ ] PCB layout (when applicable)
+    -   [ ] Tools
+2.  **Software Specification** <code>[0/11]</code>:
+    -   [ ] Entity Relations Diagram
+    -   [ ] Classes Diagram
+    -   [ ] Data Formats
+    -   [ ] Flowcharts
+    -   [ ] Tasks Division (accurate plan)
+    -   [ ] Thread Priorities
+    -   [ ] GUI Layouts
+    -   [ ] Test Cases
+    -   [ ] Software COTs
+    -   [ ] Third-party Libraries/apps
+    -   [ ] Tools
+
+It is compulsory to show/identify which/where all class topics are going to be implemented and used by you! Also third-party Libraries/apps must be identified so you can use other's software and materials with our consent.
+
+
+<a id="orga53520b"></a>
 
 # Diagrams
 
@@ -345,19 +387,19 @@ Diagrams can be drawn using <code>[2/2]</code>:
 -   [X] draw.io
     -   User mockups
     -   State-machine
--   [X] [PlantUML](#orge57752d) (stored in Proj/diags/plantuml)
+-   [X] [PlantUML](#orgcd438d8) (stored in Proj/diags/plantuml)
     -   Sequence diagram
     -   Class diagram
 
 
-<a id="orge57752d"></a>
+<a id="orgcd438d8"></a>
 
 ## PlantUML
 
 [PlantUML](https://plantuml.com/) is a tool for quickly drawing diagrams from text based descriptions. It is specially adequate for sequence diagrams, as draw.io is not very fluid.
 
 
-<a id="orgc235b1d"></a>
+<a id="org143beee"></a>
 
 ### Setup <code>[0/6]</code>
 
@@ -373,7 +415,7 @@ Diagrams can be drawn using <code>[2/2]</code>:
 6.  [ ] Check the generate png file: `output/test.png`
 
 
-<a id="org09873a4"></a>
+<a id="orgc0233e8"></a>
 
 ### Workflow <code>[0/4]</code>
 
@@ -387,7 +429,7 @@ Diagrams can be drawn using <code>[2/2]</code>:
 4.  [ ] Check the generate png file: `output/test.png`
 
 
-<a id="org55b3803"></a>
+<a id="org842f672"></a>
 
 ### Sequence diagrams
 
@@ -902,3 +944,18 @@ Diagrams can be drawn using <code>[2/2]</code>:
     ```
     
     ![img](diags/plantuml/seq-diag/examples/all-together.png)
+
+
+<a id="org349f8ef"></a>
+
+# GIF generation
+
+
+<a id="org8c1439d"></a>
+
+## C++ libraries and APIs <code>[0/1]</code>
+
+1.  [ ] [Magick++](https://www.imagemagick.org/Magick++/Documentation.html):
+    -   C++ wrapper for ImageMagick C library
+    -   One can user openCV to read frames and convert them to Magick++ structures and them save them as GIFs (see [here](https://stackoverflow.com/questions/41841553/convert-magickimage-to-cvmat) and [here](https://gist.github.com/AlphaNext/20a74d872505a36d514778b9b0719e92))
+    -   [research](https://www.one-tab.com/page/fuqT5AkaRZGbzBcehZlXVQ)
