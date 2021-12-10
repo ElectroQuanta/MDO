@@ -343,7 +343,6 @@ Design Phase must include (some specifications may vary according to your projec
 It is compulsory to show/identify which/where all class topics are going to be implemented and used by you! Also third-party Libraries/apps must be identified so you can use other's software and materials with our consent. 
 
 
-
 * Diagrams
 Diagrams can be drawn using [2/2]:
 - [X] draw.io
@@ -2276,3 +2275,11 @@ advantage of size over the number of scent elements is decreased significantly,
    1) [ ] Theory
    2) [ ] Circuit
    3) [ ] Conclusions
+* GIF generation
+** C++ libraries and APIs [0/1]
+1) [ ] [[https://www.imagemagick.org/Magick++/Documentation.html][Magick++]]:
+   - C++ wrapper for ImageMagick C library
+   - One can user openCV to read frames and convert them to Magick++ structures
+     and them save them as GIFs (see [[https://stackoverflow.com/questions/41841553/convert-magickimage-to-cvmat][here]] and [[https://gist.github.com/AlphaNext/20a74d872505a36d514778b9b0719e92][here]])
+   - [[https://www.one-tab.com/page/fuqT5AkaRZGbzBcehZlXVQ][research]]
+
