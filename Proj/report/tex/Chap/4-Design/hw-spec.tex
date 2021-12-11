@@ -172,32 +172,30 @@ The \gls{mdo-l} will be a plugged in system, so it will be needed a plugged in p
 
 \subsection{Total \gls{hw} cost}
 
-The total cost can now be precisely calculated, once that all the hardware is now specified on table \ref{tab:hw-costs}.
+The total \gls{hw} cost can now be precisely calculated, once that all the
+hardware is now specified on table \ref{tab:hw-costs}, yielding about 175 EUR.
 
 % Please add the following required packages to your document preamble:
 \begingroup
 \renewcommand{\arraystretch}{0.7} % Default value: 1
+\begin{table}[!hbt]
 % Please add the following required packages to your document preamble:
 % \usepackage{booktabs}
-% \usepackage{graphicx}
-\begin{table}[]
 \centering
 \caption{Total spending on Hardware}
 \label{tab:hw-costs}
-\resizebox{\textwidth}{!}{%
-\begin{tabular}{@{}lll@{}}
+\begin{tabular}{@{}lrr@{}}
 \toprule
-\textbf{Item}                & \textbf{Quantity} & \textbf{Price (€)} \\ \midrule
-Raspberry Pi 4B              & 1                 & 70.00              \\ \midrule
-Ultrasonic Sensor HC-SR04    & 3                 & 11.70              \\ \midrule
-Fragrance Diffusion Actuator & 1                 & 3.23               \\ \midrule
-Raspberry Pi Camera V2       & 1                 & 20.00              \\ \midrule
-LCD Display                  & 1                 & 51.95              \\ \midrule
-Speakers                     & 1                 & 3.00               \\ \midrule
-Power Supply                 & 1                 & 13.50              \\ \midrule
-\multicolumn{2}{l}{\textbf{Total}}               & \textbf{173.38}    \\ \bottomrule
-\end{tabular}%
-}
+\textbf{Item}                & \multicolumn{1}{l}{\textbf{Quantity}} & \multicolumn{1}{l}{\textbf{Price (€)}} \\ \midrule
+Raspberry Pi 4B              & 1                                     & 70.00                                  \\ \midrule
+Ultrasonic Sensor HC-SR04    & 3                                     & 11.70                                  \\ \midrule
+Fragrance Diffusion Actuator & 1                                     & 3.23                                   \\ \midrule
+Raspberry Pi Camera V2       & 1                                     & 20.00                                  \\ \midrule
+LCD Display                  & 1                                     & 51.95                                  \\ \midrule
+Speakers                     & 1                                     & 3.00                                   \\ \midrule
+Power Supply                 & 1                                     & 13.50                                  \\ \midrule
+\multicolumn{2}{r}{\textbf{Total}}                                   & \textbf{173.38}                        \\ \bottomrule
+\end{tabular}
 \end{table}
 % components. Fig.~\ref{fig:block-diag} depicts the overall information flow and
 % the TV remote block diagram: the \texttt{User} interacts with
