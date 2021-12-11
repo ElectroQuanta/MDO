@@ -1,9 +1,70 @@
 %
 \section{GIF generation}
 \label{sec:gif-generation}
-aaaaaa 
+The \acrfull{gif} is a bitmap image format that was developed by a team at the
+CompuServe in 1987~\cite{gifSpec87}. It has since come into widespread usage on the World Wide Web due to its wide support and portability between applications and operating systems.
 
+The main features of \gls{gif} are~\cite{miano1999compressed}:
+\begin{enum-c}
+\item \emph{Up to 256 colors using 1 to 8 bits per pixel}: allowing a single image to
+  reference its own palette chosen from the 24-bit color space. These palette
+  limitations make GIF less suitable for reproducing color photographs, but
+  well-suited for simpler images such as graphics or logos with solid areas of
+  color.
+\item \emph{Multiple images per file}: supporting animation.
+\end{enum-c}
 
+GIF images are compressed using the Lempel–Ziv–Welch (LZW) lossless data
+compression technique to reduce the file size without degrading the visual
+quality. It stores multi-byte integers with the \gls{lsb} first
+(little--endian)~\cite{miano1999compressed}.
+
+Conceptually, a GIF file describes a fixed-sized graphical area (the `logical
+screen') populated with zero or more `images', which can be animated, resulting
+in an animated \gls{gif}~\cite{gifSpec87}.
+
+In the present work, one is interested specifically in the animation capability
+of the \gls{gif} format, as it is widely popular in social media platforms where
+brands can target their audience.
+
+\section{C/C++ libraries and APIs}
+\label{sec:c++-libraries-apis-1}
+In this section, the most important C/C++ libraries and APIs are outlined.
+
+\texttt{ImageMagick} is a free and open-source cross-platform software suite for
+displaying, creating, converting, modifying, and editing raster images,
+supporting over 200 image file formats, including PNG, JPEG, GIF, WebP, HEIC,
+SVG, PDF, DPX, EXR and TIFF. ImageMagick can resize, flip, mirror, rotate,
+distort, shear and transform images, adjust image colors, apply various special
+effects, or draw text, lines, polygons, ellipses and Bézier
+curves~\cite{imageMagick}. It has APIs for C/C++, namely:
+\begin{enum-c}
+\item \texttt{MagickWand} --- \texttt{C}~\cite{MagickWand}: it is the recommended interface between the C
+  programming language and the ImageMagick image processing libraries. Unlike
+  the MagickCore C API, MagickWand uses only a few opaque types. Accessors are
+  available to set or get important wand properties.
+\item \texttt{MagickCore} --- \texttt{C}~\cite{MagickCore}: it is a low-level interface between
+  the C programming language and the ImageMagick image processing libraries and
+  is recommended for wizard-level programmers only. Unlike the MagickWand C API
+  which uses only a few opaque types and accessors, with MagickCore you almost
+  exlusively access the structure members directly.
+\item \texttt{Magick++} --- \texttt{C++}~\cite{Magick++}: is the object-oriented C++ API to the
+  ImageMagick image-processing library. Magick++ supports an object model which is inspired by PerlMagick. Images support implicit reference counting so that copy constructors and assignment incur almost no cost. The cost of actually copying an image (if necessary) is done just before modification and this copy is managed automagically by Magick++. De-referenced copies are automagically deleted. The image objects support value (rather than pointer) semantics so it is trivial to support multiple generations of an image in memory at one time.
+
+Magick++ provides integrated support for the Standard Template Library (STL) so
+that the powerful containers available (e.g. deque, vector, list, and map) can
+be used to write programs similar to those possible with PERL \&
+PerlMagick. STL-compatible template versions of ImageMagick's list-style
+operations are provided so that operations may be performed on multiple images
+stored in STL containers.
+\end{enum-c}
+
+The \texttt{ImageMagick} C API is complex and the data structures are currently
+not documented. \texttt{Magick++} provides access to most of the features
+available from the C API but in a simple object-oriented and well-documented
+framework~\cite{Magick++Docs}. Also, \texttt{Magick++} supports manipulation and
+conversion of \texttt{OpenCV} data structures --- which are used to store frames
+from the camera and to process them --- thus making it the chosen solution.
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "../../../dissertation"
