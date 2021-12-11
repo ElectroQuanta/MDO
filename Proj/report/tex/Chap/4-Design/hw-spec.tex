@@ -115,34 +115,35 @@ Thus the camera module that is used is the \texttt{Raspberry Pi Camera Module V2
 %
 \begin{figure}[htb!]
 \centering
-    \includegraphics[width=0.6\columnwidth]{./img/camera-module.jpg}
+    \includegraphics[width=0.4\columnwidth]{./img/camera-module.png}
   \caption{Camera module (withdrawn from \cite{camera-module})}%
 \label{fig:camera-module}
 \end{figure}
 
-This camera module has a \texttt{Sony IMX219 8-megapixel sensor} and can be used to take high-definition video, as well as stills photographs. It supports 1080p30, 720p60 and VGA90 video modes, as well as still capture. It attaches via a 15 centimeters ribbon cable to the CSI port on the Raspberry Pi. The camera works with all models of Raspberry Pi 1, 2, 3 and 4. It can be accessed through the MMAL and V4L APIs, and there are numerous third-party libraries built for it, including the Picamera Python library.~\cite{camera-module}.
+This camera module has a \texttt{Sony IMX219 8-megapixel sensor} and can be used to take high-definition video, as well as stills photographs. It supports 1080p30, 720p60 and VGA90 video modes, as well as still capture. It attaches via a 15 centimeters ribbon cable to the \gls{csi} port on the Raspberry Pi. The camera works with all models of Raspberry Pi 1, 2, 3 and 4. It can be accessed through the MMAL and V4L APIs, and there are numerous third-party libraries built for it, including the Picamera Python library.~\cite{camera-module}.
 
-\subsection{Screen}
+\subsection{LCD Display}
 
-In Fig.~\ref{fig:screen} is the screen that is used in this project. One advantage on this screen is that it has \texttt{audio drivers}, which means that it is only necessary to plug a speaker and the board can handle the rest.
-As it can be seen, the screen has \texttt{10.1 inches} and it is supplied with \texttt{5V \gls{dc}} via a micro USB port, this means that the maximum current consumption is \texttt{600 \gls{ma}}.
-Fig.~\ref{fig:screen-interfaces} show all the interfaces that the board module of the screen provides. 
+In Fig.~\ref{fig:screen} is the display that is used in this project. One advantage on this display is that it has \texttt{audio drivers}, which means that it is only necessary to plug a speaker and the board can handle the rest. It is also important to refer that the display isn't touch because there is no need to it and also this was the chosen one because it was the bigger and best on market considering quality and price.
+
+As it can be seen, the display has \texttt{10.1 inches} and it is supplied with \texttt{5V \gls{dc}} and with a current of \texttt{2 A} via a micro USB port.
+Fig.~\ref{fig:screen-interfaces} show all the interfaces that the board module of the display provides. That was also one more reason for the choice of this display: it has an \texttt{\gls{hdmi} interface} to connect to the Raspberry, the \texttt{50Pin TTL Screen Interface} that will connect to the display and two options to plug audio - the \texttt{Speaker Interface} and the \texttt{3.5mm audio interface}.
 %
 \begin{figure}[htb!]
 \centering
     \includegraphics[width=0.4\columnwidth]{./img/screen.png}
-  \caption{Screen (withdrawn from \cite{screen})}%
+  \caption{Display (withdrawn from \cite{screen})}%
 \label{fig:screen}
 \end{figure}
 %
 \begin{figure}[htb!]
 \centering
-    \includegraphics[width=0.4\columnwidth]{./img/screen-interfaces.png}
-  \caption{Screen Interfaces (withdrawn from \cite{screen})}%
+    \includegraphics[width=0.6\columnwidth]{./img/screen-interfaces.png}
+  \caption{Display Interfaces (withdrawn from \cite{screen})}%
 \label{fig:screen-interfaces}
 \end{figure}
 
-It can also be seen in this figure that the screen has also a remote and a board to handle the remote controls, but in this implementation, it will probably not be in use.
+It can also be seen in this figure that the display has also a remote and a board to handle the remote controls, but in this implementation, it will probably not be in use.
 
 \subsection{Speakers}
 When playing video ads, it is not only necessary a display, but also a speaker to playback the sound of the ads.
@@ -164,16 +165,40 @@ The \gls{mdo-l} will be a plugged in system, so it will be needed a plugged in p
 %
 \begin{figure}[htb!]
 \centering
-    \includegraphics[width=0.4\columnwidth]{./img/power-supply.png}
+    \includegraphics[width=0.3\columnwidth]{./img/power-supply.png}
   \caption{Power Supply (withdrawn from \cite{power-supply})}%
 \label{fig:power-supply}
 \end{figure}
 
 \subsection{Total \gls{hw} cost}
 
-The total cost can now be precisely calculated, once that all the hardware is now specified.
+The total cost can now be precisely calculated, once that all the hardware is now specified on table \ref{tab:hw-costs}.
 
-
+% Please add the following required packages to your document preamble:
+\begingroup
+\renewcommand{\arraystretch}{0.7} % Default value: 1
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+% \usepackage{graphicx}
+\begin{table}[]
+\centering
+\caption{Total spending on Hardware}
+\label{tab:hw-costs}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{Item}                & \textbf{Quantity} & \textbf{Price (€)} \\ \midrule
+Raspberry Pi 4B              & 1                 & 70.00              \\ \midrule
+Ultrasonic Sensor HC-SR04    & 3                 & 11.70              \\ \midrule
+Fragrance Diffusion Actuator & 1                 & 3.23               \\ \midrule
+Raspberry Pi Camera V2       & 1                 & 20.00              \\ \midrule
+LCD Display                  & 1                 & 51.95              \\ \midrule
+Speakers                     & 1                 & 3.00               \\ \midrule
+Power Supply                 & 1                 & 13.50              \\ \midrule
+\multicolumn{2}{l}{\textbf{Total}}               & \textbf{173.38}    \\ \bottomrule
+\end{tabular}%
+}
+\end{table}
 % components. Fig.~\ref{fig:block-diag} depicts the overall information flow and
 % the TV remote block diagram: the \texttt{User} interacts with
 % the TV remote by pressing buttons which triggers the emission of \gls{ir} codes
