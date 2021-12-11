@@ -326,20 +326,39 @@ Next Thursday, December 16th, we will have the presentations for the Design Phas
 Submit the *presentation* and *report* until Wednesday 15th, 23:00h.
 
 Design Phase must include (some specifications may vary according to your project):
-1) *Hardware Specification* [1/6]:
+1) *Hardware Specification* [0/6]:
    - [ ] Architecture
-   - [X] Hardware Component Specification [7/7]
+     - In the analysis phase an overview of the HW architecture was
+       conceptualized. In this section, a more specific HW architecture is
+       illustrated, using a block-diagram.
+     - BLOCK DIAGRAM and comment it
+   - [-] Hardware Component Specification [7/8]
      1) [X] Raspberry Pi
+	1) SD card
      2) [X] Power supply module
      3) [X] Ultrasonic sensor
      4) [X] Fragrance diffuser actuator: https://shorturl.at/hlxFQ
      5) [X] LCD display: https://shorturl.at/dnoIZ
      6) [X] Raspberry Pi Camera
      7) [X] Colunas
+     8) [ ] On/off button
    - [ ] Peripherals Pinout/Mapping/Connection Layout
+     - Draw a schematic for connecting all HW components
+     - Add a table containing:
+       |            | PIN MAPPING      |          |
+       | Controller | Interface device | Function |
    - [ ] Test Cases
+     - *Ultrasonic sensor*: one will connect the ultrasonic sensor to Raspberry
+       Pi. Then an object will be approximated to the sensor from several
+       distances with the corresponding distance being measure with a measuring
+       tape. If the distance measured by the sensor and the measuring device are
+       within the error margin provided by the manufactured, the device is
+       compliant.
+       | HW item | Type of test | Description | Expected result |
    - [ ] PCB layout (when applicable)
+     - Custom PCB for ultrasonic sensors + fragrance diffuser actuator
    - [ ] Tools
+     - PADS, KiCad
 2) *Software Specification* [0/11]:
    - [ ] Entity Relations Diagram
    - [ ] Classes Diagram

@@ -1,33 +1,33 @@
-- [Preamble](#orgbf77998)
-- [Versions <code>[1/1]</code>](#org0465e30)
-- [Notes](#orgcbb3c87)
-  - [Requirements](#orgcddb13b)
-  - [Problem statement](#org70f0b64)
-  - [Research](#org26d40db)
-    - [Topics <code>[0/3]</code>](#orge7a787a)
-    - [Selection](#org7c97fdc)
-  - [Report](#org9d95e8e)
-    - [Outline <code>[2/8]</code>](#org1c361cb)
-  - [Marketing Digital Outdoor](#org32652b1)
-    - [Topics](#orgda771d7)
-    - [Technologies <code>[0/11]</code>](#orgdb48755)
-    - [Problem statement](#org1bff18a)
-    - [Market research <code>[3/3]</code>](#orgfc8a35e)
-    - [Project planning](#org33086e6)
-    - [Analysis](#org4b5c42b)
-    - [Theoretical foundations <code>[13/17]</code>](#orgf0f052e)
-    - [Design](#org3971242)
-- [Diagrams](#orga53520b)
-  - [PlantUML](#orgcd438d8)
-    - [Setup <code>[0/6]</code>](#org143beee)
-    - [Workflow <code>[0/4]</code>](#orgc0233e8)
-    - [Sequence diagrams](#org842f672)
-- [GIF generation](#org349f8ef)
-  - [C++ libraries and APIs <code>[0/1]</code>](#org8c1439d)
+- [Preamble](#org0598600)
+- [Versions <code>[1/1]</code>](#orgcf159d4)
+- [Notes](#org240e2f2)
+  - [Requirements](#org74b7810)
+  - [Problem statement](#org78ca7a0)
+  - [Research](#org20683af)
+    - [Topics <code>[0/3]</code>](#org9a513e9)
+    - [Selection](#org4765032)
+  - [Report](#org212b8ea)
+    - [Outline <code>[2/8]</code>](#org2fa03f5)
+  - [Marketing Digital Outdoor](#org9981898)
+    - [Topics](#orgb793ebb)
+    - [Technologies <code>[0/11]</code>](#orgae44a68)
+    - [Problem statement](#orgf0509d2)
+    - [Market research <code>[3/3]</code>](#orge030e70)
+    - [Project planning](#org17c2177)
+    - [Analysis](#orgc903229)
+    - [Theoretical foundations <code>[17/17]</code>](#orgf27299c)
+    - [Design](#org8133eb8)
+- [Diagrams](#org981af3f)
+  - [PlantUML](#org6db7c5b)
+    - [Setup <code>[0/6]</code>](#orgfae63e9)
+    - [Workflow <code>[0/4]</code>](#orge725b05)
+    - [Sequence diagrams](#org28a630d)
+- [GIF generation](#org411d74d)
+  - [C++ libraries and APIs <code>[0/1]</code>](#org878125b)
 
 
 
-<a id="orgbf77998"></a>
+<a id="org0598600"></a>
 
 # Preamble
 
@@ -35,19 +35,19 @@
 -   It is written incrementally, i.e., as the several project phases take place, the document versions pertaining to each phase are stored in the folder **submission**.
 
 
-<a id="org0465e30"></a>
+<a id="orgcf159d4"></a>
 
 # Versions <code>[1/1]</code>
 
 1.  [X] Problem statement: deadline - <span class="timestamp-wrapper"><span class="timestamp">&lt;2021-10-28 qui&gt;</span></span>
 
 
-<a id="orgcbb3c87"></a>
+<a id="org240e2f2"></a>
 
 # Notes     :Important:
 
 
-<a id="orgcddb13b"></a>
+<a id="org74b7810"></a>
 
 ## Requirements
 
@@ -59,19 +59,19 @@
 -   Makefiles
 
 
-<a id="org70f0b64"></a>
+<a id="org78ca7a0"></a>
 
 ## Problem statement
 
 Think about the project and deliver a document about it.
 
 
-<a id="org26d40db"></a>
+<a id="org20683af"></a>
 
 ## Research
 
 
-<a id="orge7a787a"></a>
+<a id="org9a513e9"></a>
 
 ### Topics <code>[0/3]</code>
 
@@ -80,19 +80,19 @@ Think about the project and deliver a document about it.
 -   [ ] Situate the project requirements, the project constraints
 
 
-<a id="org7c97fdc"></a>
+<a id="org4765032"></a>
 
 ### Selection
 
 -   [Marketing digital Outdoor](readme.md)
 
 
-<a id="org9d95e8e"></a>
+<a id="org212b8ea"></a>
 
 ## Report
 
 
-<a id="org1c361cb"></a>
+<a id="org2fa03f5"></a>
 
 ### Outline <code>[2/8]</code>
 
@@ -143,12 +143,12 @@ Think about the project and deliver a document about it.
 8.  [ ] Conclusions
 
 
-<a id="org32652b1"></a>
+<a id="org9981898"></a>
 
 ## Marketing Digital Outdoor     :Important:
 
 
-<a id="orgda771d7"></a>
+<a id="orgb793ebb"></a>
 
 ### Topics
 
@@ -189,7 +189,7 @@ Think about the project and deliver a document about it.
             -   Additionally, brands can also monitor this by checking their social media accounts.
 
 
-<a id="orgdb48755"></a>
+<a id="orgae44a68"></a>
 
 ### Technologies <code>[0/11]</code>
 
@@ -206,12 +206,12 @@ Think about the project and deliver a document about it.
 11. [ ] Social media and e-mail sharing APIs
 
 
-<a id="org1bff18a"></a>
+<a id="orgf0509d2"></a>
 
 ### ✔ DONE Problem statement
 
 
-<a id="orgfc8a35e"></a>
+<a id="orge030e70"></a>
 
 ### ✔ DONE Market research <code>[3/3]</code>
 
@@ -220,7 +220,7 @@ Think about the project and deliver a document about it.
 3.  [X] Combined marketing: are they digital outdoor + scenting?
 
 
-<a id="org33086e6"></a>
+<a id="org17c2177"></a>
 
 ### Project planning
 
@@ -295,9 +295,9 @@ Think about the project and deliver a document about it.
     -   [X] Camera: 14 EUR - <https://shorturl.at/gnpCU>
 
 
-<a id="org4b5c42b"></a>
+<a id="orgc903229"></a>
 
-### Analysis
+### ✔ DONE Analysis
 
 1.  System architecture
 
@@ -308,9 +308,9 @@ Think about the project and deliver a document about it.
     > COMPANY -> MDO-L Staff member login RC -> RS: q mdo systems RS -> DB: query mdo-systems DB -> RS: std::<vector> mdo<sub>systems</sub> for(i = 0; i < mdo<sub>systems.size</sub>(); i++ ) RS -> RC: mdo<sub>systems</sub>[i] RC -> RC: Select MDO-L machine Send command RC -> RS: mdo <nr> <command> (mdo 1 get mode) RS -> RS: parse command RS -> RS: get mdo<sub>nr</sub> IP (query mdo-systems 1 IP) RS -> MDO-L: connect IP:port MDO-L -> RS: connected RS -> MDO-L: get mode MDO-L -> RS: normal mode (example) RS -> RC: normal
 
 
-<a id="orgf0f052e"></a>
+<a id="orgf27299c"></a>
 
-### Theoretical foundations <code>[13/17]</code>
+### ✔ DONE Theoretical foundations <code>[17/17]</code>
 
 1.  [X] **Project methodology: Waterfall model**
 2.  [X] **Multitasking and Pthreads**
@@ -326,11 +326,11 @@ Think about the project and deliver a document about it.
 8.  [X] **RDBMS (Relational Database management system) (SQL)**
 9.  [X] *User detection technologies: IR, ultrasonic*
 10. [X] *Camera recording and codecs*
-11. [ ] *Image filtering APIs*
-12. [ ] *GIFs generation*
-13. [ ] **Social media and e-mail sharing APIs**
+11. [X] *Image filtering APIs*
+12. [X] *GIFs generation*
+13. [X] **Social media and e-mail sharing APIs**
 14. [X] *UI framework: Qt*
-15. [ ] *File transfer protocols*
+15. [X] *File transfer protocols*
 16. [X] **Makefiles**
 17. [X] **Source code documentation**: Doxygen
 
@@ -340,7 +340,7 @@ Legend:
 -   *Hugo*
 
 
-<a id="org3971242"></a>
+<a id="org8133eb8"></a>
 
 ### Design
 
@@ -350,18 +350,34 @@ Design Phase must include (some specifications may vary according to your projec
 
 1.  **Hardware Specification** <code>[0/6]</code>:
     -   [ ] Architecture
-    -   [ ] Hardware Component Specification <code>[0/7]</code>
-        1.  [ ] Raspberry Pi
-        2.  [ ] Power supply module
-        3.  [ ] Ultrasonic sensor
-        4.  [ ] Fragrance diffuser actuator: <https://shorturl.at/hlxFQ>
-        5.  [ ] LCD display: <https://shorturl.at/dnoIZ>
-        6.  [ ] Raspberry Pi Camera
-        7.  [ ] Colunas
+        -   In the analysis phase an overview of the HW architecture was conceptualized. In this section, a more specific HW architecture is illustrated, using a block-diagram.
+        -   BLOCK DIAGRAM and comment it
+    -   [-] Hardware Component Specification <code>[7/8]</code>
+        1.  [X] Raspberry Pi
+            1.  SD card
+        2.  [X] Power supply module
+        3.  [X] Ultrasonic sensor
+        4.  [X] Fragrance diffuser actuator: <https://shorturl.at/hlxFQ>
+        5.  [X] LCD display: <https://shorturl.at/dnoIZ>
+        6.  [X] Raspberry Pi Camera
+        7.  [X] Colunas
+        8.  [ ] On/off button
     -   [ ] Peripherals Pinout/Mapping/Connection Layout
+        -   Draw a schematic for connecting all HW components
+        -   Add a table containing:
+            
+            |            | PIN MAPPING      |          |
+            | Controller | Interface device | Function |
     -   [ ] Test Cases
+        -   **Ultrasonic sensor**: one will connect the ultrasonic sensor to Raspberry Pi. Then an object will be approximated to the sensor from several distances with the corresponding distance being measure with a measuring tape. If the distance measured by the sensor and the measuring device are within the error margin provided by the manufactured, the device is compliant.
+            
+            |        |             |            |                |
+            |------- |------------ |----------- |--------------- |
+            | HW item | Type of test | Description | Expected result |
     -   [ ] PCB layout (when applicable)
+        -   Custom PCB for ultrasonic sensors + fragrance diffuser actuator
     -   [ ] Tools
+        -   PADS, KiCad
 2.  **Software Specification** <code>[0/11]</code>:
     -   [ ] Entity Relations Diagram
     -   [ ] Classes Diagram
@@ -378,7 +394,7 @@ Design Phase must include (some specifications may vary according to your projec
 It is compulsory to show/identify which/where all class topics are going to be implemented and used by you! Also third-party Libraries/apps must be identified so you can use other's software and materials with our consent.
 
 
-<a id="orga53520b"></a>
+<a id="org981af3f"></a>
 
 # Diagrams
 
@@ -387,19 +403,19 @@ Diagrams can be drawn using <code>[2/2]</code>:
 -   [X] draw.io
     -   User mockups
     -   State-machine
--   [X] [PlantUML](#orgcd438d8) (stored in Proj/diags/plantuml)
+-   [X] [PlantUML](#org6db7c5b) (stored in Proj/diags/plantuml)
     -   Sequence diagram
     -   Class diagram
 
 
-<a id="orgcd438d8"></a>
+<a id="org6db7c5b"></a>
 
 ## PlantUML
 
 [PlantUML](https://plantuml.com/) is a tool for quickly drawing diagrams from text based descriptions. It is specially adequate for sequence diagrams, as draw.io is not very fluid.
 
 
-<a id="org143beee"></a>
+<a id="orgfae63e9"></a>
 
 ### Setup <code>[0/6]</code>
 
@@ -415,7 +431,7 @@ Diagrams can be drawn using <code>[2/2]</code>:
 6.  [ ] Check the generate png file: `output/test.png`
 
 
-<a id="orgc0233e8"></a>
+<a id="orge725b05"></a>
 
 ### Workflow <code>[0/4]</code>
 
@@ -429,7 +445,7 @@ Diagrams can be drawn using <code>[2/2]</code>:
 4.  [ ] Check the generate png file: `output/test.png`
 
 
-<a id="org842f672"></a>
+<a id="org28a630d"></a>
 
 ### Sequence diagrams
 
@@ -946,12 +962,12 @@ Diagrams can be drawn using <code>[2/2]</code>:
     ![img](diags/plantuml/seq-diag/examples/all-together.png)
 
 
-<a id="org349f8ef"></a>
+<a id="org411d74d"></a>
 
 # GIF generation
 
 
-<a id="org8c1439d"></a>
+<a id="org878125b"></a>
 
 ## C++ libraries and APIs <code>[0/1]</code>
 
