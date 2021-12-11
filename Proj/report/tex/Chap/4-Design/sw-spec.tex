@@ -1,9 +1,20 @@
 %
 \section{Software specification}
 \label{sec:sw-specs}
-% Next, the \gls{sw} responsible for system operation is specified. As this system
-% is an event-driven asynchronous one it can be more easily specified using a
-% state machine diagram as illustrated in Fig.~\ref{fig:state-mach}. At program
+Next, the \gls{sw} responsible for system operation is specified for all
+subsystems --- \texttt{\gls{mdo-rc}}, \texttt{\gls{mdo-rs}}, and
+\texttt{mdo-l}.
+All these subsystems are event-driven (asynchronous), and they can be more easily
+specified using state-machine diagrams, previously illustrated in the
+\emph{analysis phase} (Section~\ref{sec:softw-arch}). Also in the \emph{analysis
+phase}, the use case diagrams helped to identify the main features required for
+the system and the respective sequence diagrams helped to clarify the
+intervening objects and the interaction among them.
+
+In this section, the analysis phase information is used to derive the static
+architecture of the system --- classes diagram.
+
+%At program
 % startup --- \texttt{Idle} state --- the peripherals are initialized (interrupts, PCA, I2C, timer for tick
 % generated interrupts) and the program waits for events, going into sleep
 % mode.

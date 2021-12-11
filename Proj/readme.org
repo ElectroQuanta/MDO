@@ -257,7 +257,10 @@ Research link: https://www.one-tab.com/page/TZxmVAXJTO6nVyNO593ARA
 - [ ] Power supply
 - [ ] Mechanical structure
 - [X] Camera: 14 EUR - https://shorturl.at/gnpCU
-*** Analysis
+*** ✔ DONE Analysis
+    :LOGBOOK:
+    - State "✔ DONE"     from              [2021-12-11 sáb 19:50]
+    :END:
 **** System architecture
 *Example*
 #+BEGIN_QUOTE
@@ -285,9 +288,12 @@ Send command
     MDO-L -> RS: normal mode (example)
     RS -> RC: normal
 #+END_QUOTE
-*** Theoretical foundations [13/17]  
+*** ✔ DONE Theoretical foundations [17/17]  
     :PROPERTIES:
     :ATTACH_DIR: /home/zmpl/OneDrive - Universidade do Minho/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/sec/img/
+    :END:
+    :LOGBOOK:
+    - State "✔ DONE"     from              [2021-12-11 sáb 19:50]
     :END:
 1) [X] *Project methodology: Waterfall model*
 2) [X] *Multitasking and Pthreads*
@@ -303,11 +309,11 @@ Send command
 8) [X] *RDBMS (Relational Database management system) (SQL)*
 9) [X] /User detection technologies: IR, ultrasonic/
 10) [X] /Camera recording and codecs/
-11) [ ] /Image filtering APIs/
-12) [ ] /GIFs generation/
-13) [ ] *Social media and e-mail sharing APIs*
+11) [X] /Image filtering APIs/
+12) [X] /GIFs generation/
+13) [X] *Social media and e-mail sharing APIs*
 14) [X] /UI framework: Qt/
-15) [ ] /File transfer protocols/
+15) [X] /File transfer protocols/
 16) [X] *Makefiles*
 17) [X] *Source code documentation*: Doxygen
 
@@ -320,16 +326,16 @@ Next Thursday, December 16th, we will have the presentations for the Design Phas
 Submit the *presentation* and *report* until Wednesday 15th, 23:00h.
 
 Design Phase must include (some specifications may vary according to your project):
-1) *Hardware Specification* [0/6]:
+1) *Hardware Specification* [1/6]:
    - [ ] Architecture
-   - [ ] Hardware Component Specification [0/7]
-     1) [ ] Raspberry Pi
-     2) [ ] Power supply module
-     3) [ ] Ultrasonic sensor
-     4) [ ] Fragrance diffuser actuator: https://shorturl.at/hlxFQ
-     5) [ ] LCD display: https://shorturl.at/dnoIZ
-     6) [ ] Raspberry Pi Camera
-     7) [ ] Colunas
+   - [X] Hardware Component Specification [7/7]
+     1) [X] Raspberry Pi
+     2) [X] Power supply module
+     3) [X] Ultrasonic sensor
+     4) [X] Fragrance diffuser actuator: https://shorturl.at/hlxFQ
+     5) [X] LCD display: https://shorturl.at/dnoIZ
+     6) [X] Raspberry Pi Camera
+     7) [X] Colunas
    - [ ] Peripherals Pinout/Mapping/Connection Layout
    - [ ] Test Cases
    - [ ] PCB layout (when applicable)
