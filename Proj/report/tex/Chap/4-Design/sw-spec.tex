@@ -12,7 +12,16 @@ the system and the respective sequence diagrams helped to clarify the
 intervening objects and the interaction among them.
 
 In this section, the analysis phase information is used to derive the static
-architecture of the system --- classes diagram.
+architecture of the system --- classes diagram --- and to specify algorithms for
+its implementation through flowcharts, keeping in mind that the several
+subsystems operate multiple tasks concurrently, thus requiring the tasks'
+specification and its priorities. The data frame formats are specified for
+communication between the different modules. The \acrfull{erd} are depicted to
+design the required databases and the \gls{ui} mock-ups are recalled. The test
+cases for each subsystem are listed, defining its operation and the expected
+result. The \gls{cots} \gls{sw} and the third-party libraries are identified
+and a mapping between class topics and the foreseeable implementation is
+presented for clarification. Finally, the \gls{sw} tools are listed.
 
 %At program
 % startup --- \texttt{Idle} state --- the peripherals are initialized (interrupts, PCA, I2C, timer for tick
