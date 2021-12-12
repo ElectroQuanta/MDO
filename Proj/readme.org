@@ -4,6 +4,11 @@
 #+EMAIL: a50178@alunos.uminho.pt
 
 #+LATEX_COMPILER: xelatex
+
+# dont export unless explicitly stated
+# https://stackoverflow.com/a/52062773
+#+PROPERTY: header-args :eval never-export
+
 * Preamble
 - This folder contains all the information about the project.
 - It is written incrementally, i.e., as the several project phases take place,
@@ -383,1167 +388,1723 @@ Diagrams can be drawn using [2/2]:
 - [X] [[id:03c3f7e2-18cd-4956-ad92-13e4a6cc1e60][PlantUML]] (stored in Proj/diags/plantuml)
   - Sequence diagram
   - Class diagram
+  - Component diagram
+  - Deployment diag
+  - Entity-Relationship diagram
+
 ** PlantUML
    :PROPERTIES:
    :ID:       03c3f7e2-18cd-4956-ad92-13e4a6cc1e60
    :END:
-[[https://plantuml.com/][PlantUML]] is a tool for quickly drawing diagrams from text based descriptions.
-It is specially adequate for sequence diagrams, as draw.io is not very fluid.
+ [[https://plantuml.com/][PlantUML]] is a tool for quickly drawing diagrams from text based descriptions.
+ It is specially adequate for sequence diagrams, as draw.io is not very fluid.
 *** Setup [0/6]
-1) [ ] Download PlantUML from the [[https://sourceforge.net/projects/plantuml/files/plantuml.jar/download][website]]: =plantuml.jar=
-2) [ ] Place the =plantuml.jar= file into a known directory and add it to the
-   path
-3) [ ] Write a diagram text file in an extension =.pu= (example input/test.pu) -
-   check the user manual for this
-4) [ ] Navigate to the =input= folder using cd
-5) [ ] Generate the diagram from the terminal using:
-    #+BEGIN_SRC bash
-    java -jar plantuml.jar test.pu -o ../out java -jar plantuml.jar test.puput/
-    #+END_SRC
-6) [ ] Check the generate png file: =output/test.png=
+ 1) [ ] Download PlantUML from the [[https://sourceforge.net/projects/plantuml/files/plantuml.jar/download][website]]: =plantuml.jar=
+ 2) [ ] Place the =plantuml.jar= file into a known directory and add it to the
+    path
+ 3) [ ] Write a diagram text file in an extension =.pu= (example input/test.pu) -
+    check the user manual for this
+ 4) [ ] Navigate to the =input= folder using cd
+ 5) [ ] Generate the diagram from the terminal using:
+     #+BEGIN_SRC bash
+     java -jar plantuml.jar test.pu -o ../out java -jar plantuml.jar test.puput/
+     #+END_SRC
+ 6) [ ] Check the generate png file: =output/test.png=
 *** Workflow [0/4]
-1) [ ] Write a diagram text file in an extension =.pu= (example input/test.pu) -
-   check the user manual for this
-2) [ ] Navigate to the =input= folder using cd
-3) [ ] Generate the diagram from the terminal using:
-    #+BEGIN_SRC bash
-    java -jar plantuml.jar test.pu -o ../output/
-    #+END_SRC
-4) [ ] Check the generate png file: =output/test.png=
-*** Sequence diagrams
+ 1) [ ] Write a diagram text file in an extension =.pu= (example input/test.pu) -
+    check the user manual for this
+ 2) [ ] Navigate to the =input= folder using cd
+ 3) [ ] Generate the diagram from the terminal using:
+     #+BEGIN_SRC bash
+     java -jar plantuml.jar test.pu -o ../output/
+     #+END_SRC
+ 4) [ ] Check the generate png file: =output/test.png=
+*** ✔ DONE Sequence diagrams
+    :LOGBOOK:
+    - State "✔ DONE"     from              [2021-12-12 dom 01:13]
+    :END:
 **** Declaring participants
-If the keyword participant is used to declare a participant, more control on that participant is possible.
+ If the keyword participant is used to declare a participant, more control on that participant is possible.
 
-The order of declaration will be the (default) order of display.
+ The order of declaration will be the (default) order of display.
 
-Using these other keywords to declare participants will change the shape of the participant representation:
-1) actor
-2) boundary
-3) control
-4) entity
-5) database
-6) collections
-7) queue
+ Using these other keywords to declare participants will change the shape of the participant representation:
+ 1) actor
+ 2) boundary
+ 3) control
+ 4) entity
+ 5) database
+ 6) collections
+ 7) queue
 
-#+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/examples/decl-partic.png :exports both
-  ' title PlantUML (comment)
-@startuml
+ #+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/examples/decl-partic.png :exports both
+   ' title PlantUML (comment)
+ @startuml
 
-participant Participant as Foo
-actor       Actor       as Foo1
-boundary    Boundary    as Foo2
-control     Control     as Foo3
-entity      Entity      as Foo4
-database    Database    as Foo5
-collections Collections as Foo6
-queue       Queue       as Foo7
-Foo -> Foo1 : To actor 
-Foo -> Foo2 : To boundary
-Foo -> Foo3 : To control
-Foo -> Foo4 : To entity
-Foo -> Foo5 : To database
-Foo -> Foo6 : To collections
-Foo -> Foo7: To queue
+ participant Participant as Foo
+ actor       Actor       as Foo1
+ boundary    Boundary    as Foo2
+ control     Control     as Foo3
+ entity      Entity      as Foo4
+ database    Database    as Foo5
+ collections Collections as Foo6
+ queue       Queue       as Foo7
+ Foo -> Foo1 : To actor 
+ Foo -> Foo2 : To boundary
+ Foo -> Foo3 : To control
+ Foo -> Foo4 : To entity
+ Foo -> Foo5 : To database
+ Foo -> Foo6 : To collections
+ Foo -> Foo7: To queue
 
-@enduml
-#+END_SRC
+ @enduml
+ #+END_SRC
 
-#+RESULTS:
-[[file:diags/plantuml/seq-diag/examples/decl-partic.png]]
+ #+RESULTS:
+ [[file:diags/plantuml/seq-diag/examples/decl-partic.png]]
 **** Change arrow style
-You can change arrow style by several ways:
-1) add a final x to denote a lost message
-2) use \ or / instead of < or > to have only the bottom or top part of the arrow
-3) repeat the arrow head (for example, >> or //) head to have a thin drawing
-4) use -- instead of - to have a dotted arrow
-5) add a final "o" at arrow head
-6) use bidirectional arrow <->
+ You can change arrow style by several ways:
+ 1) add a final x to denote a lost message
+ 2) use \ or / instead of < or > to have only the bottom or top part of the arrow
+ 3) repeat the arrow head (for example, >> or //) head to have a thin drawing
+ 4) use -- instead of - to have a dotted arrow
+ 5) add a final "o" at arrow head
+ 6) use bidirectional arrow <->
 
-#+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/examples/arrow-style.png :exports both
-@startuml
-' comments as needed
-' lost message
-Bob ->x Alice 
-' sync message
-Bob -> Alice 
-' async message
-Bob ->> Alice
-Bob -\ Alice
-Bob \\- Alice
-Bob //-- Alice
+ #+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/examples/arrow-style.png :exports both
+ @startuml
+ ' comments as needed
+ ' lost message
+ Bob ->x Alice 
+ ' sync message
+ Bob -> Alice 
+ ' async message
+ Bob ->> Alice
+ Bob -\ Alice
+ Bob \\- Alice
+ Bob //-- Alice
 
-Bob ->o Alice
-Bob o\\-- Alice
+ Bob ->o Alice
+ Bob o\\-- Alice
 
-' bidirectional message
-Bob <-> Alice
-Bob <->o Alice
-@enduml
-#+END_SRC
+ ' bidirectional message
+ Bob <-> Alice
+ Bob <->o Alice
+ @enduml
+ #+END_SRC
 
-#+RESULTS:
-[[file:diags/plantuml/seq-diag/examples/arrow-style.png]]
+ #+RESULTS:
+ [[file:diags/plantuml/seq-diag/examples/arrow-style.png]]
 
 **** Grouping messages
-([[https://plantuml.com/sequence-diagram#425ba4350c02142c][src]])
+ ([[https://plantuml.com/sequence-diagram#425ba4350c02142c][src]])
 
-It is possible to group messages together using the following keywords:
-1) alt/else
-2) opt
-3) loop
-4) par
-5) break
-6) critical
-7) group, followed by a text to be displayed
+ It is possible to group messages together using the following keywords:
+ 1) alt/else
+ 2) opt
+ 3) loop
+ 4) par
+ 5) break
+ 6) critical
+ 7) group, followed by a text to be displayed
 
-It is possible to add a text that will be displayed into the header (for group,
-see next paragraph 'Secondary group label').
+ It is possible to add a text that will be displayed into the header (for group,
+ see next paragraph 'Secondary group label').
 
-The end keyword is used to close the group.
+ The end keyword is used to close the group.
 
-Note that it is possible to nest groups. 
+ Note that it is possible to nest groups. 
 
-#+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/examples/group-msg.png :exports both
-  ' title PlantUML (comment)
-@startuml
-Alice -> Bob: Authentication Request
+ #+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/examples/group-msg.png :exports both
+   ' title PlantUML (comment)
+ @startuml
+ Alice -> Bob: Authentication Request
 
-alt successful case
+ alt successful case
 
-    Bob -> Alice: Authentication Accepted
+     Bob -> Alice: Authentication Accepted
 
-else some kind of failure
+ else some kind of failure
 
-    Bob -> Alice: Authentication Failure
-    group My own label
-    Alice -> Log : Log attack start
-        loop 1000 times
-            Alice -> Bob: DNS Attack
-        end
-    Alice -> Log : Log attack end
-    end
+     Bob -> Alice: Authentication Failure
+     group My own label
+     Alice -> Log : Log attack start
+         loop 1000 times
+             Alice -> Bob: DNS Attack
+         end
+     Alice -> Log : Log attack end
+     end
 
-else Another type of failure
+ else Another type of failure
 
-   Bob -> Alice: Please repeat
+    Bob -> Alice: Please repeat
 
-end
-@enduml
-#+END_SRC
+ end
+ @enduml
+ #+END_SRC
 
-#+RESULTS:
-[[file:diags/plantuml/examples/seq-diag/group-msg.png]]
+ #+RESULTS:
+ [[file:diags/plantuml/examples/seq-diag/group-msg.png]]
 **** Notes on messages
-It is possible to put notes on message using the note left or note right keywords just after the message.
+ It is possible to put notes on message using the note left or note right keywords just after the message.
 
-You can have a multi-line note using the end note keywords. 
+ You can have a multi-line note using the end note keywords. 
 
-#+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/examples/notes-msgs.png :exports both
-@startuml
-Alice->Bob : hello
-note left: this is a first note
+ #+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/examples/notes-msgs.png :exports both
+ @startuml
+ Alice->Bob : hello
+ note left: this is a first note
 
-Bob->Alice : ok
-note right: this is another note
+ Bob->Alice : ok
+ note right: this is another note
 
-Bob->Bob : I am thinking
-note left
-a note
-can also be defined
-on several lines
-end note
-@enduml
-#+END_SRC
+ Bob->Bob : I am thinking
+ note left
+ a note
+ can also be defined
+ on several lines
+ end note
+ @enduml
+ #+END_SRC
 
-#+RESULTS:
-[[file:diags/plantuml/seq-diag/examples/notes-msgs.png]]
+ #+RESULTS:
+ [[file:diags/plantuml/seq-diag/examples/notes-msgs.png]]
 
 **** Divider or separator
- If you want, you can split a diagram using == separator to divide your diagram
- into logical steps. 
+  If you want, you can split a diagram using == separator to divide your diagram
+  into logical steps. 
 
-#+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/examples/divider.png :exports both
-@startuml
+ #+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/examples/divider.png :exports both
+ @startuml
 
-== Initialization ==
+ == Initialization ==
 
-Alice -> Bob: Authentication Request
-Bob --> Alice: Authentication Response
+ Alice -> Bob: Authentication Request
+ Bob --> Alice: Authentication Response
 
-== Repetition ==
+ == Repetition ==
 
-Alice -> Bob: Another authentication Request
-Alice <-- Bob: another authentication Response
+ Alice -> Bob: Another authentication Request
+ Alice <-- Bob: another authentication Response
 
-@enduml
-#+END_SRC
+ @enduml
+ #+END_SRC
 
-#+RESULTS:
-[[file:diags/plantuml/seq-diag/examples/divider.png]]
+ #+RESULTS:
+ [[file:diags/plantuml/seq-diag/examples/divider.png]]
 
 **** Lifeline activation and destruction
-The =activate= and =deactivate= are used to denote participant activation.
+ The =activate= and =deactivate= are used to denote participant activation.
 
-Once a participant is activated, its lifeline appears.
+ Once a participant is activated, its lifeline appears.
 
-The activate and deactivate apply on the previous message.
+ The activate and deactivate apply on the previous message.
 
-The =destroy= denote the end of the lifeline of a participant. 
+ The =destroy= denote the end of the lifeline of a participant. 
 
-#+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/examples/lifeline.png :exports both
-@startuml
-participant User
+ #+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/examples/lifeline.png :exports both
+ @startuml
+ participant User
 
-User -> A: DoWork
-activate A
+ User -> A: DoWork
+ activate A
 
-A -> B: << createRequest >>
-activate B
+ A -> B: << createRequest >>
+ activate B
 
-B -> C: DoWork
-activate C
-C --> B: WorkDone
-destroy C
+ B -> C: DoWork
+ activate C
+ C --> B: WorkDone
+ destroy C
 
-B --> A: RequestCreated
-deactivate B
+ B --> A: RequestCreated
+ deactivate B
 
-A -> User: Done
-deactivate A
+ A -> User: Done
+ deactivate A
 
-@enduml
-#+END_SRC
+ @enduml
+ #+END_SRC
 
-#+RESULTS:
-[[file:diags/plantuml/seq-diag/examples/lifeline.png]]
+ #+RESULTS:
+ [[file:diags/plantuml/seq-diag/examples/lifeline.png]]
 
 **** Participant creation
- You can use the =create= keyword just before the first reception of a message
- to emphasize the fact that this message is actually creating this new object. 
+  You can use the =create= keyword just before the first reception of a message
+  to emphasize the fact that this message is actually creating this new object. 
 
-#+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/examples/partic-creation.png :exports both
-@startuml
-Bob -> Alice : hello
+ #+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/examples/partic-creation.png :exports both
+ @startuml
+ Bob -> Alice : hello
 
-create Other
-Alice -> Other : new
+ create Other
+ Alice -> Other : new
 
-create control String
-Alice -> String
-note right : You can also put notes!
+ create control String
+ Alice -> String
+ note right : You can also put notes!
 
-Alice --> Bob : ok
+ Alice --> Bob : ok
 
-@enduml
-#+END_SRC
+ @enduml
+ #+END_SRC
 
-#+RESULTS:
-[[file:diags/plantuml/seq-diag/examples/partic-creation.png]]
+ #+RESULTS:
+ [[file:diags/plantuml/seq-diag/examples/partic-creation.png]]
 
 **** Incoming and outgoing messages
-You can use incoming or outgoing arrows if you want to focus on a part of the diagram.
+ You can use incoming or outgoing arrows if you want to focus on a part of the diagram.
 
-Use square brackets to denote the left "[" or the right "]" side of the
-diagram. 
+ Use square brackets to denote the left "[" or the right "]" side of the
+ diagram. 
 
-#+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/examples/in-out-msgs.png :exports both
-@startuml
-[-> A: DoWork
+ #+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/examples/in-out-msgs.png :exports both
+ @startuml
+ [-> A: DoWork
 
-activate A
+ activate A
 
-A -> A: Internal call
-activate A
+ A -> A: Internal call
+ activate A
 
-A ->] : << createRequest >>
+ A ->] : << createRequest >>
 
-A<--] : RequestCreated
-deactivate A
-[<- A: Done
-deactivate A
-@enduml
-#+END_SRC
+ A<--] : RequestCreated
+ deactivate A
+ [<- A: Done
+ deactivate A
+ @enduml
+ #+END_SRC
 
-#+RESULTS:
-[[file:diags/plantuml/seq-diag/examples/in-out-msgs.png]]
+ #+RESULTS:
+ [[file:diags/plantuml/seq-diag/examples/in-out-msgs.png]]
 
 **** Anchors and duration
- With =teoz= it is possible to add anchors to the diagram and use the anchors to
- specify duration time. 
+  With =teoz= it is possible to add anchors to the diagram and use the anchors to
+  specify duration time. 
 
-#+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/examples/anchors-duration.png :exports both
-@startuml
-!pragma teoz true
+ #+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/examples/anchors-duration.png :exports both
+ @startuml
+ !pragma teoz true
 
-{start} Alice -> Bob : start doing things during duration
-Bob -> Max : something
-Max -> Bob : something else
-{end} Bob -> Alice : finish
+ {start} Alice -> Bob : start doing things during duration
+ Bob -> Max : something
+ Max -> Bob : something else
+ {end} Bob -> Alice : finish
 
-{start} <-> {end} : some time
+ {start} <-> {end} : some time
 
-@enduml
-#+END_SRC
+ @enduml
+ #+END_SRC
 
-#+RESULTS:
-[[file:diags/plantuml/seq-diag/examples/anchors-duration.png]]
+ #+RESULTS:
+ [[file:diags/plantuml/seq-diag/examples/anchors-duration.png]]
 
 
-You can use the -Pcommand-line option to specify the pragma:
-#+BEGIN_SRC bash
-java -jar plantuml.jar -Pteoz=true
-#+END_SRC
+ You can use the -Pcommand-line option to specify the pragma:
+ #+BEGIN_SRC bash
+ java -jar plantuml.jar -Pteoz=true
+ #+END_SRC
 
 **** Participants encompass
-It is possible to draw a box around some participants, using box and end box commands.
+ It is possible to draw a box around some participants, using box and end box commands.
 
-You can add an optional title or a optional background color, after the box
-keyword. 
+ You can add an optional title or a optional background color, after the box
+ keyword. 
 
-#+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/examples/partic-encompass.png :exports both
-@startuml
+ #+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/examples/partic-encompass.png :exports both
+ @startuml
 
-box "Internal Service" #LightBlue
-participant Bob
-participant Alice
-end box
-participant Other
+ box "Internal Service" #LightBlue
+ participant Bob
+ participant Alice
+ end box
+ participant Other
 
-Bob -> Alice : hello
-Alice -> Other : hello
+ Bob -> Alice : hello
+ Alice -> Other : hello
 
-@enduml
-#+END_SRC
+ @enduml
+ #+END_SRC
 
-#+RESULTS:
-[[file:diags/plantuml/seq-diag/examples/partic-encompass.png]]
+ #+RESULTS:
+ [[file:diags/plantuml/seq-diag/examples/partic-encompass.png]]
 
 
 **** Remove foot boxes
-      You can use the =hide footbox= keywords to remove the foot boxes of the
-      diagram. 
+       You can use the =hide footbox= keywords to remove the foot boxes of the
+       diagram. 
 
-#+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/examples/remove-foot-box.png :exports both
-@startuml
+ #+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/examples/remove-foot-box.png :exports both
+ @startuml
 
-hide footbox
-title Foot Box removed
+ hide footbox
+ title Foot Box removed
 
-Alice -> Bob: Authentication Request
-Bob --> Alice: Authentication Response
+ Alice -> Bob: Authentication Request
+ Bob --> Alice: Authentication Response
 
-@enduml
-#+END_SRC
+ @enduml
+ #+END_SRC
 
-#+RESULTS:
-[[file:diags/plantuml/seq-diag/examples/remove-foot-box.png]]
+ #+RESULTS:
+ [[file:diags/plantuml/seq-diag/examples/remove-foot-box.png]]
 
 **** Style =strictuml=
-To be conform to strict UML (for arrow style: emits triangle rather than sharp
-arrowheads), you can use: 
+ To be conform to strict UML (for arrow style: emits triangle rather than sharp
+ arrowheads), you can use: 
 
-#+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/examples/strict-uml.png :exports both
-@startuml
-skinparam style strictuml
-Bob -> Alice : hello
-Alice -> Bob : ok
-@enduml
-#+END_SRC
+ #+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/examples/strict-uml.png :exports both
+ @startuml
+ skinparam style strictuml
+ Bob -> Alice : hello
+ Alice -> Bob : ok
+ @enduml
+ #+END_SRC
 
-#+RESULTS:
-[[file:diags/plantuml/seq-diag/examples/strict-uml.png]]
+ #+RESULTS:
+ [[file:diags/plantuml/seq-diag/examples/strict-uml.png]]
 
 **** Color a group message
-It is possible to color a group message: 
-#+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/examples/color-group-msg.png :exports both
-@startuml
-Alice -> Bob: Authentication Request
-alt#Gold #LightBlue Successful case
-    Bob -> Alice: Authentication Accepted
-else #Pink Failure
-    Bob -> Alice: Authentication Rejected
-end
-@enduml
-#+END_SRC
+ It is possible to color a group message: 
+ #+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/examples/color-group-msg.png :exports both
+ @startuml
+ Alice -> Bob: Authentication Request
+ alt#Gold #LightBlue Successful case
+     Bob -> Alice: Authentication Accepted
+ else #Pink Failure
+     Bob -> Alice: Authentication Rejected
+ end
+ @enduml
+ #+END_SRC
 
-#+RESULTS:
-[[file:diags/plantuml/seq-diag/examples/color-group-msg.png]]
+ #+RESULTS:
+ [[file:diags/plantuml/seq-diag/examples/color-group-msg.png]]
 
 **** Colors
-You can use specify *fill* and *line* colors either:
-1. with its standard name or CSS name
-2. using HEX value (6 digits): #RRGGBB
-3. using HEX value (8 digits) with alpha compositing or RGBA color model:
-   #RRGGBBaa
-4. using short HEX value (3 digits): #RGB
+ You can use specify *fill* and *line* colors either:
+ 1. with its standard name or CSS name
+ 2. using HEX value (6 digits): #RRGGBB
+ 3. using HEX value (8 digits) with alpha compositing or RGBA color model:
+    #RRGGBBaa
+ 4. using short HEX value (3 digits): #RGB
 
-#+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/examples/colors.png :exports both
-@startuml
-actor Bob #Red/Yellow
-actor Alice #FF0000/FFFF00
-Alice -> Bob : hello
-@enduml
-#+END_SRC
+ #+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/examples/colors.png :exports both
+ @startuml
+ actor Bob #Red/Yellow
+ actor Alice #FF0000/FFFF00
+ Alice -> Bob : hello
+ @enduml
+ #+END_SRC
 
-#+RESULTS:
-[[file:diags/plantuml/seq-diag/examples/colors.png]]
+ #+RESULTS:
+ [[file:diags/plantuml/seq-diag/examples/colors.png]]
 **** All together                                                 :Important:
-This example tries to combine all the most important tips stated previously.
+ This example tries to combine all the most important tips stated previously.
 
-#+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/examples/all-together.png :exports both
-@startuml
-' ---------- SETUP ----------------
-' strict uml style and hide footboxes
-skinparam style strictuml
-hide footbox
-' for anchors and duration this may be required (uncomment)
-' !pragma teoz true
-
-
-' ---------- Declaring participants
-participant Participant as Foo
-actor       Actor       as Foo1
-boundary    Boundary    as Foo2
-control     Control     as Foo3
-entity      Entity      as Foo4
-database    Database    as Foo5
-collections Collections as Foo6
-queue       Queue       as Foo7
-Foo -> Foo1 : To actor 
-Foo -> Foo2 : To boundary
-Foo -> Foo3 : To control
-Foo -> Foo4 : To entity
-Foo -> Foo5 : To database
-Foo -> Foo6 : To collections
-Foo -> Foo7: To queue
-
-' -------- Grouping messages ------------------
-' divider or separator
-' Encompass actors
-' add colors to cases
-' add notes
-== Initialization ==
-
-box "Internal Service" #LightBlue
-participant Bob
-participant Alice
-end box
-Alice -> Bob: Authentication Request
-alt#Gold #LightBlue Successful case
-    Bob -> Alice: Authentication Accepted
-    note left: this is a first note
-else #Pink Failure
-    Bob -> Alice: Authentication Rejected
-    note right: this is a 2nd note
-end
-
-== Repetition ==
-
-Alice -> Bob: Another authentication Request
-Alice <-- Bob: another authentication Response
+ #+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/examples/all-together.png :exports both
+ @startuml
+ ' ---------- SETUP ----------------
+ ' strict uml style and hide footboxes
+ skinparam style strictuml
+ hide footbox
+ ' for anchors and duration this may be required (uncomment)
+ ' !pragma teoz true
 
 
-Alice -> Bob: Authentication Request
+ ' ---------- Declaring participants
+ participant Participant as Foo
+ actor       Actor       as Foo1
+ boundary    Boundary    as Foo2
+ control     Control     as Foo3
+ entity      Entity      as Foo4
+ database    Database    as Foo5
+ collections Collections as Foo6
+ queue       Queue       as Foo7
+ Foo -> Foo1 : To actor 
+ Foo -> Foo2 : To boundary
+ Foo -> Foo3 : To control
+ Foo -> Foo4 : To entity
+ Foo -> Foo5 : To database
+ Foo -> Foo6 : To collections
+ Foo -> Foo7: To queue
 
-alt successful case
+ ' -------- Grouping messages ------------------
+ ' divider or separator
+ ' Encompass actors
+ ' add colors to cases
+ ' add notes
+ == Initialization ==
 
-    Bob -> Alice: Authentication Accepted
+ box "Internal Service" #LightBlue
+ participant Bob
+ participant Alice
+ end box
+ Alice -> Bob: Authentication Request
+ alt#Gold #LightBlue Successful case
+     Bob -> Alice: Authentication Accepted
+     note left: this is a first note
+ else #Pink Failure
+     Bob -> Alice: Authentication Rejected
+     note right: this is a 2nd note
+ end
 
-else some kind of failure
+ == Repetition ==
 
-    Bob -> Alice: Authentication Failure
-    group My own label
-    Alice -> Log : Log attack start
-        loop 1000 times
-            Alice -> Bob: DNS Attack
-        end
-    Alice -> Log : Log attack end
-    end
+ Alice -> Bob: Another authentication Request
+ Alice <-- Bob: another authentication Response
 
-else Another type of failure
 
-   Bob -> Alice: Please repeat
+ Alice -> Bob: Authentication Request
 
-' ---------- Anchors and duration
-{start} Alice -> Bob : start doing things during duration
-Bob -> Max : something
-Max -> Bob : something else
-{end} Bob -> Alice : finish
+ alt successful case
 
-{start} <-> {end} : some time
+     Bob -> Alice: Authentication Accepted
 
-' --------- Incoming and outgoing messages
-[-> A: DoWork
+ else some kind of failure
 
-activate A
+     Bob -> Alice: Authentication Failure
+     group My own label
+     Alice -> Log : Log attack start
+         loop 1000 times
+             Alice -> Bob: DNS Attack
+         end
+     Alice -> Log : Log attack end
+     end
 
-A -> A: Internal call
-activate A
+ else Another type of failure
 
-A ->] : << createRequest >>
+    Bob -> Alice: Please repeat
 
-A<--] : RequestCreated
-deactivate A
-[<- A: Done
-deactivate A
+ ' ---------- Anchors and duration
+ {start} Alice -> Bob : start doing things during duration
+ Bob -> Max : something
+ Max -> Bob : something else
+ {end} Bob -> Alice : finish
 
-' -------  Participant creation ---------
-Bob -> Alice : hello
+ {start} <-> {end} : some time
 
-create Other
-Alice -> Other : new
+ ' --------- Incoming and outgoing messages
+ [-> A: DoWork
 
-create control String
-Alice -> String
-note right : You can also put notes!
+ activate A
 
-Alice --> Bob : ok
+ A -> A: Internal call
+ activate A
 
-'-------- Lifeline activation/deactivation
-participant User
+ A ->] : << createRequest >>
 
-User -> A: DoWork
-activate A
+ A<--] : RequestCreated
+ deactivate A
+ [<- A: Done
+ deactivate A
 
-A -> B: << createRequest >>
-activate B
+ ' -------  Participant creation ---------
+ Bob -> Alice : hello
 
-B -> C: DoWork
-activate C
-C --> B: WorkDone
-destroy C
+ create Other
+ Alice -> Other : new
 
-B --> A: RequestCreated
-deactivate B
+ create control String
+ Alice -> String
+ note right : You can also put notes!
 
-A -> User: Done
-deactivate A
+ Alice --> Bob : ok
 
-@enduml
-#+END_SRC
+ '-------- Lifeline activation/deactivation
+ participant User
 
-#+RESULTS:
-[[file:diags/plantuml/seq-diag/examples/all-together.png]]
+ User -> A: DoWork
+ activate A
+
+ A -> B: << createRequest >>
+ activate B
+
+ B -> C: DoWork
+ activate C
+ C --> B: WorkDone
+ destroy C
+
+ B --> A: RequestCreated
+ deactivate B
+
+ A -> User: Done
+ deactivate A
+
+ @enduml
+ #+END_SRC
+
+ #+RESULTS:
+ [[file:diags/plantuml/seq-diag/examples/all-together.png]]
 **** Mine (to generate report)                           :noexport:Important:
      :PROPERTIES:
      :ID:       6e44c5fa-06a8-40bb-bef2-b1fbca2964fb
      :END:
 
-*Interaction mode*
-#+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/output/seq-local-interaction-mode.png
-  @startuml
-  ' ---------- SETUP ----------------
-  ' strict uml style and hide footboxes
-  skinparam style strictuml
-  hide footbox
-  ' for anchors and duration this may be required (uncomment)
-  ' !pragma teoz true
+ *Interaction mode*
+ #+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/output/seq-local-interaction-mode.png
+   @startuml
+   ' ---------- SETUP ----------------
+   ' strict uml style and hide footboxes
+   skinparam style strictuml
+   hide footbox
+   ' for anchors and duration this may be required (uncomment)
+   ' !pragma teoz true
 
-  ' ---------- Declaring participants
-  ' participant Participant as Foo
-  actor User
-  box "MDO-L" #LightBlue
-  boundary "Gesture Recognition Engine" as GRE
-  control "UI Engine" as UIE
-  actor "Local System \nBack-End" as LS
-  endbox
-  ' entity      Entity      as Foo4
-  ' database    Database    as Foo5
-  ' collections Collections as Foo6
-  ' queue       Queue       as Foo7
-  ' Foo -> Foo1 : To actor 
-  ' Foo -> Foo2 : To boundary
-  ' Foo -> Foo3 : To control
-  ' Foo -> Foo4 : To entity
-  ' Foo -> Foo5 : To database
-  ' Foo -> Foo6 : To collections
-  ' Foo -> Foo7: To queue
+   ' ---------- Declaring participants
+   ' participant Participant as Foo
+   actor User
+   box "MDO-L" #LightBlue
+   boundary "Gesture Recognition Engine" as GRE
+   control "UI Engine" as UIE
+   actor "Local System \nBack-End" as LS
+   endbox
+   ' entity      Entity      as Foo4
+   ' database    Database    as Foo5
+   ' collections Collections as Foo6
+   ' queue       Queue       as Foo7
+   ' Foo -> Foo1 : To actor 
+   ' Foo -> Foo2 : To boundary
+   ' Foo -> Foo3 : To control
+   ' Foo -> Foo4 : To entity
+   ' Foo -> Foo5 : To database
+   ' Foo -> Foo6 : To collections
+   ' Foo -> Foo7: To queue
 
-  ' async message
-  == Activate camera feed ==
-  User ->> LS: User in range
-  activate User
-  activate LS
-  LS -> LS: activate camera
+   ' async message
+   == Activate camera feed ==
+   User ->> LS: User in range
+   activate User
+   activate LS
+   LS -> LS: activate camera
 
-  par
-    loop while (user in range && ! user_timeout)
-	LS -> UIE: grab frame from camera and display it on window
-	activate UIE
-	UIE -> User: visual feedback
-    end
-    == Identify User gesture ==
-    User ->> GRE: gesture
-    activate GRE
-    GRE -> LS: gesture recognized
-    deactivate GRE
-    LS -> LS: process gesture callback
-    == Multimedia mode ==
-    alt Select Image Filter
-    LS -> UIE: show Image Filter view
-    UIE -> User: visual feedback
-    ref over User, GRE, UIE, LS: Image Filter
-' -------
-    else Take Pic
-    LS -> UIE: show Pic view
-    UIE -> User: visual feedback
-    ref over User, GRE, UIE, LS: Picture mode
-' -------
-    else Create GIF
-    LS -> UIE: show GIF view
-    UIE -> User: visual feedback
-    ref over User, GRE, UIE, LS: GIF mode
-    '' LS -> LS: process gesture \ncallback
-    '' LS -> UIE: provide output
-    '' UIE -> User: visual feedback
-    ' end alt
-    end 
-' end par
-  end
+   par
+     loop while (user in range && ! user_timeout)
+	 LS -> UIE: grab frame from camera and display it on window
+	 activate UIE
+	 UIE -> User: visual feedback
+     end
+     == Identify User gesture ==
+     User ->> GRE: gesture
+     activate GRE
+     GRE -> LS: gesture recognized
+     deactivate GRE
+     LS -> LS: process gesture callback
+     == Multimedia mode ==
+     alt Select Image Filter
+     LS -> UIE: show Image Filter view
+     UIE -> User: visual feedback
+     ref over User, GRE, UIE, LS: Image Filter
+ ' -------
+     else Take Pic
+     LS -> UIE: show Pic view
+     UIE -> User: visual feedback
+     ref over User, GRE, UIE, LS: Picture mode
+ ' -------
+     else Create GIF
+     LS -> UIE: show GIF view
+     UIE -> User: visual feedback
+     ref over User, GRE, UIE, LS: GIF mode
+     '' LS -> LS: process gesture \ncallback
+     '' LS -> UIE: provide output
+     '' UIE -> User: visual feedback
+     ' end alt
+     end 
+ ' end par
+   end
 		
 
-  @enduml
-#+END_SRC
+   @enduml
+ #+END_SRC
 
-#+RESULTS:
-[[file:diags/plantuml/seq-diag/output/seq-local-interaction-mode.png]]
+ #+RESULTS:
+ [[file:diags/plantuml/seq-diag/output/seq-local-interaction-mode.png]]
 
-*Remote client*
-#+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/output/seq-rc.png
-  @startuml
-  ' ---------- SETUP ----------------
-  ' strict uml style and hide footboxes
-  skinparam style strictuml
-  hide footbox
-  ' for anchors and duration this may be required (uncomment)
-  ' !pragma teoz true
+ *Remote client*
+ #+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/output/seq-rc.png
+   @startuml
+   ' ---------- SETUP ----------------
+   ' strict uml style and hide footboxes
+   skinparam style strictuml
+   hide footbox
+   ' for anchors and duration this may be required (uncomment)
+   ' !pragma teoz true
 
-  ' ---------- Declaring participants
-  ' participant Participant as Foo
+   ' ---------- Declaring participants
+   ' participant Participant as Foo
   
-  actor User
-  box "MDO-RC" #LightBlue
-  boundary "UI" as UI
-  control "UI Engine" as UIE
-  actor "Remote Client \nBack-End" as RC
-  endbox
-  box "MDO-RS" #f9db8f
-  actor "Remote Server" as RS
-  database "User DB" as UserDB
-  endbox
-  ' entity      Entity      as Foo4
-  ' database    Database    as Foo5
-  ' collections Collections as Foo6
-  ' queue       Queue       as Foo7
+   actor User
+   box "MDO-RC" #LightBlue
+   boundary "UI" as UI
+   control "UI Engine" as UIE
+   actor "Remote Client \nBack-End" as RC
+   endbox
+   box "MDO-RS" #f9db8f
+   actor "Remote Server" as RS
+   database "User DB" as UserDB
+   endbox
+   ' entity      Entity      as Foo4
+   ' database    Database    as Foo5
+   ' collections Collections as Foo6
+   ' queue       Queue       as Foo7
 
-  ' async message
-  == Application start ==
-  activate User
-  User ->> UI: starts app 
-  deactivate User
-  activate UI
-  UI -> User: Show Login view
-  deactivate UI
-  activate User
-''
-  == Login ==
-  activate User
-  User ->> UI: input username and password
-  UI -> User: visual feedback
-  User ->> UI: User presses Login
-''
-  deactivate User
-  activate UI
-  UI -> UIE: login_btn_pressed
-  deactivate UI
-  activate UIE
-  UIE -> RC : login(username, pass)
-  deactivate UIE
-  activate RC
-  RC -> RC : Encrypt password
-  RC ->> RS : send(username, pass_crypt)
-  RS -> UserDB : transaction(username, pass_crypt)
-'' DB transaction
-  alt transaction success
-    UserDB -> RS: User info
-    RS ->> RC: User info
-    RC -> RC: check type of User
-    alt Admin user
-    RC -> UIE: admin user
-    UIE -> UI: admin_view
-    UI -> User: Show admin view
-    ref over RC, UIE, UI, User: Admin
-    else Brand user
-    RC -> UIE: brand user
-    UIE -> UI: brand_view
-    UI -> User: Show brand view
-    ref over RC, UIE, UI, User: Brand
-    end
-  else failure
-  UserDB -> RS: empty
-  end
-''
-''  == User Authentication ==
-''  alt Admin
-''    UIE ->> RC : Send DBs relative to admin
-''    RC ->> User : Show Main Menu
-''    alt Users
-''      User ->> RC : Manage Useres
-''      RC ->> UIE : Send changes
-''      UIE ->> UIE : Update data
-''    else Statistics
-''      User ->> RC : Watch Statistics
-''      RC ->> User : Show Statistics
-''    else Ads To Activate
-''      User ->> RC : Download Videos, Accept/Deny Ads
-''      RC ->> UIE : Send Changes
-''      UIE ->> UIE : Update data
-''    else Logout
-''      User ->> RC : Logout
-''      RC ->> RC : Quit
-''    end
-'    
-''  else Brand
-''    UIE ->> RC : Sends DBs relative to the brand 
-''    RC ->> User : Show Main Menu
-''    alt Notifications
-''      User ->> RC : See notifications
-''      RC ->> User : Show notifications
-''    else Rented
-''      User ->> RC : See Rented Ads
-''      RC ->> User : Show statistics of Rented Ads
-''    else To Rent
-''      User ->> RC : Upload Videos, choose conditions and fragrancy
-''      RC ->> UIE : Send Changes
-''      UIE ->> UIE : Update data
-''    else Logoudat
-''      User ->> RC : Logout
-''      RC ->> RC : Quit
-''    end
-''  end
+   ' async message
+   == Application start ==
+   activate User
+   User ->> UI: starts app 
+   deactivate User
+   activate UI
+   UI -> User: Show Login view
+   deactivate UI
+   activate User
+ ''
+   == Login ==
+   activate User
+   User ->> UI: input username and password
+   UI -> User: visual feedback
+   User ->> UI: User presses Login
+ ''
+   deactivate User
+   activate UI
+   UI -> UIE: login_btn_pressed
+   deactivate UI
+   activate UIE
+   UIE -> RC : login(username, pass)
+   deactivate UIE
+   activate RC
+   RC -> RC : Encrypt password
+   RC ->> RS : send(username, pass_crypt)
+   RS -> UserDB : transaction(username, pass_crypt)
+ '' DB transaction
+   alt transaction success
+     UserDB -> RS: User info
+     RS ->> RC: User info
+     RC -> RC: check type of User
+     alt Admin user
+     RC -> UIE: admin user
+     UIE -> UI: admin_view
+     UI -> User: Show admin view
+     ref over RC, UIE, UI, User: Admin
+     else Brand user
+     RC -> UIE: brand user
+     UIE -> UI: brand_view
+     UI -> User: Show brand view
+     ref over RC, UIE, UI, User: Brand
+     end
+   else failure
+   UserDB -> RS: empty
+   end
+ ''
+ ''  == User Authentication ==
+ ''  alt Admin
+ ''    UIE ->> RC : Send DBs relative to admin
+ ''    RC ->> User : Show Main Menu
+ ''    alt Users
+ ''      User ->> RC : Manage Useres
+ ''      RC ->> UIE : Send changes
+ ''      UIE ->> UIE : Update data
+ ''    else Statistics
+ ''      User ->> RC : Watch Statistics
+ ''      RC ->> User : Show Statistics
+ ''    else Ads To Activate
+ ''      User ->> RC : Download Videos, Accept/Deny Ads
+ ''      RC ->> UIE : Send Changes
+ ''      UIE ->> UIE : Update data
+ ''    else Logout
+ ''      User ->> RC : Logout
+ ''      RC ->> RC : Quit
+ ''    end
+ '    
+ ''  else Brand
+ ''    UIE ->> RC : Sends DBs relative to the brand 
+ ''    RC ->> User : Show Main Menu
+ ''    alt Notifications
+ ''      User ->> RC : See notifications
+ ''      RC ->> User : Show notifications
+ ''    else Rented
+ ''      User ->> RC : See Rented Ads
+ ''      RC ->> User : Show statistics of Rented Ads
+ ''    else To Rent
+ ''      User ->> RC : Upload Videos, choose conditions and fragrancy
+ ''      RC ->> UIE : Send Changes
+ ''      UIE ->> UIE : Update data
+ ''    else Logoudat
+ ''      User ->> RC : Logout
+ ''      RC ->> RC : Quit
+ ''    end
+ ''  end
 
-' =========================== ZE das couves ==============================='
-'  LS -> UIE: show Image Filter view
-'  UIE -> User: visual feedback
-'  ref over User, GRE, UIE, LS: Image Filter
-' -------
-'    else Take Pic
-'    LS -> UIE: show Pic view
-'    UIE -> User: visual feedback
-'    ref over User, GRE, UIE, LS: Picture mode
-' -------
-'    else Create GIF
-'    LS -> UIE: show GIF view
-'    UIE -> User: visual feedback
-'    ref over User, GRE, UIE, LS: GIF mode
-'    '' LS -> LS: process gesture \ncallback
-'    '' LS -> UIE: provide output
-'    '' UIE -> User: visual feedback
-'    ' end alt
-'    end 
-' end par
-'  end
+ ' =========================== ZE das couves ==============================='
+ '  LS -> UIE: show Image Filter view
+ '  UIE -> User: visual feedback
+ '  ref over User, GRE, UIE, LS: Image Filter
+ ' -------
+ '    else Take Pic
+ '    LS -> UIE: show Pic view
+ '    UIE -> User: visual feedback
+ '    ref over User, GRE, UIE, LS: Picture mode
+ ' -------
+ '    else Create GIF
+ '    LS -> UIE: show GIF view
+ '    UIE -> User: visual feedback
+ '    ref over User, GRE, UIE, LS: GIF mode
+ '    '' LS -> LS: process gesture \ncallback
+ '    '' LS -> UIE: provide output
+ '    '' UIE -> User: visual feedback
+ '    ' end alt
+ '    end 
+ ' end par
+ '  end
 		
 
-  @enduml
-#+END_SRC
+   @enduml
+ #+END_SRC
 
-#+RESULTS:
-[[file:diags/plantuml/seq-diag/output/seq-rc.png]]
+ #+RESULTS:
+ [[file:diags/plantuml/seq-diag/output/seq-rc.png]]
 
-*Normal mode*
-#+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/output/seq-local-normal-mode.png
-  @startuml
-  ' ---------- SETUP ----------------
-  ' strict uml style and hide footboxes
-  skinparam style strictuml
-  hide footbox
-  ' for anchors and duration this may be required (uncomment)
-  ' !pragma teoz true
+ *Normal mode*
+ #+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/output/seq-local-normal-mode.png
+   @startuml
+   ' ---------- SETUP ----------------
+   ' strict uml style and hide footboxes
+   skinparam style strictuml
+   hide footbox
+   ' for anchors and duration this may be required (uncomment)
+   ' !pragma teoz true
 
-  ' ---------- Declaring participants
-  ' participant Participant as Foo
-  ''actor User
-  box "MDO-L" #LightBlue
-  ''boundary "Gesture Recognition Engine" as GRE
-  ''control "UI Engine" as UIE
-  actor "Local System Back-End" as LS
-  endbox
-  ' entity      Entity      as Foo4
-  ' database    Database    as Foo5
-  ' collections Collections as Foo6
-  ' queue       Queue       as Foo7
+   ' ---------- Declaring participants
+   ' participant Participant as Foo
+   ''actor User
+   box "MDO-L" #LightBlue
+   ''boundary "Gesture Recognition Engine" as GRE
+   ''control "UI Engine" as UIE
+   actor "Local System Back-End" as LS
+   endbox
+   ' entity      Entity      as Foo4
+   ' database    Database    as Foo5
+   ' collections Collections as Foo6
+   ' queue       Queue       as Foo7
 
-  ' async message
-  activate LS
-  LS -> LS: Ads time
-  LS -> LS: get video, audio and fragrance from internal DB
-  par
-  == Video playback ==
-    loop while (! ads_time_stop)
-	LS -> LS: get next video from videos playback queue
-	LS -> LS: play video
-    end
-    == Fragrance diffusion ==
-    loop while(1)
-	LS -> LS: diffuse := (get next start and stop times)
-	alt if(! diffuse)
-	  break
-	  end
-	else diffuse
-	  loop while(1)
-	    alt if(start_time)
-	      LS -> LS: start diffusion
-	    else if(stop_time)
-	      LS -> LS: stop diffusion
-	    else idle
-	      LS -> LS: sleep
-	      'end alt
-	    end
-	    ' end while(1)
-	  end
-	  'end diffuse'
-	end
-    end
-' end par
-  end
+   ' async message
+   activate LS
+   LS -> LS: Ads time
+   LS -> LS: get video, audio and fragrance from internal DB
+   par
+   == Video playback ==
+     loop while (! ads_time_stop)
+	 LS -> LS: get next video from videos playback queue
+	 LS -> LS: play video
+     end
+     == Fragrance diffusion ==
+     loop while(1)
+	 LS -> LS: diffuse := (get next start and stop times)
+	 alt if(! diffuse)
+	   break
+	   end
+	 else diffuse
+	   loop while(1)
+	     alt if(start_time)
+	       LS -> LS: start diffusion
+	     else if(stop_time)
+	       LS -> LS: stop diffusion
+	     else idle
+	       LS -> LS: sleep
+	       'end alt
+	     end
+	     ' end while(1)
+	   end
+	   'end diffuse'
+	 end
+     end
+ ' end par
+   end
 		
 
-  @enduml
+   @enduml
+ #+END_SRC
+
+ #+RESULTS:
+ [[file:diags/plantuml/seq-diag/output/seq-local-normal-mode.png]]
+
+ *Multimedia mode: Select filter*
+ #+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/output/seq-local-multimedia-mode-sel-filt.png
+   @startuml
+   ' ---------- SETUP ----------------
+   ' strict uml style and hide footboxes
+   skinparam style strictuml
+   hide footbox
+   ' for anchors and duration this may be required (uncomment)
+   ' !pragma teoz true
+
+   ' ---------- Declaring participants
+   ' participant Participant as Foo
+   actor User
+   box "MDO-L" #LightBlue
+   boundary "Gesture Recognition Engine" as GRE
+   control "UI Engine" as UIE
+   actor "Local System Back-End" as LS
+   endbox
+   actor "Image Filtering APIs" as IFA
+   ' entity      Entity      as Foo4
+   ' database    Database    as Foo5
+   ' collections Collections as Foo6
+   ' queue       Queue       as Foo7
+
+   ' async message
+ ''== Image filter ==
+ activate User
+ User ->> GRE: select filter gesture
+ deactivate User
+ activate GRE
+ GRE -> UIE: select filter gesture recognized
+ deactivate GRE
+ activate UIE
+ UIE -> LS: select_filt
+ deactivate UIE
+ activate LS
+ LS -> LS: apply_facial_detection
+ LS -> LS: sel_filt(filt)
+ group Apply filter
+     loop while (! filter_cancel && ! filter_accept)
+     ''ref over LS, IFA, UIE, User: apply filter
+	 LS -> IFA: filter_selected
+	 deactivate LS
+	 activate IFA
+	 IFA ->> LS: apply filter
+	 deactivate IFA
+	 activate LS
+	 LS -> UIE: filter applied
+	 deactivate LS
+	 activate UIE
+	 UIE -> User: show filter applied
+	 deactivate UIE
+	 activate User
+     end
+ end
+ alt filter_accept
+     activate User
+     User ->> GRE: accept filter gesture
+     deactivate User
+     activate GRE
+     GRE -> UIE: accept filter gesture recognized
+     deactivate GRE
+     activate UIE
+     UIE -> LS: filter_accepted
+     deactivate UIE
+     activate LS
+     LS -> LS: apply filter
+     deactivate LS
+     par
+     ref over User, IFA: Interaction mode
+     ref over User, IFA: Apply filter
+     end
+ else filter_cancel
+     activate User
+     User ->> GRE: cancel filter gesture
+     deactivate User
+     activate GRE
+     GRE -> UIE: cancel filter gesture recognized
+     deactivate GRE
+     activate UIE
+     UIE -> LS: filter_canceled
+     deactivate UIE
+     activate LS
+     LS -> LS: cancel filter
+     deactivate LS
+     ref over User, LS: Interaction mode
+ end
+   @enduml
+ #+END_SRC
+
+ #+RESULTS:
+ [[file:diags/plantuml/seq-diag/output/seq-local-multimedia-mode-sel-filt.png]]
+
+ *Multimedia mode: Take pic*
+ #+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/output/seq-local-multimedia-mode-take-pic.png
+   @startuml
+   ' ---------- SETUP ----------------
+   ' strict uml style and hide footboxes
+   skinparam style strictuml
+   hide footbox
+   ' for anchors and duration this may be required (uncomment)
+   ' !pragma teoz true
+
+   ' ---------- Declaring participants
+   ' participant Participant as Foo
+   actor User
+   box "MDO-L" #LightBlue
+   boundary "Gesture Recognition Engine" as GRE
+   control "UI Engine" as UIE
+   actor "Local System Back-End" as LS
+   endbox
+ ''  actor "Image Filtering APIs" as IFA
+   ' entity      Entity      as Foo4
+   ' database    Database    as Foo5
+   ' collections Collections as Foo6
+   ' queue       Queue       as Foo7
+
+   ' async message
+ ''== Take Pic ==
+ [->> LS: Picture mode initiated
+ activate LS
+ LS -> LS: Start pic timer
+ loop while (! pic_timer_elapsed)
+     LS -> UIE: time_remaining
+     deactivate LS
+     activate UIE
+     UIE -> User: show time remaining
+     deactivate UIE
+     activate User
+ end
+ deactivate User
+ activate LS
+ LS -> LS: store picture
+ deactivate LS
+   @enduml
+ #+END_SRC
+
+ #+RESULTS:
+ [[file:diags/plantuml/seq-diag/output/seq-local-multimedia-mode-take-pic.png]]
+
+ *Multimedia mode: Create GIF*
+ #+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/output/seq-local-multimedia-mode-create-gif.png
+   @startuml
+   ' ---------- SETUP ----------------
+   ' strict uml style and hide footboxes
+   skinparam style strictuml
+   hide footbox
+   ' for anchors and duration this may be required (uncomment)
+   ' !pragma teoz true
+
+   ' ---------- Declaring participants
+   ' participant Participant as Foo
+   actor User
+   box "MDO-L" #LightBlue
+   boundary "Gesture Recognition Engine" as GRE
+   control "UI Engine" as UIE
+   actor "Local System Back-End" as LS
+   endbox
+ ''  actor "Image Filtering APIs" as IFA
+   ' entity      Entity      as Foo4
+   ' database    Database    as Foo5
+   ' collections Collections as Foo6
+   ' queue       Queue       as Foo7
+
+   ' async message
+ ''== Create GIF ==
+ [->> LS: GIF mode initiated
+ activate LS
+ LS -> LS: Start GIF setup timer
+ loop while (! gif_setup_timer_elapsed)
+     LS -> UIE: time_remaining
+     deactivate LS
+     activate UIE
+     UIE -> User: show time remaining
+     deactivate UIE
+     activate User
+ end
+ deactivate User
+ LS -> LS: Start GIF operation timer
+ loop while (! gif_oper_timer_elapsed)
+     LS -> UIE: time_remaining
+     deactivate LS
+     activate UIE
+     UIE -> User: show time remaining in a dial
+     deactivate UIE
+     activate User
+ end
+ deactivate User
+ activate LS
+ LS -> LS: store GIF
+ deactivate LS
+   @enduml
+ #+END_SRC
+
+ #+RESULTS:
+ [[file:diags/plantuml/seq-diag/output/seq-local-multimedia-mode-create-gif.png]]
+
+ *Sharing mode*
+ #+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/output/seq-local-sharing-mode.png
+   @startuml
+   ' ---------- SETUP ----------------
+   ' strict uml style and hide footboxes
+   skinparam style strictuml
+   hide footbox
+   ' for anchors and duration this may be required (uncomment)
+   ' !pragma teoz true
+
+   ' ---------- Declaring participants
+   ' participant Participant as Foo
+   actor User
+   box "MDO-L" #LightBlue
+   boundary "Gesture Recognition Engine" as GRE
+   control "UI Engine" as UIE
+   actor "Local System Back-End" as LS
+   endbox
+   actor "Social Media Servers" as SMS
+ ''  actor "Image Filtering APIs" as IFA
+   ' entity      Entity      as Foo4
+   ' database    Database    as Foo5
+   ' collections Collections as Foo6
+   ' queue       Queue       as Foo7
+
+   ' async message
+ ''== Sharing mode ==
+ == Social media selection ==
+ activate User
+ User ->> GRE: select SM gesture
+ deactivate User
+ activate GRE
+ GRE -> UIE: select SM gesture recognized
+ deactivate GRE
+ activate UIE
+ UIE -> LS: sm_selected(sm)
+ deactivate UIE
+ activate LS
+ LS -> LS: configure SM platform
+ LS -> LS: attachment = last multimedia file
+ LS -> UIE: post_edit
+ deactivate LS
+ activate UIE
+ UIE -> User: show Post Edit view
+ deactivate UIE
+ activate User
+ ''deactivate User
+ == Post editing ==
+ loop while ( !share_post && !share_cancel)
+     ''activate User
+     User -> GRE: character selected gesture
+     deactivate User
+     activate GRE
+     GRE -> UIE: char selected gesture recognized
+     deactivate GRE
+     activate UIE
+     UIE -> UIE: get_input(char)
+     UIE -> User: show feedback
+     deactivate UIE
+     activate User
+ end
+ == Share decision ==
+ alt share_post
+     activate User
+     User ->> GRE: share post gesture
+     deactivate User
+     activate GRE
+     GRE -> UIE: share post gesture recognized
+     deactivate GRE
+     activate UIE
+     UIE -> LS: post_share(message)
+     deactivate UIE
+     ref over User, LS: share_post
+ else share_cancel
+     activate User
+     User ->> GRE: cancel post gesture
+     deactivate User
+     activate GRE
+     GRE -> UIE: cancel post gesture recognized
+     deactivate GRE
+     activate UIE
+     UIE -> LS: cancel_share
+     deactivate UIE
+     ref over User, LS: interaction mode
+     ''activate LS
+ end
+ ''deactivate User
+ == Share Post ==
+ group share_post
+ ''activate LS
+ LS -> LS ++: share_post(SM, message, attachment)
+ LS ->> SMS: login
+ deactivate LS
+ activate SMS
+ return login_status
+ deactivate SMS
+ activate LS
+ alt if (login_status == fail)
+     ref over LS, SMS: share_fail
+     else success
+     LS ->> SMS: post_status = send(message, attachment)
+     deactivate LS
+     activate SMS
+     return post_status
+     activate LS
+     alt if(post_status == fail)
+	 ref over LS, SMS: share_fail
+	 deactivate LS
+     end
+ end
+ alt share_success
+     activate LS
+     LS -> UIE: share_success
+     deactivate LS
+     activate UIE
+     UIE -> User: show Share Success view
+     deactivate UIE
+ else share_fail
+     activate LS
+     LS -> UIE: share_fail
+     deactivate LS
+     activate UIE
+     UIE -> User: show Share Failure view
+     deactivate UIE
+     activate User
+ end
+ end
+   @enduml
+ #+END_SRC
+
+ #+RESULTS:
+ [[file:diags/plantuml/seq-diag/output/seq-local-sharing-mode.png]]
+*** Component diagrams
+You can use component diagrams to model the software architecture of a
+system. Component diagrams provide a view of the physical software components in
+the system, their interfaces, and their dependencies. [[https://www.ibm.com/docs/en/rsar/9.5?topic=diagrams-creating-component][src]]
+
+**** Components
+Components must be bracketed.
+
+You can also use the component keyword to define a component. And you can define
+an alias, using the as keyword. This alias will be used later, when defining
+relations. 
+
+  #+BEGIN_SRC plantuml :file diags/plantuml/component-diag/output/components.png
+@startuml
+
+[First component]
+[Another component] as Comp2
+component Comp3
+component [Last\ncomponent] as Comp4
+
+@enduml
+  #+END_SRC
+
+  #+RESULTS:
+  [[file:diags/plantuml/component-diag/output/components.png]]
+
+**** UML 2
+ UML 2 is the default now.
+
+ #+BEGIN_SRC plantuml :file diags/plantuml/component-diag/output/uml2-example.png
+ @startuml
+
+ interface "Data Access" as DA
+
+ DA - [First Component]
+ [First Component] ..> HTTP : use
+
+ @enduml
+ #+END_SRC
+
+ #+RESULTS:
+ [[file:diags/plantuml/component-diag/output/uml2-example.png]]
+**** Skinparam
+  #+BEGIN_SRC plantuml :file diags/plantuml/component-diag/output/skinparam1.png
+ @startuml
+
+ skinparam interface {
+   backgroundColor RosyBrown
+   borderColor orange
+ }
+
+ skinparam component {
+   FontSize 13
+   BackgroundColor<<Apache>> Pink
+   BorderColor<<Apache>> #FF6655
+   FontName Courier
+   BorderColor black
+   BackgroundColor gold
+   ArrowFontName Impact
+   ArrowColor #FF6655
+   ArrowFontColor #777777
+ }
+
+ () "Data Access" as DA
+ Component "Web Server" as WS << Apache >>
+
+ DA - [First Component]
+ [First Component] ..> () HTTP : use
+ HTTP - WS
+
+ @enduml
+  #+END_SRC
+
+  #+RESULTS:
+  [[file:diags/plantuml/component-diag/output/skinparam1.png]]
+
+
+  #+BEGIN_SRC plantuml :file diags/plantuml/component-diag/output/skinparam2.png
+@startuml
+[AA] <<static lib>>
+[BB] <<shared lib>>
+[CC] <<static lib>>
+
+node node1
+node node2 <<shared node>>
+database Production
+
+skinparam component {
+    backgroundColor<<static lib>> DarkKhaki
+    backgroundColor<<shared lib>> Green
+}
+
+skinparam node {
+borderColor Green
+backgroundColor Yellow
+backgroundColor<<shared node>> Magenta
+}
+skinparam databaseBackgroundColor Aqua
+
+@enduml
+  #+END_SRC
+
+  #+RESULTS:
+  [[file:diags/plantuml/component-diag/output/skinparam2.png]]
+**** Grouping components
+You can use several keywords to group components and interfaces together:
+1) package
+2) node
+3) folder
+4) frame
+5) cloud
+6) database
+
+  #+BEGIN_SRC plantuml :file diags/plantuml/component-diag/output/group-components.png
+@startuml
+
+package "Some Group" {
+  HTTP - [First Component]
+  [Another Component]
+}
+
+node "Other Groups" {
+  FTP - [Second Component]
+  [First Component] --> FTP
+}
+
+cloud {
+  [Example 1]
+}
+
+database "MySql" {
+  folder "This is my folder" {
+    [Folder 3]
+  }
+  frame "Foo" {
+    [Frame 4]
+  }
+}
+
+[Another Component] --> [Example 1]
+[Example 1] --> [Folder 3]
+[Folder 3] --> [Frame 4]
+
+@enduml
+  #+END_SRC
+
+  #+RESULTS:
+  [[file:diags/plantuml/component-diag/output/group-components.png]]
+**** Mine (to generate report)                                    :Important:
+
+*** Deployment diagrams
+In UML, deployment diagrams model the physical architecture of a system. Deployment diagrams show the relationships between the software and hardware components in the system and the physical distribution of the processing.
+
+Deployment diagrams, which you typically prepare during the implementation phase
+of development, show the physical arrangement of the nodes in a distributed
+system, the artifacts that are stored on each node, and the components and other
+elements that the artifacts implement. Nodes represent hardware devices such as
+computers, sensors, and printers, as well as other devices that support the
+runtime environment of a system. Communication paths and deploy relationships
+model the connections in the system. ([[https://www.ibm.com/docs/en/rsar/9.5?topic=diagrams-deployment][src]])
+
+*Types of elements* ([[https://mychartguide.com/deployment-diagram/#What_are_the_elements_involved][src]]): 
+1. Artifact: The artifact is the main element in a deployment diagram and
+   signifies the product developed by any software. It is also often referred to
+   as the information that software generates. It is symbolized with the help of
+   a rectangle.
+2. Association: This helps signify the correlation and message between two
+   different nodes in the diagram.
+3. Component: This helps signify the presence of a software element in the
+   diagram and is represented with a rectangle with two tabs.
+4. Dependency: This signifies the dependency and correlation of one node or
+   component with that of the other in a deployment diagram. It is represented
+   with dashed lines with arrows.
+5. Interface: This signifies the presence of a contractual relationship in a
+   diagram, especially when there are obligations involved that needs to be
+   completed in a total system. It is represented with a circle.
+6. Node: This signifies the main element of any kind of hardware or even
+   software object in a deployment diagram that is further shown with a three
+   dimensional box.
+7. Stereotype: This signifies the element that is trapped inside a node which
+   comes with its representation with the name bracketed by double arrows.
+
+**** Declaring element
+  #+BEGIN_SRC plantuml :file diags/plantuml/deploy-diag/output/decl-elem.png
+@startuml
+actor actor
+actor/ "actor/"
+agent agent
+artifact artifact
+boundary boundary
+card card
+circle circle
+cloud cloud
+collections collections
+component component
+control control
+database database
+entity entity
+file file
+folder folder
+frame frame
+hexagon hexagon
+interface interface
+label label
+node node
+package package
+person person
+queue queue
+rectangle rectangle
+stack stack
+storage storage
+usecase usecase
+usecase/ "usecase/"
+@enduml
+  #+END_SRC
+
+  #+RESULTS:
+  [[file:diags/plantuml/deploy-diag/output/decl-elem.png]]
+**** Linking or arrow
+
+  #+BEGIN_SRC plantuml :file diags/plantuml/deploy-diag/output/link-arrow.png
+@startuml
+
+cloud cloud1
+cloud cloud2
+cloud cloud3
+cloud cloud4
+cloud cloud5
+cloud1 -0- cloud2
+cloud1 -0)- cloud3
+cloud1 -(0- cloud4
+cloud1 -(0)- cloud5
+
+@enduml
+  #+END_SRC
+**** Line style
+  #+BEGIN_SRC plantuml :file diags/plantuml/deploy-diag/output/line-style.png
+@startuml
+title Bracketed line style with label
+node foo
+foo --> bar          : ∅
+foo -[bold]-> bar1   : [bold]
+foo -[dashed]-> bar2 : [dashed]
+foo -[dotted]-> bar3 : [dotted]
+foo -[hidden]-> bar4 : [hidden]
+foo -[plain]-> bar5  : [plain]
+@enduml
+  #+END_SRC
+
+  #+RESULTS:
+  [[file:diags/plantuml/deploy-diag/output/line-style.png]]
+**** Nesting
+  #+BEGIN_SRC plantuml :file diags/plantuml/deploy-diag/output/nesting.png
+@startuml
+artifact Foo1 {
+  folder Foo2
+}
+
+folder Foo3 {
+  artifact Foo4
+}
+
+frame Foo5 {
+  database Foo6
+}
+
+cloud vpc {
+  node ec2 {
+    stack stack
+  }
+}
+
+@enduml
+  #+END_SRC
+
+  #+RESULTS:
+  [[file:diags/plantuml/deploy-diag/output/nesting.png]]
+
+**** Full nesting
+  #+BEGIN_SRC plantuml :file diags/plantuml/deploy-diag/output/full-nesting.png
+@startuml
+artifact artifact {
+card card {
+cloud cloud {
+component component {
+database database {
+file file {
+folder folder {
+frame frame {
+hexagon hexagon {
+node node {
+package package {
+queue queue {
+rectangle rectangle {
+stack stack {
+storage storage {
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+@enduml
+  #+END_SRC
+
+  #+RESULTS:
+  [[file:diags/plantuml/deploy-diag/output/full-nesting.png]]
+**** Style for each nested element
+  #+BEGIN_SRC plantuml :file diags/plantuml/deploy-diag/output/style-nested.png
+@startuml
+<style>
+artifact {
+  BackGroundColor #ee1100
+  LineThickness 1
+  LineColor black
+}
+card {
+  BackGroundColor #ff3311
+  LineThickness 1
+  LineColor black
+}
+cloud {
+  BackGroundColor #ff4422
+  LineThickness 1
+  LineColor black
+}
+component {
+  BackGroundColor #ff6644
+  LineThickness 1
+  LineColor black
+}
+database {
+  BackGroundColor #ff9933
+  LineThickness 1
+  LineColor black
+}
+file {
+  BackGroundColor #feae2d
+  LineThickness 1
+  LineColor black
+}
+folder {
+  BackGroundColor #ccbb33
+  LineThickness 1
+  LineColor black
+}
+frame {
+  BackGroundColor #d0c310
+  LineThickness 1
+  LineColor black
+}
+hexagon {
+  BackGroundColor #aacc22
+  LineThickness 1
+  LineColor black
+}
+node {
+  BackGroundColor #22ccaa
+  LineThickness 1
+  LineColor black
+}
+package {
+  BackGroundColor #12bdb9
+  LineThickness 1
+  LineColor black
+}
+queue {
+  BackGroundColor #11aabb
+  LineThickness 1
+  LineColor black
+}
+rectangle {
+  BackGroundColor #4444dd
+  LineThickness 1
+  LineColor black
+}
+stack {
+  BackGroundColor #3311bb
+  LineThickness 1
+  LineColor black
+}
+storage {
+  BackGroundColor #3b0cbd
+  LineThickness 1
+  LineColor black
+}
+
+</style>
+artifact artifact {
+}
+card card {
+}
+cloud cloud {
+}
+component component {
+}
+database database {
+}
+file file {
+}
+folder folder {
+}
+frame frame {
+}
+hexagon hexagon {
+}
+node node {
+}
+package package {
+}
+queue queue {
+}
+rectangle rectangle {
+}
+stack stack {
+}
+storage storage {
+}
+@enduml
+  #+END_SRC
+
+  #+RESULTS:
+  [[file:diags/plantuml/deploy-diag/output/style-nested.png]]
+**** Style for all elements
+  #+BEGIN_SRC plantuml :file diags/plantuml/deploy-diag/output/style-nested-all.png
+@startuml
+<style>
+.stereo {
+  BackgroundColor palegreen
+}
+</style>
+actor actor << stereo >>
+actor/ "actor/" << stereo >>
+agent agent << stereo >>
+artifact artifact << stereo >>
+boundary boundary << stereo >>
+card card << stereo >>
+circle circle << stereo >>
+cloud cloud << stereo >>
+collections collections << stereo >>
+component component << stereo >>
+control control << stereo >>
+database database << stereo >>
+entity entity << stereo >>
+file file << stereo >>
+folder folder << stereo >>
+frame frame << stereo >>
+hexagon hexagon << stereo >>
+interface interface << stereo >>
+label label << stereo >>
+node node << stereo >>
+package package << stereo >>
+person person << stereo >>
+queue queue << stereo >>
+rectangle rectangle << stereo >>
+stack stack << stereo >>
+storage storage << stereo >>
+usecase usecase << stereo >>
+usecase/ "usecase/" << stereo >>
+@enduml
+  #+END_SRC
+
+  #+RESULTS:
+  [[file:diags/plantuml/deploy-diag/output/style-nested-all.png]]
+*** Entity-Relationship diagram
+[[https://plantuml.com/ie-diagram][src]]
+
+  #+BEGIN_SRC plantuml :file diags/plantuml/erd/output/complete-example.png
+@startuml
+
+' hide the spot
+hide circle
+
+' avoid problems with angled crows feet
+skinparam linetype ortho
+
+entity "Entity01" as e01 {
+  *e1_id : number <<generated>>
+  --
+  *name : text
+  description : text
+}
+
+entity "Entity02" as e02 {
+  *e2_id : number <<generated>>
+  --
+  *e1_id : number <<FK>>
+  other_details : text
+}
+
+entity "Entity03" as e03 {
+  *e3_id : number <<generated>>
+  --
+  e1_id : number <<FK>>
+  other_details : text
+}
+
+e01 ||..o{ e02
+e01 |o..o{ e03
+
+@enduml
+  #+END_SRC
+**** Plantuml to MySQL
+[[https://github.com/grafov/plantuml2mysql][src]]
+
+I liked plantuml tool for UML diagrams but use it also for visualizing structure of relational database. This script loads plantuml class diagram and generates DDL for MySQL SQL dialect. You may define primary keys with # prefix in field name (it means protected field in PlantUML) and define index fields with + (public field in PlantUML) prefix.
+
+Field type noted after field name as is. Also you may use comments after --.
+
+For example class definition:
+  #+BEGIN_SRC plantuml :file diags/plantuml/erd/output/plantuml2sql-example.png
+@startuml
+
+class dummy {
+  Sample table.
+  ==
+  #id int(10) -- A comment
+  field1 int(10)
+  .. Comment line, ignored ..
+  field2 varchar(128)
+}
+
+@enduml
+  #+END_SRC
+
+will be converted to SQL:
+#+BEGIN_SRC sql
+CREATE TABLE IF NOT EXISTS `dummy` (
+  id               INT(10) COMMENT 'A comment',
+  field1           INT(10),
+  field2           VARCHAR(128),
+  PRIMARY KEY (id));
 #+END_SRC
 
-#+RESULTS:
-[[file:diags/plantuml/seq-diag/output/seq-local-normal-mode.png]]
+Text between class name and == is table description. The description of the table is mandatory. I was too lazy to check for absence of descriptions but not lazy to write them in each table of my databases.
 
-*Multimedia mode: Select filter*
-#+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/output/seq-local-multimedia-mode-sel-filt.png
-  @startuml
-  ' ---------- SETUP ----------------
-  ' strict uml style and hide footboxes
-  skinparam style strictuml
-  hide footbox
-  ' for anchors and duration this may be required (uncomment)
-  ' !pragma teoz true
+A line starting with .. or __, used as a separator into a class definition, will be ignored.
 
-  ' ---------- Declaring participants
-  ' participant Participant as Foo
-  actor User
-  box "MDO-L" #LightBlue
-  boundary "Gesture Recognition Engine" as GRE
-  control "UI Engine" as UIE
-  actor "Local System Back-End" as LS
-  endbox
-  actor "Image Filtering APIs" as IFA
-  ' entity      Entity      as Foo4
-  ' database    Database    as Foo5
-  ' collections Collections as Foo6
-  ' queue       Queue       as Foo7
+The HTML markup in comments (after --) is stripped.
 
-  ' async message
-''== Image filter ==
-activate User
-User ->> GRE: select filter gesture
-deactivate User
-activate GRE
-GRE -> UIE: select filter gesture recognized
-deactivate GRE
-activate UIE
-UIE -> LS: select_filt
-deactivate UIE
-activate LS
-LS -> LS: apply_facial_detection
-LS -> LS: sel_filt(filt)
-group Apply filter
-    loop while (! filter_cancel && ! filter_accept)
-    ''ref over LS, IFA, UIE, User: apply filter
-	LS -> IFA: filter_selected
-	deactivate LS
-	activate IFA
-	IFA ->> LS: apply filter
-	deactivate IFA
-	activate LS
-	LS -> UIE: filter applied
-	deactivate LS
-	activate UIE
-	UIE -> User: show filter applied
-	deactivate UIE
-	activate User
-    end
-end
-alt filter_accept
-    activate User
-    User ->> GRE: accept filter gesture
-    deactivate User
-    activate GRE
-    GRE -> UIE: accept filter gesture recognized
-    deactivate GRE
-    activate UIE
-    UIE -> LS: filter_accepted
-    deactivate UIE
-    activate LS
-    LS -> LS: apply filter
-    deactivate LS
-    par
-    ref over User, IFA: Interaction mode
-    ref over User, IFA: Apply filter
-    end
-else filter_cancel
-    activate User
-    User ->> GRE: cancel filter gesture
-    deactivate User
-    activate GRE
-    GRE -> UIE: cancel filter gesture recognized
-    deactivate GRE
-    activate UIE
-    UIE -> LS: filter_canceled
-    deactivate UIE
-    activate LS
-    LS -> LS: cancel filter
-    deactivate LS
-    ref over User, LS: Interaction mode
-end
-  @enduml
-#+END_SRC
-
-#+RESULTS:
-[[file:diags/plantuml/seq-diag/output/seq-local-multimedia-mode-sel-filt.png]]
-
-*Multimedia mode: Take pic*
-#+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/output/seq-local-multimedia-mode-take-pic.png
-  @startuml
-  ' ---------- SETUP ----------------
-  ' strict uml style and hide footboxes
-  skinparam style strictuml
-  hide footbox
-  ' for anchors and duration this may be required (uncomment)
-  ' !pragma teoz true
-
-  ' ---------- Declaring participants
-  ' participant Participant as Foo
-  actor User
-  box "MDO-L" #LightBlue
-  boundary "Gesture Recognition Engine" as GRE
-  control "UI Engine" as UIE
-  actor "Local System Back-End" as LS
-  endbox
-''  actor "Image Filtering APIs" as IFA
-  ' entity      Entity      as Foo4
-  ' database    Database    as Foo5
-  ' collections Collections as Foo6
-  ' queue       Queue       as Foo7
-
-  ' async message
-''== Take Pic ==
-[->> LS: Picture mode initiated
-activate LS
-LS -> LS: Start pic timer
-loop while (! pic_timer_elapsed)
-    LS -> UIE: time_remaining
-    deactivate LS
-    activate UIE
-    UIE -> User: show time remaining
-    deactivate UIE
-    activate User
-end
-deactivate User
-activate LS
-LS -> LS: store picture
-deactivate LS
-  @enduml
-#+END_SRC
-
-#+RESULTS:
-[[file:diags/plantuml/seq-diag/output/seq-local-multimedia-mode-take-pic.png]]
-
-*Multimedia mode: Create GIF*
-#+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/output/seq-local-multimedia-mode-create-gif.png
-  @startuml
-  ' ---------- SETUP ----------------
-  ' strict uml style and hide footboxes
-  skinparam style strictuml
-  hide footbox
-  ' for anchors and duration this may be required (uncomment)
-  ' !pragma teoz true
-
-  ' ---------- Declaring participants
-  ' participant Participant as Foo
-  actor User
-  box "MDO-L" #LightBlue
-  boundary "Gesture Recognition Engine" as GRE
-  control "UI Engine" as UIE
-  actor "Local System Back-End" as LS
-  endbox
-''  actor "Image Filtering APIs" as IFA
-  ' entity      Entity      as Foo4
-  ' database    Database    as Foo5
-  ' collections Collections as Foo6
-  ' queue       Queue       as Foo7
-
-  ' async message
-''== Create GIF ==
-[->> LS: GIF mode initiated
-activate LS
-LS -> LS: Start GIF setup timer
-loop while (! gif_setup_timer_elapsed)
-    LS -> UIE: time_remaining
-    deactivate LS
-    activate UIE
-    UIE -> User: show time remaining
-    deactivate UIE
-    activate User
-end
-deactivate User
-LS -> LS: Start GIF operation timer
-loop while (! gif_oper_timer_elapsed)
-    LS -> UIE: time_remaining
-    deactivate LS
-    activate UIE
-    UIE -> User: show time remaining in a dial
-    deactivate UIE
-    activate User
-end
-deactivate User
-activate LS
-LS -> LS: store GIF
-deactivate LS
-  @enduml
-#+END_SRC
-
-#+RESULTS:
-[[file:diags/plantuml/seq-diag/output/seq-local-multimedia-mode-create-gif.png]]
-
-*Sharing mode*
-#+BEGIN_SRC plantuml :file diags/plantuml/seq-diag/output/seq-local-sharing-mode.png
-  @startuml
-  ' ---------- SETUP ----------------
-  ' strict uml style and hide footboxes
-  skinparam style strictuml
-  hide footbox
-  ' for anchors and duration this may be required (uncomment)
-  ' !pragma teoz true
-
-  ' ---------- Declaring participants
-  ' participant Participant as Foo
-  actor User
-  box "MDO-L" #LightBlue
-  boundary "Gesture Recognition Engine" as GRE
-  control "UI Engine" as UIE
-  actor "Local System Back-End" as LS
-  endbox
-  actor "Social Media Servers" as SMS
-''  actor "Image Filtering APIs" as IFA
-  ' entity      Entity      as Foo4
-  ' database    Database    as Foo5
-  ' collections Collections as Foo6
-  ' queue       Queue       as Foo7
-
-  ' async message
-''== Sharing mode ==
-== Social media selection ==
-activate User
-User ->> GRE: select SM gesture
-deactivate User
-activate GRE
-GRE -> UIE: select SM gesture recognized
-deactivate GRE
-activate UIE
-UIE -> LS: sm_selected(sm)
-deactivate UIE
-activate LS
-LS -> LS: configure SM platform
-LS -> LS: attachment = last multimedia file
-LS -> UIE: post_edit
-deactivate LS
-activate UIE
-UIE -> User: show Post Edit view
-deactivate UIE
-activate User
-''deactivate User
-== Post editing ==
-loop while ( !share_post && !share_cancel)
-    ''activate User
-    User -> GRE: character selected gesture
-    deactivate User
-    activate GRE
-    GRE -> UIE: char selected gesture recognized
-    deactivate GRE
-    activate UIE
-    UIE -> UIE: get_input(char)
-    UIE -> User: show feedback
-    deactivate UIE
-    activate User
-end
-== Share decision ==
-alt share_post
-    activate User
-    User ->> GRE: share post gesture
-    deactivate User
-    activate GRE
-    GRE -> UIE: share post gesture recognized
-    deactivate GRE
-    activate UIE
-    UIE -> LS: post_share(message)
-    deactivate UIE
-    ref over User, LS: share_post
-else share_cancel
-    activate User
-    User ->> GRE: cancel post gesture
-    deactivate User
-    activate GRE
-    GRE -> UIE: cancel post gesture recognized
-    deactivate GRE
-    activate UIE
-    UIE -> LS: cancel_share
-    deactivate UIE
-    ref over User, LS: interaction mode
-    ''activate LS
-end
-''deactivate User
-== Share Post ==
-group share_post
-''activate LS
-LS -> LS ++: share_post(SM, message, attachment)
-LS ->> SMS: login
-deactivate LS
-activate SMS
-return login_status
-deactivate SMS
-activate LS
-alt if (login_status == fail)
-    ref over LS, SMS: share_fail
-    else success
-    LS ->> SMS: post_status = send(message, attachment)
-    deactivate LS
-    activate SMS
-    return post_status
-    activate LS
-    alt if(post_status == fail)
-	ref over LS, SMS: share_fail
-	deactivate LS
-    end
-end
-alt share_success
-    activate LS
-    LS -> UIE: share_success
-    deactivate LS
-    activate UIE
-    UIE -> User: show Share Success view
-    deactivate UIE
-else share_fail
-    activate LS
-    LS -> UIE: share_fail
-    deactivate LS
-    activate UIE
-    UIE -> User: show Share Failure view
-    deactivate UIE
-    activate User
-end
-end
-  @enduml
-#+END_SRC
-
-#+RESULTS:
-[[file:diags/plantuml/seq-diag/output/seq-local-sharing-mode.png]]
 * Gesture recognition                                              :noexport:
 ** Research [0/7]
 1) [ ] [[https://techvidvan.com/tutorials/hand-gesture-recognition-tensorflow-opencv/][Real-time Hand Gesture Recognition using TensorFlow & OpenCV]]

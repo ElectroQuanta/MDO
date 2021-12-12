@@ -1,33 +1,36 @@
-- [Preamble](#org0598600)
-- [Versions <code>[1/1]</code>](#orgcf159d4)
-- [Notes](#org240e2f2)
-  - [Requirements](#org74b7810)
-  - [Problem statement](#org78ca7a0)
-  - [Research](#org20683af)
-    - [Topics <code>[0/3]</code>](#org9a513e9)
-    - [Selection](#org4765032)
-  - [Report](#org212b8ea)
-    - [Outline <code>[2/8]</code>](#org2fa03f5)
-  - [Marketing Digital Outdoor](#org9981898)
-    - [Topics](#orgb793ebb)
-    - [Technologies <code>[0/11]</code>](#orgae44a68)
-    - [Problem statement](#orgf0509d2)
-    - [Market research <code>[3/3]</code>](#orge030e70)
-    - [Project planning](#org17c2177)
-    - [Analysis](#orgc903229)
-    - [Theoretical foundations <code>[17/17]</code>](#orgf27299c)
-    - [Design](#org8133eb8)
-- [Diagrams](#org981af3f)
-  - [PlantUML](#org6db7c5b)
-    - [Setup <code>[0/6]</code>](#orgfae63e9)
-    - [Workflow <code>[0/4]</code>](#orge725b05)
-    - [Sequence diagrams](#org28a630d)
-- [GIF generation](#org411d74d)
-  - [C++ libraries and APIs <code>[0/1]</code>](#org878125b)
+- [Preamble](#orgc986acd)
+- [Versions <code>[1/1]</code>](#org4951ffb)
+- [Notes](#org2d79731)
+  - [Requirements](#orgb37bebb)
+  - [Problem statement](#org46b819f)
+  - [Research](#org9f6fd9e)
+    - [Topics <code>[0/3]</code>](#org6f7b8d9)
+    - [Selection](#orgd453985)
+  - [Report](#orgfcdefeb)
+    - [Outline <code>[2/8]</code>](#org90bc3e3)
+  - [Marketing Digital Outdoor](#orgd49cfdf)
+    - [Topics](#org6fb4eee)
+    - [Technologies <code>[0/11]</code>](#org99352f1)
+    - [Problem statement](#orgef23d3c)
+    - [Market research <code>[3/3]</code>](#orgf597c22)
+    - [Project planning](#org9e2b6d7)
+    - [Analysis](#org8cd428e)
+    - [Theoretical foundations <code>[17/17]</code>](#org85b30e3)
+    - [Design](#orgfefe697)
+- [Diagrams](#orgdd6abf5)
+  - [PlantUML](#org0e24336)
+    - [Setup <code>[0/6]</code>](#org0154b7b)
+    - [Workflow <code>[0/4]</code>](#org28b38d2)
+    - [Sequence diagrams](#orgcf4a959)
+    - [Component diagrams](#org5d75e1a)
+    - [Deployment diagrams](#org051f8fd)
+    - [Entity-Relationship diagram](#org75900a6)
+- [GIF generation](#org810797e)
+  - [C++ libraries and APIs <code>[0/1]</code>](#org7cb4b1e)
 
 
 
-<a id="org0598600"></a>
+<a id="orgc986acd"></a>
 
 # Preamble
 
@@ -35,19 +38,19 @@
 -   It is written incrementally, i.e., as the several project phases take place, the document versions pertaining to each phase are stored in the folder **submission**.
 
 
-<a id="orgcf159d4"></a>
+<a id="org4951ffb"></a>
 
 # Versions <code>[1/1]</code>
 
 1.  [X] Problem statement: deadline - <span class="timestamp-wrapper"><span class="timestamp">&lt;2021-10-28 qui&gt;</span></span>
 
 
-<a id="org240e2f2"></a>
+<a id="org2d79731"></a>
 
 # Notes     :Important:
 
 
-<a id="org74b7810"></a>
+<a id="orgb37bebb"></a>
 
 ## Requirements
 
@@ -59,19 +62,19 @@
 -   Makefiles
 
 
-<a id="org78ca7a0"></a>
+<a id="org46b819f"></a>
 
 ## Problem statement
 
 Think about the project and deliver a document about it.
 
 
-<a id="org20683af"></a>
+<a id="org9f6fd9e"></a>
 
 ## Research
 
 
-<a id="org9a513e9"></a>
+<a id="org6f7b8d9"></a>
 
 ### Topics <code>[0/3]</code>
 
@@ -80,19 +83,19 @@ Think about the project and deliver a document about it.
 -   [ ] Situate the project requirements, the project constraints
 
 
-<a id="org4765032"></a>
+<a id="orgd453985"></a>
 
 ### Selection
 
 -   [Marketing digital Outdoor](readme.md)
 
 
-<a id="org212b8ea"></a>
+<a id="orgfcdefeb"></a>
 
 ## Report
 
 
-<a id="org2fa03f5"></a>
+<a id="org90bc3e3"></a>
 
 ### Outline <code>[2/8]</code>
 
@@ -143,12 +146,12 @@ Think about the project and deliver a document about it.
 8.  [ ] Conclusions
 
 
-<a id="org9981898"></a>
+<a id="orgd49cfdf"></a>
 
 ## Marketing Digital Outdoor     :Important:
 
 
-<a id="orgb793ebb"></a>
+<a id="org6fb4eee"></a>
 
 ### Topics
 
@@ -189,7 +192,7 @@ Think about the project and deliver a document about it.
             -   Additionally, brands can also monitor this by checking their social media accounts.
 
 
-<a id="orgae44a68"></a>
+<a id="org99352f1"></a>
 
 ### Technologies <code>[0/11]</code>
 
@@ -206,12 +209,12 @@ Think about the project and deliver a document about it.
 11. [ ] Social media and e-mail sharing APIs
 
 
-<a id="orgf0509d2"></a>
+<a id="orgef23d3c"></a>
 
 ### ✔ DONE Problem statement
 
 
-<a id="orge030e70"></a>
+<a id="orgf597c22"></a>
 
 ### ✔ DONE Market research <code>[3/3]</code>
 
@@ -220,7 +223,7 @@ Think about the project and deliver a document about it.
 3.  [X] Combined marketing: are they digital outdoor + scenting?
 
 
-<a id="org17c2177"></a>
+<a id="org9e2b6d7"></a>
 
 ### Project planning
 
@@ -295,7 +298,7 @@ Think about the project and deliver a document about it.
     -   [X] Camera: 14 EUR - <https://shorturl.at/gnpCU>
 
 
-<a id="orgc903229"></a>
+<a id="org8cd428e"></a>
 
 ### ✔ DONE Analysis
 
@@ -308,7 +311,7 @@ Think about the project and deliver a document about it.
     > COMPANY -> MDO-L Staff member login RC -> RS: q mdo systems RS -> DB: query mdo-systems DB -> RS: std::<vector> mdo<sub>systems</sub> for(i = 0; i < mdo<sub>systems.size</sub>(); i++ ) RS -> RC: mdo<sub>systems</sub>[i] RC -> RC: Select MDO-L machine Send command RC -> RS: mdo <nr> <command> (mdo 1 get mode) RS -> RS: parse command RS -> RS: get mdo<sub>nr</sub> IP (query mdo-systems 1 IP) RS -> MDO-L: connect IP:port MDO-L -> RS: connected RS -> MDO-L: get mode MDO-L -> RS: normal mode (example) RS -> RC: normal
 
 
-<a id="orgf27299c"></a>
+<a id="org85b30e3"></a>
 
 ### ✔ DONE Theoretical foundations <code>[17/17]</code>
 
@@ -340,7 +343,7 @@ Legend:
 -   *Hugo*
 
 
-<a id="org8133eb8"></a>
+<a id="orgfefe697"></a>
 
 ### Design
 
@@ -394,7 +397,7 @@ Design Phase must include (some specifications may vary according to your projec
 It is compulsory to show/identify which/where all class topics are going to be implemented and used by you! Also third-party Libraries/apps must be identified so you can use other's software and materials with our consent.
 
 
-<a id="org981af3f"></a>
+<a id="orgdd6abf5"></a>
 
 # Diagrams
 
@@ -403,19 +406,22 @@ Diagrams can be drawn using <code>[2/2]</code>:
 -   [X] draw.io
     -   User mockups
     -   State-machine
--   [X] [PlantUML](#org6db7c5b) (stored in Proj/diags/plantuml)
+-   [X] [PlantUML](#org0e24336) (stored in Proj/diags/plantuml)
     -   Sequence diagram
     -   Class diagram
+    -   Component diagram
+    -   Deployment diag
+    -   Entity-Relationship diagram
 
 
-<a id="org6db7c5b"></a>
+<a id="org0e24336"></a>
 
 ## PlantUML
 
 [PlantUML](https://plantuml.com/) is a tool for quickly drawing diagrams from text based descriptions. It is specially adequate for sequence diagrams, as draw.io is not very fluid.
 
 
-<a id="orgfae63e9"></a>
+<a id="org0154b7b"></a>
 
 ### Setup <code>[0/6]</code>
 
@@ -431,7 +437,7 @@ Diagrams can be drawn using <code>[2/2]</code>:
 6.  [ ] Check the generate png file: `output/test.png`
 
 
-<a id="orge725b05"></a>
+<a id="org28b38d2"></a>
 
 ### Workflow <code>[0/4]</code>
 
@@ -445,9 +451,9 @@ Diagrams can be drawn using <code>[2/2]</code>:
 4.  [ ] Check the generate png file: `output/test.png`
 
 
-<a id="org28a630d"></a>
+<a id="orgcf4a959"></a>
 
-### Sequence diagrams
+### ✔ DONE Sequence diagrams
 
 1.  Declaring participants
 
@@ -573,7 +579,7 @@ Diagrams can be drawn using <code>[2/2]</code>:
     @enduml
     ```
     
-    ![img](diags/plantuml/seq-diag/examples/group-msg.png)
+    ![img](diags/plantuml/examples/seq-diag/group-msg.png)
 
 4.  Notes on messages
 
@@ -962,12 +968,130 @@ Diagrams can be drawn using <code>[2/2]</code>:
     ![img](diags/plantuml/seq-diag/examples/all-together.png)
 
 
-<a id="org411d74d"></a>
+<a id="org5d75e1a"></a>
+
+### Component diagrams
+
+You can use component diagrams to model the software architecture of a system. Component diagrams provide a view of the physical software components in the system, their interfaces, and their dependencies. [src](https://www.ibm.com/docs/en/rsar/9.5?topic=diagrams-creating-component)
+
+1.  Components
+
+    Components must be bracketed.
+    
+    You can also use the component keyword to define a component. And you can define an alias, using the as keyword. This alias will be used later, when defining relations.
+    
+    ![img](diags/plantuml/component-diag/output/components.png)
+
+2.  UML 2
+
+    UML 2 is the default now.
+    
+    ![img](diags/plantuml/component-diag/output/uml2-example.png)
+
+3.  Skinparam
+
+    ![img](diags/plantuml/component-diag/output/skinparam1.png)
+    
+    ![img](diags/plantuml/component-diag/output/skinparam2.png)
+
+4.  Grouping components
+
+    You can use several keywords to group components and interfaces together:
+    
+    1.  package
+    2.  node
+    3.  folder
+    4.  frame
+    5.  cloud
+    6.  database
+        
+        ![img](diags/plantuml/component-diag/output/group-components.png)
+
+5.  Mine (to generate report)     :Important:
+
+
+<a id="org051f8fd"></a>
+
+### Deployment diagrams
+
+In UML, deployment diagrams model the physical architecture of a system. Deployment diagrams show the relationships between the software and hardware components in the system and the physical distribution of the processing.
+
+Deployment diagrams, which you typically prepare during the implementation phase of development, show the physical arrangement of the nodes in a distributed system, the artifacts that are stored on each node, and the components and other elements that the artifacts implement. Nodes represent hardware devices such as computers, sensors, and printers, as well as other devices that support the runtime environment of a system. Communication paths and deploy relationships model the connections in the system. ([src](https://www.ibm.com/docs/en/rsar/9.5?topic=diagrams-deployment))
+
+**Types of elements** ([src](https://mychartguide.com/deployment-diagram/#What_are_the_elements_involved)):
+
+1.  Artifact: The artifact is the main element in a deployment diagram and signifies the product developed by any software. It is also often referred to as the information that software generates. It is symbolized with the help of a rectangle.
+2.  Association: This helps signify the correlation and message between two different nodes in the diagram.
+3.  Component: This helps signify the presence of a software element in the diagram and is represented with a rectangle with two tabs.
+4.  Dependency: This signifies the dependency and correlation of one node or component with that of the other in a deployment diagram. It is represented with dashed lines with arrows.
+5.  Interface: This signifies the presence of a contractual relationship in a diagram, especially when there are obligations involved that needs to be completed in a total system. It is represented with a circle.
+6.  Node: This signifies the main element of any kind of hardware or even software object in a deployment diagram that is further shown with a three dimensional box.
+7.  Stereotype: This signifies the element that is trapped inside a node which comes with its representation with the name bracketed by double arrows.
+
+1.  Declaring element
+
+    ![img](diags/plantuml/deploy-diag/output/decl-elem.png)
+
+2.  Linking or arrow
+
+3.  Line style
+
+    ![img](diags/plantuml/deploy-diag/output/line-style.png)
+
+4.  Nesting
+
+    ![img](diags/plantuml/deploy-diag/output/nesting.png)
+
+5.  Full nesting
+
+    ![img](diags/plantuml/deploy-diag/output/full-nesting.png)
+
+6.  Style for each nested element
+
+    ![img](diags/plantuml/deploy-diag/output/style-nested.png)
+
+7.  Style for all elements
+
+    ![img](diags/plantuml/deploy-diag/output/style-nested-all.png)
+
+
+<a id="org75900a6"></a>
+
+### Entity-Relationship diagram
+
+[src](https://plantuml.com/ie-diagram)
+
+1.  Plantuml to MySQL
+
+    [src](https://github.com/grafov/plantuml2mysql)
+    
+    I liked plantuml tool for UML diagrams but use it also for visualizing structure of relational database. This script loads plantuml class diagram and generates DDL for MySQL SQL dialect. You may define primary keys with # prefix in field name (it means protected field in PlantUML) and define index fields with + (public field in PlantUML) prefix.
+    
+    Field type noted after field name as is. Also you may use comments after &#x2013;.
+    
+    For example class definition: will be converted to SQL:
+    
+    ```sql
+    CREATE TABLE IF NOT EXISTS `dummy` (
+      id               INT(10) COMMENT 'A comment',
+      field1           INT(10),
+      field2           VARCHAR(128),
+      PRIMARY KEY (id));
+    ```
+    
+    Text between class name and == is table description. The description of the table is mandatory. I was too lazy to check for absence of descriptions but not lazy to write them in each table of my databases.
+    
+    A line starting with .. or \_\_, used as a separator into a class definition, will be ignored.
+    
+    The HTML markup in comments (after &#x2013;) is stripped.
+
+
+<a id="org810797e"></a>
 
 # GIF generation
 
 
-<a id="org878125b"></a>
+<a id="org7cb4b1e"></a>
 
 ## C++ libraries and APIs <code>[0/1]</code>
 
