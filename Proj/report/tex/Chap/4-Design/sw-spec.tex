@@ -2,8 +2,8 @@
 \section{Software specification}
 \label{sec:sw-specs}
 Next, the \gls{sw} responsible for system operation is specified for all
-subsystems --- \texttt{\gls{mdo-rc}}, \texttt{\gls{mdo-rs}}, and
-\texttt{mdo-l}.
+subsystems --- \texttt{\acrfull{mdo-rc}}, \texttt{\acrfull{mdo-rs}}, and
+\texttt{\acrfull{mdo-l}}.
 All these subsystems are event-driven (asynchronous), and they can be more easily
 specified using state-machine diagrams, previously illustrated in the
 \emph{analysis phase} (Section~\ref{sec:softw-arch}). Also in the \emph{analysis
@@ -34,24 +34,38 @@ interfaces with external subsystems.
 
 \subsubsection{Remote client}
 \label{sec:remote-client-arch}
-The \texttt{Remote Client} \gls{sw} architecture is comprised of the following
-artifacts:
-\begin{itemize}
+Fig.~\ref{fig:component-diag-rc} depicts the \texttt{Remote Client} \gls{sw} architecture, encapsulated in the package
+\texttt{MDO-RC: AppManager}, and is comprised of the following artifacts:
+\begin{item-c}
 \item
-  \emph{\texttt{User Interface} package}: contains the \texttt{\gls{ui}} and \texttt{\gls{ui} Engine}
+  \emph{\texttt{User Interface} package}: contains the \texttt{\gls{ui}} and
+  \texttt{\gls{ui} Engine}. It is responsible for providing user feedback and
+  capturing \gls{ui} events which drive the \texttt{Remote Client}'s logic.
 \item
-  \emph{\texttt{Comm Manager} package}: 
+  \emph{\texttt{Comm Manager} package}: manages incoming and outgoing
+  connections to the \texttt{Remote Server} (package \texttt{MDO-RS: App Manager}), periodically checking the
+  connection status by pinging the \texttt{Remote Server}. All connections
+  consist of \gls{tcp-ip} sockets.
 \item
-  \emph{\texttt{DB Manager} package}:
+  \emph{\texttt{DB Manager} package}: manages the queries and the associated
+  responses by building or parsing them, respectively.
 \item 
-  \emph{\texttt{Remote Controller} package}:
+  \emph{\texttt{Remote Controller} package}: contains the \texttt{Cmd Parser},
+  which parses the command responses received from the \texttt{Remote Server}
+  when the \texttt{Admin} is performing remote control of the \texttt{Local
+    System}.
 \item
-  \emph{\texttt{RC Rx Parser} component}:
+  \emph{\texttt{RC Rx Parser} component}: high-level parser which filters
+  between \texttt{db responses} and \texttt{cmd responses} for appropriate
+  dispatching.
 \item
-  \emph{\texttt{\gls{tcp-ip} Tx} socket}:
+  \emph{\texttt{\gls{tcp-ip} Tx} socket}: outgoing connection node, through
+  which \texttt{tx frames} are sent to the \texttt{Remote Server}.
 \item 
-  \emph{\texttt{\gls{tcp-ip} Rx} socket}:  
-\end{itemize}
+  \emph{\texttt{\gls{tcp-ip} Rx} socket}:  incoming connection node, through
+  which \texttt{rx frames} are received from the \texttt{Remote
+    Server}.
+\end{item-c}
 
 \begin{figure}[htb!]
 \centering
@@ -62,18 +76,74 @@ artifacts:
 
 \subsubsection{Remote server}
 \label{sec:remote-server-arch}
-
-
+Fig.~\ref{fig:component-diag-rs} depicts the \texttt{Remote Server} \gls{sw} architecture, encapsulated in the package
+\emph{\texttt{MDO-RS: AppManager}}. It interacts with the \texttt{Remote Client}
+(package \texttt{MDO-RC: AppManager}), with the \texttt{Local System} (package
+\texttt{MDO-L: AppManager}), and with the \texttt{\gls{db} server}
+(\texttt{MDO-RS: DB Server}). The database management is done using
+client-server architecture, with \texttt{MDO-RS: AppManager} containing the
+\gls{db} client and \texttt{MDO-RS: DB Server} the server.
+%
 \begin{figure}[htb!]
 \centering
-    \includegraphics[width=0.9\columnwidth]{./img/component-diag-rs.png}
+    \includegraphics[width=1.0\columnwidth]{./img/component-diag-rs.png}
   \caption{\gls{sw} architecture: component diagram --- \texttt{Remote Server}}%
 \label{fig:component-diag-rs}
 \end{figure}
 
+The \emph{\texttt{MDO-RS: AppManager}} package is comprised of the following artifacts:
+\begin{item-c}
+\item
+  \emph{\texttt{Command--Line Interface} package}: contains the
+  \texttt{\gls{cli}}, the
+  \texttt{\gls{cli} Engine}, and the \texttt{\gls{cli} Parser}. It provides the
+  server external interface for clients to perform requests,
+  capturing the events which drive the \texttt{Remote Server}'s logic.
+\item
+  \emph{\texttt{Comm Manager} package}: manages incoming and outgoing
+  connections to the \texttt{Remote Client} (package \texttt{MDO-RC: App
+    Manager}),  and each \texttt{Local System} (package \texttt{MDO-L:
+    AppManager}) it needs to interact. It periodically checks all
+  connections statuses. All connections
+  consist of \gls{tcp-ip} sockets.
+\item
+  \emph{\texttt{DB Client} package}: manages the queries and the associated
+  responses by building or parsing them, respectively. It performs the requests
+  for \texttt{\gls{db} server} with the solicited queries.
+\item 
+  \emph{\texttt{Command Parser} package}: contains the \texttt{Client Parser},
+  and the \texttt{Local Parser} to parse and handle frames received from the
+  \texttt{Remote Client} or \texttt{Local System}, respectively, forwarding it
+  for appropriate dispatching.
+\item
+  \emph{\gls{tcp-ip} sockets}: incoming/outgoing connection nodes, through which
+  incoming or outgoing traffic flows for the \texttt{Remote Client}, the
+  \texttt{Local System} and the \texttt{DB Server}.
+\end{item-c}
+
+\vspace{1em}
+The \emph{\texttt{MDO-RS: DB Server}} package is comprised of the following artifacts:
+\begin{item-c}
+\item
+  \emph{\texttt{Comm Manager} package}: manages incoming and outgoing
+  connections to the \texttt{DB Client} (in package \texttt{MDO-RS: App
+    Manager}). It periodically checks all
+  connections statuses. All connections
+  consist of \gls{tcp-ip} sockets.
+\item
+  \emph{\texttt{DB Manager} package}: handles the received queries, issuing
+  transactions for the databases and returns its response. It is also
+  responsible for periodically checking timestamps, and when there is a match,
+  update the local system with the relevant information.
+\item
+  \emph{Databases}: contains the actual data stored.
+\end{item-c}
+%
 \subsubsection{Local system}
 \label{sec:local-system-arch}
-
+Fig.~\ref{fig:component-diag-local} depicts the \texttt{Local System} \gls{sw} architecture, encapsulated in the package
+\emph{\texttt{MDO-L: AppManager}}.
+%
 \begin{figure}[htb!]
 \centering
     \includegraphics[width=1.03\columnwidth]{./img/component-diag-local.png}
@@ -81,6 +151,70 @@ artifacts:
 \label{fig:component-diag-local}
 \end{figure}
 
+It interacts with:
+\begin{item-c}
+\item 
+\emph{\texttt{Remote Server}} (package \texttt{MDO-RS: AppManager}): to retrieve updates on its operation or
+\texttt{Admin} commands
+\item
+  \emph{\texttt{Twitter}} (via its \texttt{\gls{rest} \glspl{api}}): to share
+  posts on it
+\item
+  \texttt{transfer.sh} --- an \gls{url} proxy server: to ease file transfer
+  between the \texttt{Remote Server} and the \texttt{Local System}.
+\end{item-c}
+
+\vspace{1em}
+The \emph{\texttt{MDO-RS: AppManager}} package is comprised of the following artifacts:
+\begin{item-c}
+\item
+  \emph{\texttt{User Interface} package}: contains the \texttt{\gls{ui}}, the
+  \texttt{\gls{ui} Engine}, the \texttt{Gesture Recognition Engine}, and the
+  \texttt{User Detection package}. The \texttt{\gls{ui}} provides user feedback
+  and \texttt{UI Engine}
+  captures the events that drive the \texttt{Local System}'s logic. When a user
+  approaches the \texttt{Local System}, the \texttt{Ultrasonic sensor device
+    driver} captures this event and passes it to the user space where the
+  \texttt{Ultrasonic sensor daemon} logs it, which, in turn, signals this event
+  to the \texttt{UI Engine}. When the \texttt{User} performs gestures, the
+  \texttt{Gesture Recognition Engine} requires a service to the \texttt{Gesture
+    recognition} component (\texttt{Computer Vision Framework}) to recognize the
+  gesture. Also, when the \texttt{User} is detected, the \texttt{UI Engine}
+  requests the \texttt{Normal mode manager} to stop running, and requests
+  \texttt{Face detection} to track people's faces in the camera.
+\item
+  \emph{\texttt{Comm Manager} package}: manages incoming and outgoing
+  connections to the \texttt{Remote Server} (package \texttt{MDO-RS: App
+    Manager}),  and the internet for each web service it needs to interact
+  (\texttt{Twitter} and \texttt{transfer.sh}).
+  It periodically checks all connections statuses. All connections
+  consist of \gls{tcp-ip} sockets.
+\item
+  \emph{\texttt{Computer Vision framework} package}: manages the computer vision
+  related tasks, namely, gesture recognition, face detection, and image filter
+  overlay.
+\item 
+  \emph{\texttt{Multimedia Mode Manager} package}: manages the multimedia mode
+  related tasks, namely, image filtering, \gls{gif} generation, and camera
+  management.
+\item 
+  \emph{\texttt{Sharing Mode Manager} package}: manages the sharing mode
+  related tasks, namely, post management, and social media management, in this
+  case, \texttt{Twitter}.
+\item 
+  \emph{\texttt{Normal Mode Manager} package}: manages the normal mode
+  related tasks, namely, fragrance diffusion, video and audio outputs. The
+  fragrance diffusion is requested to the device driver using a daemon to bridge
+  user-space and kernel-space.
+\item 
+  \emph{\texttt{App Parser} package}: manages the parsing for database queries
+  and requested commands.
+\item
+  \emph{\gls{tcp-ip} sockets}: incoming/outgoing connection nodes, through which
+  incoming or outgoing traffic flows for the \texttt{Remote Server}, and the web
+  services for \texttt{Twitter} and the \texttt{\gls{url} proxy server}.
+\end{item-c}
+%
 %At program
 % startup --- \texttt{Idle} state --- the peripherals are initialized (interrupts, PCA, I2C, timer for tick
 % generated interrupts) and the program waits for events, going into sleep

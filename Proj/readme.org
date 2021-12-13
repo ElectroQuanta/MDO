@@ -2082,20 +2082,20 @@ package "MDO-RS: DB Server"{
 
 '' MDO-RS
 '' Client Connections
-[RCT] ..> sockRC_RS: send server\nframe
-sockRC_RS ..> [RSRC] 
-[RSTC] ..> sockRS_RC: send client\nframe
-sockRS_RC ..> [RCR]
+[RCT] ..> sockRC_RS #blue: <color:blue>send server\n<color:blue>frame
+sockRC_RS ..> [RSRC] #blue
+[RSTC] ..> sockRS_RC #blue: <color:blue>send client\n<color:blue>frame
+sockRS_RC ..> [RCR] #blue
 '' Local connections
-[RSTL] .r.> sockRS_L: send local\nframe 
-sockRS_L .d.> [LCR]
-[LCT] .u.> sockL_RS: send server\nframe 
-sockL_RS .l.> [RSRL]
+[RSTL] .r.> sockRS_L #darkgreen: <color:darkgreen>send local\n<color:darkgreen>frame
+sockRS_L .d.> [LCR] #darkgreen
+[LCT] .u.> sockL_RS #darkgreen: <color:darkgreen>send server\n<color:darkgreen>frame
+sockL_RS .l.> [RSRL] #darkgreen
 '' Database connections
-[RSQP] --> sockRS_SQL: db query
-sockRS_SQL --> [SERVRx]
-[SERVTx] ..> sockSQL_RS: db response 
-sockSQL_RS ..> [RSRP]
+[RSQP] --> sockRS_SQL #indigo: <color:indigo>db\n<color:indigo>query
+sockRS_SQL --> [SERVRx] #indigo
+[SERVTx] ..> sockSQL_RS #indigo: <color:indigo>db \n<color:indigo>response 
+sockSQL_RS ..> [RSRP] #indigo
 
 '' Internal logic
 [RSRC] --> [RSCP]: server\n frame
@@ -2104,6 +2104,8 @@ sockSQL_RS ..> [RSRP]
 [CLIP] --> [RSTL]: local \ncmd frame
 [RSRP] --> [RSTC]: db response\n frame
 [RSRP] ..> [RSTL]: local sys\nframe 
+[RSRL] --> [RSLP]: local rx\nframe
+[RSLP] --> [RSTC]: local cmd\nresponse
 
 '' Server
 [RSDBM2] ..> [RSDBM2]: check\ntimestamps
