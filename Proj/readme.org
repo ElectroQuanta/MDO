@@ -1561,7 +1561,10 @@ Diagrams can be drawn using [2/2]:
 
  #+RESULTS:
  [[file:diags/plantuml/seq-diag/output/seq-local-sharing-mode.png]]
-*** Component diagrams
+*** ✔ DONE Component diagrams
+    :LOGBOOK:
+    - State "✔ DONE"     from              [2021-12-13 seg 21:27]
+    :END:
 You can use component diagrams to model the software architecture of a
 system. Component diagrams provide a view of the physical software components in
 the system, their interfaces, and their dependencies. [[https://www.ibm.com/docs/en/rsar/9.5?topic=diagrams-creating-component][src]]
@@ -2391,6 +2394,168 @@ sockL_Transfer_sh -l-> [WEBRx]
   #+RESULTS:
   [[file:diags/plantuml/component-diag/output/component-diag-local-no-links.png]]
 
+*** Class diagrams
+
+**** Declaring elements
+   #+BEGIN_SRC plantuml :file diags/plantuml/class-diag/output/decl-elems.png
+@startuml
+abstract        abstract
+abstract class  "abstract class"
+annotation      annotation
+circle          circle
+()              circle_short_form
+class           class
+diamond         diamond
+<>              diamond_short_form
+entity          entity
+enum            enum
+interface       interface
+''structure struct
+class structName << struct >>
+@enduml
+   #+END_SRC
+
+   #+RESULTS:
+   [[file:diags/plantuml/class-diag/output/decl-elems.png]]
+
+**** Relation between classes
+   #+BEGIN_SRC plantuml :file diags/plantuml/class-diag/output/class-relations.png
+@startuml
+'' Types
+'' - extension (inheritance):   <|--
+'' - composition: *--
+'' - Aggregation: o--
+'' To have a dotted line, replace -- by ..
+Class01 <|-- Class02
+Class03 *-- Class04
+Class05 o-- Class06
+Class07 .. Class08
+Class09 -- Class10
+@enduml
+   #+END_SRC
+
+   #+RESULTS:
+   [[file:diags/plantuml/class-diag/output/class-relations.png]]
+
+
+**** Label on relations
+It is possible to add a label on the relation, using :, followed by the text of the label.
+
+For cardinality, you can use double-quotes "" on each side of the relation. 
+   #+BEGIN_SRC plantuml :file diags/plantuml/class-diag/output/label-relations.png
+@startuml
+'' relation syntax
+''  <C1Name> "<cardC1>" <relation> "<cardC2>" <C2Name> : <label>
+
+Class01 "1" *-- "many" Class02 : contains
+Class03 o-- Class04 : aggregation
+Class05 --> "1" Class06
+
+@enduml
+   #+END_SRC
+
+   #+RESULTS:
+   [[file:diags/plantuml/class-diag/output/label-relations.png]]
+
+**** Adding methods
+To declare fields and methods, you can use the symbol : followed by the field's
+or method's name.
+- The system checks for parenthesis to choose between methods and fields. 
+
+   #+BEGIN_SRC plantuml :file diags/plantuml/class-diag/output/add-methods.png
+@startuml
+class Dummy {
+  String data
+  void methods()
+}
+
+class Flight {
+   flightNumber : Integer
+   departureTime : Date
+}
+@enduml
+   #+END_SRC
+
+   #+RESULTS:
+   [[file:diags/plantuml/class-diag/output/add-methods.png]]
+
+
+**** Mine (to generate report)
+
+*Client*
+  #+BEGIN_SRC plantuml :file diags/plantuml/class-diag/output/component-diag-rc.png
+@startuml
+''left to right direction
+skinparam fixCircleLabelOverlapping true
+'' participants definition
+actor "Brand/Admin" as User
+
+package "MDO-RC: AppManager" {
+  ''HTTP - [UI]
+  ''[  UI\n << Qt >>] as UI
+  frame "User Interface"{
+  [UI] as UI
+  [UI \nEngine] as UIE
+  }
+  frame "DB Manager" as DBM{
+  [Query\nParser] as QP
+  [Response\nParser] as RP
+  }
+  frame "Comm Manager" as CM{
+  [Comm \nStatus] as RCS
+  [RC\nTx] as RCT
+  [RC\nRx] as RCR
+  }
+  [RC Rx\nParser] as RCRP
+  frame "Remote \nController" as REMCTL{
+  [Cmd \nParser] as RCCP
+  }
+}
+
+'' ----------- INTERACTIONS
+'' MDO-RC
+[User] .d..> [UI]: presses
+[UI] .u..> [User]: feedback
+[UI] --> [UIE]: UI events
+[UIE] --> [UI]: updates
+[UIE] --> [QP]: build db \nquery
+[UIE] --> [RCT]: admin\n cmd
+[UIE] --> [RCS]: status
+[RCS] --> [UIE]: status
+[RCS] --> [RCT]: ping
+[QP] --> [UIE]: status
+[QP] --> [RCT]: db query \nframe
+[RCR] ..> [RCRP]: rx frame
+[RCRP] ..> [RP]: db response \nframe
+[RCRP] ..> [RCCP]: cmd \nresponse
+[RCCP] ..> [UIE]: cmd \nfeedback
+[RP] --> [UIE]: db response
+
+package "MDO-RS: AppManager"{
+  ''HTTP - [UI]
+  frame "Comm Manager" as CMS{
+  ''together{
+  [Comm \nStatus] as RSS
+  [RS Tx \nClient] as RSTC
+  [RS Rx \nClient] as RSRC
+  ''[RS Tx \nLocal] as RSTL
+  ''[RS Rx \nLocal] as RSRL
+  ''}
+  }
+}
+'' ----------- INTERFACES
+() "tcp/ip" as sockRC_RS
+() "tcp/ip" as sockRS_RC
+
+'' MDO-RS
+'' Client Connections
+[RCT] .r.> sockRC_RS
+sockRC_RS .d.> [RSRC]: send server\nframe
+[RSTC] .u.> sockRS_RC
+sockRS_RC .l.> [RCR]: send client\n frame
+
+@enduml
+  #+END_SRC
 *** Deployment diagrams
 In UML, deployment diagrams model the physical architecture of a system. Deployment diagrams show the relationships between the software and hardware components in the system and the physical distribution of the processing.
 
