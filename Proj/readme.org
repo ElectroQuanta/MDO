@@ -42,8 +42,11 @@
 
 [[file:sec/img/doxygen-out6.png]]
 
-* Versions [1/1]
+* Versions [3/4]
 1. [X] Problem statement: deadline - <2021-10-28 qui>
+2. [X] Phase 1
+3. [X] Analysis phase: deadline
+4. [ ] Design phase: <2021-12-15 qua 23:00>
 
 * Notes                                                           :Important:
   :PROPERTIES:
@@ -1760,7 +1763,8 @@ You can use several keywords to group components and interfaces together:
 5) cloud
 6) database
 
-  #+BEGIN_SRC plantuml :file diags/plantuml/component-diag/output/component-diag.png
+*Full*
+  #+BEGIN_SRC plantuml :file diags/plantuml/component-diag/output/component-diag-full.png
 @startuml
 ''left to right direction
 skinparam fixCircleLabelOverlapping true
@@ -1796,10 +1800,13 @@ skinparam fixCircleLabelOverlapping true
 '' participants definition
 actor "Brand/Admin" as User
 
-package "MDO-RC" {
+package "MDO-RC: AppManager" {
   ''HTTP - [UI]
-  [UI]
+  ''[  UI\n << Qt >>] as UI
+  frame "User Interface"{
+  [UI] as UI
   [UI \nEngine] as UIE
+  }
   frame "DB Manager" as DBM{
   [Query\nParser] as QP
   [Response\nParser] as RP
@@ -1809,22 +1816,259 @@ package "MDO-RC" {
   [RC\nTx] as RCT
   [RC\nRx] as RCR
   }
+  [RC Rx\nParser] as RCRP
+  frame "Remote \nController" as REMCTL{
+  [Cmd \nParser] as RCCP
+  }
 }
 
-package "MDO-RS"{
+'' ----------- INTERACTIONS
+'' MDO-RC
+[User] ..> [UI]: presses
+[UI] ..> [User]: feedback
+[UI] --> [UIE]: UI events
+[UIE] --> [UI]: updates
+[UIE] --> [QP]: build db \nquery
+[UIE] --> [RCT]: admin\n cmd
+[UIE] --> [RCS]: status
+[RCS] --> [UIE]: status
+[RCS] --> [RCT]: ping
+[QP] --> [UIE]: status
+[QP] --> [RCT]: db query \nframe
+[RCR] ..> [RCRP]: rx frame
+[RCRP] ..> [RP]: db response \nframe
+[RCRP] ..> [RCCP]: cmd \nresponse
+[RCCP] ..> [UIE]: cmd \nfeedback
+[RP] --> [UIE]: db response
+
+package "MDO-RS: AppManager"{
   ''HTTP - [UI]
-  [CLI]
-  ''[UI Engine] as UIE
-  ''[Parser]
-  ''[DB Manager] as DBM
-  ''[Comm Manager] as CM
+  frame "Command-Line\nInterface"{
+  [CLI] as CLI
+  [CLI Engine] as CLIE
+  [CLI Parser] as CLIP
+  }
+  frame "Command Parser"{
+  [Client\nParser] as RSCP
+  [Local \nParser] as RSLP
+  }
+  frame "DB Manager" as RSDBM{
+  [Query\nParser] as RSQP
+  [Response\nParser] as RSRP
+  }
   frame "Comm Manager" as CMS{
   [Comm \nStatus] as RSS
-  [RS Tx \nCli] as RSTC
-  [RS Rx \nCli] as RSRC
-  [RS Tx \nLoc] as RSTL
-  [RS Rx \nLoc] as RSRL
+  [RS Tx \nClient] as RSTC
+  [RS Rx \nClient] as RSRC
+  [RS Tx \nLocal] as RSTL
+  [RS Rx \nLocal] as RSRL
   }
+}
+
+database "MDO-RS: MySQL"{
+  [DB Server] as DBS
+  [DB Manager] as RSDBM2
+}
+'' ------------------------------
+
+'' ----------- INTERFACES
+() "tcp/ip" as sockRC_RS
+() "tcp/ip" as sockRS_RC
+
+'' MDO-RS
+'' Client Connections
+[RCT] ..> sockRC_RS
+sockRC_RS ..> [RSRC]: send server\nframe
+[RSTC] ..> sockRS_RC
+sockRS_RC ..> [RCR]: send client\n frame
+'' Internal logic
+[RSRC] --> [RSCP]: server\n frame
+[RSCP] --> [RSQP]: db query\n frame
+[RSCP] --> [CLIP]: cmd\n frame
+[CLIP] --> [RSTL]: local \ncmd frame
+[RSQP] --> [DBS]: db query
+[DBS] --> [RSRP]: db response
+[RSRP] --> [RSTC]: db response\n frame
+[RSDBM2] ..> [RSDBM2]: check\ntimestamps
+[RSDBM2] ..> [RSRP]: local sys\nupdate
+[RSRP] ..> [RSTL]: local sys\nframe 
+
+'' ----------- INTERFACES
+'' () "tcp/ip" as sockRS_L
+'' () "tcp/ip" as sockL_RS
+'' () "tcp/ip" as sockL_Twitter
+'' () "tcp/ip" as sockL_Transfer_sh
+
+@enduml
+  #+END_SRC
+
+  #+RESULTS:
+  [[file:diags/plantuml/component-diag/output/component-diag-full.png]]
+
+*Client*
+  #+BEGIN_SRC plantuml :file diags/plantuml/component-diag/output/component-diag-rc.png
+@startuml
+''left to right direction
+skinparam fixCircleLabelOverlapping true
+'' participants definition
+actor "Brand/Admin" as User
+
+package "MDO-RC: AppManager" {
+  ''HTTP - [UI]
+  ''[  UI\n << Qt >>] as UI
+  frame "User Interface"{
+  [UI] as UI
+  [UI \nEngine] as UIE
+  }
+  frame "DB Manager" as DBM{
+  [Query\nParser] as QP
+  [Response\nParser] as RP
+  }
+  frame "Comm Manager" as CM{
+  [Comm \nStatus] as RCS
+  [RC\nTx] as RCT
+  [RC\nRx] as RCR
+  }
+  [RC Rx\nParser] as RCRP
+  frame "Remote \nController" as REMCTL{
+  [Cmd \nParser] as RCCP
+  }
+}
+
+'' ----------- INTERACTIONS
+'' MDO-RC
+[User] .d..> [UI]: presses
+[UI] .u..> [User]: feedback
+[UI] --> [UIE]: UI events
+[UIE] --> [UI]: updates
+[UIE] --> [QP]: build db \nquery
+[UIE] --> [RCT]: admin\n cmd
+[UIE] --> [RCS]: status
+[RCS] --> [UIE]: status
+[RCS] --> [RCT]: ping
+[QP] --> [UIE]: status
+[QP] --> [RCT]: db query \nframe
+[RCR] ..> [RCRP]: rx frame
+[RCRP] ..> [RP]: db response \nframe
+[RCRP] ..> [RCCP]: cmd \nresponse
+[RCCP] ..> [UIE]: cmd \nfeedback
+[RP] --> [UIE]: db response
+
+package "MDO-RS: AppManager"{
+  ''HTTP - [UI]
+  frame "Comm Manager" as CMS{
+  ''together{
+  [Comm \nStatus] as RSS
+  [RS Tx \nClient] as RSTC
+  [RS Rx \nClient] as RSRC
+  ''[RS Tx \nLocal] as RSTL
+  ''[RS Rx \nLocal] as RSRL
+  ''}
+  }
+}
+'' ----------- INTERFACES
+() "tcp/ip" as sockRC_RS
+() "tcp/ip" as sockRS_RC
+
+'' MDO-RS
+'' Client Connections
+[RCT] .r.> sockRC_RS
+sockRC_RS .d.> [RSRC]: send server\nframe
+[RSTC] .u.> sockRS_RC
+sockRS_RC .l.> [RCR]: send client\n frame
+
+@enduml
+  #+END_SRC
+
+  #+RESULTS:
+  [[file:diags/plantuml/component-diag/output/component-diag-rc.png]]
+
+*Server*
+  #+BEGIN_SRC plantuml :file diags/plantuml/component-diag/output/component-diag-rs.png
+@startuml
+''left to right direction
+skinparam fixCircleLabelOverlapping true
+''skinparam linetype ortho
+''[First component]
+''[Another component] as Comp2
+''component Comp3
+''component [Last\ncomponent] as Comp4
+''
+'' interface "Data Access" as DA
+''
+'' DA - [First Component]
+'' [First Component] ..> HTTP : use
+
+''node "Other Groups" {
+''  () FTP - [Second Component]
+''  [First Component] --> FTP
+''}
+''
+''cloud {
+''  [Example 1]
+''}
+''
+''database "MySql" {
+''  folder "This is my folder" {
+''    [Folder 3]
+''  }
+''  frame "Foo" {
+''    [Frame 4]
+''  }
+''}
+
+'' participants definition
+''actor "Brand/Admin" as User
+
+package "MDO-RC: AppManager" {
+  frame "Comm Manager" as CM{
+  [Comm \nStatus] as RCS
+  [RC\nTx] as RCT
+  [RC\nRx] as RCR
+  }
+}
+
+package "MDO-L: AppManager" {
+  frame "Comm Manager" as LCM{
+  [Comm \nStatus] as LCS
+  [Local\nTx] as LCT
+  [Local\nRx] as LCR
+  }
+}
+
+package "MDO-RS: AppManager"{
+  ''HTTP - [UI]
+  frame "Command-Line\nInterface"{
+  [CLI] as CLI
+  [CLI Engine] as CLIE
+  [CLI Parser] as CLIP
+  }
+  frame "Command Parser"{
+  [Client\nParser] as RSCP
+  [Local \nParser] as RSLP
+  }
+  frame "DB Client" as RSDBM{
+  [Query\nParser] as RSQP
+  [Response\nParser] as RSRP
+  }
+  frame "Comm Manager" as CMS{
+  [Comm \nStatus] as RSS
+  [RS Tx \nClient] as RSTC
+  [RS Rx \nClient] as RSRC
+  [RS Tx \nLocal] as RSTL
+  [RS Rx \nLocal] as RSRL
+  }
+}
+
+package "MDO-RS: DB Server"{
+  ''[DB Transaction\n Manager] as DBTM
+  [DB Manager] as RSDBM2
+  frame "Comm Manager" as CMDB{
+  [Comm \nStatus] as DBSt
+  [Server \nTx] as SERVTx
+  [Server \nRx] as SERVRx
+  }
+  database "Databases" as DBs
 }
 '' ------------------------------
 
@@ -1833,32 +2077,314 @@ package "MDO-RS"{
 () "tcp/ip" as sockRS_RC
 () "tcp/ip" as sockRS_L
 () "tcp/ip" as sockL_RS
-() "tcp/ip" as sockL_Twitter
-() "tcp/ip" as sockL_Transfer_sh
+() "tcp/ip" as sockRS_SQL
+() "tcp/ip" as sockSQL_RS
 
-'' ----------- INTERACTIONS
-'' MDO-RC
-[User] ..> [UI]: presses
-[UI] .> [User]: feedback
-[UI] --> [UIE]: UI events
-[UIE] --> [UI]: updates
-[UIE] --> [QP]: build db \nquery
-[UIE] --> [RCS]: status
-[RCS] --> [UIE]: status
-[RCS] --> [RCT]: ping
-[QP] --> [UIE]: status
-[QP] --> [RCT]: db query \nframe
-[RCR] ..> [RP]: db response \nframe
-[RP] --> [UIE]: db response
 '' MDO-RS
-[RCT] ..> sockRC_RS
-sockRC_RS ..> [RSRC]: send db \nquery frame
+'' Client Connections
+[RCT] ..> sockRC_RS: send server\nframe
+sockRC_RS ..> [RSRC] 
+[RSTC] ..> sockRS_RC: send client\nframe
+sockRS_RC ..> [RCR]
+'' Local connections
+[RSTL] .r.> sockRS_L: send local\nframe 
+sockRS_L .d.> [LCR]
+[LCT] .u.> sockL_RS: send server\nframe 
+sockL_RS .l.> [RSRL]
+'' Database connections
+[RSQP] --> sockRS_SQL: db query
+sockRS_SQL --> [SERVRx]
+[SERVTx] ..> sockSQL_RS: db response 
+sockSQL_RS ..> [RSRP]
+
+'' Internal logic
+[RSRC] --> [RSCP]: server\n frame
+[RSCP] --> [RSQP]: db query\n frame
+[RSCP] --> [CLIP]: cmd\n frame
+[CLIP] --> [RSTL]: local \ncmd frame
+[RSRP] --> [RSTC]: db response\n frame
+[RSRP] ..> [RSTL]: local sys\nframe 
+
+'' Server
+[RSDBM2] ..> [RSDBM2]: check\ntimestamps
+[SERVRx] --> [RSDBM2]: db query
+[RSDBM2] --> [DBs]: db \ntransaction
+[DBs] --> [RSDBM2]: db \ntransaction
+[RSDBM2] --> [SERVTx]: update\n local sys\n
+[RSDBM2] --> [SERVTx]: db transaction\n local sys
+''[RSDBM2] --> [SERVTx]: update\n local sys\n or \ndb transaction\n local sys
+''[DBTM] --> [RSDBM2]: update \nlocal sys
+
+'' ----------- INTERFACES
+'' () "tcp/ip" as sockL_Twitter
+'' () "tcp/ip" as sockL_Transfer_sh
 
 @enduml
   #+END_SRC
 
   #+RESULTS:
-  [[file:diags/plantuml/component-diag/output/component-diag.png]]
+  [[file:diags/plantuml/component-diag/output/component-diag-rs.png]]
+
+*Local System*
+  #+BEGIN_SRC plantuml :file diags/plantuml/component-diag/output/component-diag-local.png
+@startuml
+left to right direction
+skinparam fixCircleLabelOverlapping true
+
+'' participants definition
+actor "User" as User
+
+package "MDO-RS: AppManager"{
+  ''HTTP - [UI]
+  frame "Comm Manager" as CMS{
+  ''[Comm \nStatus] as RSS
+  ''[RS Tx \nClient] as RSTC
+  ''[RS Rx \nClient] as RSRC
+  [RS Tx \nLocal] as RSTL
+  [RS Rx \nLocal] as RSRL
+  }
+}
+
+package "MDO-L: AppManager" as MDOLAPP{
+  frame "Comm Manager" as LCM{
+  [Comm \nStatus] as LCS
+  [Local\nTx] as LCT
+  [Local\nRx] as LCR
+  [Web\n Tx] as WEBTx
+  [Web\n Rx] as WEBRx
+  }
+  frame "User Interface"{
+  [UI] as UI
+  [UI \nEngine] as UIE
+  [Gesture \nRecognition\n Engine] as GRE
+  frame "User \nDetection]" as UD{
+  [Ultrasonic sensor\n device driver] as USDD
+  [Ultrasonic sensor\n daemon] as USD
+  }
+  }
+  frame "Normal mode Manager" as NMM{
+  [Video Manager] as VIDM
+  [Audio Manager] as AUDM
+  frame "Fragrance Manager" as FRAG_M{
+  [Diffuser actuator\n device driver] as DDD
+  [Diffuser actuator\n daemon] as DD
+  }
+  }
+  frame "Multimedia mode Manager"{
+  [Image Filter\nManager] as IFM
+  [Camera\nManager] as CAM
+  [GIF\nGeneration] as GIFG
+  }
+  frame "Sharing mode Manager"{
+  [Post\nManager] as PM
+  [Twitter\nManager] as TM
+  }
+  frame "Computer Vision framework"{
+  [Face\n detection] as FD
+  [Gesture\n recognition] as GR
+  [Image Filter\nOverlay] as IFO
+  }
+  frame "App Parser" as AP{
+  [Command\n Parser] as CP
+  [DB\n Parser] as DP
+  }
+}
+
+cloud Twitter{
+[REST APIs] as REST
+}
+
+cloud Transfer.sh{
+[URL proxy] as URLP
+}
+'' ------------------------------
+
+'' ----------- INTERFACES
+() "tcp/ip" as sockRS_L
+() "tcp/ip" as sockL_RS
+() "tcp/ip" as sockL_Twitter
+() "tcp/ip" as sockL_Transfer_sh
+''-------------------------------
+
+'' MDO-Local
+'' Server connections
+[RSTL] .u.> sockRS_L: send local\nframe 
+sockRS_L .u.> [LCR]
+[LCT] .d.> sockL_RS: send server\nframe 
+sockL_RS .d.> [RSRL]
+'' Cloud connections
+[WEBTx] .d.> sockL_Twitter: twitter\ncmd
+sockL_Twitter .d.> REST
+[WEBTx] -d-> sockL_Transfer_sh: URL proxy\ncmd
+sockL_Transfer_sh -r-> URLP
+REST -u-> sockL_Twitter: twitter\nresponse
+sockL_Twitter -u-> [WEBRx]
+URLP -u-> sockL_Transfer_sh: URL proxy\nresponse
+sockL_Transfer_sh -l-> [WEBRx]
+
+'' ------------------ Logic
+'' User detected
+User ..> USDD: user\ndetected
+USDD ..> USD: signal user\n detection
+USD ..> UIE: signal \nuser_detected
+UIE ..> NMM: stop normal\n mode
+UIE ..> CAM: grab\nframe
+CAM ..> UIE: camera\nframe
+UIE ..> FD: face\ndetected 
+FD ..> UIE: face\ndetected
+UIE ..> UI: update\n UI
+UI ..> User: feedback
+'' User gesture
+User ..> GRE: gesture
+GRE ..> GR: recognize\ngesture
+GR ..> GRE: gesture\ndetected
+GRE ..> UIE: gesture_type
+'' Normal mode
+MDOLAPP --> NMM: start\n normal mode
+AUDM -d-> AUDM: play\n audio
+VIDM -d-> VIDM: play\n video
+FRAG_M -> DD: enable\ndiffusion
+DD -> DDD: actuate
+'' Sharing mode
+UIE ..> PM: manage\npost
+PM ..> TM: add\npost
+TM --> WEBTx: share\npost
+WEBRx ..> TM: post\nshared
+TM ..> UIE: sharing\nstatus
+'' Multimedia mode
+UIE ..> CAM: Take\n Pic
+CAM ..> UIE: camera\n frame
+UIE ..> GIFG: create\n gif
+GIFG ..> UIE: gif \ngenerated
+UIE ..> IFM: apply\nimg filter
+IFM ..> IFO: apply \noverlay
+IFO ..> IFM: img with\n overlay
+IFM ..> UIE: img with\noverlay
+'' Parsing
+LCR ..> AP: server\n frame
+AP ..> CP: cmd
+CP ..> LCT: cmd\nresponse
+AP ..> DP: DB\nupdate
+DP ..> LCT: DB update\nstatus
+
+@enduml
+  #+END_SRC
+
+  #+RESULTS:
+  [[file:diags/plantuml/component-diag/output/component-diag-local.png]]
+
+  #+BEGIN_SRC plantuml :file diags/plantuml/component-diag/output/component-diag-local-no-links.png
+@startuml
+''left to right direction
+skinparam fixCircleLabelOverlapping true
+skinparam package<<Invisible>> {
+verticalLayout true
+  borderColor Transparent
+  backgroundColor Transparent
+  fontColor Transparent
+  stereotypeFontColor Transparent
+  componentShadowing false
+  rectangleShadowing false
+}
+
+'' participants definition
+actor "User" as User
+
+package "MDO-RS: AppManager"{
+  ''HTTP - [UI]
+  frame "Comm Manager" as CMS{
+  ''[Comm \nStatus] as RSS
+  ''[RS Tx \nClient] as RSTC
+  ''[RS Rx \nClient] as RSRC
+  [RS Tx \nLocal] as RSTL
+  [RS Rx \nLocal] as RSRL
+  }
+}
+
+package "MDO-L: AppManager" as MDOLAPP{
+  frame "Comm Manager" as LCM{
+  [Comm \nStatus] as LCS
+  [Local\nTx] as LCT
+  [Local\nRx] as LCR
+  [Web\n Tx] as WEBTx
+  [Web\n Rx] as WEBRx
+  }
+  frame "User Interface"{
+  [UI] as UI
+  [UI \nEngine] as UIE
+  [Gesture \nRecognition\n Engine] as GRE
+  frame "User \nDetection]" as UD{
+  [Ultrasonic sensor\n device driver] as USDD
+  [Ultrasonic sensor\n daemon] as USD
+  }
+  }
+  frame "Normal mode Manager" as NMM{
+  [Video Manager] as VIDM
+  [Audio Manager] as AUDM
+  frame "Fragrance Manager" as FRAG_M{
+  [Diffuser actuator\n device driver] as DDD
+  [Diffuser actuator\n daemon] as DD
+  }
+  }
+  package dummy1 <<Invisible>> {
+  frame "Multimedia mode Manager"{
+  [Image Filter\nManager] as IFM
+  [Camera\nManager] as CAM
+  [GIF\nGeneration] as GIFG
+  }
+  frame "Sharing mode Manager"{
+  [Post\nManager] as PM
+  [Twitter\nManager] as TM
+  }
+  frame "Computer Vision framework"{
+  [Face\n detection] as FD
+  [Gesture\n recognition] as GR
+  [Image Filter\nOverlay] as IFO
+  }
+  frame "App Parser" as AP{
+  [Command\n Parser] as CP
+  [DB\n Parser] as DP
+  }
+  }
+}
+
+cloud Twitter{
+[REST APIs] as REST
+}
+
+cloud Transfer.sh{
+[URL proxy] as URLP
+}
+'' ------------------------------
+
+'' ----------- INTERFACES
+() "tcp/ip" as sockRS_L
+() "tcp/ip" as sockL_RS
+() "tcp/ip" as sockL_Twitter
+() "tcp/ip" as sockL_Transfer_sh
+''-------------------------------
+
+'' MDO-Local
+'' Server connections
+[RSTL] .u.> sockRS_L: send local\nframe 
+sockRS_L .u.> [LCR]
+[LCT] .d.> sockL_RS: send server\nframe 
+sockL_RS .d.> [RSRL]
+'' Cloud connections
+[WEBTx] .d.> sockL_Twitter: twitter\ncmd
+sockL_Twitter .d.> REST
+[WEBTx] -d-> sockL_Transfer_sh: URL proxy\ncmd
+sockL_Transfer_sh -r-> URLP
+REST -u-> sockL_Twitter: twitter\nresponse
+sockL_Twitter -u-> [WEBRx]
+URLP -u-> sockL_Transfer_sh: URL proxy\nresponse
+sockL_Transfer_sh -l-> [WEBRx]
+
+@enduml
+  #+END_SRC
+
+  #+RESULTS:
+  [[file:diags/plantuml/component-diag/output/component-diag-local-no-links.png]]
 
 *** Deployment diagrams
 In UML, deployment diagrams model the physical architecture of a system. Deployment diagrams show the relationships between the software and hardware components in the system and the physical distribution of the processing.

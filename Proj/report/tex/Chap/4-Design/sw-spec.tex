@@ -23,6 +23,64 @@ result. The \gls{cots} \gls{sw} and the third-party libraries are identified
 and a mapping between class topics and the foreseeable implementation is
 presented for clarification. Finally, the \gls{sw} tools are listed.
 
+\subsection{Software architecture}
+\label{sec:softw-arch-1}
+The system's \gls{sw} architecture was devised using \emph{\gls{uml} component
+  diagrams} for \texttt{Remote Client} (Fig.~\ref{fig:component-diag-rc}), \texttt{Remote Server} (Fig.~\ref{fig:component-diag-rs}), and
+\texttt{Local System} (Fig.~\ref{fig:component-diag-local}). Each component
+diagram illustrates all \gls{sw} components for the system in analysis and the
+interaction between them, and its
+interfaces with external subsystems.
+
+\subsubsection{Remote client}
+\label{sec:remote-client-arch}
+The \texttt{Remote Client} \gls{sw} architecture is comprised of the following
+artifacts:
+\begin{itemize}
+\item
+  \emph{\texttt{User Interface} package}: contains the \texttt{\gls{ui}} and \texttt{\gls{ui} Engine}
+\item
+  \emph{\texttt{Comm Manager} package}: 
+\item
+  \emph{\texttt{DB Manager} package}:
+\item 
+  \emph{\texttt{Remote Controller} package}:
+\item
+  \emph{\texttt{RC Rx Parser} component}:
+\item
+  \emph{\texttt{\gls{tcp-ip} Tx} socket}:
+\item 
+  \emph{\texttt{\gls{tcp-ip} Rx} socket}:  
+\end{itemize}
+
+\begin{figure}[htb!]
+\centering
+    \includegraphics[width=0.9\columnwidth]{./img/component-diag-rc.png}
+  \caption{\gls{sw} architecture: component diagram --- \texttt{Remote Client}}%
+\label{fig:component-diag-rc}
+\end{figure}
+
+\subsubsection{Remote server}
+\label{sec:remote-server-arch}
+
+
+\begin{figure}[htb!]
+\centering
+    \includegraphics[width=0.9\columnwidth]{./img/component-diag-rs.png}
+  \caption{\gls{sw} architecture: component diagram --- \texttt{Remote Server}}%
+\label{fig:component-diag-rs}
+\end{figure}
+
+\subsubsection{Local system}
+\label{sec:local-system-arch}
+
+\begin{figure}[htb!]
+\centering
+    \includegraphics[width=1.03\columnwidth]{./img/component-diag-local.png}
+  \caption{\gls{sw} architecture: component diagram --- \texttt{Local system}}%
+\label{fig:component-diag-local}
+\end{figure}
+
 %At program
 % startup --- \texttt{Idle} state --- the peripherals are initialized (interrupts, PCA, I2C, timer for tick
 % generated interrupts) and the program waits for events, going into sleep
