@@ -2,7 +2,25 @@
 \section{Hardware specification}
 \label{sec:hw-specs}
 The first step for system design is the \gls{hw} specification. This can be pictured as a block diagram, this block diagram was already shown and mentioned in section \ref{sec:hardw-arch} on Fig.~\ref{fig:hw-arch}.
-Now, it's time to specify all the \gls{hw} for each block.
+
+\subsection{Architecture}
+\label{sec:arch}
+Although that in the analysis phase an overview of the \gls{hw} architecture was conceptualized, in this section, a more specific \gls{hw} architecture is illustrated, using a block-diagram.
+
+As it can be seen in Fig.~\ref{fig:hw-arch-complete}, the \texttt{Raspberry Pi} is the main controller and it is powered by the \texttt{Power Supply} through \texttt{USB-C}. 
+The \texttt{Power Supply} also supplies via \texttt{Micro-USB} the \texttt{LCD Display} control board and the \texttt{Fragrance Diffusion Actuator}.
+The \texttt{LCD Display} board connects to its board through \texttt{50-pin \gls{ttl}} and the board connects to the \texttt{Raspberry Pi} through \texttt{\gls{hdmi}}.
+The \texttt{Speakers} also connect to the \texttt{LCD Display} board through \texttt{JST PH2.0}.
+Beyond being powered up, the \texttt{Fragrance Diffusion Actuator} also connects to the \texttt{Raspberry Pi} through the \texttt{\gls{gpio}}.
+What also connects to the \texttt{Raspberry Pi} through \texttt{\gls{gpio}} are the \texttt{Motion Detection} sensors.
+Lastly, the \texttt{Camera} connects through \texttt{\gls{csi}} to the \texttt{Raspberry Pi}.
+%
+\begin{figure}[htb!]
+\centering
+    \includegraphics[width=0.8\columnwidth]{./img/hw-arch-complete.png}
+  \caption{\gls{hw} architecture Block Diagram}%
+\label{fig:hw-arch-complete}
+\end{figure}
 
 \subsection{Main Controller}
 \label{sec:main-contr}
@@ -36,6 +54,10 @@ This \gls{soc} has several of specifications~\cite{rasp-specs}:
   \caption{Raspberry Pi model 4B}%
 \label{fig:raspberri}
 \end{figure}
+
+\subsubsection{SD Card}
+
+Since this Raspberry supports SD Card, it will be used a micro SD Card with 16 GB that will store everything that is necessary to run the system and handle it.
 
 \subsection{Motion Detection}
 \label{sec:motion-detec}
@@ -160,7 +182,7 @@ Thus, the speakers that will be used have an impedance of \texttt{8 Ohm} and a p
 \end{figure}
 
 \subsection{Power Supply}
-
+\label{sec:power-supply}
 The \gls{mdo-l} will be a plugged in system, so it will be needed a plugged in power supply to supply all the components of the system. In total, the power consumption will not overtake 20 Watts and all the supplies necessary are plugged by USB (Raspberry Pi, Fragrance Diffusion Actuator, and screen). So, it will be used the power supply in Fig.~\ref{fig:power-supply}, that has 4 outputs of \texttt{5 V \gls{dc}} and \texttt{2.4 A \gls{dc}} each.
 %
 \begin{figure}[htb!]
@@ -169,6 +191,10 @@ The \gls{mdo-l} will be a plugged in system, so it will be needed a plugged in p
   \caption{Power Supply (withdrawn from \cite{power-supply})}%
 \label{fig:power-supply}
 \end{figure}
+
+\subsection{On/Off button}
+In this context, an On/Off button can be useful to power On/Off the \gls{mdo-l}. However, this feature is not that necessary, so, this prototype will be only powered through the power supply previously talked in section \ref{sec:power-supply} and will be always on until the power supply be unplugged, powering off the machine.
+
 
 \subsection{Total \gls{hw} cost}
 
