@@ -328,7 +328,10 @@ Send command
 Legend:
 - *Ze*
 - /Hugo/
-*** Design
+*** ▭▭ IN-PROGRESS Design
+    :LOGBOOK:
+    - State "▭▭ IN-PROGRESS" from              [2021-12-13 seg 21:16]
+    :END:
 
 Next Thursday, December 16th, we will have the presentations for the Design Phase.
 Submit the *presentation* and *report* until Wednesday 15th, 23:00h.

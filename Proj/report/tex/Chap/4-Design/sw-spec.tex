@@ -32,7 +32,7 @@ diagram illustrates all \gls{sw} components for the system in analysis and the
 interaction between them, and its
 interfaces with external subsystems.
 
-\subsubsection{Remote client}
+\subsubsection{Remote Client}
 \label{sec:remote-client-arch}
 Fig.~\ref{fig:component-diag-rc} depicts the \texttt{Remote Client} \gls{sw} architecture, encapsulated in the package
 \texttt{MDO-RC: AppManager}, and is comprised of the following artifacts:
@@ -74,7 +74,7 @@ Fig.~\ref{fig:component-diag-rc} depicts the \texttt{Remote Client} \gls{sw} arc
 \label{fig:component-diag-rc}
 \end{figure}
 
-\subsubsection{Remote server}
+\subsubsection{Remote Server}
 \label{sec:remote-server-arch}
 Fig.~\ref{fig:component-diag-rs} depicts the \texttt{Remote Server} \gls{sw} architecture, encapsulated in the package
 \emph{\texttt{MDO-RS: AppManager}}. It interacts with the \texttt{Remote Client}
@@ -139,7 +139,7 @@ The \emph{\texttt{MDO-RS: DB Server}} package is comprised of the following arti
   \emph{Databases}: contains the actual data stored.
 \end{item-c}
 %
-\subsubsection{Local system}
+\subsubsection{Local System}
 \label{sec:local-system-arch}
 Fig.~\ref{fig:component-diag-local} depicts the \texttt{Local System} \gls{sw} architecture, encapsulated in the package
 \emph{\texttt{MDO-L: AppManager}}.
@@ -215,42 +215,27 @@ The \emph{\texttt{MDO-RS: AppManager}} package is comprised of the following art
   services for \texttt{Twitter} and the \texttt{\gls{url} proxy server}.
 \end{item-c}
 %
-%At program
-% startup --- \texttt{Idle} state --- the peripherals are initialized (interrupts, PCA, I2C, timer for tick
-% generated interrupts) and the program waits for events, going into sleep
-% mode.
-% 
-% When a key is pressed, the external interrupt \texttt{INTO} signals this
-% event right away to the CPU awaking it up triggering the execution of
-% \texttt{ISR\_Key\_Press}. This ISR checks which key was pressed by reading it
-% from the I/O expander via I2C, pushes the associated code to
-% \texttt{keycode\_fifo} --- a circular \gls{fifo} buffer --- and flags it to the CPU, enabling \texttt{keycode\_avail}.
-% 
-% The CPU is awaked regularly to check if any keycode is available. If it is, it
-% triggers the execution of \texttt{ISR\_IR\_emit}, clearing the flag
-% \texttt{keycode\_avail}, popping the keycode from \texttt{keycode\_fifo} and
-% sending it via IR circuitry (\texttt{ir\_send(keycode)}).
-% %
-%   \vspace{-5mm}
-% %  
-% \begin{figure}[htb!]
-% \centering
-%     \includegraphics[width=0.7\columnwidth]{./img/state-mach.png}
-%   \caption{TV remote state machine diagram}%
-% \label{fig:state-mach}
-% \end{figure}
-% 
-% Fig.~\ref{fig:i2cread-flow} presents the flowchart for reading from the I/O expander via i2c
-% 
-% \begin{figure}[htb!]
-% \centering
-%     \includegraphics[width=0.7\columnwidth]{./img/i2c_read_flowchart.png}
-%   \caption{I2C Read Flowchart}%
-% \label{fig:i2cread-flow}
-% \end{figure}
-% %
-%   \vspace{-5mm}
-% %  
+%
+
+\subsection{Static architecture --- Class diagrams}
+\label{sec:stat-arch-class}
+In this section the static architecture is derived from the \gls{sw}
+architecture, i.e., the class diagrams are outlined, using the component
+diagrams as a starting point, for each subsystem.
+
+\subsubsection{Remote Client}
+\label{sec:remote-client-class}
+
+\subsubsection{Remote Server}
+\label{sec:remote-server-class}
+
+\subsubsection{Local System}
+\label{sec:local-system-class}
+
+
+
+
+
 \section{Software interfaces definition}
 \label{sec:sw-interf-def}
 %- Define the APIs in detail:
