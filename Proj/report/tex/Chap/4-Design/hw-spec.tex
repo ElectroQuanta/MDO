@@ -223,54 +223,37 @@ Power Supply                 & 1                                     & 13.50    
 \multicolumn{2}{r}{\textbf{Total}}                                   & \textbf{173.38}                        \\ \bottomrule
 \end{tabular}
 \end{table}
-% components. Fig.~\ref{fig:block-diag} depicts the overall information flow and
-% the TV remote block diagram: the \texttt{User} interacts with
-% the TV remote by pressing buttons which triggers the emission of \gls{ir} codes
-% to the TV, containing the \gls{ir} receiver. As supported by the market research
-% seen in
-% Section~\ref{sec:market-research}, the block diagram of the TV remote control
-% can be taught of a physical input interface --- the pushbuttons, a processing
-% interface --- a microprocessor --- to determine which keys are pressed and the
-% resulting \gls{ir} codes to be emitted, and a \gls{ir} transmitter circuit as
-% the output where the IR LED also works as a visual output. Usually, there will
-% be also a digital interface, to handle the large amount of keys as a
-% \gls{io} expander with serial interface, e.g. the Microchip MCP23008/MCP23S08~\cite{microchip}, which is considered here for future expansibility of the device,
-% thus making it scalable. This can be especially useful when using
-% microprocessor units with lower I/O inputs. A tradeoff between the inclusion of
-% the multiplexer versus future redesign must be performed. The system is powered
-% by batteries.
-% 
-% The microprocessor chosen depends on various factors, such as: architecture,
-% throughput, memory, processing power, power efficiency, toolchain availability
-% and programming easiness, etc. Additionally, one may consider the usage of a
-% microcontroller, due to added peripherals, easing the \gls{sw} burden. For
-% example, the usage of the \gls{pca} peripheral in the 8051 \gls{mcu} can free the processor from the
-% job of bit-banging the IR transmitter circuitry or the \gls{i2c} or \gls{spi} peripherals to
-% interface the I/O expander. With that said, the choice
-% relied on the 8051 MCU due to its small footprint, clock speed of up to 48 MHz,
-% low power usage on idle, the acquaintance with the toolchain and the
-% programming, and for the inclusion of the PCA, SPI and I2C peripherals.  
-% %
-%   \vspace{-5mm}
-% %  
-% %- Block diagram with COTS components, if possible
-% %- List of constraints of functions to be implemented in HW or SW
-% %  - Inclusion of a multiplexer may reduce SW burden
-% %  - CPU peripherals:
-% %  - PCA for wave generation
-% %  
-% \begin{figure}[htb!]
-% \centering
-%     \includegraphics[width=0.7\columnwidth]{./img/block-diagram.png}
-%   \caption{Overall information flow and TV remote block diagram}%
-% \label{fig:block-diag}
-% \end{figure}
-% %
-%   \vspace{-5mm}
+
 % %  
 \section{Hardware interfaces definition}
 \label{sec:hw-interf-def}
-% After specifying the \gls{hw}, it is important to define its interfaces. The
+After specifying the \gls{hw}, it is important to define its interfaces.
+Firstly, it is necessary to have basic know-how of the main board's pinout.
+In Fig.~\ref{fig:raspberry-pinout} is represented the pinout of the Raspberry Pi.
+%
+\begin{figure}[htb!]
+\centering
+    \includegraphics[width=0.9\columnwidth]{./img/raspberry-pinout.png}
+  \caption{Power Supply (withdrawn from \cite{raspberry-pinout})}%
+\label{fig:raspberry-pinout}
+\end{figure}
+
+\subsection{Peripherals Mapping}
+\label{sec:periph-map}
+After have a basic know-how of the Raspberry's pinout, it is now possible to map all the \gls{hw} components.
+As it can be seen in Fig.~\ref{fig:peripheral-mapping}, only two types of peripherals need to be mapped in the Raspberry: the \texttt{ultrasonic sensor} and the \texttt{fragrance diffusion actuator}.
+
+Firstly, the \texttt{ultrasonic sensors} can have three of their four pins in common: the \texttt{Vcc}, the \texttt{GND} and the \texttt{Trig}. The first two are for obvious reasons: they can be powered for the same source, so they are connected to the \texttt{pin 2 (5V power)} and \texttt{pin 9 (Ground)}, respectively. The last one is because the trigger only triggers the sensors to start the acquisition, so, they can all start at the same time and have the same trigger source, so, they are all connected to the \texttt{pin 11 (\gls{gpio} 17)}. Then, each one of them need a specific pin to connect to its \texttt{Echo} in order to make the distance read, so, the pins that are chosen are \texttt{pin 15 (\gls{gpio} 22)}, \texttt{pin 16 (\gls{gpio} 23)} and \texttt{pin 18 (\gls{gpio} 24)}.
+
+Lastly, the \texttt{fragrance diffusion actuator}. Although this one is powered up by Micro-USB, it is necessary to activate or deactivate the diffusion and this is only possible with a \texttt{\gls{mosfet}}, activating its gate. The gate is connected to the \texttt{pin 36 (\gls{gpio} 16)} and this is the pin responsible to activate or deactivate the fragrance diffusion.
+%
+\begin{figure}[htb!]
+\centering
+    \includegraphics[width=0.8\columnwidth]{./img/hw-pinout.png}
+  \caption{Peripheral Mapping}%
+\label{fig:peripheral-mapping}
+\end{figure}
+
 % TV remote control is clearly an event-driven asynchronous system, thus using HW
 % interrupts. When a user presses a pushbutton that event should be signaled to
 % the \gls{cpu} of the MCU via an external interrupt, ``waking'' it up. The CPU
