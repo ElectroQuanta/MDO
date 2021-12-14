@@ -340,6 +340,34 @@ LCD Display &
   \begin{tabular}[c]{@{}l@{}}If the images and videos are \\ displayed in good quality and are \\ in match with the manufacturer's \\ information, then this set of HW \\ is in good conditions of use.\end{tabular} \\ \bottomrule
 \end{tabular}
 \end{table}
+
+\subsection{\gls{pcb} Design}
+\label{sec:pcb-design}
+
+As it can be seen in Fig:~\ref{fig:peripheral-mapping}, it is a little bit complex and messy to look and conceive a circuit with all those connections, and since many connections are in common, it is an advantage to design a \gls{pcb} to make things more simpler.
+
+For the design of this PCB it was used the software \texttt{PADS}, developed by Mentor Graphics.
+In Fig.~\ref{fig:pcb-logic} is the logic of the connections to the \gls{pcb}, this part was made on \texttt{PADS Logic} and basically is joining everything that is common to the sensors to then connect to the raspberry Pi, then there's a pin for every Trigger of every sensor and finally a pin for the gate of the \gls{mosfet} and two pins for its supply.
+%
+\begin{figure}[htb!]
+\centering
+    \includegraphics[width=0.7\columnwidth]{./img/pcb-logic.png}
+  \caption{\gls{pcb} logic}%
+\label{fig:pcb-logic}
+\end{figure}
+
+When the logic is done, it is moved to the layout on \texttt{PADS Layout} where all the components are placed and connected through tracks. In Fig~\ref{fig:pcb-layout} is the final layout of the \gls{pcb}. Note that there are two tracks that are more wide, this is because they are the tracks that supply the \gls{mosfet} and this one need more current, which means wider tracks.
+
+Connectors J1, J2 and J3 are for the sensors, connector J4 is for the \gls{gpio} of the Raspberry Pi, connector J5 supplies the sensors and connector J6 supplies the \gls{mosfet} Q1.
+%
+\begin{figure}[htb!]
+\centering
+    \includegraphics[width=0.6\columnwidth]{./img/pcb-layout.png}
+  \caption{\gls{pcb} layout}%
+\label{fig:pcb-layout}
+\end{figure}
+
+It is to note that the final size of the \gls{pcb} is \texttt{2400 * 2200 mils}. Converting this to centimeters gives a dimension of approximately \texttt{6.1 * 5.6 centimeters}.
 %  
 %%% Local Variables:
 %%% mode: latex
