@@ -347,13 +347,13 @@ LCD Display &
 As it can be seen in Fig:~\ref{fig:peripheral-mapping}, it is a little bit complex and messy to look and conceive a circuit with all those connections, and since many connections are in common, it is an advantage to design a \gls{pcb} to make things more simpler.
 
 For the design of this PCB it was used the software \texttt{PADS}, developed by Mentor Graphics.
-In Fig.~\ref{fig:pcb-logic} is the logic of the connections to the \gls{pcb}, this part was made on \texttt{PADS Logic} and basically is joining everything that is common to the sensors to then connect to the raspberry Pi, then there's a pin for every Trigger of every sensor and finally a pin for the gate of the \gls{mosfet} and two pins for its supply.
+In Fig.~\ref{fig:pcb-schematic} is the schematic of the connections to the \gls{pcb}, this part was made on \texttt{PADS Logic} and basically is joining everything that is common to the sensors to then connect to the raspberry Pi, then there's a pin for every Trigger of every sensor and finally a pin for the gate of the \gls{mosfet} and two pins for its supply.
 %
 \begin{figure}[htb!]
 \centering
     \includegraphics[width=0.7\columnwidth]{./img/pcb-logic.png}
-  \caption{\gls{pcb} logic}%
-\label{fig:pcb-logic}
+  \caption{\gls{pcb} schematic}%
+\label{fig:pcb-schematic}
 \end{figure}
 
 When the logic is done, it is moved to the layout on \texttt{PADS Layout} where all the components are placed and connected through tracks. In Fig~\ref{fig:pcb-layout} is the final layout of the \gls{pcb}. Note that there are two tracks that are more wide, this is because they are the tracks that supply the \gls{mosfet} and this one need more current, which means wider tracks.
