@@ -281,6 +281,63 @@ diagrams as a starting point, for each subsystem.
 %good design eases error-handling specification and should be an aspect to keep
 %in mind in this phase.
 %%
+
+\section{Test cases}
+\label{sec:sw-test-cases}
+
+\subsection{Remote Client}
+\label{sec:test-cases-rc}
+
+\begingroup
+\renewcommand{\arraystretch}{0.7} % Default value: 1
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+\begin{table}[]
+\centering
+\caption{Remote Client Test Cases}
+\label{tab:test-cases-rc}
+\begin{tabular}{@{}llll@{}}
+\toprule
+\textbf{Use Case}                                              & \textbf{Type of test} & \textbf{Description}                                                                                                               & \textbf{Expected Result}                                                                                                                       \\ \midrule
+Register                                                       & Functional            & \begin{tabular}[c]{@{}l@{}}One will try to make a new register\\ as a Brand\end{tabular}                                           & \begin{tabular}[c]{@{}l@{}}If the User is created and added to\\ the database, everything is in order\end{tabular}                             \\ \midrule
+Login                                                          & Functional            & \begin{tabular}[c]{@{}l@{}}One will try to Login through its user\\ and password.\end{tabular}                                     & \begin{tabular}[c]{@{}l@{}}If the login is successful, everything\\ is working as expected.\end{tabular}                                       \\ \midrule
+Logout                                                         & Functional            & One will try to log out from the account.                                                                                          & If it returns to the login page, it works.                                                                                                     \\ \midrule
+\begin{tabular}[c]{@{}l@{}}Manage\\ User\end{tabular}          & Functional            & \begin{tabular}[c]{@{}l@{}}One will manage a user removing it or \\ giving him privileges as Admin.\end{tabular}                   & \begin{tabular}[c]{@{}l@{}}If the user is removed from the DB or\\ has privileges as admin, it works well.\end{tabular}                        \\ \midrule
+\begin{tabular}[c]{@{}l@{}}Manage\\ Station\end{tabular}       & Functional            & \begin{tabular}[c]{@{}l@{}}One will try to manage a station by\\ powering on/off, manage ads or enable/\\ disable ad.\end{tabular} & \begin{tabular}[c]{@{}l@{}}If the information is updated and \\ the station reacts to the commands,\\ the system is working well.\end{tabular} \\ \midrule
+\begin{tabular}[c]{@{}l@{}}Test\\ Operation\end{tabular}       & Functional            & \begin{tabular}[c]{@{}l@{}}One will choose to test the operation\\ of the machine.\end{tabular}                                    & \begin{tabular}[c]{@{}l@{}}If a command line is provided with the\\ remote server, it works properly.\end{tabular}                             \\ \midrule
+\begin{tabular}[c]{@{}l@{}}Display\\ Rented\\ Ads\end{tabular} & Functional            & \begin{tabular}[c]{@{}l@{}}One will try to display the rented ads\\ by the user in case.\end{tabular}                              & \begin{tabular}[c]{@{}l@{}}If there are displayed all the ads of\\ that brand, then everything works\\ properly.\end{tabular}                  \\ \midrule
+Rent Ads                                                       & Functional            & \begin{tabular}[c]{@{}l@{}}One will try to rent ads as a brand,\\ inserting all data necessary.\end{tabular}                       & \begin{tabular}[c]{@{}l@{}}If the remote client responds in order,\\ saving all data in the DB, it works well.\end{tabular}                    \\ \midrule
+\begin{tabular}[c]{@{}l@{}}See\\ Notifications\end{tabular}    & Functional            & \begin{tabular}[c]{@{}l@{}}One will try to watch the notifications\\ of a brand.\end{tabular}                                      & \begin{tabular}[c]{@{}l@{}}If the brand has notifications, it should \\ be displayed. This means that it works.\end{tabular}                   \\ \bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Remote Server}
+\label{test-cases-rs}
+
+\begingroup
+\renewcommand{\arraystretch}{0.7} % Default value: 1
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+\begin{table}[]
+\centering
+\caption{Remote Server Test Cases}
+\label{tab:test-cases-rs}
+\begin{tabular}{@{}llll@{}}
+\toprule
+\textbf{Use Case}                                                 & \textbf{Type of test} & \textbf{Description}                                                                                                                                                              & \textbf{Expected Result}                                                                                                                                                                              \\ \midrule
+Disconnect                                                        & Functional            & One will try to disconnect.                                                                                                                                                       & It has to disconnect successfully.                                                                                                                                                                    \\ \midrule
+\begin{tabular}[c]{@{}l@{}}Authenticate\\ User\end{tabular}       & Functional            & \begin{tabular}[c]{@{}l@{}}One will try to authenticate a user\\ already present in the database.\end{tabular}                                                                    & \begin{tabular}[c]{@{}l@{}}The server needs to respond in order:\\ accept authentication or decline if failed.\end{tabular}                                                                           \\ \midrule
+Help                                                              & Functional            & One will try to get help.                                                                                                                                                         & \begin{tabular}[c]{@{}l@{}}Information to help the user should be \\ provided.\end{tabular}                                                                                                           \\ \midrule
+\begin{tabular}[c]{@{}l@{}}Interact with\\ databases\end{tabular} & Functional            & \begin{tabular}[c]{@{}l@{}}One will try to query a database, reading,\\ modifying, adding or deleting something.\end{tabular}                                                     & \begin{tabular}[c]{@{}l@{}}If the database is correctly updated\\ according to the command, then it works.\end{tabular}                                                                               \\ \midrule
+\multicolumn{4}{c}{\textbf{Test Operation}}                                                                                                                                                                                                                                                                                                                                                                                                                                           \\ \midrule
+\begin{tabular}[c]{@{}l@{}}Manage\\ User\end{tabular}             & Functional            & \begin{tabular}[c]{@{}l@{}}One will manage a user removing it or \\ giving him privileges as Admin.\end{tabular}                                                                  & \begin{tabular}[c]{@{}l@{}}If the user is removed from the DB or\\ has privileges as admin, it works well.\end{tabular}                                                                               \\ \midrule
+\begin{tabular}[c]{@{}l@{}}Manage\\ Audio\end{tabular}            & Functional            & \begin{tabular}[c]{@{}l@{}}One will try to manage the audio, \\ playing an audio file that is present\\ on the database.\end{tabular}                                             & \begin{tabular}[c]{@{}l@{}}The server must send the information of\\ the audio to play to the local system. If\\ it works, then it is verified.\end{tabular}                                          \\ \midrule
+\begin{tabular}[c]{@{}l@{}}Manage\\ Video\end{tabular}            & Functional            & \begin{tabular}[c]{@{}l@{}}One will try to manage the video, \\ playing a video file that is present\\ on the database.\end{tabular}                                              & \begin{tabular}[c]{@{}l@{}}The server must send the information of\\ the video to play to the local system. If\\ it works, then it is verified.\end{tabular}                                          \\ \midrule
+\begin{tabular}[c]{@{}l@{}}Manage\\ Fragrance\end{tabular}        & Functional            & \begin{tabular}[c]{@{}l@{}}One will try to activate a fragrance\\ diffusion to the machine.\end{tabular}                                                                          & \begin{tabular}[c]{@{}l@{}}If the server sends the right information\\ to the LS, then the LS should diffuse the\\ fragrance.\end{tabular}                                                            \\ \midrule
+\begin{tabular}[c]{@{}l@{}}Manage\\ Camera\end{tabular}           & Functional            & \begin{tabular}[c]{@{}l@{}}One will try to manage the camera\\ with its various features (turn on/off,\\ facial recognition, take GIF, take picture\\ apply filter).\end{tabular} & \begin{tabular}[c]{@{}l@{}}If the remote server sends the right info,\\ then the local system should actuate in \\ the camera according to the function that\\ was requested to operate.\end{tabular} \\ \midrule
+Share                                                             & Functional            & \begin{tabular}[c]{@{}l@{}}One will try to share some file through\\ social media.\end{tabular}                                                                                   & \begin{tabular}[c]{@{}l@{}}If the LS responds correctly to that \\ command, then it is working properly.\end{tabular}                                                                                 \\ \bottomrule
+\end{tabular}
+\end{table}
 %  \vspace{-5mm}
 %%% Local Variables:
 %%% mode: latex
