@@ -254,37 +254,92 @@ Lastly, the \texttt{fragrance diffusion actuator}. Although this one is powered 
 \label{fig:peripheral-mapping}
 \end{figure}
 
-% TV remote control is clearly an event-driven asynchronous system, thus using HW
-% interrupts. When a user presses a pushbutton that event should be signaled to
-% the \gls{cpu} of the MCU via an external interrupt, ``waking'' it up. The CPU
-% handles that interrupt via an \gls{isr}, processing it and actuating, if
-% required. The system then goes back to sleep.
-% 
-% The 8051 MCU only contains 2 external interrupts sources --- \texttt{INTO} and
-% \texttt{INT1} --- thus limitting the direct connection of the pushbuttons to the
-% MCU, even with the pull-up circuitry. This is where the serial I/O expander
-% becomes most useful, as it can be connected to TV remote keys (up to 8 in this
-% case) and connected to a single external interrupt pin, being then read via
-% \gls{i2c} or \gls{spi} interface. Thus, the keys can be connected through
-% pull-up circuitry to the I/O expander and the output is then connected to
-% \texttt{INTO} on the 8051 MCU. The communication protocol chosen is \gls{i2c} as
-% it is more expandable
-% 
-% Concerning the output, the 8051 PCA peripheral is connected to the IR
-% transmitter circuitry, for IR code emission. The HW interfaces of the system are
-% depicted in Fig.~\ref{fig:hw-interfaces}.
-% %
-%   \vspace{-5mm}
-% %  
-% \begin{figure}[htb!]
-% \centering
-%     \includegraphics[width=1.0\columnwidth]{./img/hw-interfaces.jpg}
-%   \caption{HW interfaces of the system}%
-% \label{fig:hw-interfaces}
-% \end{figure}
-% %
-% %
-%   \vspace{-5mm}
+To turn things more clear, Table~\ref{tab:pin-mapping} shows all the pin mapping in a more clear way.
+%
+\begingroup
+\renewcommand{\arraystretch}{0.7} % Default value: 1
+% \useunder{\uline}{\ul}{}
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+% \usepackage[normalem]{ulem}
+% \useunder{\uline}{\ul}{}
+\begin{table}[]
+\centering
+\caption{Pin Mapping}
+\label{tab:pin-mapping}
+\begin{tabular}{@{}lll@{}}
+\toprule
+\multicolumn{3}{c}{{\ul \textbf{Pin Mapping}}} \\ \midrule
+\textbf{Controller Pin} &
+  \textbf{Interface Device Pin} &
+  \textbf{Function} \\ \midrule
+Pin 2 (5V) &
+  Ultrasonic Sensors (Vcc) &
+  Supply 5V to the sensors \\ \midrule
+Pin 9 (Ground) &
+  Ultrasonic Sensors (GND) &
+  Close the supply connection \\ \midrule
+Pin 11 (GPIO 17) & Ultrasonic Sensors (Trig)  & \begin{tabular}[c]{@{}l@{}}Make pulses to the Trigger's sensors\\ in order to start the distance acquisition\end{tabular} \\ \midrule
+Pin 15 (GPIO 22) &
+  Ultrasonic Sensor 1 (Echo) &
+  \begin{tabular}[c]{@{}l@{}}Handle the Echo Pin of the first sensor\\ in order to measure the distance\end{tabular} \\ \midrule
+Pin 16 (GPIO 23) & Ultrasonic Sensor 2 (Echo) & \begin{tabular}[c]{@{}l@{}}Handle the Echo Pin of the second \\ sensor in order to measure the distance\end{tabular}      \\ \midrule
+Pin 18 (GPIO 24) &
+  Ultrasonic Sensor 3 (Echo) &
+  \begin{tabular}[c]{@{}l@{}}Handle the Echo Pin of the third sensor\\ in order to measure the distance\end{tabular} \\ \midrule
+Pin 36 (GPIO 16) &
+  MOSFET's Gate &
+  \begin{tabular}[c]{@{}l@{}}Toggle the gate of the MOSFET in order\\ to turn On/Off the diffusion actuator\end{tabular} \\ \bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Test Cases}
+\label{sec:test-cases}
+
+In order to verify if all the hardware is in good conditions, are made some test cases to each component.
+In Table~\ref{tab:test-cases} are displayed all the test cases to be done in all pieces of \gls{hw}. Basically, all tests are functional tests and need to be done to know if some component may be damaged or also could not be in the error range provided by the manufacturer.
+%
+% Please add the following required packages to your document preamble:
+\begingroup
+\renewcommand{\arraystretch}{0.7} % Default value: 1
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+\begin{table}[]
+\centering
+\caption{Hardware Test Cases}
+\label{tab:test-cases}
+\begin{tabular}{@{}llll@{}}
+\toprule
+\textbf{HW Component} &
+  \textbf{Type of test} &
+  \textbf{Description} &
+  \textbf{Expected Result} \\ \midrule
+\begin{tabular}[c]{@{}l@{}}Ultrasonic \\ Sensor\end{tabular} &
+  Functional &
+  \begin{tabular}[c]{@{}l@{}}One will connect the ultrasonic sensor\\ to the Raspberry Pi. Then, an object\\ will be approximated to the sensor \\ from several distances with the\\ corresponding distance being measured\\ with a  measuring tape.\end{tabular} &
+  \begin{tabular}[c]{@{}l@{}}If the distance measured by the \\ sensor and the measuring device \\ are within the error margin \\ provided by the manufacturer,\\ the device is compliant.\end{tabular} \\ \midrule
+Camera &
+  Functional &
+  \begin{tabular}[c]{@{}l@{}}One will connect the camera to the \\ Raspberry Pi and then will try to make \\ image acquisition in real time, take \\ pictures and also try to take some gifs \\ and videos.\end{tabular} &
+  \begin{tabular}[c]{@{}l@{}}If the quality of the image and the \\ image  acquisition are in good \\ quality according to the \\ manufacturer's information, then \\ the device is in good conditions \\ of use.\end{tabular} \\ \midrule
+\begin{tabular}[c]{@{}l@{}}Fragrance \\ Diffusion\\ Actuator\end{tabular} &
+  Functional &
+  \begin{tabular}[c]{@{}l@{}}One will connect a MOSFET to the \\ fragrance diffusion and connect its \\ gate to the Raspberry Pi. Then, one \\ will trigger the MOSFET's gate and \\ watch the actuator's behavior.\end{tabular} &
+  \begin{tabular}[c]{@{}l@{}}If the diffusion actuator diffuses \\ in good state the fragrance and \\ also if the MOSFET  doesn't \\ overheat, then the set of HW is \\ in good conditions of use.\end{tabular} \\ \midrule
+Power Supply &
+  Functional &
+  \begin{tabular}[c]{@{}l@{}}One will connect the three components\\  (LCD, Fragrance Diffusion Actuator \\ and Raspberry Pi) to the power supply \\ and see their behavior.\end{tabular} &
+  \begin{tabular}[c]{@{}l@{}}If all components work properly, \\ then this  piece of HW is in good \\ conditions of use.\end{tabular} \\ \midrule
+Speakers &
+  Functional &
+  \begin{tabular}[c]{@{}l@{}}One will connect the Speakers to the \\ LCD board and try to run a video with \\ sound in order to verify the sound \\ provided by the speakers.\end{tabular} &
+  \begin{tabular}[c]{@{}l@{}}If the sound output matches\\ the manufacturer's \\ characteristics of the product, \\ then this set of HW is compliant.\end{tabular} \\ \midrule
+LCD Display &
+  Functional &
+  \begin{tabular}[c]{@{}l@{}}One will connect the LCD board through\\  HDMI to the Raspberry Pi, the LCD \\ Display to its board and supply the board \\ and then try to send some images and \\ videos to the LCD Display.\end{tabular} &
+  \begin{tabular}[c]{@{}l@{}}If the images and videos are \\ displayed in good quality and are \\ in match with the manufacturer's \\ information, then this set of HW \\ is in good conditions of use.\end{tabular} \\ \bottomrule
+\end{tabular}
+\end{table}
 %  
 %%% Local Variables:
 %%% mode: latex
