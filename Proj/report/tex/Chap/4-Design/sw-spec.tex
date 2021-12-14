@@ -287,7 +287,7 @@ diagrams as a starting point, for each subsystem.
 
 \subsection{Remote Client}
 \label{sec:test-cases-rc}
-
+%
 \begingroup
 \renewcommand{\arraystretch}{0.7} % Default value: 1
 % Please add the following required packages to your document preamble:
@@ -313,7 +313,7 @@ Rent Ads                                                       & Functional     
 
 \subsection{Remote Server}
 \label{test-cases-rs}
-
+%
 \begingroup
 \renewcommand{\arraystretch}{0.7} % Default value: 1
 % Please add the following required packages to your document preamble:
@@ -336,6 +336,33 @@ Help                                                              & Functional  
 \begin{tabular}[c]{@{}l@{}}Manage\\ Fragrance\end{tabular}        & Functional            & \begin{tabular}[c]{@{}l@{}}One will try to activate a fragrance\\ diffusion to the machine.\end{tabular}                                                                          & \begin{tabular}[c]{@{}l@{}}If the server sends the right information\\ to the LS, then the LS should diffuse the\\ fragrance.\end{tabular}                                                            \\ \midrule
 \begin{tabular}[c]{@{}l@{}}Manage\\ Camera\end{tabular}           & Functional            & \begin{tabular}[c]{@{}l@{}}One will try to manage the camera\\ with its various features (turn on/off,\\ facial recognition, take GIF, take picture\\ apply filter).\end{tabular} & \begin{tabular}[c]{@{}l@{}}If the remote server sends the right info,\\ then the local system should actuate in \\ the camera according to the function that\\ was requested to operate.\end{tabular} \\ \midrule
 Share                                                             & Functional            & \begin{tabular}[c]{@{}l@{}}One will try to share some file through\\ social media.\end{tabular}                                                                                   & \begin{tabular}[c]{@{}l@{}}If the LS responds correctly to that \\ command, then it is working properly.\end{tabular}                                                                                 \\ \bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Local System}
+\label{test-cases-ls}
+%
+\begingroup
+\renewcommand{\arraystretch}{0.7} % Default value: 1
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+\begin{table}[]
+\centering
+\caption{Local System Test Cases}
+\label{tab:test-cases-ls}
+\begin{tabular}{@{}llll@{}}
+\toprule
+\textbf{Use Case}                                               & \textbf{Type of test} & \textbf{Description}                                                                                      & \textbf{Expected Result}                                                                                                            \\ \midrule
+\begin{tabular}[c]{@{}l@{}}Establish\\ Connection\end{tabular}  & Functional            & \begin{tabular}[c]{@{}l@{}}One will try to establish connection to\\ the machine\end{tabular}             & \begin{tabular}[c]{@{}l@{}}If the connection is established and the\\ credentials are verified, everything works.\end{tabular}      \\ \midrule
+\begin{tabular}[c]{@{}l@{}}End remote\\ Connection\end{tabular} & Functional            & \begin{tabular}[c]{@{}l@{}}One will try to end the remote \\ connection.\end{tabular}                     & \begin{tabular}[c]{@{}l@{}}If the connection is ended correctly, then it\\ works as expected.\end{tabular}                          \\ \midrule
+\begin{tabular}[c]{@{}l@{}}Select Image\\ Filter\end{tabular}   & Functional            & \begin{tabular}[c]{@{}l@{}}One will try to select an image filter \\ and use it.\end{tabular}             & \begin{tabular}[c]{@{}l@{}}It has to apply correctly the facial detection\\ and also apply correctly the filter.\end{tabular}       \\ \midrule
+Take Picture                                                    & Functional            & One will try to take a picture.                                                                           & \begin{tabular}[c]{@{}l@{}}The Local System has to take the picture \\ and store it in order to behave properly.\end{tabular}       \\ \midrule
+Create GIF                                                      & Functional            & One will try to create a GIF.                                                                             & \begin{tabular}[c]{@{}l@{}}The Local System has to generate the GIF \\ and store it in order to work properly.\end{tabular}         \\ \midrule
+\begin{tabular}[c]{@{}l@{}}Share on\\ social media\end{tabular} & Functional            & \begin{tabular}[c]{@{}l@{}}One will try to share a picture or a \\ GIF on social media.\end{tabular}      & \begin{tabular}[c]{@{}l@{}}If the Local System shares to the social \\ media the picture or the GIF, it works.\end{tabular}         \\ \midrule
+\begin{tabular}[c]{@{}l@{}}Diffuse\\ Fragrance\end{tabular}     & Functional            & One will try to diffuse the fragrance.                                                                    & If the fragrance is diffused, it works.                                                                                             \\ \midrule
+Play Video                                                      & Functional            & \begin{tabular}[c]{@{}l@{}}One will try to play one video of an ad\\ or something else.\end{tabular}      & \begin{tabular}[c]{@{}l@{}}If the video plays properly, then the machine\\ is working as predicted.\end{tabular}                    \\ \midrule
+Play Audio                                                      & Functional            & One will try to play a random audio.                                                                      & \begin{tabular}[c]{@{}l@{}}If the video audio plays properly, then the\\ machine is working as predicted.\end{tabular}              \\ \midrule
+\begin{tabular}[c]{@{}l@{}}Process\\ Commands\end{tabular}      & Functional            & \begin{tabular}[c]{@{}l@{}}One will try to send some commands \\ for the machine to process.\end{tabular} & \begin{tabular}[c]{@{}l@{}}If the machine receives the commands \\ properly and processes them, then it \\ works well.\end{tabular}
 \end{tabular}
 \end{table}
 %  \vspace{-5mm}
