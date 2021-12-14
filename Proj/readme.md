@@ -1,36 +1,37 @@
-- [Preamble](#orgeb63ff6)
-- [Versions <code>[3/4]</code>](#orgbcc0543)
-- [Notes](#org6312484)
-  - [Requirements](#org0a71517)
-  - [Problem statement](#orgb00951c)
-  - [Research](#org780fba7)
-    - [Topics <code>[0/3]</code>](#orga059f88)
-    - [Selection](#org579c3fd)
-  - [Report](#orgd7921c7)
-    - [Outline <code>[2/8]</code>](#org0e152fa)
-  - [Marketing Digital Outdoor](#org7031146)
-    - [Topics](#orgb8f89cf)
-    - [Technologies <code>[0/11]</code>](#orge727c20)
-    - [Problem statement](#orgce813f2)
-    - [Market research <code>[3/3]</code>](#org7df3b96)
-    - [Project planning](#org8896e38)
-    - [Analysis](#orgc698507)
-    - [Theoretical foundations <code>[17/17]</code>](#orgab25637)
-    - [Design](#org9903456)
-- [Diagrams](#org01ea472)
-  - [PlantUML](#orgdff66b4)
-    - [Setup <code>[0/6]</code>](#org478202a)
-    - [Workflow <code>[0/4]</code>](#orgefb3240)
-    - [Sequence diagrams](#orge0914e7)
-    - [Component diagrams](#org939e250)
-    - [Deployment diagrams](#org2857ca1)
-    - [Entity-Relationship diagram](#org6a4336d)
-- [GIF generation](#orgbf3ce69)
-  - [C++ libraries and APIs <code>[0/1]</code>](#orgbb5b6c8)
+- [Preamble](#org45544e4)
+- [Versions <code>[3/4]</code>](#org8c55809)
+- [Notes](#org0f2f7d5)
+  - [Requirements](#org1076028)
+  - [Problem statement](#org31a3ccb)
+  - [Research](#org3310338)
+    - [Topics <code>[0/3]</code>](#org3873055)
+    - [Selection](#org657afd0)
+  - [Report](#org4059034)
+    - [Outline <code>[2/8]</code>](#org5977863)
+  - [Marketing Digital Outdoor](#org36bdb12)
+    - [Topics](#org78dd4e8)
+    - [Technologies <code>[0/11]</code>](#org97c8464)
+    - [Problem statement](#orga80f64d)
+    - [Market research <code>[3/3]</code>](#orge623b78)
+    - [Project planning](#org5cb30f8)
+    - [Analysis](#org9510823)
+    - [Theoretical foundations <code>[17/17]</code>](#org957bf7b)
+    - [Design](#orgc2172d0)
+- [Diagrams](#org7c392f6)
+  - [PlantUML](#org8dbc24a)
+    - [Setup <code>[0/6]</code>](#orgf91b9de)
+    - [Workflow <code>[0/4]</code>](#orgd90e5c5)
+    - [Sequence diagrams](#orgb7296f3)
+    - [Component diagrams](#org92a6e80)
+    - [Class diagrams](#orgacda30c)
+    - [Deployment diagrams](#orgd65cd5c)
+    - [Entity-Relationship diagram](#org356be78)
+- [GIF generation](#orgab651a8)
+  - [C++ libraries and APIs <code>[0/1]</code>](#org33d9318)
 
 
 
-<a id="orgeb63ff6"></a>
+<a id="org45544e4"></a>
 
 # Preamble
 
@@ -38,7 +39,7 @@
 -   It is written incrementally, i.e., as the several project phases take place, the document versions pertaining to each phase are stored in the folder **submission**.
 
 
-<a id="orgbcc0543"></a>
+<a id="org8c55809"></a>
 
 # Versions <code>[3/4]</code>
 
@@ -48,12 +49,12 @@
 4.  [ ] Design phase: <span class="timestamp-wrapper"><span class="timestamp">&lt;2021-12-15 qua 23:00&gt;</span></span>
 
 
-<a id="org6312484"></a>
+<a id="org0f2f7d5"></a>
 
 # Notes     :Important:
 
 
-<a id="org0a71517"></a>
+<a id="org1076028"></a>
 
 ## Requirements
 
@@ -65,19 +66,19 @@
 -   Makefiles
 
 
-<a id="orgb00951c"></a>
+<a id="org31a3ccb"></a>
 
 ## Problem statement
 
 Think about the project and deliver a document about it.
 
 
-<a id="org780fba7"></a>
+<a id="org3310338"></a>
 
 ## Research
 
 
-<a id="orga059f88"></a>
+<a id="org3873055"></a>
 
 ### Topics <code>[0/3]</code>
 
@@ -86,19 +87,19 @@ Think about the project and deliver a document about it.
 -   [ ] Situate the project requirements, the project constraints
 
 
-<a id="org579c3fd"></a>
+<a id="org657afd0"></a>
 
 ### Selection
 
 -   [Marketing digital Outdoor](readme.md)
 
 
-<a id="orgd7921c7"></a>
+<a id="org4059034"></a>
 
 ## Report
 
 
-<a id="org0e152fa"></a>
+<a id="org5977863"></a>
 
 ### Outline <code>[2/8]</code>
 
@@ -149,12 +150,12 @@ Think about the project and deliver a document about it.
 8.  [ ] Conclusions
 
 
-<a id="org7031146"></a>
+<a id="org36bdb12"></a>
 
 ## Marketing Digital Outdoor     :Important:
 
 
-<a id="orgb8f89cf"></a>
+<a id="org78dd4e8"></a>
 
 ### Topics
 
@@ -195,7 +196,7 @@ Think about the project and deliver a document about it.
             -   Additionally, brands can also monitor this by checking their social media accounts.
 
 
-<a id="orge727c20"></a>
+<a id="org97c8464"></a>
 
 ### Technologies <code>[0/11]</code>
 
@@ -212,12 +213,12 @@ Think about the project and deliver a document about it.
 11. [ ] Social media and e-mail sharing APIs
 
 
-<a id="orgce813f2"></a>
+<a id="orga80f64d"></a>
 
 ### ✔ DONE Problem statement
 
 
-<a id="org7df3b96"></a>
+<a id="orge623b78"></a>
 
 ### ✔ DONE Market research <code>[3/3]</code>
 
@@ -226,7 +227,7 @@ Think about the project and deliver a document about it.
 3.  [X] Combined marketing: are they digital outdoor + scenting?
 
 
-<a id="org8896e38"></a>
+<a id="org5cb30f8"></a>
 
 ### Project planning
 
@@ -301,7 +302,7 @@ Think about the project and deliver a document about it.
     -   [X] Camera: 14 EUR - <https://shorturl.at/gnpCU>
 
 
-<a id="orgc698507"></a>
+<a id="org9510823"></a>
 
 ### ✔ DONE Analysis
 
@@ -314,7 +315,7 @@ Think about the project and deliver a document about it.
     > COMPANY -> MDO-L Staff member login RC -> RS: q mdo systems RS -> DB: query mdo-systems DB -> RS: std::<vector> mdo<sub>systems</sub> for(i = 0; i < mdo<sub>systems.size</sub>(); i++ ) RS -> RC: mdo<sub>systems</sub>[i] RC -> RC: Select MDO-L machine Send command RC -> RS: mdo <nr> <command> (mdo 1 get mode) RS -> RS: parse command RS -> RS: get mdo<sub>nr</sub> IP (query mdo-systems 1 IP) RS -> MDO-L: connect IP:port MDO-L -> RS: connected RS -> MDO-L: get mode MDO-L -> RS: normal mode (example) RS -> RC: normal
 
 
-<a id="orgab25637"></a>
+<a id="org957bf7b"></a>
 
 ### ✔ DONE Theoretical foundations <code>[17/17]</code>
 
@@ -346,9 +347,9 @@ Legend:
 -   *Hugo*
 
 
-<a id="org9903456"></a>
+<a id="orgc2172d0"></a>
 
-### Design
+### ▭▭ IN-PROGRESS Design
 
 Next Thursday, December 16th, we will have the presentations for the Design Phase. Submit the **presentation** and **report** until Wednesday 15th, 23:00h.
 
@@ -400,7 +401,7 @@ Design Phase must include (some specifications may vary according to your projec
 It is compulsory to show/identify which/where all class topics are going to be implemented and used by you! Also third-party Libraries/apps must be identified so you can use other's software and materials with our consent.
 
 
-<a id="org01ea472"></a>
+<a id="org7c392f6"></a>
 
 # Diagrams
 
@@ -409,7 +410,7 @@ Diagrams can be drawn using <code>[2/2]</code>:
 -   [X] draw.io
     -   User mockups
     -   State-machine
--   [X] [PlantUML](#orgdff66b4) (stored in Proj/diags/plantuml)
+-   [X] [PlantUML](#org8dbc24a) (stored in Proj/diags/plantuml)
     -   Sequence diagram
     -   Class diagram
     -   Component diagram
@@ -417,14 +418,14 @@ Diagrams can be drawn using <code>[2/2]</code>:
     -   Entity-Relationship diagram
 
 
-<a id="orgdff66b4"></a>
+<a id="org8dbc24a"></a>
 
 ## PlantUML
 
 [PlantUML](https://plantuml.com/) is a tool for quickly drawing diagrams from text based descriptions. It is specially adequate for sequence diagrams, as draw.io is not very fluid.
 
 
-<a id="org478202a"></a>
+<a id="orgf91b9de"></a>
 
 ### Setup <code>[0/6]</code>
 
@@ -440,7 +441,7 @@ Diagrams can be drawn using <code>[2/2]</code>:
 6.  [ ] Check the generate png file: `output/test.png`
 
 
-<a id="orgefb3240"></a>
+<a id="orgd90e5c5"></a>
 
 ### Workflow <code>[0/4]</code>
 
@@ -454,7 +455,7 @@ Diagrams can be drawn using <code>[2/2]</code>:
 4.  [ ] Check the generate png file: `output/test.png`
 
 
-<a id="orge0914e7"></a>
+<a id="orgb7296f3"></a>
 
 ### ✔ DONE Sequence diagrams
 
@@ -971,9 +972,9 @@ Diagrams can be drawn using <code>[2/2]</code>:
     ![img](diags/plantuml/seq-diag/examples/all-together.png)
 
 
-<a id="org939e250"></a>
+<a id="org92a6e80"></a>
 
-### Component diagrams
+### ✔ DONE Component diagrams
 
 You can use component diagrams to model the software architecture of a system. Component diagrams provide a view of the physical software components in the system, their interfaces, and their dependencies. [src](https://www.ibm.com/docs/en/rsar/9.5?topic=diagrams-creating-component)
 
@@ -1040,9 +1041,148 @@ You can use component diagrams to model the software architecture of a system. C
     **Local System**
     
     ![img](diags/plantuml/component-diag/output/component-diag-local.png)
+    
+    ![img](diags/plantuml/component-diag/output/component-diag-local-no-links.png)
 
 
-<a id="org2857ca1"></a>
+<a id="orgacda30c"></a>
+
+### Class diagrams
+
+1.  Declaring elements
+
+    ![img](diags/plantuml/class-diag/output/decl-elems.png)
+
+2.  Relation between classes
+
+    ![img](diags/plantuml/class-diag/output/class-relations.png)
+
+3.  Label on relations
+
+    It is possible to add a label on the relation, using :, followed by the text of the label.
+    
+    For cardinality, you can use double-quotes "" on each side of the relation.
+    
+    ![img](diags/plantuml/class-diag/output/label-relations.png)
+
+4.  Adding methods
+
+    To declare fields and methods, you can use the symbol : followed by the field's or method's name.
+    
+    -   The system checks for parenthesis to choose between methods and fields.
+        
+        ![img](diags/plantuml/class-diag/output/add-methods.png)
+
+5.  Defining visibility
+
+    When you define methods or fields, you can use characters to define the visibility of the corresponding item:
+    
+    1.  - : private
+    2.  \# : protected
+    3.  ~ : package private
+    4.  + : public
+        
+        ![img](diags/plantuml/class-diag/output/def-visibility.png)
+
+6.  Abstract and Static
+
+    You can define static or abstract methods or fields using the {static} or {abstract} modifier.
+    
+    -   These modifiers can be used at the start or at the end of the line.
+        
+        ![img](diags/plantuml/class-diag/output/abstract-static.png)
+
+7.  Hide/show elements
+
+    You can parameterize the display of classes using the hide/show command.
+    
+    The basic command is: hide empty members. This command will hide attributes or methods if they are empty.
+    
+    Instead of empty members, you can use:
+    
+    -   empty fields or empty attributes for empty fields,
+    -   empty methods for empty methods,
+    -   fields or attributes which will hide fields, even if they are described,
+    -   methods which will hide methods, even if they are described,
+    -   members which will hide fields and methods, even if they are described,
+    -   circle for the circled character in front of class name,
+    -   stereotype for the stereotype.
+    
+    You can also provide, just after the hide or show keyword:
+    
+    -   class for all classes,
+    -   interface for all interfaces,
+    -   enum for all enums,
+    -   <a id="orgdd92800"></a> for classes which are stereotyped with foo1,
+    -   an existing class name.
+    
+    You can use several show/hide commands to define rules and exceptions.
+    
+    You can also use the show/hide commands to hide classes.
+    
+    -   This may be useful if you define a large !included file, and if you want to hide some classes after file inclusion.
+        
+        ![img](diags/plantuml/class-diag/output/hide-show.png)
+
+8.  Specific spot
+
+    Usually, a spotted character (C, I, E or A) is used for classes, interface, enum and abstract classes.
+    
+    But you can define your own spot for a class when you define the stereotype, adding a single character and a color, like in this example:
+    
+    ![img](diags/plantuml/class-diag/output/specific-spot.png)
+
+9.  Changing arrows orientation
+
+    By default, links between classes have two dashes &#x2013; and are vertically oriented.
+    
+    -   It is possible to use horizontal link by putting a single dash (or dot).
+    -   You can also change directions by reversing the link.
+        
+        ![img](diags/plantuml/class-diag/output/arrows-orientation.png)
+
+10. Help on layout
+
+    Sometimes, the default layout is not perfect&#x2026;
+    
+    You can use together keyword to group some classes together : the layout engine will try to group them (as if they were in the same package).
+    
+    You can also use hidden links to force the layout.
+    
+    ![img](diags/plantuml/class-diag/output/layout-help.png)
+
+11. Splitting large files
+
+    Sometimes, you will get some very large image files.
+    
+    You can use the page (hpages)x(vpages) command to split the generated image into several files :
+    
+    hpages is a number that indicated the number of horizontal pages, and vpages is a number that indicated the number of vertical pages.
+    
+    You can also use some specific skinparam settings to put borders on splitted pages (see example).
+    
+    ![img](diags/plantuml/class-diag/output/split-pages.png)
+
+12. Extends and implements
+
+    ![img](diags/plantuml/class-diag/output/extends-implements.png)
+
+13. Linking or arrow style
+
+    ![img](diags/plantuml/class-diag/output/link-arrow-style.png)
+
+14. All together
+
+    ![img](diags/plantuml/class-diag/output/all-together.png)
+
+15. Mine (to generate report)
+
+    **Client**
+    
+    ![img](diags/plantuml/class-diag/output/class-diag-rc.png)
+
+
+<a id="orgd65cd5c"></a>
 
 ### Deployment diagrams
 
@@ -1087,7 +1227,7 @@ Deployment diagrams, which you typically prepare during the implementation phase
     ![img](diags/plantuml/deploy-diag/output/style-nested-all.png)
 
 
-<a id="org6a4336d"></a>
+<a id="org356be78"></a>
 
 ### Entity-Relationship diagram
 
@@ -1118,12 +1258,12 @@ Deployment diagrams, which you typically prepare during the implementation phase
     The HTML markup in comments (after &#x2013;) is stripped.
 
 
-<a id="orgbf3ce69"></a>
+<a id="orgab651a8"></a>
 
 # GIF generation
 
 
-<a id="orgbb5b6c8"></a>
+<a id="org33d9318"></a>
 
 ## C++ libraries and APIs <code>[0/1]</code>
 
