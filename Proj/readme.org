@@ -1919,24 +1919,24 @@ skinparam fixCircleLabelOverlapping true
 '' participants definition
 actor "Brand/Admin" as User
 
-package "MDO-RC: AppManager" {
+package "MDO-RC: AppManager" #lightgrey{
   ''HTTP - [UI]
   ''[  UI\n << Qt >>] as UI
-  frame "User Interface"{
+  frame "User Interface" #bisque{
   [UI] as UI
   [UI \nEngine] as UIE
   }
-  frame "DB Manager" as DBM{
+  frame "DB Manager" as DBM #bisque{
   [Query\nParser] as QP
   [Response\nParser] as RP
   }
-  frame "Comm Manager" as CM{
+  frame "Comm Manager" as CM #bisque{
   [Comm \nStatus] as RCS
   [RC\nTx] as RCT
   [RC\nRx] as RCR
   }
   [RC Rx\nParser] as RCRP
-  frame "Remote \nController" as REMCTL{
+  frame "Remote \nController" as REMCTL #bisque{
   [Cmd \nParser] as RCCP
   }
 }
@@ -1960,9 +1960,9 @@ package "MDO-RC: AppManager" {
 [RCCP] ..> [UIE]: cmd \nfeedback
 [RP] --> [UIE]: db response
 
-package "MDO-RS: AppManager"{
+package "MDO-RS: AppManager" #lightgrey{
   ''HTTP - [UI]
-  frame "Comm Manager" as CMS{
+  frame "Comm Manager" as CMS #bisque{
   ''together{
   [Comm \nStatus] as RSS
   [RS Tx \nClient] as RSTC
@@ -1973,15 +1973,15 @@ package "MDO-RS: AppManager"{
   }
 }
 '' ----------- INTERFACES
-() "tcp/ip" as sockRC_RS
-() "tcp/ip" as sockRS_RC
+() "TCP/IP" as sockRC_RS
+''() "tcp/ip" as sockRS_RC
 
 '' MDO-RS
 '' Client Connections
-[RCT] .r.> sockRC_RS
-sockRC_RS .d.> [RSRC]: send server\nframe
-[RSTC] .u.> sockRS_RC
-sockRS_RC .l.> [RCR]: send client\n frame
+[RCT] .r.> sockRC_RS #blue
+sockRC_RS .d.> [RSRC] #blue: <color:blue>send server\n<color:blue>frame
+[RSTC] .u.> sockRC_RS #darkgreen
+sockRC_RS .l.> [RCR] #darkgreen: <color:darkgreen>send client\n <color:darkgreen>frame
 
 @enduml
   #+END_SRC
@@ -2026,38 +2026,38 @@ skinparam fixCircleLabelOverlapping true
 '' participants definition
 ''actor "Brand/Admin" as User
 
-package "MDO-RC: AppManager" {
-  frame "Comm Manager" as CM{
+package "MDO-RC: AppManager" #lightgrey{
+  frame "Comm Manager" as CM #bisque{
   [Comm \nStatus] as RCS
   [RC\nTx] as RCT
   [RC\nRx] as RCR
   }
 }
 
-package "MDO-L: AppManager" {
-  frame "Comm Manager" as LCM{
+package "MDO-L: AppManager" #lightgrey{
+  frame "Comm Manager" as LCM #bisque{
   [Comm \nStatus] as LCS
   [Local\nTx] as LCT
   [Local\nRx] as LCR
   }
 }
 
-package "MDO-RS: AppManager"{
+package "MDO-RS: AppManager" #lightgrey{
   ''HTTP - [UI]
-  frame "Command-Line\nInterface"{
+  frame "Command-Line\nInterface" #bisque{
   [CLI] as CLI
-  [CLI Engine] as CLIE
-  [CLI Parser] as CLIP
+  [CLI \nEngine] as CLIE
+  [CLI \nParser] as CLIP
   }
-  frame "Command Parser"{
+  frame "Command Parser" #bisque{
   [Client\nParser] as RSCP
   [Local \nParser] as RSLP
   }
-  frame "DB Client" as RSDBM{
+  frame "DB Client" as RSDBM #bisque{
   [Query\nParser] as RSQP
   [Response\nParser] as RSRP
   }
-  frame "Comm Manager" as CMS{
+  frame "Comm Manager" as CMS #bisque{
   [Comm \nStatus] as RSS
   [RS Tx \nClient] as RSTC
   [RS Rx \nClient] as RSRC
@@ -2066,10 +2066,10 @@ package "MDO-RS: AppManager"{
   }
 }
 
-package "MDO-RS: DB Server"{
+package "MDO-RS: DB Server" #lightgrey{
   ''[DB Transaction\n Manager] as DBTM
   [DB Manager] as RSDBM2
-  frame "Comm Manager" as CMDB{
+  frame "Comm Manager" as CMDB #bisque{
   [Comm \nStatus] as DBSt
   [Server \nTx] as SERVTx
   [Server \nRx] as SERVRx
@@ -2079,29 +2079,26 @@ package "MDO-RS: DB Server"{
 '' ------------------------------
 
 '' ----------- INTERFACES
-() "tcp/ip" as sockRC_RS
-() "tcp/ip" as sockRS_RC
-() "tcp/ip" as sockRS_L
-() "tcp/ip" as sockL_RS
-() "tcp/ip" as sockRS_SQL
-() "tcp/ip" as sockSQL_RS
+() "TCP/IP" as sockRC_RS
+() "TCP/IP" as sockRS_L
+() "TCP/IP" as sockRS_SQL
 
 '' MDO-RS
 '' Client Connections
 [RCT] ..> sockRC_RS #blue: <color:blue>send server\n<color:blue>frame
 sockRC_RS ..> [RSRC] #blue
-[RSTC] ..> sockRS_RC #blue: <color:blue>send client\n<color:blue>frame
-sockRS_RC ..> [RCR] #blue
+[RSTC] ..> sockRC_RS #blue: <color:blue>send client\n<color:blue>frame
+sockRC_RS ..> [RCR] #blue
 '' Local connections
 [RSTL] .r.> sockRS_L #darkgreen: <color:darkgreen>send local\n<color:darkgreen>frame
 sockRS_L .d.> [LCR] #darkgreen
-[LCT] .u.> sockL_RS #darkgreen: <color:darkgreen>send server\n<color:darkgreen>frame
-sockL_RS .l.> [RSRL] #darkgreen
+[LCT] .u.> sockRS_L #darkgreen: <color:darkgreen>send server\n<color:darkgreen>frame
+sockRS_L .l.> [RSRL] #darkgreen
 '' Database connections
 [RSQP] --> sockRS_SQL #indigo: <color:indigo>db\n<color:indigo>query
 sockRS_SQL --> [SERVRx] #indigo
-[SERVTx] ..> sockSQL_RS #indigo: <color:indigo>db \n<color:indigo>response 
-sockSQL_RS ..> [RSRP] #indigo
+[SERVTx] ..> sockRS_SQL #indigo: <color:indigo>db \n<color:indigo>response 
+sockRS_SQL ..> [RSRP] #indigo
 
 '' Internal logic
 [RSRC] --> [RSCP]: server\n frame
@@ -2142,9 +2139,9 @@ skinparam fixCircleLabelOverlapping true
 '' participants definition
 actor "User" as User
 
-package "MDO-RS: AppManager"{
+package "MDO-RS: AppManager" #lightgrey{
   ''HTTP - [UI]
-  frame "Comm Manager" as CMS{
+  frame "Comm Manager" as CMS #bisque{
   ''[Comm \nStatus] as RSS
   ''[RS Tx \nClient] as RSTC
   ''[RS Rx \nClient] as RSRC
@@ -2153,15 +2150,15 @@ package "MDO-RS: AppManager"{
   }
 }
 
-package "MDO-L: AppManager" as MDOLAPP{
-  frame "Comm Manager" as LCM{
+package "MDO-L: AppManager" as MDOLAPP #lightgrey{
+  frame "Comm Manager" as LCM #bisque{
   [Comm \nStatus] as LCS
   [Local\nTx] as LCT
   [Local\nRx] as LCR
   [Web\n Tx] as WEBTx
   [Web\n Rx] as WEBRx
   }
-  frame "User Interface"{
+  frame "User Interface" #bisque{
   [UI] as UI
   [UI \nEngine] as UIE
   [Gesture \nRecognition\n Engine] as GRE
@@ -2170,29 +2167,29 @@ package "MDO-L: AppManager" as MDOLAPP{
   [Ultrasonic sensor\n daemon] as USD
   }
   }
-  frame "Normal mode Manager" as NMM{
+  frame "Normal mode Manager" as NMM #bisque{
   [Video Manager] as VIDM
   [Audio Manager] as AUDM
-  frame "Fragrance Manager" as FRAG_M{
+  frame "Fragrance Manager" as FRAG_M #bisque{
   [Diffuser actuator\n device driver] as DDD
   [Diffuser actuator\n daemon] as DD
   }
   }
-  frame "Multimedia mode Manager"{
+  frame "Multimedia mode Manager" #bisque{
   [Image Filter\nManager] as IFM
   [Camera\nManager] as CAM
   [GIF\nGeneration] as GIFG
   }
-  frame "Sharing mode Manager"{
+  frame "Sharing mode Manager" #bisque{
   [Post\nManager] as PM
   [Twitter\nManager] as TM
   }
-  frame "Computer Vision framework"{
+  frame "Computer Vision framework" #bisque{
   [Face\n detection] as FD
   [Gesture\n recognition] as GR
   [Image Filter\nOverlay] as IFO
   }
-  frame "App Parser" as AP{
+  frame "App Parser" as AP #bisque{
   [Command\n Parser] as CP
   [DB\n Parser] as DP
   }
@@ -2208,18 +2205,18 @@ cloud Transfer.sh{
 '' ------------------------------
 
 '' ----------- INTERFACES
-() "tcp/ip" as sockRS_L
-() "tcp/ip" as sockL_RS
-() "tcp/ip" as sockL_Twitter
-() "tcp/ip" as sockL_Transfer_sh
+() "TCP/IP" as sockRS_L
+''() "TCP/ip" as sockL_RS
+() "TCP/IP" as sockL_Twitter
+() "TCP/IP" as sockL_Transfer_sh
 ''-------------------------------
 
 '' MDO-Local
 '' Server connections
 [RSTL] .u.> sockRS_L: send local\nframe 
 sockRS_L .u.> [LCR]
-[LCT] .d.> sockL_RS: send server\nframe 
-sockL_RS .d.> [RSRL]
+[LCT] .d.> sockRS_L: send server\nframe 
+sockRS_L .d.> [RSRL]
 '' Cloud connections
 [WEBTx] .d.> sockL_Twitter: twitter\ncmd
 sockL_Twitter .d.> REST
@@ -2393,6 +2390,448 @@ sockL_Transfer_sh -l-> [WEBRx]
 
   #+RESULTS:
   [[file:diags/plantuml/component-diag/output/component-diag-local-no-links.png]]
+
+*** ✔ DONE Deployment diagrams
+    :LOGBOOK:
+    - State "✔ DONE"     from              [2021-12-15 qua 02:19]
+    :END:
+In UML, deployment diagrams model the physical architecture of a system. Deployment diagrams show the relationships between the software and hardware components in the system and the physical distribution of the processing.
+
+Deployment diagrams, which you typically prepare during the implementation phase
+of development, show the physical arrangement of the nodes in a distributed
+system, the artifacts that are stored on each node, and the components and other
+elements that the artifacts implement. Nodes represent hardware devices such as
+computers, sensors, and printers, as well as other devices that support the
+runtime environment of a system. Communication paths and deploy relationships
+model the connections in the system. ([[https://www.ibm.com/docs/en/rsar/9.5?topic=diagrams-deployment][src]])
+
+*Types of elements* ([[https://mychartguide.com/deployment-diagram/#What_are_the_elements_involved][src]]): 
+1. Artifact: The artifact is the main element in a deployment diagram and
+   signifies the product developed by any software. It is also often referred to
+   as the information that software generates. It is symbolized with the help of
+   a rectangle.
+2. Association: This helps signify the correlation and message between two
+   different nodes in the diagram.
+3. Component: This helps signify the presence of a software element in the
+   diagram and is represented with a rectangle with two tabs.
+4. Dependency: This signifies the dependency and correlation of one node or
+   component with that of the other in a deployment diagram. It is represented
+   with dashed lines with arrows.
+5. Interface: This signifies the presence of a contractual relationship in a
+   diagram, especially when there are obligations involved that needs to be
+   completed in a total system. It is represented with a circle.
+6. Node: This signifies the main element of any kind of hardware or even
+   software object in a deployment diagram that is further shown with a three
+   dimensional box.
+7. Stereotype: This signifies the element that is trapped inside a node which
+   comes with its representation with the name bracketed by double arrows.
+
+**** Declaring element
+  #+BEGIN_SRC plantuml :file diags/plantuml/deploy-diag/output/decl-elem.png
+@startuml
+actor actor
+actor/ "actor/"
+agent agent
+artifact artifact
+boundary boundary
+card card
+circle circle
+cloud cloud
+collections collections
+component component
+control control
+database database
+entity entity
+file file
+folder folder
+frame frame
+hexagon hexagon
+interface interface
+label label
+node node
+package package
+person person
+queue queue
+rectangle rectangle
+stack stack
+storage storage
+usecase usecase
+usecase/ "usecase/"
+@enduml
+  #+END_SRC
+
+  #+RESULTS:
+  [[file:diags/plantuml/deploy-diag/output/decl-elem.png]]
+**** Linking or arrow
+
+  #+BEGIN_SRC plantuml :file diags/plantuml/deploy-diag/output/link-arrow.png
+@startuml
+
+cloud cloud1
+cloud cloud2
+cloud cloud3
+cloud cloud4
+cloud cloud5
+cloud1 -0- cloud2
+cloud1 -0)- cloud3
+cloud1 -(0- cloud4
+cloud1 -(0)- cloud5
+
+@enduml
+  #+END_SRC
+**** Line style
+  #+BEGIN_SRC plantuml :file diags/plantuml/deploy-diag/output/line-style.png
+@startuml
+title Bracketed line style with label
+node foo
+foo --> bar          : ∅
+foo -[bold]-> bar1   : [bold]
+foo -[dashed]-> bar2 : [dashed]
+foo -[dotted]-> bar3 : [dotted]
+foo -[hidden]-> bar4 : [hidden]
+foo -[plain]-> bar5  : [plain]
+@enduml
+  #+END_SRC
+
+  #+RESULTS:
+  [[file:diags/plantuml/deploy-diag/output/line-style.png]]
+**** Nesting
+  #+BEGIN_SRC plantuml :file diags/plantuml/deploy-diag/output/nesting.png
+@startuml
+artifact Foo1 {
+  folder Foo2
+}
+
+folder Foo3 {
+  artifact Foo4
+}
+
+frame Foo5 {
+  database Foo6
+}
+
+cloud vpc {
+  node ec2 {
+    stack stack
+  }
+}
+
+@enduml
+  #+END_SRC
+
+  #+RESULTS:
+  [[file:diags/plantuml/deploy-diag/output/nesting.png]]
+
+**** Full nesting
+  #+BEGIN_SRC plantuml :file diags/plantuml/deploy-diag/output/full-nesting.png
+@startuml
+artifact artifact {
+card card {
+cloud cloud {
+component component {
+database database {
+file file {
+folder folder {
+frame frame {
+hexagon hexagon {
+node node {
+package package {
+queue queue {
+rectangle rectangle {
+stack stack {
+storage storage {
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+@enduml
+  #+END_SRC
+
+  #+RESULTS:
+  [[file:diags/plantuml/deploy-diag/output/full-nesting.png]]
+**** Style for each nested element
+  #+BEGIN_SRC plantuml :file diags/plantuml/deploy-diag/output/style-nested.png
+@startuml
+<style>
+artifact {
+  BackGroundColor #ee1100
+  LineThickness 1
+  LineColor black
+}
+card {
+  BackGroundColor #ff3311
+  LineThickness 1
+  LineColor black
+}
+cloud {
+  BackGroundColor #ff4422
+  LineThickness 1
+  LineColor black
+}
+component {
+  BackGroundColor #ff6644
+  LineThickness 1
+  LineColor black
+}
+database {
+  BackGroundColor #ff9933
+  LineThickness 1
+  LineColor black
+}
+file {
+  BackGroundColor #feae2d
+  LineThickness 1
+  LineColor black
+}
+folder {
+  BackGroundColor #ccbb33
+  LineThickness 1
+  LineColor black
+}
+frame {
+  BackGroundColor #d0c310
+  LineThickness 1
+  LineColor black
+}
+hexagon {
+  BackGroundColor #aacc22
+  LineThickness 1
+  LineColor black
+}
+node {
+  BackGroundColor #22ccaa
+  LineThickness 1
+  LineColor black
+}
+package {
+  BackGroundColor #12bdb9
+  LineThickness 1
+  LineColor black
+}
+queue {
+  BackGroundColor #11aabb
+  LineThickness 1
+  LineColor black
+}
+rectangle {
+  BackGroundColor #4444dd
+  LineThickness 1
+  LineColor black
+}
+stack {
+  BackGroundColor #3311bb
+  LineThickness 1
+  LineColor black
+}
+storage {
+  BackGroundColor #3b0cbd
+  LineThickness 1
+  LineColor black
+}
+
+</style>
+artifact artifact {
+}
+card card {
+}
+cloud cloud {
+}
+component component {
+}
+database database {
+}
+file file {
+}
+folder folder {
+}
+frame frame {
+}
+hexagon hexagon {
+}
+node node {
+}
+package package {
+}
+queue queue {
+}
+rectangle rectangle {
+}
+stack stack {
+}
+storage storage {
+}
+@enduml
+  #+END_SRC
+
+  #+RESULTS:
+  [[file:diags/plantuml/deploy-diag/output/style-nested.png]]
+**** Style for all elements
+  #+BEGIN_SRC plantuml :file diags/plantuml/deploy-diag/output/style-nested-all.png
+@startuml
+<style>
+.stereo {
+  BackgroundColor palegreen
+}
+</style>
+actor actor << stereo >>
+actor/ "actor/" << stereo >>
+agent agent << stereo >>
+artifact artifact << stereo >>
+boundary boundary << stereo >>
+card card << stereo >>
+circle circle << stereo >>
+cloud cloud << stereo >>
+collections collections << stereo >>
+component component << stereo >>
+control control << stereo >>
+database database << stereo >>
+entity entity << stereo >>
+file file << stereo >>
+folder folder << stereo >>
+frame frame << stereo >>
+hexagon hexagon << stereo >>
+interface interface << stereo >>
+label label << stereo >>
+node node << stereo >>
+package package << stereo >>
+person person << stereo >>
+queue queue << stereo >>
+rectangle rectangle << stereo >>
+stack stack << stereo >>
+storage storage << stereo >>
+usecase usecase << stereo >>
+usecase/ "usecase/" << stereo >>
+@enduml
+  #+END_SRC
+
+  #+RESULTS:
+  [[file:diags/plantuml/deploy-diag/output/style-nested-all.png]]
+**** Mine (to generate report)                                    :Important:
+  #+BEGIN_SRC plantuml :file diags/plantuml/deploy-diag/output/deploy-diag.png
+@startuml
+''left to right direction
+!theme plain
+''<style>
+''package{
+''  BackgroundColor white
+''}
+''node{
+''  BackGroundColor #lightgrey
+''  LineThickness 2
+''  LineColor black
+''  FontStyle bold
+''}
+''</style>
+
+node "Linux PC" <<Host device>> #lightblue{
+package "MDO-RC: AppManager" as MDORCAPP #lightgrey {
+  frame "Comm Manager" as CM #bisque{
+  ''[Comm \nStatus] as RCS
+  [RC\nTx] as RCT
+  [RC\nRx] as RCR
+  }
+}
+
+package "MDO-RS: AppManager" as MDORSAPP #lightgrey{
+  ''HTTP - [UI]
+  frame "DB Client" as RSDBM #bisque{
+  [Query\nParser] as RSQP
+  [Response\nParser] as RSRP
+  }
+  frame "Comm Manager" as CMS #bisque{
+  ''[Comm \nStatus] as RSS
+  [RS Tx \nClient] as RSTC
+  [RS Rx \nClient] as RSRC
+  [RS Tx \nLocal] as RSTL
+  [RS Rx \nLocal] as RSRL
+  }
+}
+
+package "MDO-RS: DB Server" #lightgrey{
+  ''[DB Transaction\n Manager] as DBTM
+  frame "Comm Manager" as CMDB #bisque{
+  ''[Comm \nStatus] as DBSt
+  [Server \nTx] as SERVTx
+  [Server \nRx] as SERVRx
+  }
+  [DB Manager] as RSDBM2
+  database "Databases" as DBs
+}
+}
+
+node "Raspberry Pi" <<Embedded device>> #lightblue{
+package "MDO-L: AppManager" as MDOLAPP #lightgrey{
+  frame "Comm Manager" as LCM #bisque{
+  ''[Comm \nStatus] as LCS
+  [Local\nTx] as LCT
+  [Local\nRx] as LCR
+  [Web\n Tx] as WEBTx
+  [Web\n Rx] as WEBRx
+  }
+}
+}
+
+node "Web" <<cloud>> #lightblue{
+cloud Twitter #plum{
+[REST APIs] as REST
+}
+
+cloud Transfer.sh #plum{
+[URL proxy] as URLP
+}
+}
+
+'' ----------- INTERFACES
+() "TCP/IP" as sockRS_L
+() "TCP/IP" as sockL_Twitter
+() "TCP/IP" as sockL_Transfer_sh
+() "TCP/IP" as sockRC_RS
+() "TCP/IP" as sockRS_SQL
+''-------------------------------
+
+'' MDO-Local
+'' Cloud connections
+[WEBTx] .u.> sockL_Twitter #darkred: <color:darkred>twitter\n<color:darkred>cmd
+sockL_Twitter .u.> REST #darkred
+[WEBTx] -d-> sockL_Transfer_sh: URL proxy\ncmd
+sockL_Transfer_sh -d-> URLP
+REST --> sockL_Twitter #darkred: <color:darkred>twitter\n<color:darkred>response
+sockL_Twitter --> [WEBRx] #darkred
+URLP --> sockL_Transfer_sh: URL proxy\nresponse
+sockL_Transfer_sh --> [WEBRx]
+'' MDO-RS
+'' Client Connections
+[RCT] ..> sockRC_RS #blue: <color:blue>send server\n<color:blue>frame
+sockRC_RS ..> [RSRC] #blue
+[RSTC] ..> sockRC_RS #blue: <color:blue>send client\n<color:blue>frame
+sockRC_RS ..> [RCR] #blue
+'' Local connections
+[RSTL] .u.> sockRS_L #darkgreen: <color:darkgreen>send local\n<color:darkgreen>frame
+sockRS_L .u.> [LCR] #darkgreen
+[LCT] .d.> sockRS_L #darkgreen: <color:darkgreen>send server\n<color:darkgreen>frame
+sockRS_L .d.> [RSRL] #darkgreen
+'' Database connections
+[RSQP] --> sockRS_SQL #indigo: <color:indigo>db\n<color:indigo>query
+sockRS_SQL --> [SERVRx] #indigo
+[SERVTx] ..> sockRS_SQL #indigo: <color:indigo>db \n<color:indigo>response 
+sockRS_SQL ..> [RSRP] #indigo
+
+@enduml
+  #+END_SRC
+
+  #+RESULTS:
+  [[file:diags/plantuml/deploy-diag/output/deploy-diag.png]]
 
 *** ▭▭ IN-PROGRESS Class diagrams
     :LOGBOOK:
@@ -3035,37 +3474,83 @@ class User_DB{
 ' ---------
 
 '' -------- Classes 
+'' APP
+''class AppManager{
+''    - UIApp uiApp()
+''    - UIWidget win()
+''}
+class UIApp{
+    == constr/destr ==
+    +UIApp()
+    ~UIApp()
+    == mutators ==
+    void exec()
+}
+    note right of UIApp::exec
+    executes the UI
+    event loop
+    end note
+class UIWindow{
+    == constr/destr ==
+    +UIWindow(string title)
+    ~UIWindow()
+    == mutators ==
+    void show()
+}
+
 '' AD
 class Ad {
--FILE* _vid
--fragType _frag
--bool _rented
-== accessors ==
-+ bool rented() const
-+ enum fragType frag() const
-+ FILE* video() const
-== setters ==
-+ void rent(bool r)
-+ void modifyFrag(enum fragType f)
-+ void modifyVideo(FILE* f)
-== helpers ==
-+ void print() const
+  -FILE* _vid
+  -fragType _frag
+  -bool _rented
+  == constr/destr ==
+  +Ad()
+  +~Ad()
+  == accessors ==
+  + bool rented() const
+  + enum fragType frag() const
+  + FILE* video() const
+  == mutators ==
+  + void rent(bool r)
+  + void modifyFrag(enum fragType f)
+  + void modifyVideo(FILE* f)
+  == helpers ==
+  + void print() const
 }
 '' STATION
 class Station{
--int _id
--string _name
--string _addr
--list<ad> _adsToActivate
-== accessors ==
-+ int id() const
-+ string name() const
-+ string addr() const
-+ list<ad> adsToActivate() const
-== setters ==
-+ void rent(bool r)
-+ void modifyFrag(enum fragType f)
-+ void modifyVideo(FILE* f)
+  -int _id
+  -string _name
+  -string _addr
+  -list<ad> _adsToActivate
+  == accessors ==
+  + int id() const
+  + string name() const
+  + string addr() const
+  + list<ad> adsToActivate() const
+  == mutators ==
+  + void rent(bool r)
+  + void modifyFrag(enum fragType f)
+  + void modifyVideo(FILE* f)
+  == helpers ==
+  + void print() const
+}
+'' COMM MANAGER
+class CommManager{
+  -bool _rxStatus
+  -clientSock _cliSock
+  -string servAddr
+  == accessors ==
+  + bool status() const
+  + string name() const
+  + string addr() const
+  + list<ad> adsToActivate() const
+  == mutators ==
+  + void rent(bool r)
+  + void modifyFrag(enum fragType f)
+  + void modifyVideo(FILE* f)
+  == helpers ==
+  + void print() const
 }
 '' ----------------
 
@@ -3082,6 +3567,7 @@ class Station{
 '' - composition: *--
 '' - Aggregation: o--
 Ad "1" *-- "1" fragType: contains
+UIApp "1" *-- "many" UIWindow: contains
 
 '' ------------------------------
 
@@ -3090,448 +3576,6 @@ Ad "1" *-- "1" fragType: contains
 
   #+RESULTS:
   [[file:diags/plantuml/class-diag/output/class-diag-rc.png]]
-
-*** Deployment diagrams
-In UML, deployment diagrams model the physical architecture of a system. Deployment diagrams show the relationships between the software and hardware components in the system and the physical distribution of the processing.
-
-Deployment diagrams, which you typically prepare during the implementation phase
-of development, show the physical arrangement of the nodes in a distributed
-system, the artifacts that are stored on each node, and the components and other
-elements that the artifacts implement. Nodes represent hardware devices such as
-computers, sensors, and printers, as well as other devices that support the
-runtime environment of a system. Communication paths and deploy relationships
-model the connections in the system. ([[https://www.ibm.com/docs/en/rsar/9.5?topic=diagrams-deployment][src]])
-
-*Types of elements* ([[https://mychartguide.com/deployment-diagram/#What_are_the_elements_involved][src]]): 
-1. Artifact: The artifact is the main element in a deployment diagram and
-   signifies the product developed by any software. It is also often referred to
-   as the information that software generates. It is symbolized with the help of
-   a rectangle.
-2. Association: This helps signify the correlation and message between two
-   different nodes in the diagram.
-3. Component: This helps signify the presence of a software element in the
-   diagram and is represented with a rectangle with two tabs.
-4. Dependency: This signifies the dependency and correlation of one node or
-   component with that of the other in a deployment diagram. It is represented
-   with dashed lines with arrows.
-5. Interface: This signifies the presence of a contractual relationship in a
-   diagram, especially when there are obligations involved that needs to be
-   completed in a total system. It is represented with a circle.
-6. Node: This signifies the main element of any kind of hardware or even
-   software object in a deployment diagram that is further shown with a three
-   dimensional box.
-7. Stereotype: This signifies the element that is trapped inside a node which
-   comes with its representation with the name bracketed by double arrows.
-
-**** Declaring element
-  #+BEGIN_SRC plantuml :file diags/plantuml/deploy-diag/output/decl-elem.png
-@startuml
-actor actor
-actor/ "actor/"
-agent agent
-artifact artifact
-boundary boundary
-card card
-circle circle
-cloud cloud
-collections collections
-component component
-control control
-database database
-entity entity
-file file
-folder folder
-frame frame
-hexagon hexagon
-interface interface
-label label
-node node
-package package
-person person
-queue queue
-rectangle rectangle
-stack stack
-storage storage
-usecase usecase
-usecase/ "usecase/"
-@enduml
-  #+END_SRC
-
-  #+RESULTS:
-  [[file:diags/plantuml/deploy-diag/output/decl-elem.png]]
-**** Linking or arrow
-
-  #+BEGIN_SRC plantuml :file diags/plantuml/deploy-diag/output/link-arrow.png
-@startuml
-
-cloud cloud1
-cloud cloud2
-cloud cloud3
-cloud cloud4
-cloud cloud5
-cloud1 -0- cloud2
-cloud1 -0)- cloud3
-cloud1 -(0- cloud4
-cloud1 -(0)- cloud5
-
-@enduml
-  #+END_SRC
-**** Line style
-  #+BEGIN_SRC plantuml :file diags/plantuml/deploy-diag/output/line-style.png
-@startuml
-title Bracketed line style with label
-node foo
-foo --> bar          : ∅
-foo -[bold]-> bar1   : [bold]
-foo -[dashed]-> bar2 : [dashed]
-foo -[dotted]-> bar3 : [dotted]
-foo -[hidden]-> bar4 : [hidden]
-foo -[plain]-> bar5  : [plain]
-@enduml
-  #+END_SRC
-
-  #+RESULTS:
-  [[file:diags/plantuml/deploy-diag/output/line-style.png]]
-**** Nesting
-  #+BEGIN_SRC plantuml :file diags/plantuml/deploy-diag/output/nesting.png
-@startuml
-artifact Foo1 {
-  folder Foo2
-}
-
-folder Foo3 {
-  artifact Foo4
-}
-
-frame Foo5 {
-  database Foo6
-}
-
-cloud vpc {
-  node ec2 {
-    stack stack
-  }
-}
-
-@enduml
-  #+END_SRC
-
-  #+RESULTS:
-  [[file:diags/plantuml/deploy-diag/output/nesting.png]]
-
-**** Full nesting
-  #+BEGIN_SRC plantuml :file diags/plantuml/deploy-diag/output/full-nesting.png
-@startuml
-artifact artifact {
-card card {
-cloud cloud {
-component component {
-database database {
-file file {
-folder folder {
-frame frame {
-hexagon hexagon {
-node node {
-package package {
-queue queue {
-rectangle rectangle {
-stack stack {
-storage storage {
-}
-}
-}
-}
-}
-}
-}
-}
-}
-}
-}
-}
-}
-}
-}
-@enduml
-  #+END_SRC
-
-  #+RESULTS:
-  [[file:diags/plantuml/deploy-diag/output/full-nesting.png]]
-**** Style for each nested element
-  #+BEGIN_SRC plantuml :file diags/plantuml/deploy-diag/output/style-nested.png
-@startuml
-<style>
-artifact {
-  BackGroundColor #ee1100
-  LineThickness 1
-  LineColor black
-}
-card {
-  BackGroundColor #ff3311
-  LineThickness 1
-  LineColor black
-}
-cloud {
-  BackGroundColor #ff4422
-  LineThickness 1
-  LineColor black
-}
-component {
-  BackGroundColor #ff6644
-  LineThickness 1
-  LineColor black
-}
-database {
-  BackGroundColor #ff9933
-  LineThickness 1
-  LineColor black
-}
-file {
-  BackGroundColor #feae2d
-  LineThickness 1
-  LineColor black
-}
-folder {
-  BackGroundColor #ccbb33
-  LineThickness 1
-  LineColor black
-}
-frame {
-  BackGroundColor #d0c310
-  LineThickness 1
-  LineColor black
-}
-hexagon {
-  BackGroundColor #aacc22
-  LineThickness 1
-  LineColor black
-}
-node {
-  BackGroundColor #22ccaa
-  LineThickness 1
-  LineColor black
-}
-package {
-  BackGroundColor #12bdb9
-  LineThickness 1
-  LineColor black
-}
-queue {
-  BackGroundColor #11aabb
-  LineThickness 1
-  LineColor black
-}
-rectangle {
-  BackGroundColor #4444dd
-  LineThickness 1
-  LineColor black
-}
-stack {
-  BackGroundColor #3311bb
-  LineThickness 1
-  LineColor black
-}
-storage {
-  BackGroundColor #3b0cbd
-  LineThickness 1
-  LineColor black
-}
-
-</style>
-artifact artifact {
-}
-card card {
-}
-cloud cloud {
-}
-component component {
-}
-database database {
-}
-file file {
-}
-folder folder {
-}
-frame frame {
-}
-hexagon hexagon {
-}
-node node {
-}
-package package {
-}
-queue queue {
-}
-rectangle rectangle {
-}
-stack stack {
-}
-storage storage {
-}
-@enduml
-  #+END_SRC
-
-  #+RESULTS:
-  [[file:diags/plantuml/deploy-diag/output/style-nested.png]]
-**** Style for all elements
-  #+BEGIN_SRC plantuml :file diags/plantuml/deploy-diag/output/style-nested-all.png
-@startuml
-<style>
-.stereo {
-  BackgroundColor palegreen
-}
-</style>
-actor actor << stereo >>
-actor/ "actor/" << stereo >>
-agent agent << stereo >>
-artifact artifact << stereo >>
-boundary boundary << stereo >>
-card card << stereo >>
-circle circle << stereo >>
-cloud cloud << stereo >>
-collections collections << stereo >>
-component component << stereo >>
-control control << stereo >>
-database database << stereo >>
-entity entity << stereo >>
-file file << stereo >>
-folder folder << stereo >>
-frame frame << stereo >>
-hexagon hexagon << stereo >>
-interface interface << stereo >>
-label label << stereo >>
-node node << stereo >>
-package package << stereo >>
-person person << stereo >>
-queue queue << stereo >>
-rectangle rectangle << stereo >>
-stack stack << stereo >>
-storage storage << stereo >>
-usecase usecase << stereo >>
-usecase/ "usecase/" << stereo >>
-@enduml
-  #+END_SRC
-
-  #+RESULTS:
-  [[file:diags/plantuml/deploy-diag/output/style-nested-all.png]]
-**** Mine (to generate report)                                    :Important:
-  #+BEGIN_SRC plantuml :file diags/plantuml/deploy-diag/output/deploy-diag.png
-@startuml
-''left to right direction
-!theme plain
-''<style>
-''package{
-''  BackgroundColor white
-''}
-''node{
-''  BackGroundColor #lightgrey
-''  LineThickness 2
-''  LineColor black
-''  FontStyle bold
-''}
-''</style>
-
-node "Linux PC" <<Host device>> #lightblue{
-package "MDO-RC: AppManager" as MDORCAPP #lightgrey {
-  frame "Comm Manager" as CM #bisque{
-  ''[Comm \nStatus] as RCS
-  [RC\nTx] as RCT
-  [RC\nRx] as RCR
-  }
-}
-
-package "MDO-RS: AppManager" as MDORSAPP #lightgrey{
-  ''HTTP - [UI]
-  frame "DB Client" as RSDBM #bisque{
-  [Query\nParser] as RSQP
-  [Response\nParser] as RSRP
-  }
-  frame "Comm Manager" as CMS #bisque{
-  ''[Comm \nStatus] as RSS
-  [RS Tx \nClient] as RSTC
-  [RS Rx \nClient] as RSRC
-  [RS Tx \nLocal] as RSTL
-  [RS Rx \nLocal] as RSRL
-  }
-}
-
-package "MDO-RS: DB Server" #lightgrey{
-  ''[DB Transaction\n Manager] as DBTM
-  frame "Comm Manager" as CMDB #bisque{
-  ''[Comm \nStatus] as DBSt
-  [Server \nTx] as SERVTx
-  [Server \nRx] as SERVRx
-  }
-  [DB Manager] as RSDBM2
-  database "Databases" as DBs
-}
-}
-
-node "Raspberry Pi" <<Embedded device>> #lightblue{
-package "MDO-L: AppManager" as MDOLAPP #lightgrey{
-  frame "Comm Manager" as LCM #bisque{
-  ''[Comm \nStatus] as LCS
-  [Local\nTx] as LCT
-  [Local\nRx] as LCR
-  [Web\n Tx] as WEBTx
-  [Web\n Rx] as WEBRx
-  }
-}
-}
-
-node "Web" <<cloud>> #lightblue{
-cloud Twitter #plum{
-[REST APIs] as REST
-}
-
-cloud Transfer.sh #plum{
-[URL proxy] as URLP
-}
-}
-
-'' ----------- INTERFACES
-() "tcp/ip" as sockRS_L
-() "tcp/ip" as sockL_RS
-() "tcp/ip" as sockL_Twitter
-() "tcp/ip" as sockL_Transfer_sh
-() "tcp/ip" as sockRC_RS
-() "tcp/ip" as sockRS_RC
-() "tcp/ip" as sockRS_SQL
-() "tcp/ip" as sockSQL_RS
-''-------------------------------
-
-'' MDO-Local
-'' Cloud connections
-[WEBTx] ..> sockL_Twitter #darkred: <color:darkred>twitter\n<color:darkred>cmd
-sockL_Twitter ..> REST #darkred
-[WEBTx] --> sockL_Transfer_sh: URL proxy\ncmd
-sockL_Transfer_sh --> URLP
-REST --> sockL_Twitter #darkred: <color:darkred>twitter\n<color:darkred>response
-sockL_Twitter --> [WEBRx] #darkred
-URLP --> sockL_Transfer_sh: URL proxy\nresponse
-sockL_Transfer_sh --> [WEBRx]
-'' MDO-RS
-'' Client Connections
-[RCT] ..> sockRC_RS #blue: <color:blue>send server\n<color:blue>frame
-sockRC_RS ..> [RSRC] #blue
-[RSTC] ..> sockRS_RC #blue: <color:blue>send client\n<color:blue>frame
-sockRS_RC ..> [RCR] #blue
-'' Local connections
-[RSTL] ..> sockRS_L #darkgreen: <color:darkgreen>send local\n<color:darkgreen>frame
-sockRS_L ..> [LCR] #darkgreen
-[LCT] ..> sockL_RS #darkgreen: <color:darkgreen>send server\n<color:darkgreen>frame
-sockL_RS ..> [RSRL] #darkgreen
-'' Database connections
-[RSQP] --> sockRS_SQL #indigo: <color:indigo>db\n<color:indigo>query
-sockRS_SQL --> [SERVRx] #indigo
-[SERVTx] ..> sockSQL_RS #indigo: <color:indigo>db \n<color:indigo>response 
-sockSQL_RS ..> [RSRP] #indigo
-
-@enduml
-  #+END_SRC
-
-  #+RESULTS:
-  [[file:diags/plantuml/deploy-diag/output/deploy-diag.png]]
 
 *** Entity-Relationship diagram
 [[https://plantuml.com/ie-diagram][src]]
