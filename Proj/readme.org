@@ -372,7 +372,10 @@ Design Phase must include (some specifications may vary according to your projec
      - PADS, KiCad
 2) *Software Specification* [2/11]:
    - [ ] Entity Relations Diagram
-   - [ ] Classes Diagram
+   - [-] Classes Diagram
+     - [X] Remote Client
+     - [ ] Remote Server
+     - [ ] Local System
    - [ ] Data Formats
    - [ ] Flowcharts
    - [ ] Tasks Division (accurate plan)
@@ -3280,9 +3283,9 @@ class ArrayList extends AbstractList
    #+RESULTS:
    [[file:diags/plantuml/class-diag/output/all-together.png]]
 
-**** Mine (to generate report)
+**** Mine (to generate report)                                    :Important:
 
-*Test*
+***** Test
   #+BEGIN_SRC plantuml :file diags/plantuml/class-diag/output/test.png
 @startuml
 '' -------------------- Splitting into several files -----------
@@ -3363,7 +3366,7 @@ class ArrayList extends AbstractList
   #+RESULTS:
   [[file:diags/plantuml/class-diag/output/test.png]]
 
-*Client*
+***** Client
   #+BEGIN_SRC plantuml :file diags/plantuml/class-diag/output/class-diag-rc.png
 @startuml
 '' ---------------- THEMES (some only work on the web server) -----------
@@ -3786,6 +3789,285 @@ UIWindow "1" *-u- "many" cmd: contains
 
   #+RESULTS:
   [[file:diags/plantuml/class-diag/output/class-diag-rc.png]]
+
+***** Server
+  #+BEGIN_SRC plantuml :file diags/plantuml/class-diag/output/class-diag-rs.png
+@startuml
+'' ---------------- THEMES (some only work on the web server) -----------
+''!theme plain
+''!theme toy
+''!theme spacelab
+''!theme mars (does not work)
+'' -------------------- Splitting into several files -----------
+page 2x2
+skinparam pageMargin 10
+skinparam pageExternalColor gray
+skinparam pageBorderColor black
+'' --------------------------------------------------------------
+'' remove attributes and methods icons
+skinparam classAttributeIconSize 0
+'' --------------------------------------------------------------
+'' ------- defining elements --------
+''interface       interface
+'' ------- structures
+''class Ad_DB <<(S,#FF7700)struct>>
+''class User_DB <<(S,#FF7700)struct>>
+''class Station <<(S,#FF7700)struct>>
+hide <<struct>> methods
+hide enum methods
+''hide <<struct>> circle
+''class Ad_DB {
+''+FILE vid_f
+''+fragType frag
+''+bool rented
+''}
+''
+''class User_DB{
+''+bool admin
+''+char* name
+''+char* encrypted_pass
+''}
+class rxFrame <<(S,lightgrey)struct>>{
+enum frameT header
+size_t len
+void *data
+}
+class dbRsp <<(S,lightgrey)struct>>{
+size_t len
+void *data
+}
+class cmd <<(S,lightgrey)struct>>{
+size_t len
+void *data
+}
+' ---------
+
+enum ConnStatus{
+CREATED
+ONLINE
+CLOSED
+ERROR
+}
+
+enum Role{
+BRAND
+ADMIN
+}
+
+enum frameT{
+DB
+CMD
+}
+'' ---------
+
+
+'' -------- Classes 
+'' APP
+''class AppManager{
+''    - UIApp uiApp()
+''    - UIWidget win()
+''}
+class CLIApp{
+    == constr/destr ==
+    +CLIApp()
+    ~CLIApp()
+    == mutators ==
+    void exec()
+}
+    note right of CLIApp::exec
+    executes the 
+    UI event loop
+    end note
+class CLI{
+  - vector<rxFrame> cliRxVec
+  - vector<rxFrame> cliTxVec
+  - vector<rxFrame> LocRxVec
+  - vector<rxFrame> LocTxVec
+  - vector<string> userInput
+  - mutex _sockCliAccess
+  - condition_variable _msgRxCli
+  - mutex _sockLocAccess
+  - condition_variable _msgLocCli
+  == constr/destr ==
+  +CLI()
+  ~CLI()
+  == mutators ==
+  bool init()
+  void show()
+}
+
+'' User
+class User{
+  -int _id
+  -string _name
+  -string _email
+  -string _encryptedPass
+  -enum Role _role;
+  == constr/destr ==
+  +User()
+  +User(string name, string email, string pass)
+  +~User()
+  == accessors ==
+  + int id() const
+  + string name() const
+  + string email() const
+  + enum Role role() const
+  + string encryptedPass() const
+  == mutators ==
+  + bool setName(string name)
+  + bool setEmail(string email)
+  + bool setPass(string password)
+  + bool login(string password)
+  + bool logout()
+  == helpers ==
+  + void print() const
+}
+class Admin{
+  -list<User> _users
+  == constr/destr ==
+  +Admin()
+  +Admin(string name, string email, string pass)
+  +~Admin()
+  == accessors ==
+  + list<User> Users() const
+  == mutators ==
+  + bool setRole()
+  + bool addUser(User *user)
+  == helpers ==
+  + bool enableTest(bool enable)
+}
+'' Crypt
+class Crypt{
+  -int _key
+  == constr/destr ==
+  +Crypt()
+  +~Crypt()
+  == mutators ==
+  + string encrypt(string msg)
+  + string decrypt(string msg)
+}
+note top of Crypt
+Encrypts strings
+requested by
+multiple classes
+end note
+'' COMM MANAGER
+class CommManager{
+  -ConnStatus _status
+  -int _cliSock
+  -string _cliAddr
+  -int _cliPort
+  -int _localSock
+  -string _localAddr
+  -int _localPort
+  -mutex _sockCliAccess
+  -mutex _RxCliAccess
+  -condition_variable _msgRxCli
+  -mutex _sockLocAccess
+  -mutex _RxLocAccess
+  -condition_variable _msgRxLoc
+  == constr/destr ==
+  +CommManager(string addr)
+  +~CommManager()
+  == accessors ==
+  + ConnStatus status() const
+  - string cliAddr() const
+  - int cliPort() const
+  - string localAddr() const
+  - int localPort() const
+  == mutators ==
+  + int run()
+  - static void send_Cli_th_fcn( void* arg)
+  - static void recv_Cli_th_fcn( void* arg)
+  - static void send_Loc_th_fcn( void* arg) 
+  - static void recv_Loc_th_fcn( void* arg)
+''  + int Send(int sd, const void *obj, size_t len);
+''  + int Recv(int sd, void *obj, size_t len);
+}
+'' DB Client
+class DBClient{
+  -mutex RxExtract
+  -condition_variable extract
+  -ConnStatus _status
+  -int _dbSock
+  -string _dbAddr
+  -int _dbPort
+  == constr/destr ==
+  +DBClient()
+  +~DBClient()
+  == accessors ==
+  + ConnStatus status() const
+  - string dbAddr() const
+  - int dbPort() const
+  == mutators ==
+  + bool connect()
+  == helpers ==
+  + string validateQuery(string q)
+  + void extract(rxFrame *f)
+}
+class Parser{
+  -mutex parseExec
+  -condition_variable parsing
+  == constr/destr ==
+  +Parser()
+  +~Parser()
+  == helpers ==
+  + bool exec(Vector<rxFrame> *l)
+}
+class CliParser{
+  == constr/destr ==
+  +CliParser()
+  +~CliParser()
+  == helpers ==
+  + bool exec(Vector<rxFrame> *cli_l)
+}
+class LocalParser{
+  == constr/destr ==
+  +LocalParser()
+  +~LocalParser()
+  == helpers ==
+  + bool exec(Vector<rxFrame> *loc_l)
+}
+
+'' ----------------
+
+'' ----------- Containers
+
+'' ----------------
+
+'' --------------------------------------------------------------
+
+
+'' ---------- Relation between classes -----------
+'' Types
+'' - extension (inheritance):   <|--
+'' - composition: *--
+'' - Aggregation: o--
+CLIApp "1" *- "1" CLI: contains
+CLI "1" *- "1" CommManager: contains
+CLI "1" *-- "1" DBClient: contains
+CLI "1" *-- "1" User: contains
+CLI "1" *-- "1" Admin: contains
+CommManager "1" *- "1" ConnStatus: contains
+Admin -l-|> User
+User *-l- Role: contains
+User "1" - "1" Crypt
+CLI "1" *-- "1" Parser: contains
+rxFrame "1" *- "1" frameT: contains
+CLI "1" *-u- "many" rxFrame: contains
+CLI "1" *-u- "many" dbRsp: contains
+CLI "1" *-u- "many" cmd: contains
+CliParser --|> Parser
+LocalParser --|> Parser
+''UIView <|-- UIWindow: inherits
+
+'' ------------------------------
+
+@enduml
+  #+END_SRC
+
+  #+RESULTS:
+  [[file:diags/plantuml/class-diag/output/class-diag-rs.png]]
 
 *** Entity-Relationship diagram
 [[https://plantuml.com/ie-diagram][src]]
