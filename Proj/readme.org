@@ -337,13 +337,13 @@ Next Thursday, December 16th, we will have the presentations for the Design Phas
 Submit the *presentation* and *report* until Wednesday 15th, 23:00h.
 
 Design Phase must include (some specifications may vary according to your project):
-1) *Hardware Specification* [0/6]:
-   - [ ] Architecture
+1) *Hardware Specification* [6/6]:
+   - [X] Architecture
      - In the analysis phase an overview of the HW architecture was
        conceptualized. In this section, a more specific HW architecture is
        illustrated, using a block-diagram.
      - BLOCK DIAGRAM and comment it
-   - [-] Hardware Component Specification [7/8]
+   - [X] Hardware Component Specification [8/8]
      1) [X] Raspberry Pi
 	1) SD card
      2) [X] Power supply module
@@ -352,13 +352,13 @@ Design Phase must include (some specifications may vary according to your projec
      5) [X] LCD display: https://shorturl.at/dnoIZ
      6) [X] Raspberry Pi Camera
      7) [X] Colunas
-     8) [ ] On/off button
-   - [ ] Peripherals Pinout/Mapping/Connection Layout
+     8) [X] On/off button
+   - [X] Peripherals Pinout/Mapping/Connection Layout
      - Draw a schematic for connecting all HW components
      - Add a table containing:
        |            | PIN MAPPING      |          |
        | Controller | Interface device | Function |
-   - [ ] Test Cases
+   - [X] Test Cases
      - *Ultrasonic sensor*: one will connect the ultrasonic sensor to Raspberry
        Pi. Then an object will be approximated to the sensor from several
        distances with the corresponding distance being measure with a measuring
@@ -366,19 +366,19 @@ Design Phase must include (some specifications may vary according to your projec
        within the error margin provided by the manufactured, the device is
        compliant.
        | HW item | Type of test | Description | Expected result |
-   - [ ] PCB layout (when applicable)
+   - [X] PCB layout (when applicable)
      - Custom PCB for ultrasonic sensors + fragrance diffuser actuator
-   - [ ] Tools
+   - [X] Tools
      - PADS, KiCad
-2) *Software Specification* [0/11]:
+2) *Software Specification* [2/11]:
    - [ ] Entity Relations Diagram
    - [ ] Classes Diagram
    - [ ] Data Formats
    - [ ] Flowcharts
    - [ ] Tasks Division (accurate plan)
    - [ ] Thread Priorities
-   - [ ] GUI Layouts
-   - [ ] Test Cases
+   - [X] GUI Layouts
+   - [X] Test Cases
    - [ ] Software COTs
    - [ ] Third-party Libraries/apps
    - [ ] Tools
@@ -2394,7 +2394,10 @@ sockL_Transfer_sh -l-> [WEBRx]
   #+RESULTS:
   [[file:diags/plantuml/component-diag/output/component-diag-local-no-links.png]]
 
-*** Class diagrams
+*** ▭▭ IN-PROGRESS Class diagrams
+    :LOGBOOK:
+    - State "▭▭ IN-PROGRESS" from              [2021-12-14 ter 14:42]
+    :END:
 
 **** Declaring elements
    #+BEGIN_SRC plantuml :file diags/plantuml/class-diag/output/decl-elems.png
@@ -2840,14 +2843,23 @@ class ArrayList extends AbstractList
 
 **** Mine (to generate report)
 
-*Client*
-  #+BEGIN_SRC plantuml :file diags/plantuml/class-diag/output/class-diag-rc.png
+*Test*
+  #+BEGIN_SRC plantuml :file diags/plantuml/class-diag/output/test.png
 @startuml
 '' -------------------- Splitting into several files -----------
 page 2x2
 skinparam pageMargin 10
 skinparam pageExternalColor gray
 skinparam pageBorderColor black
+'' --------------------------------------------------------------
+
+'' --------------- Notes ---------------------------------------
+note top of Object : In java, every class\nextends this one.
+
+note "This is a floating note" as N1
+note "This note is connected\nto several objects." as N2
+Object .. N2
+N2 .. ArrayList
 '' --------------------------------------------------------------
 
 '' ------- defining elements --------
@@ -2863,7 +2875,10 @@ entity          entity
 enum            enum
 interface       interface
 ''structure struct
-class structName << struct >>
+class structName <<(S,#FF7700)struct>> {
++char[] data
+}
+hide <<struct>> methods
 '' ------------------------------
 
 '' ---------- Relation between classes -----------
@@ -2893,6 +2908,182 @@ class Dummy {
  ~method1()
  +method2()
 }
+
+
+'' -------------- Specific spot -----------
+class System << (S,#FF7700) Singleton >>
+class Date << (D,orchid) >>
+'' --------------------------------------
+
+class ArrayList implements List
+class ArrayList extends AbstractList
+
+@enduml
+  #+END_SRC
+
+  #+RESULTS:
+  [[file:diags/plantuml/class-diag/output/test.png]]
+
+*Client*
+  #+BEGIN_SRC plantuml :file diags/plantuml/class-diag/output/class-diag-rc.png
+@startuml
+'' ---------------- THEMES (some only work on the web server) -----------
+''!theme plain
+''!theme toy
+''!theme spacelab
+''!theme mars (does not work)
+'' -------------------- Splitting into several files -----------
+page 2x2
+skinparam pageMargin 10
+skinparam pageExternalColor gray
+skinparam pageBorderColor black
+'' --------------------------------------------------------------
+'' remove attributes and methods icons
+skinparam classAttributeIconSize 0
+'' --------------------------------------------------------------
+
+'' ---------------------- NOTES --------------------------------
+''note "This is a floating note" as N1
+''note "This note is connected\nto several objects." as N2
+''Object .. N2
+''N2 .. ArrayList
+'' --------------------------------------------------------------
+
+'' ------- defining elements --------
+''abstract        abstract
+''abstract class  "abstract class"
+''annotation      annotation
+''circle          circle
+''()              circle_short_form
+''class           class
+''diamond         diamond
+''<>              diamond_short_form
+''entity          entity
+''enum            enum
+''interface       interface
+''structure struct
+''class structName <<(S,#FF7700)struct>> {
+''+char[] data
+''}
+''hide <<struct>> methods
+'' ------------------------------
+''
+'' ---------- Relation between classes -----------
+'' Types
+'' - extension (inheritance):   <|--
+'' - composition: *--
+'' - Aggregation: o--
+'' To have a dotted line, replace -- by ..
+'' relation syntax
+''  <C1Name> "<cardC1>" <relation> "<cardC2>" <C2Name> : <label>
+''Class01 "1" *-- "many" Class02 : contains
+''Class03 o-- Class04 : aggregation
+''Class05 --> "1" Class06
+'' --------------------------------------
+''
+''newpage
+''
+'' -------------- Scope ---------------
+'' 
+'' 1) - : private
+'' 2) # : protected
+'' 3) ~ : package private
+'' 4) + : public 
+''class Dummy {
+'' -field1
+'' #field2
+'' ~method1()
+'' +method2()
+''}
+''
+''class ArrayList implements List
+''class ArrayList extends AbstractList
+'' --------------------------------------------------------------
+
+'' ------- defining elements --------
+interface       interface
+'' structures
+class Ad_DB <<(S,#FF7700)struct>>
+class User_DB <<(S,#FF7700)struct>>
+''class Station <<(S,#FF7700)struct>>
+hide <<struct>> methods
+''hide <<struct>> circle
+hide enum methods
+
+'' ------- enums
+enum fragType{
+COFFEE
+BURGER
+CHICKEN
+CALM
+...
+}
+'' ---------
+
+'' ------- structures
+class Ad_DB {
++FILE vid_f
++fragType frag
++bool rented
+}
+''
+class User_DB{
++bool admin
++char* name
++char* encrypted_pass
+}
+' ---------
+
+'' -------- Classes 
+'' AD
+class Ad {
+-FILE* _vid
+-fragType _frag
+-bool _rented
+== accessors ==
++ bool rented() const
++ enum fragType frag() const
++ FILE* video() const
+== setters ==
++ void rent(bool r)
++ void modifyFrag(enum fragType f)
++ void modifyVideo(FILE* f)
+== helpers ==
++ void print() const
+}
+'' STATION
+class Station{
+-int _id
+-string _name
+-string _addr
+-list<ad> _adsToActivate
+== accessors ==
++ int id() const
++ string name() const
++ string addr() const
++ list<ad> adsToActivate() const
+== setters ==
++ void rent(bool r)
++ void modifyFrag(enum fragType f)
++ void modifyVideo(FILE* f)
+}
+'' ----------------
+
+'' ----------- Containers
+
+'' ----------------
+
+'' --------------------------------------------------------------
+
+
+'' ---------- Relation between classes -----------
+'' Types
+'' - extension (inheritance):   <|--
+'' - composition: *--
+'' - Aggregation: o--
+Ad "1" *-- "1" fragType: contains
+
+'' ------------------------------
 
 @enduml
   #+END_SRC
@@ -3223,6 +3414,125 @@ usecase/ "usecase/" << stereo >>
 
   #+RESULTS:
   [[file:diags/plantuml/deploy-diag/output/style-nested-all.png]]
+**** Mine (to generate report)                                    :Important:
+  #+BEGIN_SRC plantuml :file diags/plantuml/deploy-diag/output/deploy-diag.png
+@startuml
+''left to right direction
+!theme plain
+''<style>
+''package{
+''  BackgroundColor white
+''}
+''node{
+''  BackGroundColor #lightgrey
+''  LineThickness 2
+''  LineColor black
+''  FontStyle bold
+''}
+''</style>
+
+node "Linux PC" <<Host device>> #lightblue{
+package "MDO-RC: AppManager" as MDORCAPP #lightgrey {
+  frame "Comm Manager" as CM #bisque{
+  ''[Comm \nStatus] as RCS
+  [RC\nTx] as RCT
+  [RC\nRx] as RCR
+  }
+}
+
+package "MDO-RS: AppManager" as MDORSAPP #lightgrey{
+  ''HTTP - [UI]
+  frame "DB Client" as RSDBM #bisque{
+  [Query\nParser] as RSQP
+  [Response\nParser] as RSRP
+  }
+  frame "Comm Manager" as CMS #bisque{
+  ''[Comm \nStatus] as RSS
+  [RS Tx \nClient] as RSTC
+  [RS Rx \nClient] as RSRC
+  [RS Tx \nLocal] as RSTL
+  [RS Rx \nLocal] as RSRL
+  }
+}
+
+package "MDO-RS: DB Server" #lightgrey{
+  ''[DB Transaction\n Manager] as DBTM
+  frame "Comm Manager" as CMDB #bisque{
+  ''[Comm \nStatus] as DBSt
+  [Server \nTx] as SERVTx
+  [Server \nRx] as SERVRx
+  }
+  [DB Manager] as RSDBM2
+  database "Databases" as DBs
+}
+}
+
+node "Raspberry Pi" <<Embedded device>> #lightblue{
+package "MDO-L: AppManager" as MDOLAPP #lightgrey{
+  frame "Comm Manager" as LCM #bisque{
+  ''[Comm \nStatus] as LCS
+  [Local\nTx] as LCT
+  [Local\nRx] as LCR
+  [Web\n Tx] as WEBTx
+  [Web\n Rx] as WEBRx
+  }
+}
+}
+
+node "Web" <<cloud>> #lightblue{
+cloud Twitter #plum{
+[REST APIs] as REST
+}
+
+cloud Transfer.sh #plum{
+[URL proxy] as URLP
+}
+}
+
+'' ----------- INTERFACES
+() "tcp/ip" as sockRS_L
+() "tcp/ip" as sockL_RS
+() "tcp/ip" as sockL_Twitter
+() "tcp/ip" as sockL_Transfer_sh
+() "tcp/ip" as sockRC_RS
+() "tcp/ip" as sockRS_RC
+() "tcp/ip" as sockRS_SQL
+() "tcp/ip" as sockSQL_RS
+''-------------------------------
+
+'' MDO-Local
+'' Cloud connections
+[WEBTx] ..> sockL_Twitter #darkred: <color:darkred>twitter\n<color:darkred>cmd
+sockL_Twitter ..> REST #darkred
+[WEBTx] --> sockL_Transfer_sh: URL proxy\ncmd
+sockL_Transfer_sh --> URLP
+REST --> sockL_Twitter #darkred: <color:darkred>twitter\n<color:darkred>response
+sockL_Twitter --> [WEBRx] #darkred
+URLP --> sockL_Transfer_sh: URL proxy\nresponse
+sockL_Transfer_sh --> [WEBRx]
+'' MDO-RS
+'' Client Connections
+[RCT] ..> sockRC_RS #blue: <color:blue>send server\n<color:blue>frame
+sockRC_RS ..> [RSRC] #blue
+[RSTC] ..> sockRS_RC #blue: <color:blue>send client\n<color:blue>frame
+sockRS_RC ..> [RCR] #blue
+'' Local connections
+[RSTL] ..> sockRS_L #darkgreen: <color:darkgreen>send local\n<color:darkgreen>frame
+sockRS_L ..> [LCR] #darkgreen
+[LCT] ..> sockL_RS #darkgreen: <color:darkgreen>send server\n<color:darkgreen>frame
+sockL_RS ..> [RSRL] #darkgreen
+'' Database connections
+[RSQP] --> sockRS_SQL #indigo: <color:indigo>db\n<color:indigo>query
+sockRS_SQL --> [SERVRx] #indigo
+[SERVTx] ..> sockSQL_RS #indigo: <color:indigo>db \n<color:indigo>response 
+sockSQL_RS ..> [RSRP] #indigo
+
+@enduml
+  #+END_SRC
+
+  #+RESULTS:
+  [[file:diags/plantuml/deploy-diag/output/deploy-diag.png]]
+
 *** Entity-Relationship diagram
 [[https://plantuml.com/ie-diagram][src]]
 

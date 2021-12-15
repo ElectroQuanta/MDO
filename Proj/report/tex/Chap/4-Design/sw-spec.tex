@@ -217,6 +217,58 @@ The \emph{\texttt{MDO-RS: AppManager}} package is comprised of the following art
 %
 %
 
+%
+\subsection{Deployment specification}
+\label{sec:deployment-spec}
+The deployment specification maps the software artifacts derived in the
+component diagrams to the respective computational node where it will be
+executed. This step pertains to the implementation phase; nonetheless, it is
+illustrated here as it clarifies the \gls{sw} architecture, as well as it guides
+some design decisions.
+
+Fig.~\ref{fig:deploy-diag} depicts the deployment diagram for the \gls{mdo}
+system. In blue are represented the computational nodes of interest, namely:
+\begin{item-c}
+\item
+  \emph{\texttt{Linux PC}}:
+  it is the host device, where are executed the packages
+  (in grey) \texttt{MDO-RC: AppManager}, the \texttt{MDO-RS: AppManager}, and
+  the \texttt{MDO-RS: DB Server}. All connections between packages in the
+  \texttt{Linux PC} and \texttt{Raspberry Pi} are \gls{tcp-ip} sockets in
+  a client-server architecture. The design and subsequent implementation of
+  these packages are not limited by the embedded device constraints, thus, the
+  focus is on functionality and ease of implementation. It is important to note
+  the design is decoupled, i.e., the \texttt{Remote Client} and \texttt{Remote
+    Server} can be executed in different computational nodes, where, the former
+  runs on a desktop computer and the latter on a cloud-based service or
+  mainframe, thanks to the client-server architecture based on \gls{tcp-ip}
+  sockets. Thus, for practicality reasons, both subsystems are implemented on
+  the same \texttt{Linux PC}, but it should be straightforward to migrate them
+  to different and distinct platforms.
+\item
+  \emph{\texttt{Raspberry Pi}}:
+  it is the embedded device, where is executed the package \texttt{MDO-L:
+    AppManager}. It interacts with \texttt{Remote Server} and \texttt{Web
+    services} --- \texttt{Twitter} and \texttt{Transfer.sh} --- using
+  \gls{tcp-ip} sockets in a client-server architecture. The design and subsequent
+  implementation of this package is limited by the embedded device constraints,
+  thus, the focus in on functionality and performance.
+\item
+  \emph{\texttt{Web}}:
+  it represents the remote computational nodes where the \texttt{Web services}
+  --- \texttt{Twitter} and \texttt{Transfer.sh} are executed. The \texttt{Local
+    System} interacts with these services using \gls{tcp-ip} sockets in a
+  client-server architecture through the exposed \glspl{api}.
+\end{item-c}
+%
+%
+\begin{figure}[htb!]
+\centering
+    \includegraphics[width=1.0\columnwidth]{./img/deploy-diag.png}
+  \caption{Deployment diagram}%
+\label{fig:deploy-diag}
+\end{figure}
+
 \subsection{Static architecture --- Class diagrams}
 \label{sec:stat-arch-class}
 In this section the static architecture is derived from the \gls{sw}
