@@ -3440,14 +3440,39 @@ skinparam classAttributeIconSize 0
 '' --------------------------------------------------------------
 
 '' ------- defining elements --------
-interface       interface
-'' structures
-class Ad_DB <<(S,#FF7700)struct>>
-class User_DB <<(S,#FF7700)struct>>
+''interface       interface
+'' ------- structures
+''class Ad_DB <<(S,#FF7700)struct>>
+''class User_DB <<(S,#FF7700)struct>>
 ''class Station <<(S,#FF7700)struct>>
 hide <<struct>> methods
-''hide <<struct>> circle
 hide enum methods
+''hide <<struct>> circle
+''class Ad_DB {
+''+FILE vid_f
+''+fragType frag
+''+bool rented
+''}
+''
+''class User_DB{
+''+bool admin
+''+char* name
+''+char* encrypted_pass
+''}
+class rxFrame <<(S,lightgrey)struct>>{
+enum frameT header
+size_t len
+void *data
+}
+class dbRsp <<(S,lightgrey)struct>>{
+size_t len
+void *data
+}
+class cmd <<(S,lightgrey)struct>>{
+size_t len
+void *data
+}
+' ---------
 
 '' ------- enums
 enum fragType{
@@ -3457,21 +3482,25 @@ CHICKEN
 CALM
 ...
 }
+''
+enum ConnStatus{
+CREATED
+ONLINE
+CLOSED
+ERROR
+}
+
+enum Role{
+BRAND
+ADMIN
+}
+
+enum frameT{
+DB
+CMD
+}
 '' ---------
 
-'' ------- structures
-class Ad_DB {
-+FILE vid_f
-+fragType frag
-+bool rented
-}
-''
-class User_DB{
-+bool admin
-+char* name
-+char* encrypted_pass
-}
-' ---------
 
 '' -------- Classes 
 '' APP
@@ -3487,8 +3516,8 @@ class UIApp{
     void exec()
 }
     note right of UIApp::exec
-    executes the UI
-    event loop
+    executes the 
+    UI event loop
     end note
 class UIWindow{
     == constr/destr ==
@@ -3497,6 +3526,12 @@ class UIWindow{
     == mutators ==
     void show()
 }
+''class UIView{
+''}
+''note top of UIView
+''Specific for 
+''each UI view
+''end note
 
 '' AD
 class Ad {
@@ -3510,48 +3545,205 @@ class Ad {
   + bool rented() const
   + enum fragType frag() const
   + FILE* video() const
+  + boold compareAd(const Ad &otherAd) const
   == mutators ==
   + void rent(bool r)
   + void modifyFrag(enum fragType f)
   + void modifyVideo(FILE* f)
   == helpers ==
   + void print() const
+  + void serialize(map<string col, string val> &m) 
+  + void deserialize(map<string col, string val> &m) 
 }
+    note right of Ad::serialize
+	serializes 
+	object 
+	for DB 
+	management
+    end note
 '' STATION
 class Station{
   -int _id
   -string _name
   -string _addr
   -list<ad> _adsToActivate
+  -TimeTable* _tt
+  == constr/destr ==
+  +Station(string name, string addr)
+  +~Station()
   == accessors ==
   + int id() const
   + string name() const
   + string addr() const
-  + list<ad> adsToActivate() const
+  + TimeTable* getTimeTable() const
   == mutators ==
-  + void rent(bool r)
-  + void modifyFrag(enum fragType f)
-  + void modifyVideo(FILE* f)
+  + void setName(string name)
+  + bool setAddr(Ad ad)
   == helpers ==
   + void print() const
+  + void serialize(map<string col, string val> &m) 
+  + void deserialize(map<string col, string val> &m) 
 }
+'' Timetable (to check ad slots)
+class TimeTable{
+  -Date _startDate
+  -Date _endDate
+  -Date _curDate
+  -list<ad> _adsToActivate
+  == constr/destr ==
+  +TimeTable(Date start, Date end)
+  +TimeTable()
+  +~TimeTable()
+  == accessors ==
+  + Date start() const
+  + Date end() const
+  + list<Ad> adsToActivate() const
+  + list<Ad> ads() const
+  == mutators ==
+  + void addAd(Ad ad)
+  + bool removeAd(Ad ad)
+  + bool editAd(Ad ad)
+  + bool findAd(Ad ad)
+  == helpers ==
+  + void print() const
+  + void serialize(map<string col, string val> &m) 
+  + void deserialize(map<string col, string val> &m) 
+}
+'' Date
+class Date{
+  - int _year
+  - int _month
+  - int _day
+  - int _week
+  - int _hour
+  == constr/destr ==
+  +Date(int year, int month, int day, int hour)
+  +~Date()
+  == accessors ==
+  + Date year() const
+  + Date month() const
+  + Date day() const
+  + Date week() const
+  + Date hour() const
+  == mutators ==
+  + bool addDay(int day)
+  + bool addYear(int year)
+  + bool addMonth(int month)
+  + bool addWeek(int week)
+  + bool addHour(int hour)
+  == helpers ==
+  + void print() const
+  + void serialize(map<string col, string val> &m) 
+  + void deserialize(map<string col, string val> &m) 
+}
+'' User
+class User{
+  -int _id
+  -string _name
+  -string _email
+  -string _encryptedPass
+  -list<Station> _stations
+  -enum Role _role;
+  == constr/destr ==
+  +User()
+  +User(string name, string email, string pass)
+  +~User()
+  == accessors ==
+  + int id() const
+  + string name() const
+  + string email() const
+  + enum Role role() const
+  + string encryptedPass() const
+  + list<Ad> ads() const
+  + list<Station> stations() const
+  == mutators ==
+  + bool setName(string name)
+  + bool setEmail(string email)
+  + bool setPass(string password)
+  + bool login(string password)
+  + bool logout()
+  == helpers ==
+  + void print() const
+  + void serialize(map<string col, string val> &m) 
+  + void deserialize(map<string col, string val> &m) 
+  + Station findStation(const Station &otherStat)
+}
+class Admin{
+  -list<User> _users
+  == constr/destr ==
+  +Admin()
+  +Admin(string name, string email, string pass)
+  +~Admin()
+  == accessors ==
+  + list<User> Users() const
+  == mutators ==
+  + bool setRole()
+  + bool addUser(User *user)
+  == helpers ==
+  + bool testOper(string cmdMsg)
+}
+'' Crypt
+class Crypt{
+  -int _key
+  == constr/destr ==
+  +Crypt()
+  +~Crypt()
+  == mutators ==
+  + string encrypt(string msg)
+  + string decrypt(string msg)
+}
+note top of Crypt
+Encrypts strings
+requested by
+multiple classes
+end note
 '' COMM MANAGER
 class CommManager{
-  -bool _rxStatus
-  -clientSock _cliSock
+  -ConnStatus _status
+  -int _cliSock
   -string servAddr
+  -int servPort
+  -mutex sockAccess
+  -mutex RxAccess
+  -condition_variable msgRx
+  == constr/destr ==
+  +CommManager(string servAddr, int servPort)
+  +~CommManager()
   == accessors ==
-  + bool status() const
-  + string name() const
-  + string addr() const
-  + list<ad> adsToActivate() const
+  + ConnStatus status() const
+  - string servAddr() const
+  - int servPort() const
   == mutators ==
-  + void rent(bool r)
-  + void modifyFrag(enum fragType f)
-  + void modifyVideo(FILE* f)
+  + int run()
+  - static void send_th_fcn( void *)
+  - static void recv_th_fcn( void *)
+  + int Send(const void *obj, size_t len);
+  + int Recv(void *obj, size_t len);
   == helpers ==
   + void print() const
 }
+'' DB Manager
+class DBManager{
+  -mutex RxExtract
+  -condition_variable extract
+  == constr/destr ==
+  +DBManager()
+  +~DBManager()
+  == helpers ==
+  + string validateQuery(string q)
+  + void extract(rxFrame *f)
+}
+class Parser{
+  -mutex parseExec
+  -condition_variable parsing
+  == constr/destr ==
+  +DBManager()
+  +~DBManager()
+  == helpers ==
+  + bool exec(list<rxFrame> *l, 
+      list<cmd> *c, list<dbRsp> *d)
+}
+
 '' ----------------
 
 '' ----------- Containers
@@ -3566,8 +3758,26 @@ class CommManager{
 '' - extension (inheritance):   <|--
 '' - composition: *--
 '' - Aggregation: o--
-Ad "1" *-- "1" fragType: contains
-UIApp "1" *-- "many" UIWindow: contains
+Ad "1" *-u- "1" fragType: contains
+UIApp "1" *- "1" UIWindow: contains
+UIWindow "1" *- "1" CommManager: contains
+UIWindow "1" *-- "1" DBManager: contains
+UIWindow "1" *-- "1" User: contains
+UIWindow "1" *-- "1" Admin: contains
+CommManager "1" *- "1" ConnStatus: contains
+User "1" *-- "many" Station: contains
+Station "1" *- "1" TimeTable: contains
+TimeTable "1" *- "many" Ad: contains
+TimeTable "1" *-- "3" Date: contains
+Admin -l-|> User
+User *-l- Role: contains
+User "1" - "1" Crypt
+UIWindow "1" *-- "1" Parser: contains
+rxFrame "1" *- "1" frameT: contains
+UIWindow "1" *-u- "many" rxFrame: contains
+UIWindow "1" *-u- "many" dbRsp: contains
+UIWindow "1" *-u- "many" cmd: contains
+''UIView <|-- UIWindow: inherits
 
 '' ------------------------------
 
