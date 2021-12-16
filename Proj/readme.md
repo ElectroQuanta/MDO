@@ -1,37 +1,37 @@
-- [Preamble](#org45544e4)
-- [Versions <code>[3/4]</code>](#org8c55809)
-- [Notes](#org0f2f7d5)
-  - [Requirements](#org1076028)
-  - [Problem statement](#org31a3ccb)
-  - [Research](#org3310338)
-    - [Topics <code>[0/3]</code>](#org3873055)
-    - [Selection](#org657afd0)
-  - [Report](#org4059034)
-    - [Outline <code>[2/8]</code>](#org5977863)
-  - [Marketing Digital Outdoor](#org36bdb12)
-    - [Topics](#org78dd4e8)
-    - [Technologies <code>[0/11]</code>](#org97c8464)
-    - [Problem statement](#orga80f64d)
-    - [Market research <code>[3/3]</code>](#orge623b78)
-    - [Project planning](#org5cb30f8)
-    - [Analysis](#org9510823)
-    - [Theoretical foundations <code>[17/17]</code>](#org957bf7b)
-    - [Design](#orgc2172d0)
-- [Diagrams](#org7c392f6)
-  - [PlantUML](#org8dbc24a)
-    - [Setup <code>[0/6]</code>](#orgf91b9de)
-    - [Workflow <code>[0/4]</code>](#orgd90e5c5)
-    - [Sequence diagrams](#orgb7296f3)
-    - [Component diagrams](#org92a6e80)
-    - [Class diagrams](#orgacda30c)
-    - [Deployment diagrams](#orgd65cd5c)
-    - [Entity-Relationship diagram](#org356be78)
-- [GIF generation](#orgab651a8)
-  - [C++ libraries and APIs <code>[0/1]</code>](#org33d9318)
+- [Preamble](#orgc983145)
+- [Versions <code>[4/4]</code>](#org87794dc)
+- [Notes](#orgb691698)
+  - [Requirements](#org5be2498)
+  - [Problem statement](#org596ac05)
+  - [Research](#org7b38899)
+    - [Topics <code>[0/3]</code>](#orgf623df8)
+    - [Selection](#org60f972d)
+  - [Report](#orgeb5336e)
+    - [Outline <code>[2/8]</code>](#org193c091)
+  - [Marketing Digital Outdoor](#org5f45697)
+    - [Topics](#orgcbfec98)
+    - [Technologies <code>[0/11]</code>](#orgd35ba0d)
+    - [Problem statement](#org3987995)
+    - [Market research <code>[3/3]</code>](#org5f0d3fc)
+    - [Project planning](#org73fedf9)
+    - [Analysis](#org88bf015)
+    - [Theoretical foundations <code>[17/17]</code>](#orgc09b3ba)
+    - [Design](#orgd90348a)
+- [Diagrams](#org3d17d8a)
+  - [PlantUML](#org9c2940d)
+    - [Setup <code>[0/6]</code>](#org465e54c)
+    - [Workflow <code>[0/4]</code>](#org99de750)
+    - [Sequence diagrams](#org62fe279)
+    - [Component diagrams](#orgf6219e4)
+    - [Deployment diagrams](#org001b95c)
+    - [Class diagrams](#org4d59933)
+    - [Entity-Relationship diagram](#org8eeb0c8)
+- [GIF generation](#org47c2b54)
+  - [C++ libraries and APIs <code>[0/1]</code>](#org09bb3c9)
 
 
 
-<a id="org45544e4"></a>
+<a id="orgc983145"></a>
 
 # Preamble
 
@@ -39,22 +39,22 @@
 -   It is written incrementally, i.e., as the several project phases take place, the document versions pertaining to each phase are stored in the folder **submission**.
 
 
-<a id="org8c55809"></a>
+<a id="org87794dc"></a>
 
-# Versions <code>[3/4]</code>
+# Versions <code>[4/4]</code>
 
 1.  [X] Problem statement: deadline - <span class="timestamp-wrapper"><span class="timestamp">&lt;2021-10-28 qui&gt;</span></span>
 2.  [X] Phase 1
 3.  [X] Analysis phase: deadline
-4.  [ ] Design phase: <span class="timestamp-wrapper"><span class="timestamp">&lt;2021-12-15 qua 23:00&gt;</span></span>
+4.  [X] Design phase: <span class="timestamp-wrapper"><span class="timestamp">&lt;2021-12-15 qua 23:00&gt;</span></span>
 
 
-<a id="org0f2f7d5"></a>
+<a id="orgb691698"></a>
 
 # Notes     :Important:
 
 
-<a id="org1076028"></a>
+<a id="org5be2498"></a>
 
 ## Requirements
 
@@ -66,19 +66,19 @@
 -   Makefiles
 
 
-<a id="org31a3ccb"></a>
+<a id="org596ac05"></a>
 
 ## Problem statement
 
 Think about the project and deliver a document about it.
 
 
-<a id="org3310338"></a>
+<a id="org7b38899"></a>
 
 ## Research
 
 
-<a id="org3873055"></a>
+<a id="orgf623df8"></a>
 
 ### Topics <code>[0/3]</code>
 
@@ -87,19 +87,19 @@ Think about the project and deliver a document about it.
 -   [ ] Situate the project requirements, the project constraints
 
 
-<a id="org657afd0"></a>
+<a id="org60f972d"></a>
 
 ### Selection
 
 -   [Marketing digital Outdoor](readme.md)
 
 
-<a id="org4059034"></a>
+<a id="orgeb5336e"></a>
 
 ## Report
 
 
-<a id="org5977863"></a>
+<a id="org193c091"></a>
 
 ### Outline <code>[2/8]</code>
 
@@ -150,12 +150,12 @@ Think about the project and deliver a document about it.
 8.  [ ] Conclusions
 
 
-<a id="org36bdb12"></a>
+<a id="org5f45697"></a>
 
 ## Marketing Digital Outdoor     :Important:
 
 
-<a id="org78dd4e8"></a>
+<a id="orgcbfec98"></a>
 
 ### Topics
 
@@ -196,7 +196,7 @@ Think about the project and deliver a document about it.
             -   Additionally, brands can also monitor this by checking their social media accounts.
 
 
-<a id="org97c8464"></a>
+<a id="orgd35ba0d"></a>
 
 ### Technologies <code>[0/11]</code>
 
@@ -213,12 +213,12 @@ Think about the project and deliver a document about it.
 11. [ ] Social media and e-mail sharing APIs
 
 
-<a id="orga80f64d"></a>
+<a id="org3987995"></a>
 
 ### ✔ DONE Problem statement
 
 
-<a id="orge623b78"></a>
+<a id="org5f0d3fc"></a>
 
 ### ✔ DONE Market research <code>[3/3]</code>
 
@@ -227,7 +227,7 @@ Think about the project and deliver a document about it.
 3.  [X] Combined marketing: are they digital outdoor + scenting?
 
 
-<a id="org5cb30f8"></a>
+<a id="org73fedf9"></a>
 
 ### Project planning
 
@@ -302,7 +302,7 @@ Think about the project and deliver a document about it.
     -   [X] Camera: 14 EUR - <https://shorturl.at/gnpCU>
 
 
-<a id="org9510823"></a>
+<a id="org88bf015"></a>
 
 ### ✔ DONE Analysis
 
@@ -315,7 +315,7 @@ Think about the project and deliver a document about it.
     > COMPANY -> MDO-L Staff member login RC -> RS: q mdo systems RS -> DB: query mdo-systems DB -> RS: std::<vector> mdo<sub>systems</sub> for(i = 0; i < mdo<sub>systems.size</sub>(); i++ ) RS -> RC: mdo<sub>systems</sub>[i] RC -> RC: Select MDO-L machine Send command RC -> RS: mdo <nr> <command> (mdo 1 get mode) RS -> RS: parse command RS -> RS: get mdo<sub>nr</sub> IP (query mdo-systems 1 IP) RS -> MDO-L: connect IP:port MDO-L -> RS: connected RS -> MDO-L: get mode MDO-L -> RS: normal mode (example) RS -> RC: normal
 
 
-<a id="org957bf7b"></a>
+<a id="orgc09b3ba"></a>
 
 ### ✔ DONE Theoretical foundations <code>[17/17]</code>
 
@@ -347,7 +347,7 @@ Legend:
 -   *Hugo*
 
 
-<a id="orgc2172d0"></a>
+<a id="orgd90348a"></a>
 
 ### ▭▭ IN-PROGRESS Design
 
@@ -355,11 +355,11 @@ Next Thursday, December 16th, we will have the presentations for the Design Phas
 
 Design Phase must include (some specifications may vary according to your project):
 
-1.  **Hardware Specification** <code>[0/6]</code>:
-    -   [ ] Architecture
+1.  **Hardware Specification** <code>[6/6]</code>:
+    -   [X] Architecture
         -   In the analysis phase an overview of the HW architecture was conceptualized. In this section, a more specific HW architecture is illustrated, using a block-diagram.
         -   BLOCK DIAGRAM and comment it
-    -   [-] Hardware Component Specification <code>[7/8]</code>
+    -   [X] Hardware Component Specification <code>[8/8]</code>
         1.  [X] Raspberry Pi
             1.  SD card
         2.  [X] Power supply module
@@ -368,40 +368,43 @@ Design Phase must include (some specifications may vary according to your projec
         5.  [X] LCD display: <https://shorturl.at/dnoIZ>
         6.  [X] Raspberry Pi Camera
         7.  [X] Colunas
-        8.  [ ] On/off button
-    -   [ ] Peripherals Pinout/Mapping/Connection Layout
+        8.  [X] On/off button
+    -   [X] Peripherals Pinout/Mapping/Connection Layout
         -   Draw a schematic for connecting all HW components
         -   Add a table containing:
             
             |            | PIN MAPPING      |          |
             | Controller | Interface device | Function |
-    -   [ ] Test Cases
+    -   [X] Test Cases
         -   **Ultrasonic sensor**: one will connect the ultrasonic sensor to Raspberry Pi. Then an object will be approximated to the sensor from several distances with the corresponding distance being measure with a measuring tape. If the distance measured by the sensor and the measuring device are within the error margin provided by the manufactured, the device is compliant.
             
             |        |             |            |                |
             |------- |------------ |----------- |--------------- |
             | HW item | Type of test | Description | Expected result |
-    -   [ ] PCB layout (when applicable)
+    -   [X] PCB layout (when applicable)
         -   Custom PCB for ultrasonic sensors + fragrance diffuser actuator
-    -   [ ] Tools
+    -   [X] Tools
         -   PADS, KiCad
-2.  **Software Specification** <code>[0/11]</code>:
+2.  **Software Specification** <code>[6/11]</code>:
     -   [ ] Entity Relations Diagram
-    -   [ ] Classes Diagram
+    -   [X] Classes Diagram
+        -   [X] Remote Client
+        -   [X] Remote Server
+        -   [X] Local System
     -   [ ] Data Formats
     -   [ ] Flowcharts
     -   [ ] Tasks Division (accurate plan)
     -   [ ] Thread Priorities
-    -   [ ] GUI Layouts
-    -   [ ] Test Cases
-    -   [ ] Software COTs
-    -   [ ] Third-party Libraries/apps
-    -   [ ] Tools
+    -   [X] GUI Layouts
+    -   [X] Test Cases
+    -   [X] Software COTs
+    -   [X] Third-party Libraries/apps
+    -   [X] Tools
 
 It is compulsory to show/identify which/where all class topics are going to be implemented and used by you! Also third-party Libraries/apps must be identified so you can use other's software and materials with our consent.
 
 
-<a id="org7c392f6"></a>
+<a id="org3d17d8a"></a>
 
 # Diagrams
 
@@ -410,7 +413,7 @@ Diagrams can be drawn using <code>[2/2]</code>:
 -   [X] draw.io
     -   User mockups
     -   State-machine
--   [X] [PlantUML](#org8dbc24a) (stored in Proj/diags/plantuml)
+-   [X] [PlantUML](#org9c2940d) (stored in Proj/diags/plantuml)
     -   Sequence diagram
     -   Class diagram
     -   Component diagram
@@ -418,14 +421,14 @@ Diagrams can be drawn using <code>[2/2]</code>:
     -   Entity-Relationship diagram
 
 
-<a id="org8dbc24a"></a>
+<a id="org9c2940d"></a>
 
 ## PlantUML
 
 [PlantUML](https://plantuml.com/) is a tool for quickly drawing diagrams from text based descriptions. It is specially adequate for sequence diagrams, as draw.io is not very fluid.
 
 
-<a id="orgf91b9de"></a>
+<a id="org465e54c"></a>
 
 ### Setup <code>[0/6]</code>
 
@@ -441,7 +444,7 @@ Diagrams can be drawn using <code>[2/2]</code>:
 6.  [ ] Check the generate png file: `output/test.png`
 
 
-<a id="orgd90e5c5"></a>
+<a id="org99de750"></a>
 
 ### Workflow <code>[0/4]</code>
 
@@ -455,7 +458,7 @@ Diagrams can be drawn using <code>[2/2]</code>:
 4.  [ ] Check the generate png file: `output/test.png`
 
 
-<a id="orgb7296f3"></a>
+<a id="org62fe279"></a>
 
 ### ✔ DONE Sequence diagrams
 
@@ -972,7 +975,7 @@ Diagrams can be drawn using <code>[2/2]</code>:
     ![img](diags/plantuml/seq-diag/examples/all-together.png)
 
 
-<a id="org92a6e80"></a>
+<a id="orgf6219e4"></a>
 
 ### ✔ DONE Component diagrams
 
@@ -1045,9 +1048,58 @@ You can use component diagrams to model the software architecture of a system. C
     ![img](diags/plantuml/component-diag/output/component-diag-local-no-links.png)
 
 
-<a id="orgacda30c"></a>
+<a id="org001b95c"></a>
 
-### Class diagrams
+### ✔ DONE Deployment diagrams
+
+In UML, deployment diagrams model the physical architecture of a system. Deployment diagrams show the relationships between the software and hardware components in the system and the physical distribution of the processing.
+
+Deployment diagrams, which you typically prepare during the implementation phase of development, show the physical arrangement of the nodes in a distributed system, the artifacts that are stored on each node, and the components and other elements that the artifacts implement. Nodes represent hardware devices such as computers, sensors, and printers, as well as other devices that support the runtime environment of a system. Communication paths and deploy relationships model the connections in the system. ([src](https://www.ibm.com/docs/en/rsar/9.5?topic=diagrams-deployment))
+
+**Types of elements** ([src](https://mychartguide.com/deployment-diagram/#What_are_the_elements_involved)):
+
+1.  Artifact: The artifact is the main element in a deployment diagram and signifies the product developed by any software. It is also often referred to as the information that software generates. It is symbolized with the help of a rectangle.
+2.  Association: This helps signify the correlation and message between two different nodes in the diagram.
+3.  Component: This helps signify the presence of a software element in the diagram and is represented with a rectangle with two tabs.
+4.  Dependency: This signifies the dependency and correlation of one node or component with that of the other in a deployment diagram. It is represented with dashed lines with arrows.
+5.  Interface: This signifies the presence of a contractual relationship in a diagram, especially when there are obligations involved that needs to be completed in a total system. It is represented with a circle.
+6.  Node: This signifies the main element of any kind of hardware or even software object in a deployment diagram that is further shown with a three dimensional box.
+7.  Stereotype: This signifies the element that is trapped inside a node which comes with its representation with the name bracketed by double arrows.
+
+1.  Declaring element
+
+    ![img](diags/plantuml/deploy-diag/output/decl-elem.png)
+
+2.  Linking or arrow
+
+3.  Line style
+
+    ![img](diags/plantuml/deploy-diag/output/line-style.png)
+
+4.  Nesting
+
+    ![img](diags/plantuml/deploy-diag/output/nesting.png)
+
+5.  Full nesting
+
+    ![img](diags/plantuml/deploy-diag/output/full-nesting.png)
+
+6.  Style for each nested element
+
+    ![img](diags/plantuml/deploy-diag/output/style-nested.png)
+
+7.  Style for all elements
+
+    ![img](diags/plantuml/deploy-diag/output/style-nested-all.png)
+
+8.  Mine (to generate report)     :Important:
+
+    ![img](diags/plantuml/deploy-diag/output/deploy-diag.png)
+
+
+<a id="org4d59933"></a>
+
+### ▭▭ IN-PROGRESS Class diagrams
 
 1.  Declaring elements
 
@@ -1113,7 +1165,7 @@ You can use component diagrams to model the software architecture of a system. C
     -   class for all classes,
     -   interface for all interfaces,
     -   enum for all enums,
-    -   <a id="orgdd92800"></a> for classes which are stereotyped with foo1,
+    -   <a id="orgb092cbe"></a> for classes which are stereotyped with foo1,
     -   an existing class name.
     
     You can use several show/hide commands to define rules and exceptions.
@@ -1175,63 +1227,32 @@ You can use component diagrams to model the software architecture of a system. C
 
     ![img](diags/plantuml/class-diag/output/all-together.png)
 
-15. Mine (to generate report)
+15. Mine (to generate report)     :Important:
 
-    **Client**
+    1.  Test
     
-    ![img](diags/plantuml/class-diag/output/class-diag-rc.png)
+        ![img](diags/plantuml/class-diag/output/test.png)
+    
+    2.  Client
+    
+        ![img](diags/plantuml/class-diag/output/class-diag-rc.png)
+    
+    3.  Server
+    
+        ![img](diags/plantuml/class-diag/output/class-diag-rs.png)
+    
+    4.  Local System
+    
+        ![img](diags/plantuml/class-diag/output/class-diag-local.png)
 
 
-<a id="orgd65cd5c"></a>
-
-### Deployment diagrams
-
-In UML, deployment diagrams model the physical architecture of a system. Deployment diagrams show the relationships between the software and hardware components in the system and the physical distribution of the processing.
-
-Deployment diagrams, which you typically prepare during the implementation phase of development, show the physical arrangement of the nodes in a distributed system, the artifacts that are stored on each node, and the components and other elements that the artifacts implement. Nodes represent hardware devices such as computers, sensors, and printers, as well as other devices that support the runtime environment of a system. Communication paths and deploy relationships model the connections in the system. ([src](https://www.ibm.com/docs/en/rsar/9.5?topic=diagrams-deployment))
-
-**Types of elements** ([src](https://mychartguide.com/deployment-diagram/#What_are_the_elements_involved)):
-
-1.  Artifact: The artifact is the main element in a deployment diagram and signifies the product developed by any software. It is also often referred to as the information that software generates. It is symbolized with the help of a rectangle.
-2.  Association: This helps signify the correlation and message between two different nodes in the diagram.
-3.  Component: This helps signify the presence of a software element in the diagram and is represented with a rectangle with two tabs.
-4.  Dependency: This signifies the dependency and correlation of one node or component with that of the other in a deployment diagram. It is represented with dashed lines with arrows.
-5.  Interface: This signifies the presence of a contractual relationship in a diagram, especially when there are obligations involved that needs to be completed in a total system. It is represented with a circle.
-6.  Node: This signifies the main element of any kind of hardware or even software object in a deployment diagram that is further shown with a three dimensional box.
-7.  Stereotype: This signifies the element that is trapped inside a node which comes with its representation with the name bracketed by double arrows.
-
-1.  Declaring element
-
-    ![img](diags/plantuml/deploy-diag/output/decl-elem.png)
-
-2.  Linking or arrow
-
-3.  Line style
-
-    ![img](diags/plantuml/deploy-diag/output/line-style.png)
-
-4.  Nesting
-
-    ![img](diags/plantuml/deploy-diag/output/nesting.png)
-
-5.  Full nesting
-
-    ![img](diags/plantuml/deploy-diag/output/full-nesting.png)
-
-6.  Style for each nested element
-
-    ![img](diags/plantuml/deploy-diag/output/style-nested.png)
-
-7.  Style for all elements
-
-    ![img](diags/plantuml/deploy-diag/output/style-nested-all.png)
-
-
-<a id="org356be78"></a>
+<a id="org8eeb0c8"></a>
 
 ### Entity-Relationship diagram
 
 [src](https://plantuml.com/ie-diagram)
+
+![img](diags/plantuml/erd/output/complete-example.png)
 
 1.  Plantuml to MySQL
 
@@ -1258,12 +1279,12 @@ Deployment diagrams, which you typically prepare during the implementation phase
     The HTML markup in comments (after &#x2013;) is stripped.
 
 
-<a id="orgab651a8"></a>
+<a id="org47c2b54"></a>
 
 # GIF generation
 
 
-<a id="org33d9318"></a>
+<a id="org09bb3c9"></a>
 
 ## C++ libraries and APIs <code>[0/1]</code>
 
