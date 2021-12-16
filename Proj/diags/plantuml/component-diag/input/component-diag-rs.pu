@@ -1,0 +1,134 @@
+@startuml
+''left to right direction
+skinparam fixCircleLabelOverlapping true
+''skinparam linetype ortho
+''[First component]
+''[Another component] as Comp2
+''component Comp3
+''component [Last\ncomponent] as Comp4
+''
+'' interface "Data Access" as DA
+''
+'' DA - [First Component]
+'' [First Component] ..> HTTP : use
+
+''node "Other Groups" {
+''  () FTP - [Second Component]
+''  [First Component] --> FTP
+''}
+''
+''cloud {
+''  [Example 1]
+''}
+''
+''database "MySql" {
+''  folder "This is my folder" {
+''    [Folder 3]
+''  }
+''  frame "Foo" {
+''    [Frame 4]
+''  }
+''}
+
+'' participants definition
+''actor "Brand/Admin" as User
+
+package "MDO-RC: AppManager" #lightgrey{
+  frame "Comm Manager" as CM #bisque{
+  [Comm \nStatus] as RCS
+  [RC\nTx] as RCT
+  [RC\nRx] as RCR
+  }
+}
+
+package "MDO-L: AppManager" #lightgrey{
+  frame "Comm Manager" as LCM #bisque{
+  [Comm \nStatus] as LCS
+  [Local\nTx] as LCT
+  [Local\nRx] as LCR
+  }
+}
+
+package "MDO-RS: AppManager" #lightgrey{
+  ''HTTP - [UI]
+  frame "Command-Line\nInterface" #bisque{
+  [CLI] as CLI
+  [CLI \nEngine] as CLIE
+  [CLI \nParser] as CLIP
+  }
+  frame "Command Parser" #bisque{
+  [Client\nParser] as RSCP
+  [Local \nParser] as RSLP
+  }
+  frame "DB Client" as RSDBM #bisque{
+  [Query\nParser] as RSQP
+  [Response\nParser] as RSRP
+  }
+  frame "Comm Manager" as CMS #bisque{
+  [Comm \nStatus] as RSS
+  [RS Tx \nClient] as RSTC
+  [RS Rx \nClient] as RSRC
+  [RS Tx \nLocal] as RSTL
+  [RS Rx \nLocal] as RSRL
+  }
+}
+
+package "MDO-RS: DB Server" #lightgrey{
+  ''[DB Transaction\n Manager] as DBTM
+  [DB Manager] as RSDBM2
+  frame "Comm Manager" as CMDB #bisque{
+  [Comm \nStatus] as DBSt
+  [Server \nTx] as SERVTx
+  [Server \nRx] as SERVRx
+  }
+  database "Databases" as DBs
+}
+'' ------------------------------
+
+'' ----------- INTERFACES
+() "TCP/IP" as sockRC_RS
+() "TCP/IP" as sockRS_L
+() "TCP/IP" as sockRS_SQL
+
+'' MDO-RS
+'' Client Connections
+[RCT] ..> sockRC_RS #blue: <color:blue>send server\n<color:blue>frame
+sockRC_RS ..> [RSRC] #blue
+[RSTC] ..> sockRC_RS #blue: <color:blue>send client\n<color:blue>frame
+sockRC_RS ..> [RCR] #blue
+'' Local connections
+[RSTL] .r.> sockRS_L #darkgreen: <color:darkgreen>send local\n<color:darkgreen>frame
+sockRS_L .d.> [LCR] #darkgreen
+[LCT] .u.> sockRS_L #darkgreen: <color:darkgreen>send server\n<color:darkgreen>frame
+sockRS_L .l.> [RSRL] #darkgreen
+'' Database connections
+[RSQP] --> sockRS_SQL #indigo: <color:indigo>db\n<color:indigo>query
+sockRS_SQL --> [SERVRx] #indigo
+[SERVTx] ..> sockRS_SQL #indigo: <color:indigo>db \n<color:indigo>response 
+sockRS_SQL ..> [RSRP] #indigo
+
+'' Internal logic
+[RSRC] --> [RSCP]: server\n frame
+[RSCP] --> [RSQP]: db query\n frame
+[RSCP] --> [CLIP]: cmd\n frame
+[CLIP] --> [RSTL]: local \ncmd frame
+[RSRP] --> [RSTC]: db response\n frame
+[RSRP] ..> [RSTL]: local sys\nframe 
+[RSRL] --> [RSLP]: local rx\nframe
+[RSLP] --> [RSTC]: local cmd\nresponse
+
+'' Server
+[RSDBM2] ..> [RSDBM2]: check\ntimestamps
+[SERVRx] --> [RSDBM2]: db query
+[RSDBM2] --> [DBs]: db \ntransaction
+[DBs] --> [RSDBM2]: db \ntransaction
+[RSDBM2] --> [SERVTx]: update\n local sys\n
+[RSDBM2] --> [SERVTx]: db transaction\n local sys
+''[RSDBM2] --> [SERVTx]: update\n local sys\n or \ndb transaction\n local sys
+''[DBTM] --> [RSDBM2]: update \nlocal sys
+
+'' ----------- INTERFACES
+'' () "tcp/ip" as sockL_Twitter
+'' () "tcp/ip" as sockL_Transfer_sh
+
+@enduml

@@ -1,0 +1,71 @@
+@startuml
+''left to right direction
+skinparam fixCircleLabelOverlapping true
+'' participants definition
+actor "Brand/Admin" as User
+
+package "MDO-RC: AppManager" #lightgrey{
+  ''HTTP - [UI]
+  ''[  UI\n << Qt >>] as UI
+  frame "User Interface" #bisque{
+  [UI] as UI
+  [UI \nEngine] as UIE
+  }
+  frame "DB Manager" as DBM #bisque{
+  [Query\nParser] as QP
+  [Response\nParser] as RP
+  }
+  frame "Comm Manager" as CM #bisque{
+  [Comm \nStatus] as RCS
+  [RC\nTx] as RCT
+  [RC\nRx] as RCR
+  }
+  [RC Rx\nParser] as RCRP
+  frame "Remote \nController" as REMCTL #bisque{
+  [Cmd \nParser] as RCCP
+  }
+}
+
+'' ----------- INTERACTIONS
+'' MDO-RC
+[User] .d..> [UI]: presses
+[UI] .u..> [User]: feedback
+[UI] --> [UIE]: UI events
+[UIE] --> [UI]: updates
+[UIE] --> [QP]: build db \nquery
+[UIE] --> [RCT]: admin\n cmd
+[UIE] --> [RCS]: status
+[RCS] --> [UIE]: status
+[RCS] --> [RCT]: ping
+[QP] --> [UIE]: status
+[QP] --> [RCT]: db query \nframe
+[RCR] ..> [RCRP]: rx frame
+[RCRP] ..> [RP]: db response \nframe
+[RCRP] ..> [RCCP]: cmd \nresponse
+[RCCP] ..> [UIE]: cmd \nfeedback
+[RP] --> [UIE]: db response
+
+package "MDO-RS: AppManager" #lightgrey{
+  ''HTTP - [UI]
+  frame "Comm Manager" as CMS #bisque{
+  ''together{
+  [Comm \nStatus] as RSS
+  [RS Tx \nClient] as RSTC
+  [RS Rx \nClient] as RSRC
+  ''[RS Tx \nLocal] as RSTL
+  ''[RS Rx \nLocal] as RSRL
+  ''}
+  }
+}
+'' ----------- INTERFACES
+() "TCP/IP" as sockRC_RS
+''() "tcp/ip" as sockRS_RC
+
+'' MDO-RS
+'' Client Connections
+[RCT] .r.> sockRC_RS #blue
+sockRC_RS .d.> [RSRC] #blue: <color:blue>send server\n<color:blue>frame
+[RSTC] .u.> sockRC_RS #darkgreen
+sockRC_RS .l.> [RCR] #darkgreen: <color:darkgreen>send client\n <color:darkgreen>frame
+
+@enduml

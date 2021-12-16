@@ -1914,7 +1914,7 @@ sockRS_RC ..> [RCR]: send client\n frame
   #+RESULTS:
   [[file:diags/plantuml/component-diag/output/component-diag-full.png]]
 
-*Client*
+***** Client
   #+BEGIN_SRC plantuml :file diags/plantuml/component-diag/output/component-diag-rc.png
 @startuml
 ''left to right direction
@@ -1992,7 +1992,7 @@ sockRC_RS .l.> [RCR] #darkgreen: <color:darkgreen>send client\n <color:darkgreen
   #+RESULTS:
   [[file:diags/plantuml/component-diag/output/component-diag-rc.png]]
 
-*Server*
+***** Server
   #+BEGIN_SRC plantuml :file diags/plantuml/component-diag/output/component-diag-rs.png
 @startuml
 ''left to right direction
@@ -2133,7 +2133,7 @@ sockRS_SQL ..> [RSRP] #indigo
   #+RESULTS:
   [[file:diags/plantuml/component-diag/output/component-diag-rs.png]]
 
-*Local System*
+***** Local System
   #+BEGIN_SRC plantuml :file diags/plantuml/component-diag/output/component-diag-local.png
 @startuml
 left to right direction

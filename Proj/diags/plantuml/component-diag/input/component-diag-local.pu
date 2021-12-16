@@ -1,0 +1,141 @@
+@startuml
+left to right direction
+skinparam fixCircleLabelOverlapping true
+
+'' participants definition
+actor "User" as User
+
+package "MDO-RS: AppManager" #lightgrey{
+  ''HTTP - [UI]
+  frame "Comm Manager" as CMS #bisque{
+  ''[Comm \nStatus] as RSS
+  ''[RS Tx \nClient] as RSTC
+  ''[RS Rx \nClient] as RSRC
+  [RS Tx \nLocal] as RSTL
+  [RS Rx \nLocal] as RSRL
+  }
+}
+
+package "MDO-L: AppManager" as MDOLAPP #lightgrey{
+  frame "Comm Manager" as LCM #bisque{
+  [Comm \nStatus] as LCS
+  [Local\nTx] as LCT
+  [Local\nRx] as LCR
+  [Web\n Tx] as WEBTx
+  [Web\n Rx] as WEBRx
+  }
+  frame "User Interface" #bisque{
+  [UI] as UI
+  [UI \nEngine] as UIE
+  [Gesture \nRecognition\n Engine] as GRE
+  frame "User \nDetection]" as UD{
+  [Ultrasonic sensor\n device driver] as USDD
+  [Ultrasonic sensor\n daemon] as USD
+  }
+  }
+  frame "Normal mode Manager" as NMM #bisque{
+  [Video Manager] as VIDM
+  [Audio Manager] as AUDM
+  frame "Fragrance Manager" as FRAG_M #bisque{
+  [Diffuser actuator\n device driver] as DDD
+  [Diffuser actuator\n daemon] as DD
+  }
+  }
+  frame "Multimedia mode Manager" #bisque{
+  [Image Filter\nManager] as IFM
+  [Camera\nManager] as CAM
+  [GIF\nGeneration] as GIFG
+  }
+  frame "Sharing mode Manager" #bisque{
+  [Post\nManager] as PM
+  [Twitter\nManager] as TM
+  }
+  frame "Computer Vision framework" #bisque{
+  [Face\n detection] as FD
+  [Gesture\n recognition] as GR
+  [Image Filter\nOverlay] as IFO
+  }
+  frame "App Parser" as AP #bisque{
+  [Command\n Parser] as CP
+  [DB\n Parser] as DP
+  }
+}
+
+cloud Twitter{
+[REST APIs] as REST
+}
+
+cloud Transfer.sh{
+[URL proxy] as URLP
+}
+'' ------------------------------
+
+'' ----------- INTERFACES
+() "TCP/IP" as sockRS_L
+''() "TCP/ip" as sockL_RS
+() "TCP/IP" as sockL_Twitter
+() "TCP/IP" as sockL_Transfer_sh
+''-------------------------------
+
+'' MDO-Local
+'' Server connections
+[RSTL] .u.> sockRS_L: send local\nframe 
+sockRS_L .u.> [LCR]
+[LCT] .d.> sockRS_L: send server\nframe 
+sockRS_L .d.> [RSRL]
+'' Cloud connections
+[WEBTx] .d.> sockL_Twitter: twitter\ncmd
+sockL_Twitter .d.> REST
+[WEBTx] -d-> sockL_Transfer_sh: URL proxy\ncmd
+sockL_Transfer_sh -r-> URLP
+REST -u-> sockL_Twitter: twitter\nresponse
+sockL_Twitter -u-> [WEBRx]
+URLP -u-> sockL_Transfer_sh: URL proxy\nresponse
+sockL_Transfer_sh -l-> [WEBRx]
+
+'' ------------------ Logic
+'' User detected
+User ..> USDD: user\ndetected
+USDD ..> USD: signal user\n detection
+USD ..> UIE: signal \nuser_detected
+UIE ..> NMM: stop normal\n mode
+UIE ..> CAM: grab\nframe
+CAM ..> UIE: camera\nframe
+UIE ..> FD: face\ndetected 
+FD ..> UIE: face\ndetected
+UIE ..> UI: update\n UI
+UI ..> User: feedback
+'' User gesture
+User ..> GRE: gesture
+GRE ..> GR: recognize\ngesture
+GR ..> GRE: gesture\ndetected
+GRE ..> UIE: gesture_type
+'' Normal mode
+MDOLAPP --> NMM: start\n normal mode
+AUDM -d-> AUDM: play\n audio
+VIDM -d-> VIDM: play\n video
+FRAG_M -> DD: enable\ndiffusion
+DD -> DDD: actuate
+'' Sharing mode
+UIE ..> PM: manage\npost
+PM ..> TM: add\npost
+TM --> WEBTx: share\npost
+WEBRx ..> TM: post\nshared
+TM ..> UIE: sharing\nstatus
+'' Multimedia mode
+UIE ..> CAM: Take\n Pic
+CAM ..> UIE: camera\n frame
+UIE ..> GIFG: create\n gif
+GIFG ..> UIE: gif \ngenerated
+UIE ..> IFM: apply\nimg filter
+IFM ..> IFO: apply \noverlay
+IFO ..> IFM: img with\n overlay
+IFM ..> UIE: img with\noverlay
+'' Parsing
+LCR ..> AP: server\n frame
+AP ..> CP: cmd
+CP ..> LCT: cmd\nresponse
+AP ..> DP: DB\nupdate
+DP ..> LCT: DB update\nstatus
+
+@enduml
