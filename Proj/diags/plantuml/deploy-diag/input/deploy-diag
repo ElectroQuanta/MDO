@@ -1,0 +1,109 @@
+@startuml
+''left to right direction
+!theme plain
+''<style>
+''package{
+''  BackgroundColor white
+''}
+''node{
+''  BackGroundColor #lightgrey
+''  LineThickness 2
+''  LineColor black
+''  FontStyle bold
+''}
+''</style>
+
+node "Linux PC" <<Host device>> #lightblue{
+package "MDO-RC: AppManager" as MDORCAPP #lightgrey {
+  frame "Comm Manager" as CM #bisque{
+  ''[Comm \nStatus] as RCS
+  [RC\nTx] as RCT
+  [RC\nRx] as RCR
+  }
+}
+
+package "MDO-RS: AppManager" as MDORSAPP #lightgrey{
+  ''HTTP - [UI]
+  frame "DB Client" as RSDBM #bisque{
+  [Query\nParser] as RSQP
+  [Response\nParser] as RSRP
+  }
+  frame "Comm Manager" as CMS #bisque{
+  ''[Comm \nStatus] as RSS
+  [RS Tx \nClient] as RSTC
+  [RS Rx \nClient] as RSRC
+  [RS Tx \nLocal] as RSTL
+  [RS Rx \nLocal] as RSRL
+  }
+}
+
+package "MDO-RS: DB Server" #lightgrey{
+  ''[DB Transaction\n Manager] as DBTM
+  frame "Comm Manager" as CMDB #bisque{
+  ''[Comm \nStatus] as DBSt
+  [Server \nTx] as SERVTx
+  [Server \nRx] as SERVRx
+  }
+  [DB Manager] as RSDBM2
+  database "Databases" as DBs
+}
+}
+
+node "Raspberry Pi" <<Embedded device>> #lightblue{
+package "MDO-L: AppManager" as MDOLAPP #lightgrey{
+  frame "Comm Manager" as LCM #bisque{
+  ''[Comm \nStatus] as LCS
+  [Local\nTx] as LCT
+  [Local\nRx] as LCR
+  [Web\n Tx] as WEBTx
+  [Web\n Rx] as WEBRx
+  }
+}
+}
+
+node "Web" <<cloud>> #lightblue{
+cloud Twitter #plum{
+[REST APIs] as REST
+}
+
+cloud Transfer.sh #plum{
+[URL proxy] as URLP
+}
+}
+
+'' ----------- INTERFACES
+() "TCP/IP" as sockRS_L
+() "TCP/IP" as sockL_Twitter
+() "TCP/IP" as sockL_Transfer_sh
+() "TCP/IP" as sockRC_RS
+() "TCP/IP" as sockRS_SQL
+''-------------------------------
+
+'' MDO-Local
+'' Cloud connections
+[WEBTx] .u.> sockL_Twitter #darkred: <color:darkred>twitter\n<color:darkred>cmd
+sockL_Twitter .u.> REST #darkred
+[WEBTx] -d-> sockL_Transfer_sh: URL proxy\ncmd
+sockL_Transfer_sh -d-> URLP
+REST --> sockL_Twitter #darkred: <color:darkred>twitter\n<color:darkred>response
+sockL_Twitter --> [WEBRx] #darkred
+URLP --> sockL_Transfer_sh: URL proxy\nresponse
+sockL_Transfer_sh --> [WEBRx]
+'' MDO-RS
+'' Client Connections
+[RCT] ..> sockRC_RS #blue: <color:blue>send server\n<color:blue>frame
+sockRC_RS ..> [RSRC] #blue
+[RSTC] ..> sockRC_RS #blue: <color:blue>send client\n<color:blue>frame
+sockRC_RS ..> [RCR] #blue
+'' Local connections
+[RSTL] .u.> sockRS_L #darkgreen: <color:darkgreen>send local\n<color:darkgreen>frame
+sockRS_L .u.> [LCR] #darkgreen
+[LCT] .d.> sockRS_L #darkgreen: <color:darkgreen>send server\n<color:darkgreen>frame
+sockRS_L .d.> [RSRL] #darkgreen
+'' Database connections
+[RSQP] --> sockRS_SQL #indigo: <color:indigo>db\n<color:indigo>query
+sockRS_SQL --> [SERVRx] #indigo
+[SERVTx] ..> sockRS_SQL #indigo: <color:indigo>db \n<color:indigo>response 
+sockRS_SQL ..> [RSRP] #indigo
+
+@enduml
