@@ -1,0 +1,465 @@
+@startuml
+'' ---------------- THEMES (some only work on the web server) -----------
+''!theme plain
+''!theme toy
+''!theme spacelab
+''!theme mars (does not work)
+'' -------------------- Splitting into several files -----------
+page 2x2
+skinparam pageMargin 10
+skinparam pageExternalColor gray
+skinparam pageBorderColor black
+'' --------------------------------------------------------------
+'' remove attributes and methods icons
+skinparam classAttributeIconSize 0
+'' --------------------------------------------------------------
+'' ------- defining elements --------
+''interface       interface
+'' ------- structures
+''class Ad_DB <<(S,#FF7700)struct>>
+''class User_DB <<(S,#FF7700)struct>>
+''class Station <<(S,#FF7700)struct>>
+hide <<struct>> methods
+hide enum methods
+''hide <<struct>> circle
+''class Ad_DB {
+''+FILE vid_f
+''+fragType frag
+''+bool rented
+''}
+''
+''class User_DB{
+''+bool admin
+''+char* name
+''+char* encrypted_pass
+''}
+''class rxFrame <<(S,lightgrey)struct>>{
+''enum frameT header
+''size_t len
+''void *data
+''}
+''class dbRsp <<(S,lightgrey)struct>>{
+''size_t len
+''void *data
+''}
+''class cmd <<(S,lightgrey)struct>>{
+''size_t len
+''void *data
+''}
+' ---------
+''
+''enum ConnStatus{
+''CREATED
+''ONLINE
+''CLOSED
+''ERROR
+''}
+''
+''
+''enum frameT{
+''DB
+''CMD
+''}
+'' ---------
+''
+''
+'' -------- Classes 
+'' APP
+''class AppManager{
+''    - UIApp uiApp()
+''    - UIWidget win()
+''}
+''class UIApp{
+''    == constr/destr ==
+''    +UIApp()
+''    ~UIApp()
+''    == mutators ==
+''    void exec()
+''}
+''    note left of UIApp::exec
+''    executes the 
+''    UI event loop
+''    end note
+''class UI{
+''  - vector<rxFrame> servRxVec
+''  - vector<rxFrame> servTxVec
+''  - vector<rxFrame> WebRxVec
+''  - vector<rxFrame> WebTxVec
+''  - mutex _sockCliAccess
+''  - condition_variable _msgRxCli
+''  - mutex _sockWebAccess
+''  - condition_variable _msgWebCli
+''  == constr/destr ==
+''  +UI()
+''  ~UI()
+''  == mutators ==
+''  bool init()
+''  void show()
+''}
+''
+'' User
+''class User{
+''  -int _id
+''  -string _name
+''  -string _email
+''  -string _encryptedPass
+''  -enum Role _role;
+''  == constr/destr ==
+''  +User()
+''  +User(string name, string email, string pass)
+''  +~User()
+''  == accessors ==
+''  + int id() const
+''  + string name() const
+''  + string email() const
+''  + enum Role role() const
+''  + string encryptedPass() const
+''  == mutators ==
+''  + bool setName(string name)
+''  + bool setEmail(string email)
+''  + bool setPass(string password)
+''  + bool login(string password)
+''  + bool logout()
+''  == helpers ==
+''  + void print() const
+''}
+''class Admin{
+''  -list<User> _users
+''  == constr/destr ==
+''  +Admin()
+''  +Admin(string name, string email, string pass)
+''  +~Admin()
+''  == accessors ==
+''  + list<User> Users() const
+''  == mutators ==
+''  + bool setRole()
+''  + bool addUser(User *user)
+''  == helpers ==
+''  + bool enableTest(bool enable)
+''}
+'' Crypt
+''class Crypt{
+''  -int _key
+''  == constr/destr ==
+''  +Crypt()
+''  +~Crypt()
+''  == mutators ==
+''  + string encrypt(string msg)
+''  + string decrypt(string msg)
+''}
+''note top of Crypt
+''Encrypts strings
+''requested by
+''multiple classes
+''end note
+'' COMM MANAGER
+''class CommManager{
+''  -ConnStatus _status
+''  -int _servSock
+''  -string _servAddr
+''  -int _servPort
+''  -int _webSock
+''  -string _webAddr
+''  -int _webPort
+''  -mutex _sockCliAccess
+''  -mutex _RxCliAccess
+''  -condition_variable _msgRxCli
+''  -mutex _sockWebAccess
+''  -mutex _RxWebAccess
+''  -condition_variable _msgWebLoc
+''  == constr/destr ==
+''  +CommManager(string addr)
+''  +~CommManager()
+''  == accessors ==
+''  + ConnStatus status() const
+''  - string cliAddr() const
+''  - int cliPort() const
+''  - string webAddr() const
+''  - int webPort() const
+''  == mutators ==
+''  + int run()
+''  - static void send_Cli_th_fcn( void* arg)
+''  - static void recv_Cli_th_fcn( void* arg)
+''  - static void send_Web_th_fcn( void* arg) 
+''  - static void recv_Web_th_fcn( void* arg)
+''  + int Send(int sd, const void *obj, size_t len);
+''  + int Recv(int sd, void *obj, size_t len);
+''}
+''abstract class Parser{
+''  -mutex parseExec
+''  -condition_variable parsing
+''  == constr/destr ==
+''  +Parser()
+''  +~Parser()
+''  == helpers ==
+''  + bool exec(Vector<rxFrame> *v)
+''}
+''class DBParser{
+''  == constr/destr ==
+''  +CliParser()
+''  +~CliParser()
+''  == helpers ==
+''  + bool exec(Vector<rxFrame> *db_v)
+''}
+''class CmdParser{
+''  == constr/destr ==
+''  +LocalParser()
+''  +~LocalParser()
+''  == helpers ==
+''  + bool exec(Vector<rxFrame> *cmd_v)
+''}
+''class TwitterParser{
+''  == constr/destr ==
+''  +LocalParser()
+''  +~LocalParser()
+''  == helpers ==
+''  + bool exec(Vector<rxFrame> *twit_v)
+''}
+''
+''class Post{
+''  -int _id
+''  -string _msg
+''  -FILE* _attach
+''  == constr/destr ==
+''  +Post()
+''  +Post(string msg, FILE* attach)
+''  +~Post()
+''  == accessors ==
+''  + int id() const
+''  + string msg() const
+''  + FILE* attachment() const
+''  == mutators ==
+''  + bool setMsg(string msg)
+''  + bool attach(FILE* f)
+''  == helpers ==
+''  + void print() const
+''}
+''
+''abstract class SocialMedia{
+''  == constr/destr ==
+''  +SocialMedia()
+''  +~SocialMedia()
+''  == mutators ==
+''  + string addPost(Post* p)
+''}
+''
+''class Twitter{
+''  -string _consumerKey
+''  -string _consumerSecret
+''  -string _accessToken
+''  -string _tokenSecret
+''  ''-Post *_post
+''  == constr/destr ==
+''  +Twitter()
+''  +~Twitter()
+''  ''== accessors ==
+''  ''+ Post* getPost() const
+''  == mutators ==
+''  + string addPost(Post* p)
+''}
+''
+''class GestureRecognitionEngine{
+''  -int _status
+''  -Vector<Gesture> gestures
+''  -mutex _gestAcess
+''  -condition_variable _gestRx
+''  == constr/destr ==
+''  +GestureRecognitionEngine()
+''  +~GestureRecognitionEngine()
+''  == mutators ==
+''  + int run()
+''  - static void run_th_fcn( void* arg)
+''}
+''class UserDetectionEngine{
+''  -int _status
+''  -bool detected
+''  -mutex _UDAcess
+''  -condition_variable _UDRx
+''  == constr/destr ==
+''  +UserDetectionEngine()
+''  +~UserDetectionEngine()
+''  == mutators ==
+''  + int init()
+''  + int run()
+''  - static void run_th_fcn( void* arg)
+''}
+''
+''
+'' ----------------
+''
+'' ----------- Containers
+''
+'' ----------------
+''
+'' --------------------------------------------------------------
+''
+''
+'' ---------- Relation between classes -----------
+'' Types
+'' - extension (inheritance):   <|--
+'' - composition: *--
+'' - Aggregation: o--
+''UIApp "1" *- "1" UI: contains
+''UI "1" *- "1" CommManager: contains
+''UI "1" *-- "1" User: contains
+''UI "1" *-- "1" Admin: contains
+''UI "1" *-- "1" Twitter: contains
+''UI "1" *-- "1" Post: contains
+''CommManager "1" *- "1" ConnStatus: contains
+''Admin -l-|> User
+''User *-l- Role: contains
+''User "1" - "1" Crypt
+''UI "1" *-- "1" DBParser: contains
+''UI "1" *-- "1" CmdParser: contains
+''UI "1" *-- "1" TwitterParser: contains
+''UI "1" *-- "1" GestureRecognitionEngine: contains
+''UI "1" *-- "1" UserDetectionEngine: contains
+''rxFrame "1" *- "1" frameT: contains
+''UI "1" *-u- "many" rxFrame: contains
+''UI "1" *-u- "many" dbRsp: contains
+''UI "1" *-u- "many" cmd: contains
+''DBParser --|> Parser
+''CmdParser --|> Parser
+''TwitterParser --|> Parser
+''Twitter --|> SocialMedia
+
+''newpage
+
+enum ImgFilterType{
+GLASSES
+CIGAR
+RED_EYES
+...
+}
+class ImageFilterEngine{
+  -int _status
+  -enum ImgFilterType _filt
+  + vector<ImgFilterType> *_filts
+  == constr/destr ==
+  +ImageFilterEngine()
+  +~ImageFilterEngine()
+  == mutators ==
+  + int init()
+  + int apply()
+  + bool selectFilter()
+  + vector<ImgFilterType>* listFilter()
+  - static void run_th_fcn( void* arg)
+}
+
+class GIFGenerator{
+  -int _status
+  -mutex _started
+  -condition_variable _start
+  -mutex _ended
+  -condition_variable _end
+  -string fname
+  == constr/destr ==
+  +GIFGenerator()
+  +~GIFGenerator()
+  == mutators ==
+  + int init()
+  + bool run(FILE* f)
+  - static void run_th_fcn( void* arg)
+}
+
+class CameraEngine{
+  -int _status
+  -mutex _running
+  -condition_variable _run
+  == constr/destr ==
+  +CameraEngine()
+  +~CameraEngine()
+  == mutators ==
+  + int init()
+  + int run()
+  - static void run_th_fcn( void* arg)
+}
+
+class FragranceManager{
+  -int _status
+  -mutex _running
+  -condition_variable _run
+  -int _timeToRun
+  -enum FragType _fragT
+  == constr/destr ==
+  +FragranceManager()
+  +~FragranceManager()
+  == mutators ==
+  + int start()
+  + int stop()
+  + bool add(enum FragType f)
+  - static void run_th_fcn( void* arg)
+}
+
+class VideoManager{
+  -int _status
+  -mutex _running
+  -condition_variable _run
+  -Vector<FILE *> _vids
+  == constr/destr ==
+  +VideoManager()
+  +~VideoManager()
+  == mutators ==
+  + int start()
+  + int stop()
+  + bool add(FILE* vid)
+  + bool clear()
+  - static void run_th_fcn( void* arg)
+}
+
+class AudioManager{
+  -int _status
+  -mutex _running
+  -condition_variable _run
+  -Vector<FILE *> _audios
+  == constr/destr ==
+  +AudioManager()
+  +~AudioManager()
+  == mutators ==
+  + int start()
+  + int stop()
+  + bool add(FILE* audio)
+  + bool clear()
+  - static void run_th_fcn( void* arg)
+}
+
+enum State{
+NORMAL
+INTERACTION
+MULTIMEDIA
+SHARING
+}
+
+class FSM{
+  -int _status
+  -enum State _curState
+  -enum State _nextState
+  == constr/destr ==
+  +FSM()
+  +~FSM()
+  == mutators ==
+  + int init()
+  + int run(enum State s)
+}
+
+enum fragType{
+COFFEE
+BURGER
+CHICKEN
+CALM
+...
+}
+
+ImageFilterEngine "1" *- "1" ImgFilterType: contains
+FragranceManager "1" *- "1" fragType: contains
+FSM "1" *- "1" State: contains
+UI "1" *-- "1" FSM: contains
+UI "1" *-- "1" ImageFilterEngine: contains
+UI "1" *-- "1" CameraEngine: contains
+UI "1" *-u- "1" GIFGenerator: contains
+UI "1" *-u- "1" VideoManager: contains
+UI "1" *-u- "1" AudioManager: contains
+UI "1" *-u- "1" FragranceManager: contains
+''UIView <|-- UIWindow: inherits
+
+'' ------------------------------

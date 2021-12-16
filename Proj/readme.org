@@ -4546,6 +4546,16 @@ UI "1" *-u- "1" FragranceManager: contains
 *** Entity-Relationship diagram
 [[https://plantuml.com/ie-diagram][src]]
 
+Based on the Information Engineering notation.
+This is an extension to the existing Class Diagram. This  extension adds:
+- Additional relations for the Information Engineering  notation.   
+- An entity alias that maps to the class diagram class.   
+- An additional visibility modifier * to identify mandatory attributes. 
+
+Otherwise, the syntax for drawing diagrams is the same as for  class
+diagrams. All other features of class diagrams are also supported.
+
+
   #+BEGIN_SRC plantuml :file diags/plantuml/erd/output/complete-example.png
 @startuml
 
