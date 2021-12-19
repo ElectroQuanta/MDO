@@ -4547,8 +4547,8 @@ UI "1" *-u- "1" FragranceManager: contains
 [[https://plantuml.com/ie-diagram][src]]
 
 Based on the Information Engineering notation.
-This is an extension to the existing Class Diagram. This  extension adds:
-- Additional relations for the Information Engineering  notation.   
+This is an extension to the existing Class Diagram. This extension adds:
+- Additional relations for the Information Engineering notation.   
 - An entity alias that maps to the class diagram class.   
 - An additional visibility modifier * to identify mandatory attributes. 
 
@@ -4633,11 +4633,15 @@ A line starting with .. or __, used as a separator into a class definition, will
 
 The HTML markup in comments (after --) is stripped.
 
+**** [[file:db.org][DB design and implementation using SQL]]                       :Important:
 *** Flowcharts (activity diagram)
 
 **** Conditionals
   #+BEGIN_SRC plantuml :file diags/plantuml/flowchart/output/cond.png
     start      
+'' You can use the command !pragma useVerticalIf on to have the tests in vertical mode:     
+''  *  !pragma useVerticalIf on      
+
   '' style 1        
     if (Graphviz installed?) then (yes)      
       :process all\ndiagrams;      
@@ -4671,6 +4675,9 @@ The HTML markup in comments (after --) is stripped.
     else (nothing)      
       :Text else;      
     endif      
+
+
+
           
     stop      
           
@@ -4680,7 +4687,29 @@ The HTML markup in comments (after --) is stripped.
   #+RESULTS:
   [[file:diags/plantuml/flowchart/output/cond.png]]
 
+  #+BEGIN_SRC plantuml :file diags/plantuml/flowchart/output/switch-case.png
+  @startuml      
+  start      
+    switch (test?)      
+    case ( condition A )      
+      :Text 1;      
+    case ( condition B )       
+      :Text 2;      
+    case ( condition C )      
+      :Text 3;      
+    case ( condition D )      
+      :Text 4;      
+    case ( condition E )      
+      :Text 5;      
+    endswitch      
+    stop      
+    @enduml      
+  #+END_SRC
 
+  #+RESULTS:
+  [[file:diags/plantuml/flowchart/output/switch-case.png]]
+
+**** Switch-case
 * Gesture recognition                                              :noexport:
 ** Research [0/7]
 1) [ ] [[https://techvidvan.com/tutorials/hand-gesture-recognition-tensorflow-opencv/][Real-time Hand Gesture Recognition using TensorFlow & OpenCV]]

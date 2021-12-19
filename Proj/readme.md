@@ -1,37 +1,38 @@
-- [Preamble](#orgc983145)
-- [Versions <code>[4/4]</code>](#org87794dc)
-- [Notes](#orgb691698)
-  - [Requirements](#org5be2498)
-  - [Problem statement](#org596ac05)
-  - [Research](#org7b38899)
-    - [Topics <code>[0/3]</code>](#orgf623df8)
-    - [Selection](#org60f972d)
-  - [Report](#orgeb5336e)
-    - [Outline <code>[2/8]</code>](#org193c091)
-  - [Marketing Digital Outdoor](#org5f45697)
-    - [Topics](#orgcbfec98)
-    - [Technologies <code>[0/11]</code>](#orgd35ba0d)
-    - [Problem statement](#org3987995)
-    - [Market research <code>[3/3]</code>](#org5f0d3fc)
-    - [Project planning](#org73fedf9)
-    - [Analysis](#org88bf015)
-    - [Theoretical foundations <code>[17/17]</code>](#orgc09b3ba)
-    - [Design](#orgd90348a)
-- [Diagrams](#org3d17d8a)
-  - [PlantUML](#org9c2940d)
-    - [Setup <code>[0/6]</code>](#org465e54c)
-    - [Workflow <code>[0/4]</code>](#org99de750)
-    - [Sequence diagrams](#org62fe279)
-    - [Component diagrams](#orgf6219e4)
-    - [Deployment diagrams](#org001b95c)
-    - [Class diagrams](#org4d59933)
-    - [Entity-Relationship diagram](#org8eeb0c8)
-- [GIF generation](#org47c2b54)
-  - [C++ libraries and APIs <code>[0/1]</code>](#org09bb3c9)
+- [Preamble](#org678197c)
+- [Versions <code>[4/4]</code>](#org207590c)
+- [Notes](#org4586b5c)
+  - [Requirements](#org2b53848)
+  - [Problem statement](#orgf7b450c)
+  - [Research](#org1e3b73e)
+    - [Topics <code>[0/3]</code>](#org57a817c)
+    - [Selection](#orga4a47c8)
+  - [Report](#org27c456c)
+    - [Outline <code>[2/8]</code>](#org33f874b)
+  - [Marketing Digital Outdoor](#orgafa2036)
+    - [Topics](#org597e8a8)
+    - [Technologies <code>[0/11]</code>](#orgc1dfc49)
+    - [Problem statement](#org4455d2d)
+    - [Market research <code>[3/3]</code>](#org8083bd5)
+    - [Project planning](#orgccb52a5)
+    - [Analysis](#orga68a341)
+    - [Theoretical foundations <code>[17/17]</code>](#org9e8117e)
+    - [Design](#orgee470e0)
+- [Diagrams](#orgaa8c720)
+  - [PlantUML](#orgdc6d186)
+    - [Setup <code>[0/6]</code>](#org0b1b24c)
+    - [Workflow <code>[0/4]</code>](#org49fb716)
+    - [Sequence diagrams](#org8c734fa)
+    - [Component diagrams](#org218ea28)
+    - [Deployment diagrams](#org629abc4)
+    - [Class diagrams](#orga0785c6)
+    - [Entity-Relationship diagram](#org4c143e7)
+    - [Flowcharts (activity diagram)](#org6b2f343)
+- [GIF generation](#org80eec97)
+  - [C++ libraries and APIs <code>[0/1]</code>](#org251862e)
 
 
 
-<a id="orgc983145"></a>
+<a id="org678197c"></a>
 
 # Preamble
 
@@ -39,7 +40,7 @@
 -   It is written incrementally, i.e., as the several project phases take place, the document versions pertaining to each phase are stored in the folder **submission**.
 
 
-<a id="org87794dc"></a>
+<a id="org207590c"></a>
 
 # Versions <code>[4/4]</code>
 
@@ -49,12 +50,12 @@
 4.  [X] Design phase: <span class="timestamp-wrapper"><span class="timestamp">&lt;2021-12-15 qua 23:00&gt;</span></span>
 
 
-<a id="orgb691698"></a>
+<a id="org4586b5c"></a>
 
 # Notes     :Important:
 
 
-<a id="org5be2498"></a>
+<a id="org2b53848"></a>
 
 ## Requirements
 
@@ -66,19 +67,19 @@
 -   Makefiles
 
 
-<a id="org596ac05"></a>
+<a id="orgf7b450c"></a>
 
 ## Problem statement
 
 Think about the project and deliver a document about it.
 
 
-<a id="org7b38899"></a>
+<a id="org1e3b73e"></a>
 
 ## Research
 
 
-<a id="orgf623df8"></a>
+<a id="org57a817c"></a>
 
 ### Topics <code>[0/3]</code>
 
@@ -87,19 +88,19 @@ Think about the project and deliver a document about it.
 -   [ ] Situate the project requirements, the project constraints
 
 
-<a id="org60f972d"></a>
+<a id="orga4a47c8"></a>
 
 ### Selection
 
 -   [Marketing digital Outdoor](readme.md)
 
 
-<a id="orgeb5336e"></a>
+<a id="org27c456c"></a>
 
 ## Report
 
 
-<a id="org193c091"></a>
+<a id="org33f874b"></a>
 
 ### Outline <code>[2/8]</code>
 
@@ -150,12 +151,12 @@ Think about the project and deliver a document about it.
 8.  [ ] Conclusions
 
 
-<a id="org5f45697"></a>
+<a id="orgafa2036"></a>
 
 ## Marketing Digital Outdoor     :Important:
 
 
-<a id="orgcbfec98"></a>
+<a id="org597e8a8"></a>
 
 ### Topics
 
@@ -196,7 +197,7 @@ Think about the project and deliver a document about it.
             -   Additionally, brands can also monitor this by checking their social media accounts.
 
 
-<a id="orgd35ba0d"></a>
+<a id="orgc1dfc49"></a>
 
 ### Technologies <code>[0/11]</code>
 
@@ -213,12 +214,12 @@ Think about the project and deliver a document about it.
 11. [ ] Social media and e-mail sharing APIs
 
 
-<a id="org3987995"></a>
+<a id="org4455d2d"></a>
 
 ### ✔ DONE Problem statement
 
 
-<a id="org5f0d3fc"></a>
+<a id="org8083bd5"></a>
 
 ### ✔ DONE Market research <code>[3/3]</code>
 
@@ -227,7 +228,7 @@ Think about the project and deliver a document about it.
 3.  [X] Combined marketing: are they digital outdoor + scenting?
 
 
-<a id="org73fedf9"></a>
+<a id="orgccb52a5"></a>
 
 ### Project planning
 
@@ -302,7 +303,7 @@ Think about the project and deliver a document about it.
     -   [X] Camera: 14 EUR - <https://shorturl.at/gnpCU>
 
 
-<a id="org88bf015"></a>
+<a id="orga68a341"></a>
 
 ### ✔ DONE Analysis
 
@@ -315,7 +316,7 @@ Think about the project and deliver a document about it.
     > COMPANY -> MDO-L Staff member login RC -> RS: q mdo systems RS -> DB: query mdo-systems DB -> RS: std::<vector> mdo<sub>systems</sub> for(i = 0; i < mdo<sub>systems.size</sub>(); i++ ) RS -> RC: mdo<sub>systems</sub>[i] RC -> RC: Select MDO-L machine Send command RC -> RS: mdo <nr> <command> (mdo 1 get mode) RS -> RS: parse command RS -> RS: get mdo<sub>nr</sub> IP (query mdo-systems 1 IP) RS -> MDO-L: connect IP:port MDO-L -> RS: connected RS -> MDO-L: get mode MDO-L -> RS: normal mode (example) RS -> RC: normal
 
 
-<a id="orgc09b3ba"></a>
+<a id="org9e8117e"></a>
 
 ### ✔ DONE Theoretical foundations <code>[17/17]</code>
 
@@ -347,7 +348,7 @@ Legend:
 -   *Hugo*
 
 
-<a id="orgd90348a"></a>
+<a id="orgee470e0"></a>
 
 ### ▭▭ IN-PROGRESS Design
 
@@ -404,7 +405,7 @@ Design Phase must include (some specifications may vary according to your projec
 It is compulsory to show/identify which/where all class topics are going to be implemented and used by you! Also third-party Libraries/apps must be identified so you can use other's software and materials with our consent.
 
 
-<a id="org3d17d8a"></a>
+<a id="orgaa8c720"></a>
 
 # Diagrams
 
@@ -413,7 +414,7 @@ Diagrams can be drawn using <code>[2/2]</code>:
 -   [X] draw.io
     -   User mockups
     -   State-machine
--   [X] [PlantUML](#org9c2940d) (stored in Proj/diags/plantuml)
+-   [X] [PlantUML](#orgdc6d186) (stored in Proj/diags/plantuml)
     -   Sequence diagram
     -   Class diagram
     -   Component diagram
@@ -421,14 +422,14 @@ Diagrams can be drawn using <code>[2/2]</code>:
     -   Entity-Relationship diagram
 
 
-<a id="org9c2940d"></a>
+<a id="orgdc6d186"></a>
 
 ## PlantUML
 
 [PlantUML](https://plantuml.com/) is a tool for quickly drawing diagrams from text based descriptions. It is specially adequate for sequence diagrams, as draw.io is not very fluid.
 
 
-<a id="org465e54c"></a>
+<a id="org0b1b24c"></a>
 
 ### Setup <code>[0/6]</code>
 
@@ -444,7 +445,7 @@ Diagrams can be drawn using <code>[2/2]</code>:
 6.  [ ] Check the generate png file: `output/test.png`
 
 
-<a id="org99de750"></a>
+<a id="org49fb716"></a>
 
 ### Workflow <code>[0/4]</code>
 
@@ -458,7 +459,7 @@ Diagrams can be drawn using <code>[2/2]</code>:
 4.  [ ] Check the generate png file: `output/test.png`
 
 
-<a id="org62fe279"></a>
+<a id="org8c734fa"></a>
 
 ### ✔ DONE Sequence diagrams
 
@@ -975,7 +976,7 @@ Diagrams can be drawn using <code>[2/2]</code>:
     ![img](diags/plantuml/seq-diag/examples/all-together.png)
 
 
-<a id="orgf6219e4"></a>
+<a id="org218ea28"></a>
 
 ### ✔ DONE Component diagrams
 
@@ -1033,22 +1034,22 @@ You can use component diagrams to model the software architecture of a system. C
     
     ![img](diags/plantuml/component-diag/output/component-diag-full.png)
     
-    **Client**
+    1.  Client
     
-    ![img](diags/plantuml/component-diag/output/component-diag-rc.png)
+        ![img](diags/plantuml/component-diag/output/component-diag-rc.png)
     
-    **Server**
+    2.  Server
     
-    ![img](diags/plantuml/component-diag/output/component-diag-rs.png)
+        ![img](diags/plantuml/component-diag/output/component-diag-rs.png)
     
-    **Local System**
+    3.  Local System
     
-    ![img](diags/plantuml/component-diag/output/component-diag-local.png)
-    
-    ![img](diags/plantuml/component-diag/output/component-diag-local-no-links.png)
+        ![img](diags/plantuml/component-diag/output/component-diag-local.png)
+        
+        ![img](diags/plantuml/component-diag/output/component-diag-local-no-links.png)
 
 
-<a id="org001b95c"></a>
+<a id="org629abc4"></a>
 
 ### ✔ DONE Deployment diagrams
 
@@ -1097,7 +1098,7 @@ Deployment diagrams, which you typically prepare during the implementation phase
     ![img](diags/plantuml/deploy-diag/output/deploy-diag.png)
 
 
-<a id="org4d59933"></a>
+<a id="orga0785c6"></a>
 
 ### ▭▭ IN-PROGRESS Class diagrams
 
@@ -1165,7 +1166,7 @@ Deployment diagrams, which you typically prepare during the implementation phase
     -   class for all classes,
     -   interface for all interfaces,
     -   enum for all enums,
-    -   <a id="orgb092cbe"></a> for classes which are stereotyped with foo1,
+    -   <a id="org87d72e4"></a> for classes which are stereotyped with foo1,
     -   an existing class name.
     
     You can use several show/hide commands to define rules and exceptions.
@@ -1246,11 +1247,19 @@ Deployment diagrams, which you typically prepare during the implementation phase
         ![img](diags/plantuml/class-diag/output/class-diag-local.png)
 
 
-<a id="org8eeb0c8"></a>
+<a id="org4c143e7"></a>
 
 ### Entity-Relationship diagram
 
 [src](https://plantuml.com/ie-diagram)
+
+Based on the Information Engineering notation. This is an extension to the existing Class Diagram. This extension adds:
+
+-   Additional relations for the Information Engineering notation.
+-   An entity alias that maps to the class diagram class.
+-   An additional visibility modifier \* to identify mandatory attributes.
+
+Otherwise, the syntax for drawing diagrams is the same as for class diagrams. All other features of class diagrams are also supported.
 
 ![img](diags/plantuml/erd/output/complete-example.png)
 
@@ -1278,13 +1287,28 @@ Deployment diagrams, which you typically prepare during the implementation phase
     
     The HTML markup in comments (after &#x2013;) is stripped.
 
+2.  [DB design and implementation using SQL](db.md)     :Important:
 
-<a id="org47c2b54"></a>
+
+<a id="org6b2f343"></a>
+
+### Flowcharts (activity diagram)
+
+1.  Conditionals
+
+    ![img](diags/plantuml/flowchart/output/cond.png)
+    
+    ![img](diags/plantuml/flowchart/output/switch-case.png)
+
+2.  Switch-case
+
+
+<a id="org80eec97"></a>
 
 # GIF generation
 
 
-<a id="org09bb3c9"></a>
+<a id="org251862e"></a>
 
 ## C++ libraries and APIs <code>[0/1]</code>
 

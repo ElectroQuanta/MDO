@@ -1,0 +1,1729 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2021-12-19 dom 19:37 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Database design and implementation using SQL</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="José Pires" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Database design and implementation using SQL</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgb218612">1. Data modeling</a></li>
+<li><a href="#orgb1bafcc">2. E-R diagram</a></li>
+<li><a href="#org9bb076f">3. Logical design</a></li>
+<li><a href="#orgb750809">4. Relational languages</a>
+<ul>
+<li><a href="#orgcb73cec">4.1. SQL</a>
+<ul>
+<li><a href="#orgc10218a">4.1.1. Intro</a></li>
+<li><a href="#org5724c5e">4.1.2. DDL: Data definition language</a></li>
+<li><a href="#orgda1aba8">4.1.3. DML: Data modeling language</a></li>
+<li><a href="#org8205e24">4.1.4. Views</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-orgb218612" class="outline-2">
+<h2 id="orgb218612"><span class="section-number-2">1</span> Data modeling</h2>
+<div class="outline-text-2" id="text-1">
+<ul class="org-ul">
+<li>A modelação de dados justifica-se porque várias aplicações podem
+partilhar o mesmo conjunto de dados.</li>
+<li>A base de dados serve as aplicações já existentes, mas deve estar
+preparada para servir as aplicações que venham a ser desenvolvidas no
+futuro (dentro da organização).</li>
+<li>A identificação dos dados necessários depende dos requisitos de
+informação do Sistema de Informação (SI) que a base de dados pretende
+suportar (e não exclusivamente das necessidades de processamento de cada
+aplicação)</li>
+</ul>
+
+
+<p>
+<span class="underline">Etapas</span>:
+</p>
+<ol class="org-ol">
+<li><span class="underline">Desenho conceptual</span>: consiste na construção do modelo conceptual de
+dados, o qual reflecte a percepção que os utilizadores têm dos dados,
+sendo independente de qualquer implementação física.
+<ul class="org-ul">
+<li>A abordagem mais utilizada são os diagramas DER (Diagramas de
+Entidades e Relacionamentos).</li>
+</ul></li>
+<li><span class="underline">Desenho lógico</span>: Corresponde à transformação do modelo conceptual em
+estruturas de dados que são implementáveis no SGBD (sistema de gestão
+de bases de dados) seleccionado.
+<ul class="org-ul">
+<li>O modelo relacional tem sido o modelo mais utilizado na construção
+de modelos lógicos de dados.</li>
+</ul></li>
+<li><p>
+<span class="underline">Desenho físico</span>: Passa pela definição dos detalhes físicos que serão
+considerados na implementação do modelo lógico, e que são específicos
+do SGBD com que se vá trabalhar (MySQL nesta Unidade Curricular).
+</p>
+
+<div id="org8906041" class="figure">
+<p><img src="sec/img/modelacao-dados.png" alt="modelacao-dados.png" width="500px" />
+</p>
+<p><span class="figure-number">Figure 1: </span>Modelacao de dados <a href="fig:modelacao-dados">fig:modelacao-dados</a></p>
+</div></li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-orgb1bafcc" class="outline-2">
+<h2 id="orgb1bafcc"><span class="section-number-2">2</span> E-R diagram</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Os diagramas E-R são utilizados para descrever a estrutura dos dados, específica de uma dada aplicação ou SI.
+</p>
+<ul class="org-ul">
+<li><span class="underline">Componentes básicos</span>:
+<ol class="org-ol">
+<li><span class="underline">Entidades</span>: constituem objectos ou conceitos de interesse no domínio
+de aplicação em causa (Ex: objeto do negócio, atores envolvidos,
+documentos que circulam na organização,&#x2026;).</li>
+<li><span class="underline">Relacionamentos</span>: representam associações entre entidades.</li>
+<li><span class="underline">Atributos</span>: os atributos de uma entidade ou relação definem
+propriedades, assumindo valores dentro do contexto definido para o
+domínio de aplicação modelado (caraterizam a entidade).</li>
+</ol></li>
+<li><span class="underline">Representacao grafica</span>:
+<ul class="org-ul">
+<li><span class="underline">Entidades</span>: retângulos</li>
+<li><span class="underline">atributos</span>: elipses</li>
+<li><span class="underline">relacionamentos</span>: linhas entre as entidades.</li>
+<li>Nos retângulos e nas elipses colocam-se os nomes das diferentes
+entidades e atributos.</li>
+<li>As linhas apresentam setas que definem o sentido da relação e cuja
+forma caracteriza o tipo de relacionamento existente entre duas
+entidades (há outras representações para os relacionamentos, com outras
+semânticas).</li>
+<li><span class="underline">cardinalidade</span>: indica a quantidade no relacionamento:
+<ul class="org-ul">
+<li>1:1: um para um</li>
+<li>1:M: um para muitos</li>
+<li>M:N: muitos para muitos</li>
+</ul></li>
+<li><span class="underline">opcionalidade</span>:
+<ul class="org-ul">
+<li>0: opcional</li>
+<li><p>
+1: obrigatório
+</p>
+<p width="400px">
+<img src="sec/img/diag-er.png" alt="diag-er.png" width="400px" />
+<img src="sec/img/diag-er2.png" alt="diag-er2.png" />
+</p></li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org9bb076f" class="outline-2">
+<h2 id="org9bb076f"><span class="section-number-2">3</span> Logical design</h2>
+<div class="outline-text-2" id="text-3">
+<ul class="org-ul">
+<li><span class="underline">Modelação lógica</span>: transformacao do modelo conceptual de dados num modelo
+de BD (neste caso relacional)
+<ul class="org-ul">
+<li><span class="underline">Chave primária</span>: Conjunto de atributos, eventualmente singular, que
+quando conhecidos valores específicos dos mesmos, permite o acesso
+unívoco à instância da relação (entidade no modelo concetual) a que
+pertencem tais valores.
+<ul class="org-ul">
+<li>Uma chave primaria nao pode ter conteudo nulo!!!</li>
+</ul></li>
+<li><span class="underline">Chave secundária</span>: Atributo(s) que num relacionamento de “um para
+muitos” é(são) chave primária na entidade do lado “um” no relacionamento,
+e integra o conjunto de atributos da entidade no lado “muitos” desse
+relacionamento.
+<ul class="org-ul">
+<li>Se uma relação contiver uma chave estrangeira com conteúdo não nulo,
+então terá que existir um registo na relação onde é chave primária, com
+conteúdo não nulo!</li>
+</ul></li>
+<li><span class="underline">Regras de transformacao</span> (nao necessariamente por esta ordem)
+<ol class="org-ol">
+<li>Cada entidade no modelo conceptual dará origem a uma relação (tabela
+aquando da criação da base de dados) no modelo relacional, cujos
+atributos são os atributos da entidade no modelo concetual de dados;
+<ul class="org-ul">
+<li>Nota: relação é diferente de relacionamento!</li>
+</ul></li>
+<li>Para cada relação, de entre as chaves candidatas que possam existir,
+selecionar a chave primária. As restantes passam a ser chaves
+secundárias;</li>
+<li>Recorrendo à cardinalidade dos relacionamentos estabelecidos no
+modelo conceptual:
+<ol class="org-ol">
+<li><span class="underline">Para cada relacionamento de muitos para muitos (M:N)</span> cria-se
+uma nova relação (já temos no horizonte o modelo relacional de
+base de dados!) cujos atributos terão que incluir os atributos
+correspondentes às chaves primárias das relações envolvidas;</li>
+<li><span class="underline">Relacionamentos de um para um (1:1)</span> tendem a dar origem a uma
+única relação que, fundindo as entidades envolvidas nesse
+relacionamento, será constituída pelos atributos de ambas.
+<ol class="org-ol">
+<li>Quando não for possível, ou aconselhável, fazer a fusão das
+duas entidades, uma das duas relações deve importar a chave
+primária da outra relação;</li>
+</ol></li>
+<li><span class="underline">Relacionamentos de um para muitos (1:N)</span> implicam a importação,
+para a relação correspondente à entidade (no MCD) do lado
+“muitos”, do(s) atributo(s) chave primária da relação que
+corresponde à entidade do lado “um”;</li>
+</ol></li>
+<li>Identificação das chaves primária e estrangeiras:
+<ol class="org-ol">
+<li>Os atributos que constituem a chave primária de uma relação devem
+ser sublinhados a cheio;</li>
+<li>Os atributos que constituem as chaves estrangeiras de uma relação
+devem ser sublinhados a tracejado;</li>
+</ol></li>
+</ol></li>
+<li><span class="underline">Exemplos</span>: Utilizando as regras de transformação de modelos
+conceptuais de dados em modelos relacionais, desenvolva os esquemas
+relacionais correspondentes aos exercícios vistos anteriormente:
+<ol class="org-ol">
+<li><p>
+Contexto escolar;
+</p>
+<p width="400px">
+<img src="sec/img/mod-logico1.png" alt="mod-logico1.png" width="400px" />
+<img src="sec/img/mod-logico1-2.png" alt="mod-logico1-2.png" />
+</p></li>
+<li><p>
+Contexto bancário
+</p>
+<p width="400px">
+<img src="sec/img/mod-logico2.png" alt="mod-logico2.png" width="400px" />
+<img src="sec/img/mod-logico2-2.png" alt="mod-logico2-2.png" />
+</p></li>
+</ol></li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgb750809" class="outline-2">
+<h2 id="orgb750809"><span class="section-number-2">4</span> Relational languages</h2>
+<div class="outline-text-2" id="text-4">
+<blockquote>
+<ul class="org-ul">
+<li>Baseadas na Álgebra Relacional e, sobretudo, no Cálculo Relacional</li>
+<li>Linguagens:
+<ol class="org-ol">
+<li>SQL: mais representativa</li>
+<li>QBE (Query By Example):
+<ul class="org-ul">
+<li>Marcas possíveis em QBE: P. I. D. U.
+<ul class="org-ul">
+<li>a marca P. é usada para apresentação de resultados (Present)</li>
+<li>a marca I. é usada para inserção de tuplos (insert)</li>
+<li>a marca D. é usada para remoção de tuplos (Delete)</li>
+<li>a marca U. é usada para alteração de tuplos (Update)</li>
+</ul></li>
+</ul></li>
+<li>Calculo relacional de dominios</li>
+</ol></li>
+</ul>
+</blockquote>
+</div>
+
+<div id="outline-container-orgcb73cec" class="outline-3">
+<h3 id="orgcb73cec"><span class="section-number-3">4.1</span> SQL</h3>
+<div class="outline-text-3" id="text-4-1">
+</div>
+<div id="outline-container-orgc10218a" class="outline-4">
+<h4 id="orgc10218a"><span class="section-number-4">4.1.1</span> Intro</h4>
+<div class="outline-text-4" id="text-4-1-1">
+<ol class="org-ol">
+<li>Linguagem declarativa: 
+<ul class="org-ul">
+<li>especifica-se (declara-se) o que se quer fazer;</li>
+<li>nao se especifica como se faz (como em C ou noutra linguagem
+procedimental ou imperativa), apenas o que se pretende)</li>
+</ul></li>
+<li><p>
+Formato base duma query SQL
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #586e75;">-- A &#8220;where clause&#8221; pode n&#227;o existir na interroga&#231;&#227;o (query). </span>
+<span style="color: #586e75;">-- Da&#237; surgir entre par&#234;ntesis retos.</span>
+            <span style="color: #859900; font-weight: bold;">SELECT</span> &lt;colunas&gt;
+            <span style="color: #859900; font-weight: bold;">FROM</span> &lt;tabelas&gt;
+            [<span style="color: #859900; font-weight: bold;">WHERE</span> &lt;condi&#231;&#227;o&gt;]
+
+<span style="color: #586e75;">-- Exemplos</span>
+            <span style="color: #586e75;">-- 1.</span>
+            <span style="color: #859900; font-weight: bold;">SELECT</span> nome
+            <span style="color: #859900; font-weight: bold;">FROM</span> alunos
+            <span style="color: #859900; font-weight: bold;">WHERE</span> localidade = <span style="color: #2aa198;">'Guimar&#227;es'</span> 
+            <span style="color: #586e75;">-- Algebra relacional</span>
+            <span style="color: #586e75;">-- Proj&lt;nome&gt;(Sel&lt;localidade = 'Guimar&#227;es'&gt; (Alunos) )</span>
+
+            <span style="color: #586e75;">-- 2.</span>
+            <span style="color: #859900; font-weight: bold;">SELECT</span> nome
+            <span style="color: #859900; font-weight: bold;">FROM</span> alunos
+            <span style="color: #586e75;">-- Algebra relacional</span>
+            <span style="color: #586e75;">-- Proj&lt;nome&gt;( Alunos )</span>
+</pre>
+</div></li>
+<li>Comandos:
+<ol class="org-ol">
+<li>Para definir a BD: Ling. de Def. de Dados (LDD)</li>
+<li>Para manipular dados: Ling. de Manipulação de Dados (LMD)
+<ol class="org-ol">
+<li>Interrogacao de BDs</li>
+<li>Update de BDs</li>
+</ol></li>
+<li>Para administrar a BD: segurança, optimizacao, etc.</li>
+</ol></li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-org5724c5e" class="outline-4">
+<h4 id="org5724c5e"><span class="section-number-4">4.1.2</span> DDL: Data definition language</h4>
+<div class="outline-text-4" id="text-4-1-2">
+<ol class="org-ol">
+<li>Comandos
+<ol class="org-ol">
+<li>Criacao de BD</li>
+<li>Modificacao de BD</li>
+<li>Remocao de BD</li>
+</ol></li>
+<li>Tipos de dados (dominios) dos campos</li>
+<li>Constraints: Assegurar a integridade dos dados
+<ol class="org-ol">
+<li>Restricoes de Integridade Implicitas
+<ol class="org-ol">
+<li>Integridade de dominio
+<ol class="org-ol">
+<li><code>DEFAULT</code>: indicacao dos valores por defeito, por omissao, a
+aplicar num campo: <code>tipo varchar(3) DEFAULT 'ORD'</code></li>
+<li><code>NOT NULL</code>: indicacao de que o conteudo dum campo nao pode
+ser nulo: <code>nome varchar(100) NOT NULL</code></li>
+<li><code>UNIQUE</code>: indicacao de que o conteudo dum campo nao pode
+ser repetido: <code>nome varchar(100) UNIQUE</code></li>
+<li><code>CHECK</code>: impoe uma condição para o valor do campo ser
+aceite. Pode usar os operadores:
+<ol class="org-ol">
+<li>Relacionais: <code>, &gt;, &lt;, &gt;</code>, &lt;=, &lt;&gt; ou !=</li>
+<li>Logicos: AND, OR, NOT</li>
+<li><p>
+Outros: BETWEEN, IN, IS, LIKE
+</p>
+<div class="org-src-container">
+<pre class="src src-sql">        genero <span style="color: #b58900;">varchar</span>(1) <span style="color: #859900; font-weight: bold;">CHECK</span> (genero = <span style="color: #2aa198;">'M'</span> <span style="color: #859900; font-weight: bold;">or</span> genero = <span style="color: #2aa198;">'F'</span>)
+
+<span style="color: #859900; font-weight: bold;">CREATE</span> <span style="color: #859900; font-weight: bold;">TABLE</span> <span style="color: #268bd2;">Professor</span>(
+Id <span style="color: #b58900;">INTEGER</span> <span style="color: #859900; font-weight: bold;">NOT</span> <span style="color: #859900; font-weight: bold;">NULL</span>,
+Nome <span style="color: #b58900;">CHAR</span>(50) <span style="color: #859900; font-weight: bold;">NOT</span> <span style="color: #859900; font-weight: bold;">NULL</span> <span style="color: #859900; font-weight: bold;">CHECK</span>(Nome <span style="color: #859900; font-weight: bold;">NOT</span> <span style="color: #859900; font-weight: bold;">LIKE</span> <span style="color: #2aa198;">'%Rui'</span>),
+Idade <span style="color: #b58900;">INTEGER</span> <span style="color: #859900; font-weight: bold;">NOT</span> <span style="color: #859900; font-weight: bold;">NULL</span> <span style="color: #859900; font-weight: bold;">CHECK</span>(Idade <span style="color: #859900; font-weight: bold;">BETWEEN</span> 0 <span style="color: #859900; font-weight: bold;">AND</span> 150),
+Sexo <span style="color: #b58900;">CHAR</span> <span style="color: #859900; font-weight: bold;">NOT</span> <span style="color: #859900; font-weight: bold;">NULL</span> <span style="color: #859900; font-weight: bold;">CHECK</span>(SEXO <span style="color: #859900; font-weight: bold;">IN</span> (<span style="color: #2aa198;">'M'</span>, <span style="color: #2aa198;">'F'</span>)),
+Salario <span style="color: #b58900;">FLOAT</span> <span style="color: #859900; font-weight: bold;">NOT</span> <span style="color: #859900; font-weight: bold;">NULL</span> <span style="color: #859900; font-weight: bold;">CHECK</span>(Salario &gt;= 0),
+Data_Nasc <span style="color: #b58900;">DATE</span> <span style="color: #859900; font-weight: bold;">NOT</span> <span style="color: #859900; font-weight: bold;">NULL</span>,
+Data_Admi <span style="color: #b58900;">DATE</span> <span style="color: #859900; font-weight: bold;">NOT</span> <span style="color: #859900; font-weight: bold;">NULL</span>,
+<span style="color: #859900; font-weight: bold;">CHECK</span>(Data_Admi &gt; Data_Nasc)
+);
+</pre>
+</div></li>
+</ol></li>
+</ol></li>
+<li>Integridade ao nivel da entidade
+<ol class="org-ol">
+<li>Cada relacao ou tabela (entidade) deve ter definida uma
+unica chave primaria</li>
+
+<li>Numa relacao ou tabela, um conteudo da chave primaria é
+unico</li>
+
+<li>A chave primaria nao pode ser nula
+<ol class="org-ol">
+<li><code>PRIMARY KEY</code>: indica qual a chave primaria da
+tabela. Implica que o campo nao pode ser nulo e um
+conteudo desse campo tem que ser unico.</li>
+</ol></li>
+</ol></li>
+<li>Entidade referencial
+<ol class="org-ol">
+<li>Conceito de chave estrangeira: atributos que nao sao chave primaria
+duma tabela, mas sao chave primaria noutra tabela</li>
+
+<li>Ao valor duma chave estrangeira deverá corresponder um
+valor da chave primária na tabela respectiva.</li>
+<li>Pode admitir o valor <code>null</code></li>
+<li><p>
+Restricao <code>FOREIGN KEY</code> + <code>REFERENCES</code>
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #859900; font-weight: bold;">CREATE</span> <span style="color: #859900; font-weight: bold;">TABLE</span> <span style="color: #268bd2;">Professor</span>(
+Id <span style="color: #b58900;">INTEGER</span>,
+Nome <span style="color: #b58900;">CHAR</span>(50) <span style="color: #859900; font-weight: bold;">NOT</span> <span style="color: #859900; font-weight: bold;">NULL</span> <span style="color: #859900; font-weight: bold;">CHECK</span>(Nome <span style="color: #859900; font-weight: bold;">NOT</span> <span style="color: #859900; font-weight: bold;">LIKE</span> <span style="color: #2aa198;">'%Rui'</span>),
+BI <span style="color: #b58900;">NUMERIC</span> <span style="color: #859900; font-weight: bold;">NOT</span> <span style="color: #859900; font-weight: bold;">NULL</span> <span style="color: #859900; font-weight: bold;">UNIQUE</span>,
+Morada <span style="color: #b58900;">CHAR</span>(80),
+Cod_Postal <span style="color: #b58900;">NUMERIC</span>(4) <span style="color: #859900; font-weight: bold;">REFERENCES</span> Postal(Codigo)
+Salario <span style="color: #b58900;">NUMERIC</span>(10,2) <span style="color: #859900; font-weight: bold;">NOT</span> <span style="color: #859900; font-weight: bold;">NULL</span> <span style="color: #859900; font-weight: bold;">CHECK</span>(Salario &gt;= 0),
+<span style="color: #859900; font-weight: bold;">PRIMARY</span> <span style="color: #859900; font-weight: bold;">KEY</span> (Id),
+<span style="color: #859900; font-weight: bold;">FOREIGN</span> <span style="color: #859900; font-weight: bold;">KEY</span> (BI) <span style="color: #859900; font-weight: bold;">REFERENCES</span> Seg_Social(BId),
+<span style="color: #859900; font-weight: bold;">FOREIGN</span> <span style="color: #859900; font-weight: bold;">KEY</span> (Nome, Apelido) <span style="color: #859900; font-weight: bold;">REFERENCES</span> Pessoa(Nome, Apelido),
+);
+</pre>
+</div></li>
+<li><p>
+Pode definir-se a atualizacao das tabelas onde estao
+definidas as chave estrangeiras, i.e., <code>UPDATE</code> ou <code>DELETE</code>
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #859900; font-weight: bold;">CREATE</span> <span style="color: #859900; font-weight: bold;">TABLE</span> <span style="color: #268bd2;">Funcionarios</span>(
+...,
+cod_dep <span style="color: #b58900;">CHAR</span>(3),
+<span style="color: #859900; font-weight: bold;">FOREIGN</span> <span style="color: #859900; font-weight: bold;">KEY</span> (cod_dep)
+<span style="color: #859900; font-weight: bold;">REFERENCES</span> Departamentos (cod_dep)
+<span style="color: #859900; font-weight: bold;">ON</span> <span style="color: #859900; font-weight: bold;">UPDATE</span> <span style="color: #859900; font-weight: bold;">CASCADE</span>
+<span style="color: #859900; font-weight: bold;">ON</span> <span style="color: #859900; font-weight: bold;">DELETE</span> <span style="color: #859900; font-weight: bold;">SET</span> <span style="color: #859900; font-weight: bold;">NULL</span>,
+);
+</pre>
+</div></li>
+</ol></li>
+</ol></li>
+<li>Restricoes de Integridade Explicitas: regras impostas pelo
+negocio ou contexto (ex. livros para adultos)
+<ol class="org-ol">
+<li>Muitas podem ser implementadas com restricoes de dominio</li>
+<li>Outros so atraves de codigo aplicacional ou triggers na base
+de dados</li>
+</ol></li>
+<li><code>CONSTRAINT</code>: acrescenta restricoes que podem ser manipuladas
+directamente atraves do seu nome: <code>CONSTRAINT chave_pr PRIMARY
+	       KEY(numero)</code></li>
+</ol></li>
+<li><p>
+<b>LDD: Exemplo Completo</b>:
+</p>
+<div class="org-src-container">
+<pre class="src src-sql">            <span style="color: #859900; font-weight: bold;">CREATE</span> <span style="color: #859900; font-weight: bold;">TABLE</span> <span style="color: #268bd2;">CONTAS</span> (
+            num_conta <span style="color: #b58900;">CHAR</span>(10),
+            tipo_conta <span style="color: #b58900;">CHAR</span>(5),
+            cod_agencia <span style="color: #b58900;">CHAR</span>(3),
+            cod_cliente <span style="color: #b58900;">CHAR</span>(4) <span style="color: #859900; font-weight: bold;">NOT</span> <span style="color: #859900; font-weight: bold;">NULL</span>,
+            saldo <span style="color: #b58900;">DECIMAL</span>(10,2) <span style="color: #859900; font-weight: bold;">NOT</span> <span style="color: #859900; font-weight: bold;">NULL</span>,
+            <span style="color: #859900; font-weight: bold;">CONSTRAINT</span> tipos_de_contas
+              <span style="color: #859900; font-weight: bold;">CHECK</span> (tipo_conta <span style="color: #859900; font-weight: bold;">IN</span> (<span style="color: #2aa198;">'ordem'</span>,<span style="color: #2aa198;">'prazo'</span>)),
+            <span style="color: #859900; font-weight: bold;">CONSTRAINT</span> valor_saldo <span style="color: #859900; font-weight: bold;">CHECK</span> (saldo &gt;= 10000),
+            <span style="color: #859900; font-weight: bold;">CONSTRAINT</span> ch_prim_Contas
+              <span style="color: #859900; font-weight: bold;">PRIMARY</span> <span style="color: #859900; font-weight: bold;">KEY</span> (num_conta),
+            <span style="color: #859900; font-weight: bold;">CONSTRAINT</span> ch_estr_Agencias_Contas
+              <span style="color: #859900; font-weight: bold;">FOREIGN</span> <span style="color: #859900; font-weight: bold;">KEY</span> (cod_agencia)
+              <span style="color: #859900; font-weight: bold;">REFERENCES</span> Agencias (cod_agencia)
+              <span style="color: #859900; font-weight: bold;">ON</span> <span style="color: #859900; font-weight: bold;">UPDATE</span> <span style="color: #859900; font-weight: bold;">CASCADE</span>
+              <span style="color: #859900; font-weight: bold;">ON</span> <span style="color: #859900; font-weight: bold;">DELETE</span> <span style="color: #859900; font-weight: bold;">SET</span> <span style="color: #859900; font-weight: bold;">NULL</span>,
+            <span style="color: #859900; font-weight: bold;">CONSTRAINT</span> ch_estr_Clientes_Contas
+              <span style="color: #859900; font-weight: bold;">FOREIGN</span> <span style="color: #859900; font-weight: bold;">KEY</span> (cod_cliente)
+              <span style="color: #859900; font-weight: bold;">REFERENCES</span> Clientes (cod_cliente)
+              <span style="color: #859900; font-weight: bold;">ON</span> <span style="color: #859900; font-weight: bold;">UPDATE</span> <span style="color: #859900; font-weight: bold;">CASCADE</span>
+              <span style="color: #859900; font-weight: bold;">ON</span> <span style="color: #859900; font-weight: bold;">DELETE</span> <span style="color: #859900; font-weight: bold;">CASCADE</span>
+            );
+
+            <span style="color: #859900; font-weight: bold;">CREATE</span> <span style="color: #859900; font-weight: bold;">TABLE</span> <span style="color: #268bd2;">Emprestimos</span> (
+            num_emprestimo <span style="color: #b58900;">CHAR</span>(5),
+            cod_agencia <span style="color: #b58900;">CHAR</span>(3),
+            cod_cliente <span style="color: #b58900;">CHAR</span>(4) <span style="color: #859900; font-weight: bold;">NOT</span> <span style="color: #859900; font-weight: bold;">NULL</span>,
+            valor <span style="color: #b58900;">INTEGER</span> <span style="color: #859900; font-weight: bold;">NOT</span> <span style="color: #859900; font-weight: bold;">NULL</span>,
+            <span style="color: #859900; font-weight: bold;">CONSTRAINT</span> valor_emprestimo
+              <span style="color: #859900; font-weight: bold;">CHECK</span> (valor <span style="color: #859900; font-weight: bold;">BETWEEN</span> 100000 <span style="color: #859900; font-weight: bold;">AND</span> 100000000),
+            <span style="color: #859900; font-weight: bold;">CONSTRAINT</span> ch_prim_Emprestimos
+              <span style="color: #859900; font-weight: bold;">PRIMARY</span> <span style="color: #859900; font-weight: bold;">KEY</span> (num_emprestimo),
+            <span style="color: #859900; font-weight: bold;">CONSTRAINT</span> ch_estr_Agencias_Emprestimos
+              <span style="color: #859900; font-weight: bold;">FOREIGN</span> <span style="color: #859900; font-weight: bold;">KEY</span> (cod_agencia)
+              <span style="color: #859900; font-weight: bold;">REFERENCES</span> Agencias (cod_agencia)
+              <span style="color: #859900; font-weight: bold;">ON</span> <span style="color: #859900; font-weight: bold;">UPDATE</span> <span style="color: #859900; font-weight: bold;">CASCADE</span>
+              <span style="color: #859900; font-weight: bold;">ON</span> <span style="color: #859900; font-weight: bold;">DELETE</span> <span style="color: #859900; font-weight: bold;">SET</span> <span style="color: #859900; font-weight: bold;">NULL</span>,
+            <span style="color: #859900; font-weight: bold;">CONSTRAINT</span> ch_estr_Clientes_Emprestimos
+              <span style="color: #859900; font-weight: bold;">FOREIGN</span> <span style="color: #859900; font-weight: bold;">KEY</span> (cod_cliente)
+              <span style="color: #859900; font-weight: bold;">REFERENCES</span> Clientes (cod_cliente)
+              <span style="color: #859900; font-weight: bold;">ON</span> <span style="color: #859900; font-weight: bold;">UPDATE</span> <span style="color: #859900; font-weight: bold;">CASCADE</span>
+              <span style="color: #859900; font-weight: bold;">ON</span> <span style="color: #859900; font-weight: bold;">DELETE</span> <span style="color: #859900; font-weight: bold;">CASCADE</span>
+            ) ;
+
+            <span style="color: #859900; font-weight: bold;">CREATE</span> <span style="color: #859900; font-weight: bold;">TABLE</span> <span style="color: #268bd2;">Agencias</span> (
+            cod_agencia <span style="color: #b58900;">CHAR</span>(3),
+            agencia <span style="color: #b58900;">VARCHAR</span>(20) <span style="color: #859900; font-weight: bold;">NOT</span> <span style="color: #859900; font-weight: bold;">NULL</span>,
+            localidade <span style="color: #b58900;">VARCHAR</span>(10) <span style="color: #859900; font-weight: bold;">NOT</span> <span style="color: #859900; font-weight: bold;">NULL</span>,
+            <span style="color: #859900; font-weight: bold;">CONSTRAINT</span> ch_candidata_Agencias
+              <span style="color: #859900; font-weight: bold;">UNIQUE</span> (agencia),
+            <span style="color: #859900; font-weight: bold;">CONSTRAINT</span> ch_prim_Agencias
+              <span style="color: #859900; font-weight: bold;">PRIMARY</span> <span style="color: #859900; font-weight: bold;">KEY</span> (cod_agencia)
+            );
+
+            <span style="color: #859900; font-weight: bold;">CREATE</span> <span style="color: #859900; font-weight: bold;">TABLE</span> <span style="color: #268bd2;">Clientes</span> (
+            cod_cliente <span style="color: #b58900;">CHAR</span>(4),
+            cliente <span style="color: #b58900;">VARCHAR</span>(30) <span style="color: #859900; font-weight: bold;">NOT</span> <span style="color: #859900; font-weight: bold;">NULL</span>,
+            profissao <span style="color: #b58900;">VARCHAR</span>(10),
+            localidade <span style="color: #b58900;">VARCHAR</span>(10) <span style="color: #859900; font-weight: bold;">NOT</span> <span style="color: #859900; font-weight: bold;">NULL</span>,
+            <span style="color: #859900; font-weight: bold;">CONSTRAINT</span> ch_prim_Clientes
+              <span style="color: #859900; font-weight: bold;">PRIMARY</span> <span style="color: #859900; font-weight: bold;">KEY</span> (cod_cliente)
+            );
+
+<span style="color: #586e75;">/* </span><span style="color: #586e75;">Alterar estrutura de tabelas */</span>
+<span style="color: #586e75;">--     Adicionar coluna</span>
+            <span style="color: #859900; font-weight: bold;">ALTER</span> <span style="color: #859900; font-weight: bold;">TABLE</span> <span style="color: #268bd2;">Clientes</span>
+              <span style="color: #859900; font-weight: bold;">ADD</span> <span style="color: #859900; font-weight: bold;">COLUMN</span> nacionalidade <span style="color: #b58900;">VARCHAR</span>(15)
+              <span style="color: #859900; font-weight: bold;">DEFAULT</span> <span style="color: #2aa198;">'portuguesa'</span> [<span style="color: #859900; font-weight: bold;">FIRST</span>| <span style="color: #859900; font-weight: bold;">AFTER</span> &lt;coluna&gt;] ;
+<span style="color: #586e75;">--     Modificar coluna</span>
+            <span style="color: #859900; font-weight: bold;">ALTER</span> <span style="color: #859900; font-weight: bold;">TABLE</span> <span style="color: #268bd2;">Clientes</span>
+              <span style="color: #859900; font-weight: bold;">MODIFY</span> <span style="color: #859900; font-weight: bold;">COLUMN</span> nacionalidade <span style="color: #b58900;">VARCHAR</span>(25) ;
+<span style="color: #586e75;">--     Remover coluna</span>
+            <span style="color: #859900; font-weight: bold;">ALTER</span> <span style="color: #859900; font-weight: bold;">TABLE</span> <span style="color: #268bd2;">Clientes</span>
+              <span style="color: #859900; font-weight: bold;">DROP</span> <span style="color: #859900; font-weight: bold;">COLUMN</span> nacionalidade ;
+
+<span style="color: #586e75;">/* </span><span style="color: #586e75;">Remover tabelas */</span>
+<span style="color: #859900; font-weight: bold;">DROP</span> <span style="color: #859900; font-weight: bold;">TABLE</span> <span style="color: #268bd2;">Clientes</span>;
+</pre>
+</div></li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-orgda1aba8" class="outline-4">
+<h4 id="orgda1aba8"><span class="section-number-4">4.1.3</span> DML: Data modeling language</h4>
+<div class="outline-text-4" id="text-4-1-3">
+</div>
+<ol class="org-ol">
+<li><a id="org98f6be7"></a>Comandos<br />
+<div class="outline-text-5" id="text-4-1-3-1">
+<ol class="org-ol">
+<li><p>
+Insert
+</p>
+<div class="org-src-container">
+<pre class="src src-sql">         <span style="color: #586e75;">/* </span><span style="color: #586e75;">========== INSERT ============== */</span>
+         <span style="color: #586e75;">-- INSERT INTO &lt;tabela&gt; [(&lt;colunas&gt;)]</span>
+         <span style="color: #586e75;">-- VALUES (&lt;valores&gt;)</span>
+         <span style="color: #859900; font-weight: bold;">INSERT</span> <span style="color: #859900; font-weight: bold;">INTO</span> Clientes 
+         <span style="color: #859900; font-weight: bold;">VALUES</span> 
+         (<span style="color: #2aa198;">'1234'</span>,<span style="color: #2aa198;">'J.Silva'</span>,<span style="color: #2aa198;">'Estudante'</span>,<span style="color: #2aa198;">'Braga'</span>),
+         (<span style="color: #2aa198;">'5678'</span>,<span style="color: #2aa198;">'F.Gomes'</span>,<span style="color: #2aa198;">'Estudante'</span>,<span style="color: #2aa198;">'Guimar&#227;es'</span>),
+         (<span style="color: #2aa198;">'4321'</span>,<span style="color: #2aa198;">'A.Pires'</span>,<span style="color: #2aa198;">'Estudante'</span>,<span style="color: #2aa198;">'Taipas'</span>)
+         ;
+
+         <span style="color: #859900; font-weight: bold;">INSERT</span> <span style="color: #859900; font-weight: bold;">INTO</span> Clientes
+           (cod_cliente, cliente, localidade)
+         <span style="color: #859900; font-weight: bold;">VALUES</span> 
+           (<span style="color: #2aa198;">'1235'</span>,<span style="color: #2aa198;">'A.Costa'</span>,<span style="color: #2aa198;">'Guimar&#227;es'</span>),
+           (<span style="color: #2aa198;">'9876'</span>,<span style="color: #2aa198;">'C.Pereira'</span>,<span style="color: #2aa198;">'Guimar&#227;es'</span>),
+           (<span style="color: #2aa198;">'4256'</span>,<span style="color: #2aa198;">'D.Silveira'</span>,<span style="color: #2aa198;">'Porto'</span>)
+         ;
+
+         <span style="color: #586e75;">-- After using select</span>
+<span style="color: #586e75;">/* </span><span style="color: #586e75;">In this case, the records inserted into table Contas_Prazo are those</span>
+<span style="color: #586e75;"> * resultant from the SELECT over the table Contas, including the fields</span>
+<span style="color: #586e75;"> * indicated (num_conta and saldo)</span>
+<span style="color: #586e75;"> */</span>
+         <span style="color: #859900; font-weight: bold;">INSERT</span> <span style="color: #859900; font-weight: bold;">INTO</span> Contas_Prazo (num_conta, saldo)
+           <span style="color: #859900; font-weight: bold;">SELECT</span> (num_conta, saldo)
+           <span style="color: #859900; font-weight: bold;">FROM</span> Contas
+           <span style="color: #859900; font-weight: bold;">WHERE</span> saldo &lt; 15000;
+</pre>
+</div>
+<ol class="org-ol">
+<li>auto<sub>increment</sub>
+<ol class="org-ol">
+<li>Se o esquema duma tabela contiver a definicao dum campo chave
+primária do tipo <code>int</code> como <code>auto_increment</code>, tal campo terá:
+<ol class="org-ol">
+<li>valor inicial: 1</li>
+<li>será incrementado de 1 por cada novo registo inserido da
+tabela</li>
+</ol></li>
+<li>A remocao de registos nessa tabela NAO altera o contador
+automatico associado a esse campo</li>
+<li><p>
+Para iniciar um campo AUTO<sub>INCREMENT</sub> com valor diferente de 1,
+usa-se:
+</p>
+<div class="org-src-container">
+<pre class="src src-sql">     <span style="color: #586e75;">-- &lt;valor_inicial&gt; tem que ser &gt; 0</span>
+     <span style="color: #859900; font-weight: bold;">ALTER</span> <span style="color: #859900; font-weight: bold;">TABLE</span> &lt;nome_tabela&gt; AUTO_INCREMENT = &lt;valor_inicial&gt;
+
+<span style="color: #586e75;">/* </span><span style="color: #586e75;">================ Example ===================== */</span>
+     <span style="color: #859900; font-weight: bold;">Create</span> <span style="color: #859900; font-weight: bold;">table</span> <span style="color: #268bd2;">clientes</span> (
+     id_cliente <span style="color: #b58900;">int</span> auto_increment <span style="color: #859900; font-weight: bold;">primary</span> <span style="color: #859900; font-weight: bold;">key</span>,
+     cliente <span style="color: #b58900;">varchar</span>(50),
+     profissao <span style="color: #b58900;">varchar</span>(25),
+     localidade <span style="color: #b58900;">varchar</span>(500)
+     );
+<span style="color: #586e75;">-- a funcionalidade auto_increment aplicada ao campo id_cliente pode </span>
+<span style="color: #586e75;">-- ser invocada de 2 formas:</span>
+  <span style="color: #586e75;">-- 1. Conteudo NULL no campo id_cliente</span>
+    <span style="color: #859900; font-weight: bold;">INSERT</span> <span style="color: #859900; font-weight: bold;">INTO</span> Clientes <span style="color: #859900; font-weight: bold;">VALUES</span>
+      (<span style="color: #859900; font-weight: bold;">null</span>, <span style="color: #2aa198;">'J.Silva'</span>, <span style="color: #2aa198;">'Estudante'</span>, <span style="color: #2aa198;">'Braga'</span>);
+  <span style="color: #586e75;">-- 2. Nao referencia ao atributo id_cliente, se indicados os atributos</span>
+  <span style="color: #586e75;">-- que vao ter conteudos no INSERT</span>
+    <span style="color: #859900; font-weight: bold;">INSERT</span> <span style="color: #859900; font-weight: bold;">INTO</span> Clientes
+      (cliente, profissao, localidade)
+    <span style="color: #859900; font-weight: bold;">VALUES</span>
+      (<span style="color: #859900; font-weight: bold;">null</span>, <span style="color: #2aa198;">'J.Silva'</span>, <span style="color: #2aa198;">'Estudante'</span>, <span style="color: #2aa198;">'Braga'</span>);
+
+<span style="color: #586e75;">/* </span><span style="color: #586e75;">Notas:</span>
+<span style="color: #586e75;">*   1. A insercao dum novo registo na tabela Clientes admite um valor</span>
+<span style="color: #586e75;">* diferente de NULL no campo id_cliente, desde que numerico inteiro.</span>
+<span style="color: #586e75;">*   2. O registo seguinte que solicitar o autoincremento do atributo</span>
+<span style="color: #586e75;">* id_cliente, receber&#225; nesse campo o conteudo que o SGBD determinar,</span>
+<span style="color: #586e75;">* que pode ser 1 de 2 valores:</span>
+<span style="color: #586e75;">*     1. Se cada registo inserido na tabela tiver usado o valor NULL</span>
+<span style="color: #586e75;">*        para o primeiro campo, o valor calculado pelo SGBD ser&#225; o </span>
+<span style="color: #586e75;">*        inteiro a seguir ao do ultimo registo inserido</span>
+<span style="color: #586e75;">*     2. Se o utilizador tiver inserido um registo com o valor do campo </span>
+<span style="color: #586e75;">*       id_cliente fora da sequencia normal que o SGBD seguiria, o valor</span>
+<span style="color: #586e75;">*       calculado pelo SGBD ser&#225; o inteiro a seguir ao que o utilizador </span>
+<span style="color: #586e75;">*       tiver utilizado, alterando a ordem normal!</span>
+<span style="color: #586e75;">*/</span>
+</pre>
+</div></li>
+</ol></li>
+<li><p>
+Funcao <code>LAST_INSERT_ID</code>
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #859900; font-weight: bold;">INSERT</span> <span style="color: #859900; font-weight: bold;">INTO</span> tabela (chave_primaria, col1, col2)
+  <span style="color: #859900; font-weight: bold;">VALUES</span> (<span style="color: #859900; font-weight: bold;">null</span>, <span style="color: #2aa198;">'aaa'</span>, <span style="color: #2aa198;">'bbb'</span>);
+
+  <span style="color: #586e75;">-- armazenar o ultimo id inserido na variavel xpto</span>
+<span style="color: #859900; font-weight: bold;">SELECT</span> LAST_INSERT_ID() <span style="color: #859900; font-weight: bold;">INTO</span> @xpto;
+
+  <span style="color: #586e75;">-- inserir noutra tabela usando xpto</span>
+<span style="color: #859900; font-weight: bold;">INSERT</span> <span style="color: #859900; font-weight: bold;">INTO</span> outra_tabela (chave_estrang, col3, col4)
+  <span style="color: #859900; font-weight: bold;">VALUES</span>( @xpto + 1, <span style="color: #2aa198;">'xxx'</span>, <span style="color: #2aa198;">'yyy'</span>);
+</pre>
+</div></li>
+</ol></li>
+<li><p>
+Update
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #859900; font-weight: bold;">UPDATE</span> &lt;tabela&gt;
+<span style="color: #859900; font-weight: bold;">SET</span> &lt;coluna&gt; = &lt;expr&gt;,
+....
+[<span style="color: #859900; font-weight: bold;">WHERE</span> &lt;condicao&gt;]
+
+<span style="color: #859900; font-weight: bold;">UPDATE</span> Contas
+<span style="color: #859900; font-weight: bold;">SET</span> saldo = saldo + 1000
+<span style="color: #859900; font-weight: bold;">WHERE</span> num_conta  = <span style="color: #2aa198;">'123456'</span>;
+
+<span style="color: #586e75;">-- update de todas as contas do cliente 1234, passando o saldo de </span>
+<span style="color: #586e75;">-- cada uma delas a ter o valor do saldo max das contas desse cliente</span>
+<span style="color: #859900; font-weight: bold;">UPDATE</span> Contas
+<span style="color: #859900; font-weight: bold;">SET</span> Saldo = (<span style="color: #859900; font-weight: bold;">SELECT</span> <span style="color: #839496; font-weight: bold;">MAX</span>(saldo)
+              <span style="color: #859900; font-weight: bold;">FROM</span> Contas
+              <span style="color: #859900; font-weight: bold;">WHERE</span> cod_cliente = <span style="color: #2aa198;">'1234'</span>)
+<span style="color: #859900; font-weight: bold;">WHERE</span> cod_cli = <span style="color: #2aa198;">'1234'</span>;
+</pre>
+</div></li>
+<li><p>
+Delete
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #859900; font-weight: bold;">DELETE</span> <span style="color: #859900; font-weight: bold;">FROM</span> &lt;tabela&gt;
+[<span style="color: #859900; font-weight: bold;">WHERE</span> &lt;condicao&gt;]
+
+<span style="color: #586e75;">-- remover todos os cartoes</span>
+<span style="color: #859900; font-weight: bold;">delete</span> <span style="color: #859900; font-weight: bold;">from</span> cartoes
+
+<span style="color: #586e75;">-- remover 1 conta especifica</span>
+<span style="color: #859900; font-weight: bold;">delete</span> <span style="color: #859900; font-weight: bold;">from</span> Contas
+<span style="color: #859900; font-weight: bold;">WHERE</span> num_conta  = <span style="color: #2aa198;">'123456'</span>;
+
+<span style="color: #586e75;">-- remover todos os clientes da tabela Clientes</span>
+<span style="color: #586e75;">-- com contas na agencia 123</span>
+<span style="color: #859900; font-weight: bold;">delete</span> <span style="color: #859900; font-weight: bold;">from</span> Clientes
+<span style="color: #859900; font-weight: bold;">where</span> cod_cliente <span style="color: #859900; font-weight: bold;">IN</span> (<span style="color: #859900; font-weight: bold;">select</span> cod_cliente
+                      <span style="color: #859900; font-weight: bold;">from</span> Contas
+                      <span style="color: #859900; font-weight: bold;">where</span> cod_agencia = <span style="color: #2aa198;">'123'</span>);
+</pre>
+</div></li>
+<li><p>
+LIMIT: limitar a lista de registos resultantes duma query
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #586e75;">-- Devolver as 100 primeiras linhas da tabela Artigos</span>
+<span style="color: #586e75;">-- independentemente do nr total de linhas</span>
+<span style="color: #859900; font-weight: bold;">select</span> * <span style="color: #859900; font-weight: bold;">from</span> artigos <span style="color: #859900; font-weight: bold;">limit</span> 100;
+
+<span style="color: #586e75;">-- Devolver um conj de linhas da tabela Clientes,</span>
+<span style="color: #586e75;">-- comecando no registo 5 e considerando as 7 linhas seguintes</span>
+<span style="color: #859900; font-weight: bold;">select</span> * <span style="color: #859900; font-weight: bold;">from</span> clientes <span style="color: #859900; font-weight: bold;">limit</span> 5, 7;
+
+<span style="color: #586e75;">-- Seleccionar o artigo mais caro da tabela artigo</span>
+<span style="color: #859900; font-weight: bold;">select</span> preco_venda
+<span style="color: #859900; font-weight: bold;">from</span> artigo
+<span style="color: #859900; font-weight: bold;">order</span> <span style="color: #859900; font-weight: bold;">by</span> preco_venda <span style="color: #859900; font-weight: bold;">DESC</span>
+<span style="color: #859900; font-weight: bold;">limit</span> 1
+</pre>
+</div></li>
+<li><p>
+Manipular vars em MySQL
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #586e75;">-- 1.</span>
+<span style="color: #859900; font-weight: bold;">Set</span> @&lt;vari&#225;vel&gt; = valor;
+<span style="color: #586e75;">-- 2.</span>
+<span style="color: #859900; font-weight: bold;">Set</span> @&lt;vari&#225;vel&gt; = <span style="color: #859900; font-weight: bold;">select</span> &lt;coluna&gt;
+<span style="color: #859900; font-weight: bold;">from</span> &lt;tabela&gt;
+<span style="color: #859900; font-weight: bold;">where</span> &lt;condi&#231;&#227;o&gt;
+[<span style="color: #859900; font-weight: bold;">limit</span> 1];
+<span style="color: #586e75;">-- 3.</span>
+<span style="color: #859900; font-weight: bold;">Select</span> &lt;coluna&gt; <span style="color: #859900; font-weight: bold;">into</span> @&lt;vari&#225;vel&gt;
+<span style="color: #859900; font-weight: bold;">from</span> &lt;tabela&gt;
+<span style="color: #859900; font-weight: bold;">where</span> &lt;condi&#231;&#227;o&gt;
+[<span style="color: #859900; font-weight: bold;">limit</span> 1];        
+
+<span style="color: #586e75;">-- Ver/Manipular o conteudo</span>
+<span style="color: #859900; font-weight: bold;">select</span> @&lt;variavel&gt;
+</pre>
+</div></li>
+<li><p>
+Manipular datas em MySQL
+</p>
+<div class="org-src-container">
+<pre class="src src-sql">Now() <span style="color: #586e75;">-- Data e hora atuais</span>
+CURDATE() <span style="color: #586e75;">--ou </span>
+<span style="color: #839496; font-weight: bold;">CURRENT_DATE</span>() <span style="color: #586e75;">-- &#8211; Data atual</span>
+DATE_FORMAT() <span style="color: #586e75;">-- Formata&#231;&#227;o de datas</span>
+
+<span style="color: #586e75;">-- Exemplo</span>
+<span style="color: #859900; font-weight: bold;">SELECT</span> DATE_FORMAT("2017-06-15", "%<span style="color: #859900; font-weight: bold;">M</span> %d %Y");
+<span style="color: #586e75;">/* </span><span style="color: #586e75;">Formato </span>
+<span style="color: #586e75;">| Especifica&#231;&#227;o | Descri&#231;&#227;o                          |</span>
+<span style="color: #586e75;">|----------------------------------------------------|</span>
+<span style="color: #586e75;">| %d            | Dia do m&#234;s num&#233;rico(00..31)        |</span>
+<span style="color: #586e75;">| %D            | Dia do m&#234;s com sufixo (em Ingl&#234;s)  |</span>
+<span style="color: #586e75;">| %m            | M&#234;s, num&#233;rico(00..12)              |</span>
+<span style="color: #586e75;">| %M            | Nome do M&#234;s(em Ingl&#234;s)             |</span>
+<span style="color: #586e75;">| %y            | Ano, num&#233;rico (dois d&#237;gitos)       |</span>
+<span style="color: #586e75;">| %Y            | Ano, quatro d&#237;gitos num&#233;ricos      |</span>
+<span style="color: #586e75;">*/</span>
+
+<span style="color: #586e75;">-- Exemplos</span>
+<span style="color: #859900; font-weight: bold;">SELECT</span> <span style="color: #839496; font-weight: bold;">EXTRACT</span>(<span style="color: #859900; font-weight: bold;">DAY</span> <span style="color: #859900; font-weight: bold;">FROM</span> CURDATE()) <span style="color: #859900; font-weight: bold;">AS</span> DIA,
+<span style="color: #859900; font-weight: bold;">SELECT</span> <span style="color: #839496; font-weight: bold;">EXTRACT</span>(<span style="color: #859900; font-weight: bold;">MONTH</span> <span style="color: #859900; font-weight: bold;">FROM</span> CURDATE()) <span style="color: #859900; font-weight: bold;">AS</span> MES,
+<span style="color: #859900; font-weight: bold;">SELECT</span> <span style="color: #839496; font-weight: bold;">EXTRACT</span>(<span style="color: #859900; font-weight: bold;">YEAR</span> <span style="color: #859900; font-weight: bold;">FROM</span> CURDATE()) <span style="color: #859900; font-weight: bold;">AS</span> ANO;
+
+<span style="color: #859900; font-weight: bold;">SELECT</span> DATE_ADD(CURDATE(), <span style="color: #b58900;">INTERVAL</span> 10 <span style="color: #859900; font-weight: bold;">DAY</span>)
+ <span style="color: #586e75;">-- ou</span>
+<span style="color: #859900; font-weight: bold;">SELECT</span> DATE_ADD(CURDATE(), <span style="color: #b58900;">INTERVAL</span> 10 <span style="color: #859900; font-weight: bold;">DAY</span>)
+<span style="color: #859900; font-weight: bold;">as</span> &lt;vari&#225;vel&gt;;
+
+<span style="color: #859900; font-weight: bold;">SELECT</span> DATEDIFF(<span style="color: #2aa198;">'2012-08-21'</span>, <span style="color: #2aa198;">'2012-08-05'</span>);
+
+<span style="color: #586e75;">--                ( YYYYMM,   YYYYMM)</span>
+<span style="color: #859900; font-weight: bold;">SELECT</span> PERIOD_DIFF(&#8216;201708&#8217;, &#8216;201703&#8217;);
+<span style="color: #586e75;">--                ( YYMM,    YYMM)</span>
+<span style="color: #859900; font-weight: bold;">SELECT</span> PERIOD_DIFF(&#8216;1708&#8217;, &#8216;1703&#8217;);
+
+
+<span style="color: #859900; font-weight: bold;">SELECT</span> DAYOFYEAR(<span style="color: #2aa198;">'2012-08-21'</span>);
+<span style="color: #586e75;">-- Exemplo:</span>
+<span style="color: #859900; font-weight: bold;">SELECT</span> DAYOFYEAR(CURDATE());
+<span style="color: #586e75;">-- Resultado: 113</span>
+
+</pre>
+</div></li>
+<li><p>
+Funcao <code>IFNULL(exp1, exp2)</code>
+</p>
+<div class="org-src-container">
+<pre class="src src-sql">          IFNULL (exp1,exp2)
+<span style="color: #586e75;">-- Se exp1 n&#227;o for NULL ou um valor imposs&#237;vel de calcular, a fun&#231;&#227;o</span>
+<span style="color: #586e75;">-- IFNULL retornar&#225; exp1, caso contr&#225;rio, devolver&#225; exp2.</span>
+<span style="color: #586e75;">-- IFNULL devolve um valor num&#233;rico ou uma string, dependendo do</span>
+<span style="color: #586e75;">-- contexto em que for usada.</span>
+<span style="color: #586e75;">-- </span>
+<span style="color: #586e75;">-- O Select &#233; uma das formas de invocacao duma funcao em SQL</span>
+<span style="color: #586e75;">-- Exemplos:</span>
+<span style="color: #859900; font-weight: bold;">Select</span> IFNULL(1,0) <span style="color: #586e75;">--- Result: 1;</span>
+<span style="color: #859900; font-weight: bold;">Select</span> IFNULL(<span style="color: #859900; font-weight: bold;">null</span>, 10) <span style="color: #586e75;">--- Result: 10;</span>
+<span style="color: #586e75;">-- 1/0 nao pode ser calculado</span>
+<span style="color: #859900; font-weight: bold;">Select</span> IFNULL(1/0, 10) <span style="color: #586e75;">--- Result: 10;</span>
+<span style="color: #859900; font-weight: bold;">Select</span> IFNULL(1/0, &#8216;yes&#8217;) <span style="color: #586e75;">--- Result: &#8216;yes&#8217;</span>
+</pre>
+</div></li>
+</ol>
+</div>
+</li>
+
+<li><a id="org8765eb9"></a>Adicao de codigo a uma BD<br />
+<div class="outline-text-5" id="text-4-1-3-2">
+<ol class="org-ol">
+<li><p>
+Delimitador
+</p>
+<blockquote>
+<p>
+O caracter “;” é o terminador de qualquer instrução SQL. 
+</p>
+<ul class="org-ul">
+<li>Contudo, functions, procedures e triggers não fazem parte da especificação
+SQL!</li>
+<li>Dado que na escrita de functions, procedures e triggers se utilizam
+caracteres “;” que fazem parte da sintaxe da linguagem usada para escrever
+esse código, é necessário dizer ao MySQL para alterar o terminador a que está
+“habituado” (;).</li>
+<li>Isso faz-se indicando explicitamente um outro caracter qualquer para esse
+efeito. Deve escolher-se um caracter cuja utilização não seja previsível!</li>
+</ul>
+
+<p>
+Devemos então incluir nas scripts destinadas a criar procedures, functions e
+triggers, antes do código que implementa essas unidades de processamento,
+uma instrução do género: <code>delimiter @</code>
+</p>
+<ul class="org-ul">
+<li>A partir desse momento, para o MySQL, o caracter que termina as instruções SQL
+passa a ser o <code>@</code>!</li>
+</ul>
+
+<p>
+Após a execução da script, será necessário “repor” o delimitador habitual do MySQL, através da instrução <code>delimiter ;</code>.
+</p>
+</blockquote></li>
+<li>Codigo
+<ol class="org-ol">
+<li><p>
+Stored Procedures
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"> <span style="color: #586e75;">-- Sintaxe</span>
+ <span style="color: #586e75;">-- Os par&#226;metros podem ser de tr&#234;s tipos: </span>
+ <span style="color: #859900; font-weight: bold;">IN</span> 
+ <span style="color: #859900; font-weight: bold;">OUT</span>
+ <span style="color: #859900; font-weight: bold;">INOUT</span>
+
+ <span style="color: #859900; font-weight: bold;">CREATE</span> <span style="color: #859900; font-weight: bold;">PROCEDURE</span> &lt;nome_proc&gt; ([parametros, ...])
+ <span style="color: #859900; font-weight: bold;">BEGIN</span>
+ [&lt;declara&#231;&#227;o_vari&#225;veis&gt;]
+ &lt;corpo_procedimento&gt;
+ <span style="color: #859900; font-weight: bold;">END</span>;
+
+<span style="color: #586e75;">-- Exemplo&gt; Seleccionar as 1as =quantidade= linhas da tab produtos </span>
+DELIMITER @
+<span style="color: #859900; font-weight: bold;">CREATE</span> <span style="color: #859900; font-weight: bold;">PROCEDURE</span> <span style="color: #268bd2;">Selecionar_Produtos</span>(<span style="color: #859900; font-weight: bold;">IN</span> quantidade <span style="color: #b58900;">INT</span>)
+<span style="color: #859900; font-weight: bold;">BEGIN</span>
+<span style="color: #859900; font-weight: bold;">SELECT</span> *
+<span style="color: #859900; font-weight: bold;">FROM</span> PRODUTOS
+<span style="color: #859900; font-weight: bold;">LIMIT</span> quantidade;
+<span style="color: #859900; font-weight: bold;">END</span>;
+@ <span style="color: #586e75;">-- O delimitador delimita o codigo adicionavel</span>
+DELIMITER ; <span style="color: #586e75;">-- reset do delimitador original</span>
+
+<span style="color: #586e75;">-- Exemplo&gt; Obter a =quantidade= de produtos </span>
+DELIMITER @
+<span style="color: #859900; font-weight: bold;">CREATE</span> <span style="color: #859900; font-weight: bold;">PROCEDURE</span> <span style="color: #268bd2;">Verificar_Quantidade_Produtos</span>(<span style="color: #859900; font-weight: bold;">OUT</span> quantidade <span style="color: #b58900;">INT</span>)
+<span style="color: #859900; font-weight: bold;">BEGIN</span>
+<span style="color: #859900; font-weight: bold;">SELECT</span> <span style="color: #839496; font-weight: bold;">COUNT</span>(*) <span style="color: #859900; font-weight: bold;">INTO</span> quantidade
+<span style="color: #859900; font-weight: bold;">FROM</span> PRODUTOS;
+<span style="color: #859900; font-weight: bold;">END</span>;
+@
+DELIMITER ;
+
+<span style="color: #586e75;">-- Obter um nr. ao quadrado</span>
+DELIMITER @
+<span style="color: #859900; font-weight: bold;">CREATE</span> <span style="color: #859900; font-weight: bold;">PROCEDURE</span> <span style="color: #268bd2;">Elevar_Ao_Quadrado</span>(<span style="color: #859900; font-weight: bold;">INOUT</span> numero <span style="color: #b58900;">INT</span>)
+<span style="color: #859900; font-weight: bold;">BEGIN</span>
+<span style="color: #859900; font-weight: bold;">SET</span> numero = numero * numero;
+<span style="color: #859900; font-weight: bold;">END</span>;
+@
+DELIMITER ;
+
+<span style="color: #586e75;">-- Abrir aluguer pg 35</span>
+ <span style="color: #586e75;">-- se o campo =num_aluguer= da tabela Alugueres estivesse definido </span>
+ <span style="color: #586e75;">-- como sendo auto increment, n&#227;o seria  necess&#225;rio determinar o </span>
+ <span style="color: #586e75;">-- valor da vari&#225;vel aluguer, nem incluir esse campo no insert.</span>
+DELIMITER @
+<span style="color: #859900; font-weight: bold;">CREATE</span> <span style="color: #859900; font-weight: bold;">PROCEDURE</span> <span style="color: #268bd2;">abrir_aluguer</span>( <span style="color: #859900; font-weight: bold;">IN</span> socio <span style="color: #b58900;">CHAR</span>(8),
+filme <span style="color: #b58900;">CHAR</span>(5), exemplar <span style="color: #b58900;">CHAR</span>(5),
+modalidade <span style="color: #b58900;">CHAR</span>(1))
+<span style="color: #859900; font-weight: bold;">Begin</span>
+<span style="color: #586e75;">-- declaration</span>
+<span style="color: #859900; font-weight: bold;">DECLARE</span> n_aluguer <span style="color: #b58900;">INT</span>;
+<span style="color: #859900; font-weight: bold;">DECLARE</span> p_mod <span style="color: #b58900;">DECIMAL</span>(4,2); Se o campo num_aluguer da tabela
+<span style="color: #586e75;">-- body</span>
+<span style="color: #859900; font-weight: bold;">SELECT</span> <span style="color: #839496; font-weight: bold;">MAX</span>(num_aluguer)
+  <span style="color: #859900; font-weight: bold;">INTO</span> n_aluguer
+  <span style="color: #859900; font-weight: bold;">FROM</span> alugueres;
+<span style="color: #859900; font-weight: bold;">SELECT</span> preco_dia
+  <span style="color: #859900; font-weight: bold;">INTO</span> p_mod
+  <span style="color: #859900; font-weight: bold;">FROM</span> modalidades
+  <span style="color: #859900; font-weight: bold;">WHERE</span> modalid = modalidade;
+<span style="color: #859900; font-weight: bold;">INSERT</span> <span style="color: #859900; font-weight: bold;">INTO</span> alugueres <span style="color: #859900; font-weight: bold;">VALUES</span>(n_aluguer+1, socio, filme, exemplar,
+                             modalidade, curdate(), <span style="color: #859900; font-weight: bold;">NULL</span>, p_mod, 
+                             <span style="color: #859900; font-weight: bold;">NULL</span>);
+<span style="color: #859900; font-weight: bold;">End</span>;
+@
+DELIMITER ;
+
+<span style="color: #586e75;">-- Fechar aluguer</span>
+DELIMITER @
+<span style="color: #859900; font-weight: bold;">CREATE</span> <span style="color: #859900; font-weight: bold;">PROCEDURE</span> <span style="color: #268bd2;">fechar_aluguer</span>( <span style="color: #859900; font-weight: bold;">IN</span> aluguer <span style="color: #b58900;">INT</span> )
+<span style="color: #859900; font-weight: bold;">Begin</span>
+<span style="color: #859900; font-weight: bold;">DECLARE</span> multa_dia <span style="color: #b58900;">DECIMAL</span>(4, 2), modal <span style="color: #b58900;">char</span>(1);
+<span style="color: #859900; font-weight: bold;">SELECT</span> modalid
+  <span style="color: #859900; font-weight: bold;">INTO</span> modal
+  <span style="color: #859900; font-weight: bold;">FROM</span> alugueres
+  <span style="color: #859900; font-weight: bold;">WHERE</span> num_aluguer = aluguer;
+<span style="color: #859900; font-weight: bold;">SELECT</span> multa_diaria
+  <span style="color: #859900; font-weight: bold;">INTO</span> multa_dia
+  <span style="color: #859900; font-weight: bold;">FROM</span> modalidades
+  <span style="color: #859900; font-weight: bold;">WHERE</span> modalid = modal;
+<span style="color: #859900; font-weight: bold;">UPDATE</span> alugueres <span style="color: #859900; font-weight: bold;">set</span> data_entrega = curdate(),
+multa = ( now() &#8211; data_aluguer &#8211; 1 ) * multa_dia
+<span style="color: #859900; font-weight: bold;">WHERE</span> num_aluguer = aluguer;
+<span style="color: #859900; font-weight: bold;">End</span>;
+@
+DELIMITER ;
+</pre>
+</div></li>
+<li><p>
+Stored Functions
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #586e75;">--  Parametro: Lista (se houver!) de pares com</span>
+<span style="color: #586e75;">--             nome do par&#226;metro e o seu tipo de dados.</span>
+<span style="color: #586e75;">-- O &lt;resultado&gt; tera que ser do tipo declarado na clausula RETURNS</span>
+<span style="color: #859900; font-weight: bold;">CREATE</span> <span style="color: #859900; font-weight: bold;">FUNCTION</span> &lt;nome_func&gt; ([parametro, ...])
+<span style="color: #859900; font-weight: bold;">RETURNS</span> &lt;tipo_dados&gt;
+<span style="color: #859900; font-weight: bold;">BEGIN</span>
+[&lt;declara&#231;&#227;o_vari&#225;veis&gt;]
+&lt;corpo_fun&#231;&#227;o&gt;
+<span style="color: #859900; font-weight: bold;">RETURN</span> &lt;resultado&gt;;
+<span style="color: #859900; font-weight: bold;">END</span>;
+
+<span style="color: #586e75;">-- Determinar lucro</span>
+DELIMITER @
+<span style="color: #859900; font-weight: bold;">CREATE</span> <span style="color: #859900; font-weight: bold;">FUNCTION</span> <span style="color: #268bd2;">lucro</span>(v_compra <span style="color: #b58900;">FLOAT</span>, v_venda <span style="color: #b58900;">FLOAT</span>)
+<span style="color: #859900; font-weight: bold;">RETURNS</span> <span style="color: #b58900;">DECIMAL</span>(9,2)
+<span style="color: #859900; font-weight: bold;">BEGIN</span>
+<span style="color: #859900; font-weight: bold;">DECLARE</span> lucro <span style="color: #b58900;">DECIMAL</span>(9,2);
+<span style="color: #859900; font-weight: bold;">SET</span> lucro = v_venda - v_compra;
+<span style="color: #859900; font-weight: bold;">RETURN</span> lucro;
+<span style="color: #859900; font-weight: bold;">END</span>;
+@
+DELIMITER ;
+</pre>
+</div></li>
+<li>Stored Triggers</li>
+</ol></li>
+<li>Inclusao e Invocacao
+<ol class="org-ol">
+<li><span class="underline">Inclusao</span>: para incluir uma <code>procedure</code> ou <code>function</code> na BD, será
+necessário executar da forma habitual as scripts que as definem</li>
+<li><span class="underline">Invocacao</span>:
+<ol class="org-ol">
+<li><code>Procedure</code>: a invocacao duma <code>procedure</code> já adicionada á BD
+faz-se através do comando <code>call</code>. Exemplo: <code>call listar_artigos</code></li>
+<li><p>
+<code>Function</code>: pode-se invocar de 3 formas
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #859900; font-weight: bold;">select</span> max_multa(2)                 <span style="color: #586e75;">-- 1</span>
+if (max_multa(5) &gt; 1000) <span style="color: #859900; font-weight: bold;">then</span> ...   <span style="color: #586e75;">-- 2</span>
+<span style="color: #859900; font-weight: bold;">set</span> x = max_multa(7)                <span style="color: #586e75;">-- 3</span>
+</pre>
+</div></li>
+</ol></li>
+</ol></li>
+</ol>
+</div>
+
+<ol class="org-ol">
+<li><a id="org348d1f5"></a>Stored functions<br />
+<div class="outline-text-6" id="text-4-1-3-2-1">
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #586e75;">-- EXEMPLO 1: function exemplares_dentro</span>
+<span style="color: #586e75;">-- Escrever uma fun&#231;&#227;o &#8220;exemplares_dentro&#8221; que, dada a identifica&#231;&#227;o de </span>
+<span style="color: #586e75;">-- um filme (cod_filme), retorne o n&#250;mero de exemplares (de todos os</span>
+<span style="color: #586e75;">-- tipos) desse filme que neste momento n&#227;o se encontram alugados.</span>
+    <span style="color: #586e75;">-- FUNCTION exemplares_dentro: Procedimento</span>
+       <span style="color: #586e75;">-- 1. Precisamos de identificar e fornecer:</span>
+         <span style="color: #586e75;">-- Qual o filme;</span>
+       <span style="color: #586e75;">-- 2. Para determinar:</span>
+         <span style="color: #586e75;">-- Os exemplares que existem;</span>
+         <span style="color: #586e75;">-- Os exemplares emprestados.</span>
+       <span style="color: #586e75;">-- 3. E retornar:</span>
+         <span style="color: #586e75;">-- A diferen&#231;a entre os dois valores</span>
+       DELIMITER @
+       <span style="color: #859900; font-weight: bold;">CREATE</span> <span style="color: #859900; font-weight: bold;">FUNCTION</span> <span style="color: #268bd2;">exemplares_dentro</span>( filme <span style="color: #b58900;">char</span>(5) )
+         <span style="color: #859900; font-weight: bold;">RETURNS</span> <span style="color: #b58900;">INT</span>
+         <span style="color: #859900; font-weight: bold;">Begin</span>
+           <span style="color: #859900; font-weight: bold;">DECLARE</span> existentes, fora <span style="color: #b58900;">INT</span>;
+           <span style="color: #859900; font-weight: bold;">SELECT</span> <span style="color: #839496; font-weight: bold;">COUNT</span>( * )
+             <span style="color: #859900; font-weight: bold;">INTO</span> existentes
+             <span style="color: #859900; font-weight: bold;">FROM</span> copias
+             <span style="color: #859900; font-weight: bold;">WHERE</span> cod_filme = filme;
+           <span style="color: #859900; font-weight: bold;">SELECT</span> <span style="color: #839496; font-weight: bold;">COUNT</span>( * )
+             <span style="color: #859900; font-weight: bold;">INTO</span> fora
+             <span style="color: #859900; font-weight: bold;">FROM</span> alugueres
+             <span style="color: #859900; font-weight: bold;">WHERE</span> cod_filme = filme <span style="color: #859900; font-weight: bold;">AND</span> data_entrega <span style="color: #859900; font-weight: bold;">IS</span> <span style="color: #859900; font-weight: bold;">NULL</span>;
+           <span style="color: #859900; font-weight: bold;">RETURN</span> ( existentes &#8211; fora );
+         <span style="color: #859900; font-weight: bold;">End</span>;
+       @
+       DELIMITER ;
+
+<span style="color: #586e75;">-- EXEMPLO 2: function multa_a_pagar</span>
+<span style="color: #586e75;">-- Escrever uma fun&#231;&#227;o &#8220;multa_a_pagar&#8221; que, dada a modalidade em que um </span>
+<span style="color: #586e75;">-- aluguer foi realizado, juntamente com o n&#250;mero de dias em atraso,</span>
+<span style="color: #586e75;">-- retorne o correspondente valor da multa a pagar.</span>
+    <span style="color: #586e75;">-- FUNCTION multa_a_pagar: Procedimento</span>
+       <span style="color: #586e75;">-- 1. Precisamos de identificar e fornecer:</span>
+         <span style="color: #586e75;">-- O valor di&#225;rio da multa, para a modalidade do aluguer;</span>
+         <span style="color: #586e75;">-- O n&#186; de dias que o filme esteve emprestado</span>
+       DELIMITER @
+       <span style="color: #859900; font-weight: bold;">CREATE</span> <span style="color: #859900; font-weight: bold;">FUNCTION</span> <span style="color: #268bd2;">multa_a_pagar</span>( aluguer <span style="color: #b58900;">INT</span> )
+         <span style="color: #859900; font-weight: bold;">RETURNS</span> <span style="color: #b58900;">decimal</span>(4,2)
+           <span style="color: #859900; font-weight: bold;">Begin</span>
+             <span style="color: #859900; font-weight: bold;">DECLARE</span> modal <span style="color: #b58900;">CHAR</span>(1);
+             <span style="color: #859900; font-weight: bold;">DECLARE</span> hoje <span style="color: #b58900;">DATE</span>, data_alug <span style="color: #b58900;">DATE</span>;
+             <span style="color: #859900; font-weight: bold;">DECLARE</span> mult_dia <span style="color: #b58900;">DECIMAL</span>(4,2), dias_multa <span style="color: #b58900;">INT</span>;
+             <span style="color: #859900; font-weight: bold;">SELECT</span> modalid, data_aluguer
+               <span style="color: #859900; font-weight: bold;">INTO</span> modal, data_alug
+               <span style="color: #859900; font-weight: bold;">FROM</span> alugueres
+               <span style="color: #859900; font-weight: bold;">WHERE</span> num_aluguer = aluguer;
+             <span style="color: #859900; font-weight: bold;">SELECT</span> multa_diaria
+               <span style="color: #859900; font-weight: bold;">INTO</span> mult_dia
+               <span style="color: #859900; font-weight: bold;">FROM</span> modalidades
+               <span style="color: #859900; font-weight: bold;">WHERE</span> modalid = modal;
+             <span style="color: #859900; font-weight: bold;">SET</span> hoje = curdate();
+             <span style="color: #859900; font-weight: bold;">SET</span> dias_multa = datediff(hoje, data_alug) &#8211; 1;
+             <span style="color: #859900; font-weight: bold;">RETURN</span> ( dias_multa * mult_dia );
+           <span style="color: #859900; font-weight: bold;">End</span>;
+       @
+       DELIMITER ;
+</pre>
+</div>
+</div>
+</li>
+
+<li><a id="org27c18be"></a>Triggers<br />
+<div class="outline-text-6" id="text-4-1-3-2-2">
+<blockquote>
+<ul class="org-ul">
+<li>Os triggers são blocos de código armazenados na base de dados e
+associados a uma tabela.</li>
+<li>Podem existir diversos triggers associados a uma mesma tabela.</li>
+<li>Tais blocos de código são executados automaticamente, sempre que
+ocorrem determinadas atualizações (inserts, updates ou deletes) sobre a
+tabela em que estão “alicerçados”.</li>
+<li>Este mecanismo permite “aliviar” a camada aplicacional, implementando
+tarefas ao nível do próprio SGBD!</li>
+<li>Para adicionar um trigger à base de dados, deve executar-se a script
+que o cria, tendo em atenção os mesmos cuidados referidos
+anteriormente, quanto ao carater terminador de instruções SQL
+(delimiter).</li>
+<li>Para testar o funcionamento do trigger, deverá executar-se a operação
+SQL que provocará a execução desse trigger (por exemplo, um insert).</li>
+<li>Posteriormente será necessário inspeccionar o conteúdo da tabela sobre
+a qual se executou a operação SQL, no sentido de verificar se o trigger
+provocou o efeito desejado.</li>
+</ul>
+</blockquote>
+<div class="org-src-container">
+<pre class="src src-sql">    <span style="color: #586e75;">-- Sintaxe:</span>
+    <span style="color: #586e75;">--  Neste caso &#233; a tentativa de inser&#231;&#227;o de um novo registo na tabela </span>
+    <span style="color: #586e75;">-- indicada que vai espoletar a execu&#231;&#227;o do  trigger! Mas poderia ser </span>
+    <span style="color: #586e75;">-- outra opera&#231;&#227;o (p.e. um update ou um delete</span>
+       <span style="color: #859900; font-weight: bold;">create</span> <span style="color: #859900; font-weight: bold;">trigger</span> &lt;nome_trigger&gt;
+       &lt;<span style="color: #859900; font-weight: bold;">before</span>/<span style="color: #859900; font-weight: bold;">after</span>&gt; &lt;<span style="color: #859900; font-weight: bold;">insert</span>/<span style="color: #859900; font-weight: bold;">delete</span>/<span style="color: #859900; font-weight: bold;">update</span>&gt; <span style="color: #859900; font-weight: bold;">on</span> &lt;tabela&gt; 
+              <span style="color: #586e75;">-- before ou after insert, delete ou update.</span>
+       <span style="color: #859900; font-weight: bold;">for</span> <span style="color: #859900; font-weight: bold;">each</span> <span style="color: #b58900;">row</span>
+       <span style="color: #859900; font-weight: bold;">begin</span>
+         <span style="color: #859900; font-weight: bold;">declare</span> &lt;vari&#225;veis&gt;;
+         &lt;c&#243;digo&gt;
+       <span style="color: #859900; font-weight: bold;">end</span>;
+
+    <span style="color: #586e75;">-- 1. Escrever o c&#243;digo que crie um trigger que implemente a seguinte </span>
+    <span style="color: #586e75;">--    regra de neg&#243;cio: &#8220;todos os clientes com mais de 5 alugueres </span>
+    <span style="color: #586e75;">--    terminados em multa, s&#243; poder&#227;o fazer novos alugueres na</span>
+    <span style="color: #586e75;">--    modalidade mais cara&#8221;.</span>
+       <span style="color: #859900; font-weight: bold;">drop</span> <span style="color: #859900; font-weight: bold;">trigger</span> <span style="color: #268bd2;">if</span> <span style="color: #859900; font-weight: bold;">exists</span> punir_clientes;
+       delimiter @
+       <span style="color: #859900; font-weight: bold;">create</span> <span style="color: #859900; font-weight: bold;">trigger</span> <span style="color: #268bd2;">punir_clientes</span> 
+         <span style="color: #586e75;">-- Neste caso &#233; a tentativa de inser&#231;&#227;o de um novo registo na tabela </span>
+         <span style="color: #586e75;">-- alugueres, que vai espoletar a execu&#231;&#227;o do trigger, e o c&#243;digo </span>
+         <span style="color: #586e75;">-- associado ao mesmo ser&#225; executado antes de ser feita a inser&#231;&#227;o do </span>
+         <span style="color: #586e75;">-- registo na tabela.</span>
+       <span style="color: #859900; font-weight: bold;">before</span> <span style="color: #859900; font-weight: bold;">insert</span> <span style="color: #859900; font-weight: bold;">on</span> alugueres
+       <span style="color: #859900; font-weight: bold;">for</span> <span style="color: #859900; font-weight: bold;">each</span> <span style="color: #b58900;">row</span>
+       <span style="color: #859900; font-weight: bold;">begin</span>
+         <span style="color: #859900; font-weight: bold;">declare</span> num_alug_multa <span style="color: #b58900;">int</span>; 
+         <span style="color: #859900; font-weight: bold;">declare</span> preco_max <span style="color: #b58900;">decimal</span>(5,2);
+         <span style="color: #859900; font-weight: bold;">declare</span> modal_mais_cara <span style="color: #b58900;">char</span>(6);
+         <span style="color: #859900; font-weight: bold;">select</span> <span style="color: #839496; font-weight: bold;">count</span>(*)
+           <span style="color: #859900; font-weight: bold;">into</span> num_alug_multa
+           <span style="color: #859900; font-weight: bold;">from</span> alugueres
+           <span style="color: #859900; font-weight: bold;">where</span> (n_socio = <span style="color: #859900; font-weight: bold;">new</span>.n_socio <span style="color: #859900; font-weight: bold;">and</span> multa &gt; 0);
+           <span style="color: #586e75;">-- * new &#233; uma c&#243;pia do registo que acaba de se tentar inserir</span>
+           <span style="color: #586e75;">--   na tabela alugueres. </span>
+           <span style="color: #586e75;">-- * Tem exist&#234;ncia tempor&#225;ria e &#233; uma r&#233;plica de todo o conte&#250;do da </span>
+           <span style="color: #586e75;">--   linha, com todos os campos constituintes da tabela associada &#224; </span>
+           <span style="color: #586e75;">--   opera&#231;&#227;o insert into alugueres values (...)</span>
+           <span style="color: #586e75;">-- * Se a opera&#231;&#227;o a provocar o acionamento do trigger fosse</span>
+           <span style="color: #586e75;">--   um delete, existiria uma c&#243;pia do registo em old!</span>
+         if (num_alug_multa &gt; 5) <span style="color: #859900; font-weight: bold;">then</span>
+           <span style="color: #859900; font-weight: bold;">select</span> <span style="color: #839496; font-weight: bold;">max</span>(preco_dia)
+             <span style="color: #859900; font-weight: bold;">into</span> preco_max
+             <span style="color: #859900; font-weight: bold;">from</span> modalidades;
+           <span style="color: #859900; font-weight: bold;">select</span> modalid
+             <span style="color: #859900; font-weight: bold;">into</span> modal_mais_cara
+             <span style="color: #859900; font-weight: bold;">from</span> modalidades
+             <span style="color: #859900; font-weight: bold;">where</span> preco_dia = preco_max;
+           <span style="color: #859900; font-weight: bold;">set</span> <span style="color: #859900; font-weight: bold;">new</span>.valor_aluguer = preco_max;
+           <span style="color: #859900; font-weight: bold;">set</span> <span style="color: #859900; font-weight: bold;">new</span>.modalid = modal_mais_cara;
+         <span style="color: #859900; font-weight: bold;">end</span> if;
+       <span style="color: #859900; font-weight: bold;">end</span>;
+       @
+       DELIMITER ;
+
+<span style="color: #586e75;">/* </span><span style="color: #586e75;">2. Uma empresa vende produtos inform&#225;ticos. </span>
+<span style="color: #586e75;">- Sempre que regista (insert) uma venda na tabela Vendas, o registo </span>
+<span style="color: #586e75;">  correspondente na tabela Produtos deve ser diminuido da quantidade vendida. </span>
+<span style="color: #586e75;">- Sempre que haja a devolu&#231;&#227;o de um produto vendido, deve ser removido (delete) </span>
+<span style="color: #586e75;">  o registo correspondente da tabela Vendas e &#224; quantidade em Stock na tabela </span>
+<span style="color: #586e75;">  Produtos, para o produto devolvido, deve ser adicionada a quantidade </span>
+<span style="color: #586e75;">  devolvida.</span>
+
+<span style="color: #586e75;">Considere as duas tabelas a seguir e escreva o c&#243;digo correspondente aos</span>
+<span style="color: #586e75;">triggers Insere_venda e Remove_venda, capazes de garantir o</span>
+<span style="color: #586e75;">funcionamento descrito.</span>
+<span style="color: #586e75;">*/</span>
+<span style="color: #859900; font-weight: bold;">Create</span> <span style="color: #859900; font-weight: bold;">table</span> <span style="color: #268bd2;">Produtos</span> ( Codigo <span style="color: #b58900;">VARCHAR</span>(3) <span style="color: #859900; font-weight: bold;">PRIMARY</span> <span style="color: #859900; font-weight: bold;">KEY</span>,
+                        Descricao <span style="color: #b58900;">VARCHAR</span>(50),
+                        Stock <span style="color: #b58900;">INT</span> <span style="color: #859900; font-weight: bold;">NOT</span> <span style="color: #859900; font-weight: bold;">NULL</span> <span style="color: #859900; font-weight: bold;">DEFAULT</span> 0 );
+<span style="color: #859900; font-weight: bold;">Create</span> <span style="color: #859900; font-weight: bold;">table</span> <span style="color: #268bd2;">Vendas</span> ( Venda <span style="color: #b58900;">INT</span> <span style="color: #859900; font-weight: bold;">PRIMARY</span> <span style="color: #859900; font-weight: bold;">KEY</span>,
+                  Produto <span style="color: #b58900;">VARCHAR</span>(3),
+                  Quantidade <span style="color: #b58900;">INT</span> );
+
+<span style="color: #586e75;">-- 1. Insere Venda</span>
+   DELIMITER @
+   <span style="color: #859900; font-weight: bold;">CREATE</span> <span style="color: #859900; font-weight: bold;">TRIGGER</span> <span style="color: #268bd2;">Insere_venda</span>
+     <span style="color: #859900; font-weight: bold;">AFTER</span> <span style="color: #859900; font-weight: bold;">INSERT</span> <span style="color: #859900; font-weight: bold;">ON</span> Vendas
+     <span style="color: #859900; font-weight: bold;">FOR</span> <span style="color: #859900; font-weight: bold;">EACH</span> <span style="color: #b58900;">ROW</span>
+     <span style="color: #859900; font-weight: bold;">BEGIN</span>
+       <span style="color: #859900; font-weight: bold;">UPDATE</span> Produtos <span style="color: #859900; font-weight: bold;">SET</span> Stock = Stock - <span style="color: #859900; font-weight: bold;">NEW</span>.Quantidade
+       <span style="color: #859900; font-weight: bold;">WHERE</span> Codigo = <span style="color: #859900; font-weight: bold;">NEW</span>.Produto;
+     <span style="color: #859900; font-weight: bold;">END</span>;
+   @
+<span style="color: #586e75;">-- 2. Remove venda</span>
+   <span style="color: #859900; font-weight: bold;">CREATE</span> <span style="color: #859900; font-weight: bold;">TRIGGER</span> <span style="color: #268bd2;">Remove_venda</span>
+     <span style="color: #859900; font-weight: bold;">AFTER</span> <span style="color: #859900; font-weight: bold;">DELETE</span> <span style="color: #859900; font-weight: bold;">ON</span> Vendas
+     <span style="color: #859900; font-weight: bold;">FOR</span> <span style="color: #859900; font-weight: bold;">EACH</span> <span style="color: #b58900;">ROW</span>
+     <span style="color: #859900; font-weight: bold;">BEGIN</span>
+       <span style="color: #859900; font-weight: bold;">UPDATE</span> Produtos <span style="color: #859900; font-weight: bold;">SET</span> Stock = Stock + <span style="color: #859900; font-weight: bold;">OLD</span>.Quantidade
+       <span style="color: #859900; font-weight: bold;">WHERE</span> Codigo = <span style="color: #859900; font-weight: bold;">OLD</span>.Produto;
+     <span style="color: #859900; font-weight: bold;">END</span>
+   @
+   DELIMITER ;
+</pre>
+</div>
+</div>
+
+
+<ol class="org-ol">
+<li><a id="org0be7450"></a>Exemplos<br />
+<div class="outline-text-7" id="text-4-1-3-2-2-1">
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #586e75;">-- A atividade de um banco pode ser descrita, em termos de dados, pelo</span>
+<span style="color: #586e75;">-- esquema relacional a seguir:</span>
+<span style="color: #586e75;">--     Cliente (_cod_cliente_, cliente, profiss&#227;o, localidade)</span>
+<span style="color: #586e75;">--     Ag&#234;ncia (_cod_ag&#234;ncia_, ag&#234;ncia, localidade)</span>
+<span style="color: #586e75;">--     Conta (_num_conta_, tipo_conta, -cod_ag&#234;ncia-, -cod_cliente-, saldo)</span>
+<span style="color: #586e75;">--     Empr&#233;stimo (_num_empr&#233;stimo_, -cod_ag&#234;ncia-, -cod_cliente-, valor)</span>
+<span style="color: #586e75;">-- </span>
+<span style="color: #586e75;">-- Chaves estrangeiras em it&#225;lico e a azul (-): chave prim&#225;ria sublinhada (_)</span>
+<span style="color: #586e75;">-- Um cliente dum banco tem contas, emprestimos ou ambos.</span>
+
+         <span style="color: #586e75;">-- 1. Quais os clientes (cod_cliente e nome) deste banco?</span>
+         <span style="color: #859900; font-weight: bold;">select</span> cod_cliente, nome
+         <span style="color: #859900; font-weight: bold;">from</span> Cliente
+
+         <span style="color: #586e75;">-- 2. Quais os clientes que residem em Braga?</span>
+         <span style="color: #859900; font-weight: bold;">select</span> * <span style="color: #586e75;">-- '*' representa o tuplo/registo completo (todos os campos) </span>
+         <span style="color: #859900; font-weight: bold;">from</span> Cliente
+         <span style="color: #859900; font-weight: bold;">where</span> localidade = <span style="color: #2aa198;">'Braga'</span>
+
+         <span style="color: #586e75;">-- 3. Quais os clientes (cod_cliente) com contas na agencia </span>
+         <span style="color: #586e75;">--    cod_agencia='123'</span>
+         <span style="color: #859900; font-weight: bold;">select</span> <span style="color: #859900; font-weight: bold;">distinct</span> cod_cliente <span style="color: #586e75;">-- distinct permite obter apenas os que</span>
+         <span style="color: #586e75;">-- nao sao repetidos, pois na agencia os clientes podem ter varias </span>
+         <span style="color: #586e75;">-- contas</span>
+         <span style="color: #859900; font-weight: bold;">from</span> Conta
+         <span style="color: #859900; font-weight: bold;">where</span> cod_agencia = <span style="color: #2aa198;">'123'</span>
+
+         <span style="color: #586e75;">-- 4. Quais os clientes que moram em localidades onde existem ag&#234;ncias?</span>
+         <span style="color: #859900; font-weight: bold;">SELECT</span> Cliente.*
+         <span style="color: #859900; font-weight: bold;">FROM</span> Cliente, Agencia
+         <span style="color: #859900; font-weight: bold;">WHERE</span> Cliente.localidade = Agencia.localidade
+         <span style="color: #586e75;">-- Implementa uma jun&#231;&#227;o entre as duas tabelas. Ao contr&#225;rio do que se </span>
+         <span style="color: #586e75;">-- verificava na &#193;lgebra Relacional, em SQL temos que referir </span>
+         <span style="color: #586e75;">-- explicitamente quais os atributos de cada tabela que possibilitam</span>
+         <span style="color: #586e75;">-- essa jun&#231;&#227;o!</span>
+
+         <span style="color: #586e75;">-- 5. Quais os clientes (todos os atributos) com empr&#233;stimos de valor </span>
+         <span style="color: #586e75;">--    superior a 500.000?</span>
+         <span style="color: #859900; font-weight: bold;">SELECT</span> Cliente.*
+         <span style="color: #859900; font-weight: bold;">FROM</span> Cliente, Emprestimo
+         <span style="color: #859900; font-weight: bold;">WHERE</span> Cliente.cod_cliente = Emprestimo.cod_cliente
+         <span style="color: #859900; font-weight: bold;">AND</span> Emprestimo.valor &gt; 500000
+         <span style="color: #586e75;">-- Ou</span>
+         <span style="color: #859900; font-weight: bold;">AND</span> valor &gt; 500000 <span style="color: #586e75;">-- pq o atributo valor so existe na tab emprestimo</span>
+         <span style="color: #586e75;">--</span>
+            <span style="color: #586e75;">-- Utilizando sin&#243;nimos (aliases):</span>
+         <span style="color: #859900; font-weight: bold;">SELECT</span> Cli.*
+         <span style="color: #859900; font-weight: bold;">FROM</span> Cliente Cli, Emprestimo Emp
+         <span style="color: #859900; font-weight: bold;">WHERE</span> Cli.cod_cliente = Emp.cod_cliente
+         <span style="color: #859900; font-weight: bold;">AND</span> Emp.valor &gt; 500000
+         <span style="color: #586e75;">-- Nota: Na query, na cl&#225;usula where, a tabela Cliente</span>
+         <span style="color: #586e75;">-- passa a ser &#8220;conhecida&#8221; por Cli e a tabela Emprestimo</span>
+         <span style="color: #586e75;">-- passa a ser conhecida por Emp!</span>
+
+         <span style="color: #586e75;">-- 6. Quais os clientes (todos os atributos) que residem na mesma </span>
+         <span style="color: #586e75;">--    localidade das ag&#234;ncias onde possuem contas?</span>
+            <span style="color: #586e75;">-- Clientes do banco que vivem onde h&#225; ag&#234;ncias e</span>
+            <span style="color: #586e75;">-- que possuem contas (podiam n&#227;o possuir!) e</span>
+            <span style="color: #586e75;">-- essas contas est&#227;o sediadas nas ag&#234;ncias dos locais em que vivem!</span>
+         <span style="color: #859900; font-weight: bold;">SELECT</span> Cliente.*
+         <span style="color: #859900; font-weight: bold;">FROM</span> Cliente, Conta, Agencia
+         <span style="color: #859900; font-weight: bold;">WHERE</span> Cliente.localidade = Agencia.localidade
+           <span style="color: #859900; font-weight: bold;">AND</span> Cliente.cod_cliente = Conta.cod_cliente
+           <span style="color: #859900; font-weight: bold;">AND</span> Conta.cod_agencia = Agencia.cod_agencia
+
+         <span style="color: #586e75;">-- 7. Quais os nomes dos clientes com a mesma profiss&#227;o que o cliente </span>
+         <span style="color: #586e75;">--    com cod_cliente = &#8216;1234&#8217;?</span>
+         <span style="color: #859900; font-weight: bold;">SELECT</span> C1.nome
+         <span style="color: #859900; font-weight: bold;">FROM</span> Cliente C1, Cliente C2 <span style="color: #586e75;">-- C1 e C2 sao 2 instancias da mesma tab </span>
+                                     <span style="color: #586e75;">-- Cliente</span>
+         <span style="color: #859900; font-weight: bold;">WHERE</span> C1.profissao = C2.profissao
+           <span style="color: #859900; font-weight: bold;">AND</span> C2.cod_cliente = <span style="color: #2aa198;">'1234'</span>
+
+         <span style="color: #586e75;">-- 8. Listar as contas (num_conta, saldo) da ag&#234;ncia cujo </span>
+         <span style="color: #586e75;">-- cod_agencia=&#8216;123&#8217;, por ordem decrescente do seu valor de saldo.</span>
+         <span style="color: #859900; font-weight: bold;">SELECT</span> num_conta, saldo
+         <span style="color: #859900; font-weight: bold;">FROM</span> Conta
+         <span style="color: #859900; font-weight: bold;">WHERE</span> cod_agencia = <span style="color: #2aa198;">'123'</span>
+         <span style="color: #859900; font-weight: bold;">ORDER</span> <span style="color: #859900; font-weight: bold;">BY</span> saldo <span style="color: #859900; font-weight: bold;">DESC</span> <span style="color: #586e75;">-- por omissao, o criterio de ordenacao &#233; ASC</span>
+
+         <span style="color: #586e75;">-- 9. Quantas contas existem em todas as ag&#234;ncias do banco?</span>
+         <span style="color: #859900; font-weight: bold;">SELECT</span> <span style="color: #839496; font-weight: bold;">COUNT</span>(*)
+         <span style="color: #859900; font-weight: bold;">FROM</span> Conta
+         <span style="color: #586e75;">-- Outras fun&#231;&#245;es de agrega&#231;&#227;o, p.ex., para o c&#225;lculo do m&#225;ximo, do</span>
+         <span style="color: #586e75;">-- m&#237;nimo, da m&#233;dia e do somat&#243;rio de um conjunto de valores</span>
+         <span style="color: #586e75;">-- (respectivamente, MAX, MIN, AVG e SUM).</span>
+
+         <span style="color: #586e75;">-- 10. Quantos clientes possuem contas na ag&#234;ncia cujo </span>
+         <span style="color: #586e75;">-- cod_agencia=&#8216;123&#8217;?</span>
+         <span style="color: #859900; font-weight: bold;">SELECT</span> <span style="color: #839496; font-weight: bold;">COUNT</span> (<span style="color: #859900; font-weight: bold;">DISTINCT</span> cod_cliente)
+         <span style="color: #859900; font-weight: bold;">FROM</span> Conta
+         <span style="color: #859900; font-weight: bold;">WHERE</span> cod_agencia = <span style="color: #2aa198;">'123'</span>
+         <span style="color: #586e75;">-- A n&#227;o utiliza&#231;&#227;o da cl&#225;usula DISTINCT provocaria a</span>
+         <span style="color: #586e75;">-- devolu&#231;&#227;o do n&#250;mero de todas as contas, uma vez que um</span>
+         <span style="color: #586e75;">-- cliente poderia ter diversas contas na ag&#234;ncia!</span>
+
+         <span style="color: #586e75;">-- 11. Listar o n&#250;mero de contas existentes em cada ag&#234;ncia.</span>
+         <span style="color: #859900; font-weight: bold;">SELECT</span> cod_agencia, <span style="color: #839496; font-weight: bold;">COUNT</span>(*)
+         <span style="color: #859900; font-weight: bold;">FROM</span> Conta
+         <span style="color: #859900; font-weight: bold;">GROUP</span> <span style="color: #859900; font-weight: bold;">BY</span> cod_agencia
+         <span style="color: #586e75;">-- Sem a cl&#225;usula GROUP BY seria devolvido um &#250;nico valor, </span>
+         <span style="color: #586e75;">-- correspondente a toda a tabela Contas.</span>
+         <span style="color: #586e75;">-- Deste modo ser&#225; retornado um conjunto de valores constitu&#237;dos pelos </span>
+         <span style="color: #586e75;">-- c&#243;digos das ag&#234;ncias e pelo n&#250;mero de contas em cada uma delas.</span>
+
+         <span style="color: #586e75;">-- 12. Para cada ag&#234;ncia (cod_agencia) com menos de 1000 contas, </span>
+         <span style="color: #586e75;">--     listar os valores m&#225;ximo e m&#237;nimo dos saldos dessas contas, bem </span>
+         <span style="color: #586e75;">--     como o saldo m&#233;dio.</span>
+         <span style="color: #859900; font-weight: bold;">SELECT</span> cod_agencia, <span style="color: #839496; font-weight: bold;">MAX</span>(saldo), <span style="color: #839496; font-weight: bold;">MIN</span>(saldo), <span style="color: #839496; font-weight: bold;">AVG</span>(saldo)
+         <span style="color: #859900; font-weight: bold;">FROM</span> Conta
+         <span style="color: #859900; font-weight: bold;">GROUP</span> <span style="color: #859900; font-weight: bold;">BY</span> cod_agencia
+         <span style="color: #859900; font-weight: bold;">HAVING</span> <span style="color: #839496; font-weight: bold;">COUNT</span>(*)&lt; 1000 <span style="color: #586e75;">-- A cl&#225;usula HAVING funciona associada &#224;</span>
+                               <span style="color: #586e75;">-- clausula GROUP BY.</span>
+</pre>
+</div>
+<div class="org-src-container">
+<pre class="src src-sql">       <span style="color: #586e75;">-- Cliente (cod_cliente, nome, profiss&#227;o, localidade)</span>
+       <span style="color: #586e75;">-- Ag&#234;ncia (cod_ag&#234;ncia, ag&#234;ncia, localidade)</span>
+       <span style="color: #586e75;">-- Conta (num_conta, tipo_conta, cod_ag&#234;ncia, cod_cliente, saldo)</span>
+       <span style="color: #586e75;">-- Empr&#233;stimo (num_empr&#233;stimo, cod_ag&#234;ncia, cod_cliente, valor)</span>
+
+<span style="color: #586e75;">-- 1. Quais os clientes (cod_cliente e nome) da ag&#234;ncia cod_agencia=&#8216;123&#8217;?</span>
+       <span style="color: #859900; font-weight: bold;">SELECT</span> Cli.cod_cliente, Cli.nome
+       <span style="color: #859900; font-weight: bold;">FROM</span> Conta Cont, Cliente Cli
+       <span style="color: #859900; font-weight: bold;">WHERE</span> Cont.cod_agencia = <span style="color: #2aa198;">'123'</span> <span style="color: #859900; font-weight: bold;">AND</span>
+       Cont.cod_cliente = Cli.cod_cliente
+       <span style="color: #859900; font-weight: bold;">UNION</span> <span style="color: #586e75;">-- Corresponde &#224; uni&#227;o da &#193;lgebra Relacional. </span>
+             <span style="color: #586e75;">-- Portanto, anula duplicados!</span>
+       <span style="color: #859900; font-weight: bold;">SELECT</span> Cli.cod_cliente, Cli.nome
+       <span style="color: #859900; font-weight: bold;">FROM</span> Emprestimo Emp, Cliente Cli
+       <span style="color: #859900; font-weight: bold;">WHERE</span> Emp.cod_agencia = <span style="color: #2aa198;">'123'</span> <span style="color: #859900; font-weight: bold;">AND</span>
+       Emp.cod_cliente = Cli.cod_cliente
+   <span style="color: #586e75;">-- Solucao alternativa usando OR</span>
+       <span style="color: #859900; font-weight: bold;">SELECT</span> Cl.cod_cliente, Cl.nome
+       <span style="color: #859900; font-weight: bold;">FROM</span> Emprestimo E, Conta Co, Cliente Cl
+       <span style="color: #859900; font-weight: bold;">WHERE</span> (Co.cod_agencia = <span style="color: #2aa198;">'123'</span> <span style="color: #859900; font-weight: bold;">AND</span>
+       Co.cod_cliente = Cl.cod_cliente) <span style="color: #859900; font-weight: bold;">OR</span>  <span style="color: #586e75;">-- Clientes pq t&#234;m conta</span>
+       (E.cod_agencia = <span style="color: #2aa198;">'123'</span> <span style="color: #859900; font-weight: bold;">AND</span>           <span style="color: #586e75;">-- ou pq t&#234;m emprestimo</span>
+       E.cod_cliente = Cl.cod_cliente)
+
+<span style="color: #586e75;">-- 2. Quais os clientes (cod_cliente e nome) que s&#227;o, simultaneamente,</span>
+<span style="color: #586e75;">--    depositantes e devedores na ag&#234;ncia cujo cod_agencia = &#8216;123&#8217;?</span>
+       <span style="color: #859900; font-weight: bold;">SELECT</span> Cl.cod_cliente, Cl.nome
+       <span style="color: #859900; font-weight: bold;">FROM</span> Conta Co, Cliente Cl
+       <span style="color: #859900; font-weight: bold;">WHERE</span> Co.cod_agencia = <span style="color: #2aa198;">'123'</span> <span style="color: #859900; font-weight: bold;">AND</span>
+       Co.cod_cliente = Cl.cod_cliente
+       <span style="color: #859900; font-weight: bold;">INTERSECT</span> <span style="color: #586e75;">-- Corresponde &#224; interse&#231;&#227;o da &#193;lgebra Relacional.</span>
+       <span style="color: #859900; font-weight: bold;">SELECT</span> Cl.cod_cliente, Cl.nome
+       <span style="color: #859900; font-weight: bold;">FROM</span> Emprestimo E, Cliente Cl
+       <span style="color: #859900; font-weight: bold;">WHERE</span> E.cod_agencia = <span style="color: #2aa198;">'123'</span> <span style="color: #859900; font-weight: bold;">AND</span>
+       E.cod_cliente = Cl.cod_cliente
+   <span style="color: #586e75;">-- Solucao alternativa usando AND</span>
+       <span style="color: #859900; font-weight: bold;">SELECT</span> Cl.cod_cliente, Cl.nome
+       <span style="color: #859900; font-weight: bold;">SELECT</span> Cl.cod_cliente, Cl.nome
+       <span style="color: #859900; font-weight: bold;">FROM</span> Emprestimo E, Conta Co, Cliente Cl
+       <span style="color: #859900; font-weight: bold;">WHERE</span> (Co.cod_agencia = <span style="color: #2aa198;">'123'</span> <span style="color: #859900; font-weight: bold;">AND</span>
+       Co.cod_cliente = Cl.cod_cliente) <span style="color: #859900; font-weight: bold;">AND</span>
+       (E.cod_agencia = <span style="color: #2aa198;">'123'</span> <span style="color: #859900; font-weight: bold;">AND</span>
+       E.cod_cliente = Cl.cod_cliente)
+
+<span style="color: #586e75;">-- 3. Quais os clientes (cod_cliente e nome) da ag&#234;ncia com cod_agencia = </span>
+<span style="color: #586e75;">-- &#8216;123&#8217; que apenas s&#227;o depositantes (apenas t&#234;m contas)?</span>
+   <span style="color: #586e75;">-- Usando EXCEPT -&gt; registos dum conj que nao existem no outro </span>
+   <span style="color: #586e75;">-- NAO EXISTE EM MYSQL!!!</span>
+       E.cod_cliente = Cl.cod_cliente)
+       <span style="color: #859900; font-weight: bold;">SELECT</span> Cli.cod_cliente, Cli.nome
+       <span style="color: #859900; font-weight: bold;">FROM</span> Conta Cont, Cliente Cli
+       <span style="color: #859900; font-weight: bold;">WHERE</span> Cont.cod_agencia = <span style="color: #2aa198;">'123'</span> <span style="color: #859900; font-weight: bold;">AND</span>
+       Cont.cod_cliente = Cli.cod_cliente
+       <span style="color: #859900; font-weight: bold;">EXCEPT</span> <span style="color: #586e75;">-- Corresponde &#224; diferen&#231;a da &#193;lgebra Relacional.</span>
+       <span style="color: #859900; font-weight: bold;">SELECT</span> Cli.cod_cliente, Cli.nome
+       <span style="color: #859900; font-weight: bold;">FROM</span> Emprestimo Emp, Cliente Cli
+       <span style="color: #859900; font-weight: bold;">WHERE</span> Emp.cod_agencia = <span style="color: #2aa198;">'123'</span> <span style="color: #859900; font-weight: bold;">AND</span>
+   <span style="color: #586e75;">-- Usando NOT IN -&gt; registos dum conj que nao existem no outro </span>
+       <span style="color: #859900; font-weight: bold;">SELECT</span> Cli.cod_cliente, Cli.nome
+         <span style="color: #859900; font-weight: bold;">FROM</span> Conta Cont, Cliente Cli
+         <span style="color: #859900; font-weight: bold;">WHERE</span> Cont.cod_agencia = <span style="color: #2aa198;">'123'</span> <span style="color: #859900; font-weight: bold;">AND</span>
+               Cont.cod_cliente = Cli.cod_cliente <span style="color: #859900; font-weight: bold;">AND</span>
+               (Cli.cod_cliente,Cli.nome
+                 <span style="color: #859900; font-weight: bold;">not</span> <span style="color: #859900; font-weight: bold;">in</span> (<span style="color: #859900; font-weight: bold;">select</span> Cli.cod_cliente, Cli.nome
+                         <span style="color: #859900; font-weight: bold;">from</span> Emprestimo Emp, Cliente Cli
+                         <span style="color: #859900; font-weight: bold;">where</span> Emp.cod_agencia = <span style="color: #2aa198;">'123'</span> <span style="color: #859900; font-weight: bold;">AND</span>
+                               Emp.cod_cliente = Cli.cod_cliente
+       );
+</pre>
+</div>
+<div class="org-src-container">
+<pre class="src src-sql">       <span style="color: #586e75;">-- S&#243;cio (num_socio, nome, morada, telefone, BI, Data_Nasc, Data_Insc)</span>
+       <span style="color: #586e75;">-- Filme (cod_filme, titulo, duracao)</span>
+       <span style="color: #586e75;">-- Modalidade (modalid, preco, multa_diaria)</span>
+       <span style="color: #586e75;">-- C&#243;pia ( cod_filme, n_c&#243;pia, formato, data_aquisicao, preco)</span>
+       <span style="color: #586e75;">-- Aluguer (num_aluguer, num_socio, cod_filme, num_copia, modalid,</span>
+       <span style="color: #586e75;">-- data_aluguer, data_entrega, preco, multa)</span>
+
+<span style="color: #586e75;">-- 1. Quais as cassetes (cod_filme e n&#186;c&#243;pia) que, neste momento, n&#227;o</span>
+<span style="color: #586e75;">--    se encontram alugadas?</span>
+<span style="color: #586e75;">-- C&#243;pias em formato VHS que n&#227;o pertencem ao conjunto das c&#243;pias que</span>
+<span style="color: #586e75;">-- est&#227;o alugadas (o que se aluga s&#227;o c&#243;pias!).</span>
+       <span style="color: #859900; font-weight: bold;">select</span> cod_filme, num_copia
+         <span style="color: #859900; font-weight: bold;">from</span> copia
+         <span style="color: #859900; font-weight: bold;">where</span> formato = &#8216;VHS&#8217; <span style="color: #859900; font-weight: bold;">and</span>
+         (cod_filme, num_c&#243;pia)
+           <span style="color: #859900; font-weight: bold;">not</span> <span style="color: #859900; font-weight: bold;">in</span> (<span style="color: #859900; font-weight: bold;">select</span> cod_filme, num_copia
+                   <span style="color: #859900; font-weight: bold;">from</span> aluguer
+                   <span style="color: #859900; font-weight: bold;">where</span> data_entrega <span style="color: #859900; font-weight: bold;">is</span> <span style="color: #859900; font-weight: bold;">null</span>);
+
+<span style="color: #586e75;">-- 2. Quais os s&#243;cios (n&#186;s&#243;cio e nome) que nunca alugaram DVDs?</span>
+       <span style="color: #859900; font-weight: bold;">select</span> num_socio, nome_socio
+         <span style="color: #859900; font-weight: bold;">from</span> socio
+         <span style="color: #859900; font-weight: bold;">where</span> num_socio <span style="color: #859900; font-weight: bold;">not</span> <span style="color: #859900; font-weight: bold;">in</span>
+           (<span style="color: #859900; font-weight: bold;">select</span> num_socio
+           <span style="color: #859900; font-weight: bold;">from</span> aluguer Alug, copia Cop
+           <span style="color: #859900; font-weight: bold;">where</span> Cop.suporte = &#8216;DVD&#8217; <span style="color: #859900; font-weight: bold;">and</span>
+                 Cop.cod_filme = Alug.cod_filme <span style="color: #859900; font-weight: bold;">and</span>
+                 Cop.num_copia = Alug.num_copia);
+
+<span style="color: #586e75;">-- 3. Quais os filmes (cod_filme e t&#237;tulo) que existem no clube em formato</span>
+<span style="color: #586e75;">--     cassete e DVD?</span>
+       <span style="color: #859900; font-weight: bold;">select</span> cod_filme, titulo
+         <span style="color: #859900; font-weight: bold;">from</span> filme
+         <span style="color: #859900; font-weight: bold;">where</span> cod_filme <span style="color: #859900; font-weight: bold;">in</span>
+           (<span style="color: #859900; font-weight: bold;">select</span> cod_filme <span style="color: #586e75;">-- Conj de c&#243;pias de todos os filmes, em DVD.</span>
+             <span style="color: #859900; font-weight: bold;">from</span> copia
+             <span style="color: #859900; font-weight: bold;">where</span> formato=<span style="color: #2aa198;">'DVD'</span>) <span style="color: #859900; font-weight: bold;">and</span>
+               cod_filme <span style="color: #859900; font-weight: bold;">in</span>
+                 (<span style="color: #859900; font-weight: bold;">select</span> cod_filme <span style="color: #586e75;">-- Conjunto de c&#243;pias de todos</span>
+                                   <span style="color: #586e75;">-- os filmes, em formato VHS.</span>
+                   <span style="color: #859900; font-weight: bold;">from</span> copia
+                   <span style="color: #859900; font-weight: bold;">where</span> formato=&#8216;VHS&#8217;)
+
+<span style="color: #586e75;">-- 4.  Relativamente a cada aluguer que terminou em multa, identificar qual </span>
+<span style="color: #586e75;">-- o s&#243;cio envolvido (n&#186;s&#243;cio e nome), qual o valor da multa paga, e de que -- filme (t&#237;tulo) se tratava.</span>
+       <span style="color: #859900; font-weight: bold;">select</span> Soc.num_socio, nome, titulo, multa
+         <span style="color: #859900; font-weight: bold;">from</span> alugueres Alg, socios Soc, filmes Flm <span style="color: #586e75;">-- Porque o t&#237;tulo est&#225; </span>
+            <span style="color: #586e75;">-- em &#8220;filmes&#8221;, a multa est&#225; em &#8220;alugueres&#8221; e a identifica&#231;&#227;o </span>
+            <span style="color: #586e75;">-- dos s&#243;cios est&#225; em &#8220;s&#243;cios&#8221;.</span>
+         <span style="color: #859900; font-weight: bold;">where</span> Alg.multa &gt; 0 <span style="color: #859900; font-weight: bold;">and</span> <span style="color: #586e75;">-- juncao entre aluguer, socio e filme</span>
+               Alg.num_socio = Soc.num_socio <span style="color: #859900; font-weight: bold;">and</span>
+               Alg.cod_filme = Flm.cod_filme;
+<span style="color: #586e75;">-- 6. Listar, para cada filme (cod_filme, t&#237;tulo), o n&#250;mero de cassetes </span>
+<span style="color: #586e75;">--    existentes no clube.</span>
+       <span style="color: #859900; font-weight: bold;">select</span> Flm.cod_filme, titulo, <span style="color: #839496; font-weight: bold;">count</span>(cod_filme)
+         <span style="color: #859900; font-weight: bold;">from</span> filme Flm, copia Cop
+         <span style="color: #859900; font-weight: bold;">where</span> Flm.cod_filme = Cop.cod_filme <span style="color: #859900; font-weight: bold;">and</span>
+               Cop.formato = &#8216;VHS&#8216;
+         <span style="color: #859900; font-weight: bold;">group</span> <span style="color: #859900; font-weight: bold;">by</span> cod_filme; <span style="color: #586e75;">-- para que apare&#231;a uma so linha por cada</span>
+                             <span style="color: #586e75;">-- em formato VHS</span>
+<span style="color: #586e75;">-- 7. Qual o maior valor de multa alguma vez ocorrido? </span>
+<span style="color: #586e75;">-- Qual o s&#243;cio (n&#186;s&#243;cio e nome) e filme (cod_filme e t&#237;tulo) envolvidos?</span>
+       <span style="color: #859900; font-weight: bold;">select</span> Soc.num_socio, nome, Flm.cod_filme, titulo, multa
+         <span style="color: #859900; font-weight: bold;">from</span> aluguer Alg, socio Soc, filme Flm
+         <span style="color: #859900; font-weight: bold;">where</span> Alg.num_socio = Soc.num_socio <span style="color: #859900; font-weight: bold;">and</span>
+               Alg.cod_filme = Flm.cod_filme <span style="color: #859900; font-weight: bold;">and</span>
+               Alg.multa = (<span style="color: #859900; font-weight: bold;">select</span> <span style="color: #839496; font-weight: bold;">max</span>(multa)
+                            <span style="color: #859900; font-weight: bold;">from</span> aluguer);
+</pre>
+</div>
+</div>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</div>
+
+<div id="outline-container-org8205e24" class="outline-4">
+<h4 id="org8205e24"><span class="section-number-4">4.1.4</span> Views</h4>
+<div class="outline-text-4" id="text-4-1-4">
+<ol class="org-ol">
+<li>As views sao tabelas virtuais, i.e., comportam-se como tabelas, sem
+terem, contudo, existencia fisica.</li>
+<li>Dado que dependem das tabelas à custa das quais são definidas, o seu
+conteúdo depende inteiramente também do conteúdo dessas tabelas.</li>
+<li>Não é possível fazer a alteração do esquema de uma view! Contudo,
+pode-se inserir, alterar ou remover linhas de uma view.</li>
+<li>O conteúdo de uma view altera-se também quando se inserem linhas na
+tabela de que a mesma deriva.</li>
+<li><p>
+Sintaxe do comando para a criação de uma view:
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #859900; font-weight: bold;">CREATE</span> <span style="color: #859900; font-weight: bold;">VIEW</span> &lt;nome_da_view&gt; [ ( &lt;lista_de_nomes_de_colunas_da_view&gt;)]
+<span style="color: #859900; font-weight: bold;">AS</span> &lt;query_SQL&gt; ;
+</pre>
+</div></li>
+<li><p>
+Exemplos
+</p>
+<div class="org-src-container">
+<pre class="src src-sql">       <span style="color: #586e75;">-- S&#243;cio (num_socio, nome, morada, telefone, BI, Data_Nasc, Data_Insc)</span>
+       <span style="color: #586e75;">-- Filme (cod_filme, titulo, duracao)</span>
+       <span style="color: #586e75;">-- Modalidade (modalid, preco, multa_diaria)</span>
+       <span style="color: #586e75;">-- C&#243;pia ( cod_filme, n_c&#243;pia, formato, data_aquisicao, preco)</span>
+       <span style="color: #586e75;">-- Aluguer (num_aluguer, num_socio, cod_filme, num_copia, modalid,</span>
+       <span style="color: #586e75;">-- data_aluguer, data_entrega, preco, multa)</span>
+
+<span style="color: #586e75;">-- 1. Qual o s&#243;cio (n&#186;s&#243;cio e nome) com maior n&#250;mero de </span>
+<span style="color: #586e75;">--    alugueres terminados em multa, at&#233; ao momento?       </span>
+<span style="color: #586e75;">-- Sugestoes de resolucao:</span>
+<span style="color: #586e75;">--   1. Come&#231;ar por criar a view que permita identificar os s&#243;cios que</span>
+<span style="color: #586e75;">--      incorreram em alugueres com multas.</span>
+<span style="color: #586e75;">--   2. Seleccionar o s&#243;cio que, fazendo parte da view, apresenta um</span>
+<span style="color: #586e75;">--      total de alugueres com multa, m&#225;ximo.</span>
+       <span style="color: #859900; font-weight: bold;">CREATE</span> <span style="color: #859900; font-weight: bold;">VIEW</span> <span style="color: #268bd2;">multas_por_socio</span>( socio, num_multas)
+         <span style="color: #859900; font-weight: bold;">AS</span> <span style="color: #859900; font-weight: bold;">SELECT</span> num_socio, <span style="color: #839496; font-weight: bold;">COUNT</span>( * )
+           <span style="color: #859900; font-weight: bold;">FROM</span> alugueres
+           <span style="color: #859900; font-weight: bold;">WHERE</span> multa &gt; 0
+           <span style="color: #859900; font-weight: bold;">GROUP</span> <span style="color: #859900; font-weight: bold;">BY</span> num_socio;
+       <span style="color: #859900; font-weight: bold;">SELECT</span> num_socio, nome
+         <span style="color: #859900; font-weight: bold;">FROM</span> socios
+         <span style="color: #859900; font-weight: bold;">WHERE</span> num_socio <span style="color: #859900; font-weight: bold;">IN</span>( <span style="color: #859900; font-weight: bold;">SELECT</span> socio
+                             <span style="color: #859900; font-weight: bold;">FROM</span> multas_por_socio
+                             <span style="color: #859900; font-weight: bold;">WHERE</span> num_multas = ( <span style="color: #859900; font-weight: bold;">SELECT</span> <span style="color: #839496; font-weight: bold;">max</span>(num_multas)
+                                                  <span style="color: #859900; font-weight: bold;">FROM</span> multas_por_socio));
+
+<span style="color: #586e75;">-- 2. Qual o filme (t&#237;tulo) mais rent&#225;vel do v&#237;deo-clube?</span>
+<span style="color: #586e75;">-- Sugestoes de resolucao:</span>
+<span style="color: #586e75;">--   1. Come&#231;ar por criar uma view que permita obter os proveitos de</span>
+<span style="color: #586e75;">--      cada filme (parcelas de sinal positivo).</span>
+<span style="color: #586e75;">--   2. Criar outra view que permita obter os custos associados a cada</span>
+<span style="color: #586e75;">--      filme (parcelas de sinal negativo).</span>
+<span style="color: #586e75;">--   3. Criar uma terceira view com a informa&#231;&#227;o relativa ao lucro que</span>
+<span style="color: #586e75;">--      cada filme permitiu obter.</span>
+<span style="color: #586e75;">--   4. Selecionar o filme (t&#237;tulo) que tenha dado mais lucro.</span>
+       <span style="color: #586e75;">-- 1. recebido</span>
+       <span style="color: #859900; font-weight: bold;">CREATE</span> <span style="color: #859900; font-weight: bold;">VIEW</span> <span style="color: #268bd2;">proveito_por_filme</span>( filme, proveito ) <span style="color: #586e75;">-- recebido</span>
+         <span style="color: #859900; font-weight: bold;">AS</span> <span style="color: #859900; font-weight: bold;">SELECT</span> cod_filme, <span style="color: #839496; font-weight: bold;">SUM</span>( valor_aluguer + multa )
+           <span style="color: #859900; font-weight: bold;">FROM</span> alugueres
+           <span style="color: #859900; font-weight: bold;">GROUP</span> <span style="color: #859900; font-weight: bold;">BY</span> cod_filme;
+       <span style="color: #586e75;">-- 2. custo</span>
+       <span style="color: #859900; font-weight: bold;">CREATE</span> <span style="color: #859900; font-weight: bold;">VIEW</span> <span style="color: #268bd2;">custo_por_filme</span>( filme, custo ) <span style="color: #586e75;">-- pago</span>
+         <span style="color: #859900; font-weight: bold;">AS</span> <span style="color: #859900; font-weight: bold;">SELECT</span> cod_filme, <span style="color: #839496; font-weight: bold;">SUM</span>( preco_compra )
+           <span style="color: #859900; font-weight: bold;">FROM</span> copias
+           <span style="color: #859900; font-weight: bold;">GROUP</span> <span style="color: #859900; font-weight: bold;">BY</span> cod_filme;
+       <span style="color: #586e75;">-- 3. Lucro</span>
+       <span style="color: #859900; font-weight: bold;">CREATE</span> <span style="color: #859900; font-weight: bold;">VIEW</span> <span style="color: #268bd2;">lucro_por_filme</span>( filme, lucro )
+         <span style="color: #859900; font-weight: bold;">AS</span> <span style="color: #859900; font-weight: bold;">SELECT</span> CPF.filme, proveito - custo
+           <span style="color: #859900; font-weight: bold;">FROM</span> proveito_por_filme PPF, custo_por_filme CPF
+           <span style="color: #859900; font-weight: bold;">WHERE</span> PPF.filme = CPF.filme;
+       <span style="color: #586e75;">-- 4. Titulo</span>
+       <span style="color: #859900; font-weight: bold;">SELECT</span> titulo, filme, lucro
+         <span style="color: #859900; font-weight: bold;">FROM</span> lucro_por_filme LPF, filmes
+         <span style="color: #859900; font-weight: bold;">WHERE</span> LPF.filme = filmes.cod_filme <span style="color: #859900; font-weight: bold;">AND</span>
+               LPF.lucro = (<span style="color: #859900; font-weight: bold;">select</span> <span style="color: #839496; font-weight: bold;">MAX</span>(lucro)
+                            <span style="color: #859900; font-weight: bold;">FROM</span> lucro_por_filme)
+</pre>
+</div></li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: 2021-12-19 dom 19:35</p>
+<p class="author">Author: José Pires</p>
+<p class="email">Email: <a href="mailto:a50178@alunos.uminho.pt">a50178@alunos.uminho.pt</a></p>
+<p class="date">Created: 2021-12-19 dom 19:37</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
