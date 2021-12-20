@@ -269,6 +269,87 @@ system. In blue are represented the computational nodes of interest, namely:
 \label{fig:deploy-diag}
 \end{figure}
 
+\subsection{Database design}
+\label{sec:database-design}
+As aforementioned in Section~\ref{sec:datab-design-overv}, the conceptual design
+of a database consists of a high-level description of the data to be stored in
+the database and its constraints, which is usually carried out using the
+\gls{er} model. Thus, in Section~\ref{sec:entity-relat-model} the key concepts
+of the \gls{er} model are presented, which can be reviewed to assist the
+comprehension of the subsequent database design produced.
+
+Fig.~\ref{fig:erd} depicts the \gls{erd} for the conceptual design of the
+\gls{mdo} system's database,
+with the primary keys shown in red and the foreign keys in blue,
+comprising the relevant entities and its relationships, namely:
+\begin{item-c}
+\item
+  \emph{\texttt{User}}:
+  models an User in the application (\texttt{Brand} or \texttt{Admin}). It has a
+  \texttt{role}, a \texttt{name}, an \texttt{email}, and a \texttt{pass} (which
+  is encrypted before being stored). An \texttt{User} manages \texttt{0} or many
+  \texttt{UserStations} and owns \texttt{0} or many \texttt{Ad}s.
+\item
+  \emph{\texttt{UserStations}}: it unfolds the relationship many-to-many between
+  an \texttt{User} and a \texttt{Station}. An \texttt{User} manages \texttt{0}
+  or many \texttt{UserStations}, and a \texttt{UserStations} contains one or
+  many \texttt{Station}s. It imports the \texttt{User.id} as a foreign key to
+  enable referencing an \texttt{User}.
+\item
+  \emph{\texttt{Station}}: it models a physical \gls{mdo} station. It contains
+  an \texttt{id}, a \texttt{name}, a \texttt{location} and an \texttt{IP}
+  address. It imports the \texttt{UserStations.id} as a foreign key to
+  enable referencing an \texttt{UserStations}.
+\item
+  \emph{\texttt{TimeTable}}: it models a weekly timetable that every
+  \texttt{Station} contains. It contains one or many \texttt{TimeSlot}s.
+  It imports the \texttt{Station.id} as a foreign key to
+  enable referencing a \texttt{Station}.
+\item
+  \emph{\texttt{TimeSlot}}: it models a slot of time available for ads
+  reproduction. It contains the \texttt{duration} (in minutes), the
+  \texttt{cost}, and a flag signaling if it is \texttt{rented} or not. It
+  imports the \texttt{TimeTable.id} as a foreign key to enable referencing a
+  \texttt{TimeTable}.
+\item
+  \emph{\texttt{Ad}}: it models an advertisement.
+  It imports the \texttt{User.id} as a foreign key to reference an
+  \texttt{User}, a \texttt{Fragrance.id} to reference the associated
+  \texttt{Fragrance}, and a \texttt{TimeSlot.id} to reference a
+  \texttt{TimeSlot}. The \texttt{Fragrance} is optional, but, as the foreign key
+  must not contain a null value, a default value of \texttt{0} is used to signal
+  that no fragrance is used.
+\item
+  \emph{\texttt{MediaFile}}: it models a media file that must be attached to the
+  \texttt{Ad}. It contains an \texttt{id}, file specifications (\texttt{filename}, \texttt{filesize}, and \texttt{filetype}), \texttt{mdata}
+  for storing the file and an optional \texttt{description}. It
+  imports the \texttt{Ad.id} as a foreign key to enable referencing an
+  \texttt{Ad}.
+\item
+  \emph{\texttt{Fragrance}}: it models a \texttt{Fragrance}. It is added to the
+  database by the \texttt{Admin} and it can be selected by the \texttt{Brand}
+  from the \texttt{FragranceList} available for each \texttt{Station}.
+  It contains an
+  \texttt{id}, a \texttt{name}, an \texttt{intensity} to define the actuation
+  time, a maximum capacity (\texttt{vol\_ml\_max}) and a current capacity
+  (\texttt{vol\_ml\_level}), and an optional \texttt{description}. It
+  imports the \texttt{FragranceList.id} as a foreign key to reference the
+  \texttt{FragranceList} available for each \texttt{Station}.
+\item
+  \emph{\texttt{FragranceList}}: it represents the list of fragrances available
+  for each \texttt{Station}.
+  It imports the \texttt{Station.id} as a foreign key to reference its
+  associated \texttt{Station}.
+\end{item-c}
+
+%
+\begin{figure}[htb!]
+\centering
+    \includegraphics[width=1.0\columnwidth]{./img/erd.png}
+  \caption{\gls{mdo} Entity-Relationship Diagram: conceptual design}%
+\label{fig:erd}
+\end{figure}
+
 \subsection{Static architecture --- Class diagrams}
 \label{sec:stat-arch-class}
 In this section the static architecture is derived from the \gls{sw}

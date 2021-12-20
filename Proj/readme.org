@@ -4692,7 +4692,7 @@ entity "MediaFile" as MF{
   *filename : text
   *filesize : text
   *filetype : text
-  *data : blob
+  *mdata : blob
   description : text
 }
 
