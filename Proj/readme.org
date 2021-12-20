@@ -4595,6 +4595,146 @@ e01 |o..o{ e03
   #+RESULTS:
   [[file:diags/plantuml/erd/output/complete-example.png]]
 
+**** Mine (to generate report)                                    :Important:
+  #+BEGIN_SRC plantuml :file diags/plantuml/erd/output/erd.png
+@startuml
+
+' hide the spot
+hide circle
+
+' avoid problems with angled crows feet
+skinparam linetype ortho
+
+
+''entity "Entity01" as e01 {
+''  *e1_id : number <<generated>>
+''  --
+''  *name : text
+''  description : text
+''}
+''
+''entity "Entity02" as e02 {
+''  *e2_id : number <<generated>>
+''  --
+''  *e1_id : number <<FK>>
+''  other_details : text
+''}
+''
+''entity "Entity03" as e03 {
+''  *e3_id : number <<generated>>
+''  --
+''  e1_id : number <<FK>>
+''  other_details : text
+''}
+''
+''e01 ||..o{ e02
+''e01 |o..o{ e03
+
+'' ENTITIES DEFINITION
+'' - *: indicates mandatory fields 
+entity "User" as USER{
+  * <color:darkred>id : number <<generated>> <<PK>>
+  --
+  *role : number
+  *name : text
+  *email : text
+  *pass : text
+}
+
+entity "UserStations" as SPU{
+  * <color:darkred>id : number <<generated>> <<PK>>
+  --
+  * <color:blue>User.id : number <<FK>>
+}
+
+entity "Station" as ST{
+  * <color:darkred>id : number <<generated>> <<PK>>
+  --
+  *<color:blue>UserStations.id : number <<FK>>
+  *name : text
+  *location : text
+  *IP : text
+}
+
+entity "TimeTable" as TT{
+  * <color:darkred>week : number <<generated>> <<PK>>
+  --
+  *<color:blue>Station.id : number <<FK>>
+}
+
+entity "TimeSlot" as TS{
+  * <color:darkred>id : number <<generated>> <<PK>>
+  --
+  *<color:blue>TimeTable.id : number <<FK>>
+  *duration : int
+  *cost : int
+  *rented : bool
+}
+
+entity "Ad" as AD{
+  * <color:darkred>id : number <<generated>> <<PK>>
+  --
+  *<color:blue>Fragrance.id : number <<FK>>
+  *<color:blue>User.id : number <<FK>>
+  *<color:blue>TimeSlot.id : number <<FK>>
+}
+
+''entity "MediaFileList" as MFL{
+''  *id : number <<generated>> <<PK>>
+''  --
+''  *Ad.id : number <<FK>>
+''}
+
+entity "MediaFile" as MF{
+  * <color:darkred>id : number <<generated>> <<PK>>
+  --
+  *<color:blue>Ad.id : number <<FK>> 
+  *filename : text
+  *filesize : text
+  *filetype : text
+  *data : blob
+  description : text
+}
+
+entity "Fragrance" as FRAG{
+  * <color:darkred>id : number <<generated>> <<PK>>
+  --
+  *<color:blue>FragranceList.id : number <<FK>>
+  *name : text
+  *intensity : text
+  *vol_ml_max: int
+  *vol_ml_level: int
+  description : text
+}
+
+entity "FragranceList" as FL{
+  * <color:darkred>id : number <<generated>> <<PK>>
+  --
+  *<color:blue>Station.id : number <<FK>>
+}
+
+
+'' RELATIONSHIPS
+USER ||--o{ SPU
+USER ||--o{ AD
+SPU ||-|{ ST 
+ST ||-u-|| TT 
+TT ||-u-|{ TS  
+TS }|-l|| AD  
+''AD ||--|| MFL  
+''MFL ||--|{ MF
+AD ||--|{ MF
+ST ||--|| FL 
+FL ||-u-|{ FRAG
+AD }o--|| FRAG
+
+
+@enduml
+  #+END_SRC
+
+  #+RESULTS:
+  [[file:diags/plantuml/erd/output/erd.png]]
+
 **** Plantuml to MySQL
 [[https://github.com/grafov/plantuml2mysql][src]]
 
@@ -4618,6 +4758,9 @@ class dummy {
 @enduml
   #+END_SRC
 
+  #+RESULTS:
+  [[file:diags/plantuml/erd/output/plantuml2sql-example.png]]
+
 will be converted to SQL:
 #+BEGIN_SRC sql
 CREATE TABLE IF NOT EXISTS `dummy` (
@@ -4634,6 +4777,7 @@ A line starting with .. or __, used as a separator into a class definition, will
 The HTML markup in comments (after --) is stripped.
 
 **** [[file:db.org][DB design and implementation using SQL]]                       :Important:
+
 *** Flowcharts (activity diagram)
 
 **** Conditionals

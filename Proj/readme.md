@@ -1,38 +1,38 @@
-- [Preamble](#org678197c)
-- [Versions <code>[4/4]</code>](#org207590c)
-- [Notes](#org4586b5c)
-  - [Requirements](#org2b53848)
-  - [Problem statement](#orgf7b450c)
-  - [Research](#org1e3b73e)
-    - [Topics <code>[0/3]</code>](#org57a817c)
-    - [Selection](#orga4a47c8)
-  - [Report](#org27c456c)
-    - [Outline <code>[2/8]</code>](#org33f874b)
-  - [Marketing Digital Outdoor](#orgafa2036)
-    - [Topics](#org597e8a8)
-    - [Technologies <code>[0/11]</code>](#orgc1dfc49)
-    - [Problem statement](#org4455d2d)
-    - [Market research <code>[3/3]</code>](#org8083bd5)
-    - [Project planning](#orgccb52a5)
-    - [Analysis](#orga68a341)
-    - [Theoretical foundations <code>[17/17]</code>](#org9e8117e)
-    - [Design](#orgee470e0)
-- [Diagrams](#orgaa8c720)
-  - [PlantUML](#orgdc6d186)
-    - [Setup <code>[0/6]</code>](#org0b1b24c)
-    - [Workflow <code>[0/4]</code>](#org49fb716)
-    - [Sequence diagrams](#org8c734fa)
-    - [Component diagrams](#org218ea28)
-    - [Deployment diagrams](#org629abc4)
-    - [Class diagrams](#orga0785c6)
-    - [Entity-Relationship diagram](#org4c143e7)
-    - [Flowcharts (activity diagram)](#org6b2f343)
-- [GIF generation](#org80eec97)
-  - [C++ libraries and APIs <code>[0/1]</code>](#org251862e)
+- [Preamble](#orgd121a4d)
+- [Versions <code>[4/4]</code>](#org4c968d1)
+- [Notes](#org4cf5563)
+  - [Requirements](#org85e6950)
+  - [Problem statement](#org4500aaa)
+  - [Research](#orga6d1389)
+    - [Topics <code>[0/3]</code>](#org73ed118)
+    - [Selection](#orgc8e1965)
+  - [Report](#org9245c76)
+    - [Outline <code>[2/8]</code>](#org4830975)
+  - [Marketing Digital Outdoor](#orgb155335)
+    - [Topics](#org220d458)
+    - [Technologies <code>[0/11]</code>](#org13a7a28)
+    - [Problem statement](#org8e91137)
+    - [Market research <code>[3/3]</code>](#org0813bf3)
+    - [Project planning](#org38a62e4)
+    - [Analysis](#org8daffcd)
+    - [Theoretical foundations <code>[17/17]</code>](#orgb70e491)
+    - [Design](#orgd44f3f2)
+- [Diagrams](#org8e5df48)
+  - [PlantUML](#orgbcfcd63)
+    - [Setup <code>[0/6]</code>](#orgc0fa2d4)
+    - [Workflow <code>[0/4]</code>](#orgb1187f9)
+    - [Sequence diagrams](#org354f044)
+    - [Component diagrams](#orgc147f14)
+    - [Deployment diagrams](#org9bcccfe)
+    - [Class diagrams](#org157a64e)
+    - [Entity-Relationship diagram](#org0104a66)
+    - [Flowcharts (activity diagram)](#org8a455c8)
+- [GIF generation](#org7c6cc87)
+  - [C++ libraries and APIs <code>[0/1]</code>](#org41e1ad4)
 
 
 
-<a id="org678197c"></a>
+<a id="orgd121a4d"></a>
 
 # Preamble
 
@@ -40,7 +40,7 @@
 -   It is written incrementally, i.e., as the several project phases take place, the document versions pertaining to each phase are stored in the folder **submission**.
 
 
-<a id="org207590c"></a>
+<a id="org4c968d1"></a>
 
 # Versions <code>[4/4]</code>
 
@@ -50,12 +50,12 @@
 4.  [X] Design phase: <span class="timestamp-wrapper"><span class="timestamp">&lt;2021-12-15 qua 23:00&gt;</span></span>
 
 
-<a id="org4586b5c"></a>
+<a id="org4cf5563"></a>
 
 # Notes     :Important:
 
 
-<a id="org2b53848"></a>
+<a id="org85e6950"></a>
 
 ## Requirements
 
@@ -67,19 +67,19 @@
 -   Makefiles
 
 
-<a id="orgf7b450c"></a>
+<a id="org4500aaa"></a>
 
 ## Problem statement
 
 Think about the project and deliver a document about it.
 
 
-<a id="org1e3b73e"></a>
+<a id="orga6d1389"></a>
 
 ## Research
 
 
-<a id="org57a817c"></a>
+<a id="org73ed118"></a>
 
 ### Topics <code>[0/3]</code>
 
@@ -88,19 +88,19 @@ Think about the project and deliver a document about it.
 -   [ ] Situate the project requirements, the project constraints
 
 
-<a id="orga4a47c8"></a>
+<a id="orgc8e1965"></a>
 
 ### Selection
 
 -   [Marketing digital Outdoor](readme.md)
 
 
-<a id="org27c456c"></a>
+<a id="org9245c76"></a>
 
 ## Report
 
 
-<a id="org33f874b"></a>
+<a id="org4830975"></a>
 
 ### Outline <code>[2/8]</code>
 
@@ -151,12 +151,12 @@ Think about the project and deliver a document about it.
 8.  [ ] Conclusions
 
 
-<a id="orgafa2036"></a>
+<a id="orgb155335"></a>
 
 ## Marketing Digital Outdoor     :Important:
 
 
-<a id="org597e8a8"></a>
+<a id="org220d458"></a>
 
 ### Topics
 
@@ -197,7 +197,7 @@ Think about the project and deliver a document about it.
             -   Additionally, brands can also monitor this by checking their social media accounts.
 
 
-<a id="orgc1dfc49"></a>
+<a id="org13a7a28"></a>
 
 ### Technologies <code>[0/11]</code>
 
@@ -214,12 +214,12 @@ Think about the project and deliver a document about it.
 11. [ ] Social media and e-mail sharing APIs
 
 
-<a id="org4455d2d"></a>
+<a id="org8e91137"></a>
 
 ### ✔ DONE Problem statement
 
 
-<a id="org8083bd5"></a>
+<a id="org0813bf3"></a>
 
 ### ✔ DONE Market research <code>[3/3]</code>
 
@@ -228,7 +228,7 @@ Think about the project and deliver a document about it.
 3.  [X] Combined marketing: are they digital outdoor + scenting?
 
 
-<a id="orgccb52a5"></a>
+<a id="org38a62e4"></a>
 
 ### Project planning
 
@@ -303,7 +303,7 @@ Think about the project and deliver a document about it.
     -   [X] Camera: 14 EUR - <https://shorturl.at/gnpCU>
 
 
-<a id="orga68a341"></a>
+<a id="org8daffcd"></a>
 
 ### ✔ DONE Analysis
 
@@ -316,7 +316,7 @@ Think about the project and deliver a document about it.
     > COMPANY -> MDO-L Staff member login RC -> RS: q mdo systems RS -> DB: query mdo-systems DB -> RS: std::<vector> mdo<sub>systems</sub> for(i = 0; i < mdo<sub>systems.size</sub>(); i++ ) RS -> RC: mdo<sub>systems</sub>[i] RC -> RC: Select MDO-L machine Send command RC -> RS: mdo <nr> <command> (mdo 1 get mode) RS -> RS: parse command RS -> RS: get mdo<sub>nr</sub> IP (query mdo-systems 1 IP) RS -> MDO-L: connect IP:port MDO-L -> RS: connected RS -> MDO-L: get mode MDO-L -> RS: normal mode (example) RS -> RC: normal
 
 
-<a id="org9e8117e"></a>
+<a id="orgb70e491"></a>
 
 ### ✔ DONE Theoretical foundations <code>[17/17]</code>
 
@@ -348,7 +348,7 @@ Legend:
 -   *Hugo*
 
 
-<a id="orgee470e0"></a>
+<a id="orgd44f3f2"></a>
 
 ### ▭▭ IN-PROGRESS Design
 
@@ -405,7 +405,7 @@ Design Phase must include (some specifications may vary according to your projec
 It is compulsory to show/identify which/where all class topics are going to be implemented and used by you! Also third-party Libraries/apps must be identified so you can use other's software and materials with our consent.
 
 
-<a id="orgaa8c720"></a>
+<a id="org8e5df48"></a>
 
 # Diagrams
 
@@ -414,7 +414,7 @@ Diagrams can be drawn using <code>[2/2]</code>:
 -   [X] draw.io
     -   User mockups
     -   State-machine
--   [X] [PlantUML](#orgdc6d186) (stored in Proj/diags/plantuml)
+-   [X] [PlantUML](#orgbcfcd63) (stored in Proj/diags/plantuml)
     -   Sequence diagram
     -   Class diagram
     -   Component diagram
@@ -422,14 +422,14 @@ Diagrams can be drawn using <code>[2/2]</code>:
     -   Entity-Relationship diagram
 
 
-<a id="orgdc6d186"></a>
+<a id="orgbcfcd63"></a>
 
 ## PlantUML
 
 [PlantUML](https://plantuml.com/) is a tool for quickly drawing diagrams from text based descriptions. It is specially adequate for sequence diagrams, as draw.io is not very fluid.
 
 
-<a id="org0b1b24c"></a>
+<a id="orgc0fa2d4"></a>
 
 ### Setup <code>[0/6]</code>
 
@@ -445,7 +445,7 @@ Diagrams can be drawn using <code>[2/2]</code>:
 6.  [ ] Check the generate png file: `output/test.png`
 
 
-<a id="org49fb716"></a>
+<a id="orgb1187f9"></a>
 
 ### Workflow <code>[0/4]</code>
 
@@ -459,7 +459,7 @@ Diagrams can be drawn using <code>[2/2]</code>:
 4.  [ ] Check the generate png file: `output/test.png`
 
 
-<a id="org8c734fa"></a>
+<a id="org354f044"></a>
 
 ### ✔ DONE Sequence diagrams
 
@@ -976,7 +976,7 @@ Diagrams can be drawn using <code>[2/2]</code>:
     ![img](diags/plantuml/seq-diag/examples/all-together.png)
 
 
-<a id="org218ea28"></a>
+<a id="orgc147f14"></a>
 
 ### ✔ DONE Component diagrams
 
@@ -1049,7 +1049,7 @@ You can use component diagrams to model the software architecture of a system. C
         ![img](diags/plantuml/component-diag/output/component-diag-local-no-links.png)
 
 
-<a id="org629abc4"></a>
+<a id="org9bcccfe"></a>
 
 ### ✔ DONE Deployment diagrams
 
@@ -1098,7 +1098,7 @@ Deployment diagrams, which you typically prepare during the implementation phase
     ![img](diags/plantuml/deploy-diag/output/deploy-diag.png)
 
 
-<a id="orga0785c6"></a>
+<a id="org157a64e"></a>
 
 ### ▭▭ IN-PROGRESS Class diagrams
 
@@ -1166,7 +1166,7 @@ Deployment diagrams, which you typically prepare during the implementation phase
     -   class for all classes,
     -   interface for all interfaces,
     -   enum for all enums,
-    -   <a id="org87d72e4"></a> for classes which are stereotyped with foo1,
+    -   <a id="org2644d18"></a> for classes which are stereotyped with foo1,
     -   an existing class name.
     
     You can use several show/hide commands to define rules and exceptions.
@@ -1247,7 +1247,7 @@ Deployment diagrams, which you typically prepare during the implementation phase
         ![img](diags/plantuml/class-diag/output/class-diag-local.png)
 
 
-<a id="org4c143e7"></a>
+<a id="org0104a66"></a>
 
 ### Entity-Relationship diagram
 
@@ -1263,7 +1263,11 @@ Otherwise, the syntax for drawing diagrams is the same as for class diagrams. Al
 
 ![img](diags/plantuml/erd/output/complete-example.png)
 
-1.  Plantuml to MySQL
+1.  Mine (to generate report)     :Important:
+
+    ![img](diags/plantuml/erd/output/erd.png)
+
+2.  Plantuml to MySQL
 
     [src](https://github.com/grafov/plantuml2mysql)
     
@@ -1271,7 +1275,11 @@ Otherwise, the syntax for drawing diagrams is the same as for class diagrams. Al
     
     Field type noted after field name as is. Also you may use comments after &#x2013;.
     
-    For example class definition: will be converted to SQL:
+    For example class definition:
+    
+    ![img](diags/plantuml/erd/output/plantuml2sql-example.png)
+    
+    will be converted to SQL:
     
     ```sql
     CREATE TABLE IF NOT EXISTS `dummy` (
@@ -1287,10 +1295,10 @@ Otherwise, the syntax for drawing diagrams is the same as for class diagrams. Al
     
     The HTML markup in comments (after &#x2013;) is stripped.
 
-2.  [DB design and implementation using SQL](db.md)     :Important:
+3.  [DB design and implementation using SQL](db.md)     :Important:
 
 
-<a id="org6b2f343"></a>
+<a id="org8a455c8"></a>
 
 ### Flowcharts (activity diagram)
 
@@ -1303,12 +1311,12 @@ Otherwise, the syntax for drawing diagrams is the same as for class diagrams. Al
 2.  Switch-case
 
 
-<a id="org80eec97"></a>
+<a id="org7c6cc87"></a>
 
 # GIF generation
 
 
-<a id="org251862e"></a>
+<a id="org41e1ad4"></a>
 
 ## C++ libraries and APIs <code>[0/1]</code>
 
