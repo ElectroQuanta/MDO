@@ -1,0 +1,62 @@
+@startuml
+'-----------------------
+  note right
+    Registration menu
+    (adding a user)
+  end note
+'-----------------------
+  start
+    repeat
+    repeat while(register_btn pressed?) is (No) not (Yes)
+    
+    if (All fields are filled?) then (Yes)  
+    
+      :Create object User user(username, email, pass);
+      note left 
+        The user is BRAND
+        by default
+      end note
+
+      :db_query = "select count (*) from user where (username =
+      " + user.name() + " or email = " + user.email() + ");";
+      
+      note left
+        Verify if doesn't exist
+        already an user.
+      end note
+
+      :server.Send(db_query, db_query.len);
+      
+      :wait for server response (async);
+
+      if (count != 0) then (No)
+        
+      
+      else (Yes)
+        :Error! It already exists an
+        user with that username or email!;
+        stop
+      endif   
+
+      :db_values = user.serialize()
+      db_query = "insert into" + db.validateQuery(db_values)
+      server.Send(db_query, db_query.len);
+      note left
+        Create the string
+        to perform the query
+      end note
+
+      :wait for server response (async);
+
+      if(User added successfully?) then (Yes)
+        :User was added successfully!;
+      else (No)
+        :Error! User could not be added.;
+      endif
+    else (No)
+      :Error! Fill all the fields;
+    endif   
+  stop
+  
+'-----------------------
+@enduml
