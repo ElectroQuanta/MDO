@@ -5,10 +5,10 @@
 ''!theme spacelab
 ''!theme mars (does not work)
 '' -------------------- Splitting into several files -----------
-page 2x2
-skinparam pageMargin 10
-skinparam pageExternalColor gray
-skinparam pageBorderColor black
+'page 2x2
+'skinparam pageMargin 10
+'skinparam pageExternalColor gray
+'skinparam pageBorderColor black
 '' --------------------------------------------------------------
 '' remove attributes and methods icons
 skinparam classAttributeIconSize 0
@@ -132,6 +132,26 @@ enum frameT{
 DB
 CMD
 }
+
+enum DB_OBJ{
+User
+Ad
+TimeSlot
+TimeTable
+Station
+UserStations
+Fragrance
+FragranceList
+MediaFile
+}
+
+enum DB_OPER{
+INSERT
+UPDATE
+DELETE
+SELECT
+CREATE
+}
 '' ---------
 
 
@@ -185,7 +205,7 @@ class Ad {
   + void modifyVideo(FILE* f)
   == helpers ==
   + void print() const
-  + void serialize() 
+  + string serialize() 
   + void deserialize(string values) 
 }
     note right of Ad::serialize
@@ -214,7 +234,7 @@ class Station{
   + bool setAddr(Ad ad)
   == helpers ==
   + void print() const
-  + void serialize() 
+  + string serialize() 
   + void deserialize(string values) 
 }
 '' Timetable (to check ad slots)
@@ -239,7 +259,7 @@ class TimeTable{
   + bool findAd(Ad ad)
   == helpers ==
   + void print() const
-  + void serialize() 
+  + string serialize() 
   + void deserialize(string values) 
 }
 '' Date
@@ -266,7 +286,7 @@ class Date{
   + bool addHour(int hour)
   == helpers ==
   + void print() const
-  + void serialize() 
+  + string serialize() 
   + void deserialize(string values) 
 }
 '' User
@@ -297,7 +317,7 @@ class User{
   + bool logout()
   == helpers ==
   + void print() const
-  + void serialize() 
+  + string serialize() 
   + void deserialize(string values) 
   + Station findStation(const Station &otherStat)
 }
@@ -363,7 +383,7 @@ class DBManager{
   +DBManager()
   +~DBManager()
   == helpers ==
-  + string validateQuery(string q)
+  + string buildQuery(DB_OPER op, DB_OBJ obj, string q)
   + void extract(rxFrame *f)
 }
 class Parser{
@@ -405,6 +425,8 @@ TimeTable "1" *-- "3" Date: contains
 Admin -l-|> User
 User *-l- Role: contains
 User "1" - "1" Crypt
+DBManager *-u- DB_OBJ: contains
+DBManager *-u- DB_OPER: contains
 UIWindow "1" *-- "1" Parser: contains
 rxFrame "1" *- "1" frameT: contains
 UIWindow "1" *-u- "many" rxFrame: contains

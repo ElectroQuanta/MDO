@@ -1,0 +1,36 @@
+@startuml
+'-----------------------
+  note right
+    Delete user
+  end note
+'-----------------------
+  start
+    repeat
+    repeat while(delete_btn pressed?) is (No) not (Yes)
+    
+    if (User is selected?) then (Yes)
+
+        :db_query = db.buildQuery(DB_OPER::DELETE, 
+        DB_OBJ::USER, id);
+        note right 
+            Delete the user by its id
+        end note
+        :rxFrame.header = DB
+        rxFrame.len = db_query.length
+        rxFrame.data = db_query
+        server.send(rxFrame, rxFrame.len);
+
+        :wait for server response (async);
+      
+        if(Deleted properly?) then (Yes)
+            :User deleted successfully!;
+        else (No)
+            :Error deleting User!;
+        endif
+    else (No)
+        :Error! No user selected;
+    endif   
+  stop
+  
+'-----------------------
+@enduml

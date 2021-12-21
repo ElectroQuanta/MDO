@@ -25,7 +25,10 @@
         already an user.
       end note
 
-      :server.Send(db_query, db_query.len);
+      :rxFrame.header = DB
+      rxFrame.len = db_query.length
+      rxFrame.data = db_query
+      server.send(rxFrame, rxFrame.len);
       
       :wait for server response (async);
 
@@ -39,12 +42,17 @@
       endif   
 
       :db_values = user.serialize()
-      db_query = "insert into" + db.validateQuery(db_values)
-      server.Send(db_query, db_query.len);
+      db_query = db.buildQuery(DB_OPER::INSERT,
+      DB_OBJ::USER, db_values);
       note left
         Create the string
         to perform the query
       end note
+
+      :rxFrame.header = DB
+      rxFrame.len = db_query.length
+      rxFrame.data = db_query
+      server.send(rxFrame, rxFrame.len);
 
       :wait for server response (async);
 

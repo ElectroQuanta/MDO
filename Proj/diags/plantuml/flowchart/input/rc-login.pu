@@ -13,25 +13,31 @@
     
         :pass_encrypt = crypt.encrypt(password)
         db_query = "select count (*), role from user where
-        (username = " + username + " and pass_encrypt = " + pass_encrypt + ");"
-        server.Send(db_query, db_query.len);
+        (username = " + username + " and pass_encrypt = " + pass_encrypt + ");";
 
-        note right 
+        note left
             Encrypt the pass and 
             then query to the db
             in order to receive 
             the count of 1
         end note
 
+        :rxFrame.header = DB
+        rxFrame.len = db_query.length
+        rxFrame.data = db_query
+        server.send(rxFrame, rxFrame.len);
+
         :wait for server response (async);
       
         if(Count == 1?) then (Yes)
-            if (role == ADMIN) then (Yes)
-                :Show ADMIN view;
-            (No) elseif (role == BRAND) (Yes)
-                :Show BRAND view;
-            else (No)
-            endif
+          if (role == ADMIN) then (Yes)
+              :Show ADMIN view;
+          (No) elseif (role == BRAND) then (Yes)
+              :Show BRAND view;
+          else (No)
+            :Error logging in!;
+            stop
+          endif
 
         else (No)
             :Error logging in! Credentials are wrong;

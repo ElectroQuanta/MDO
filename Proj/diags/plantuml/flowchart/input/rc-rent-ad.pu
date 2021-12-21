@@ -1,0 +1,79 @@
+@startuml
+'-----------------------
+  note right
+    Rent Ad menu
+  end note
+'-----------------------
+  start
+    repeat
+    repeat while(rent_ad_btn pressed?) is (No) not (Yes)
+    
+    if (All fields are filled?) then (Yes)  
+    
+        :Create object Ad ad()
+        ad.modifyVideo(video)
+        ad.modifyFrag(frag);
+        note right 
+            Add fields for
+            the ad
+        end note
+
+        :tt.addAd(ad)
+        db_values = tt.serialize()
+        db_query = db.validateQuery(DB_OPER::INSERT,
+        DB_OBJ::TimeTable,db_values);
+        note right
+            Create the string
+            to perform the query
+        end note
+      
+        :rxFrame.header = DB
+        rxFrame.len = db_query.length
+        rxFrame.data = db_query
+        server.send(rxFrame, rxFrame.len);
+
+        :Wait for server response (async);
+
+        if(TT added successfully?) then (Yes)
+          :db_values = ad.serialize()
+          db_query = db.buildQuery(DB_OPER::INSERT,
+          DB_OBJ::AD, db_values);
+          
+          :rxFrame.header = DB
+          rxFrame.len = db_query.length
+          rxFrame.data = db_query
+          server.send(rxFrame, rxFrame.len);
+
+          :Wait for server response (async);
+
+          if(Ad added successfully?) then (No)
+            :db_query = "delete from TimeTable order by id desc limit 1;";
+            note right
+              delete last entry
+              of TimeTable table
+            end note
+
+            :rxFrame.header = DB
+            rxFrame.len = db_query.length
+            rxFrame.data = db_query
+            server.send(rxFrame, rxFrame.len);
+
+            :Wait for server response (async);
+            :Error! Ad no added properly!;
+            stop
+          else (Yes)
+          endif
+        
+            :Ad added to waiting list!;
+
+        else (No)
+          :Error! Ad could not be added.;
+        endif
+
+    else (No)
+      :Error! Fill all the fields;
+    endif   
+  stop
+  
+'-----------------------
+@enduml

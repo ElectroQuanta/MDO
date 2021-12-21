@@ -359,12 +359,17 @@ diagrams as a starting point, for each subsystem.
 \subsubsection{Remote Client}
 \label{sec:remote-client-class}
 %
-Fig.~\ref{fig:class-diag-rc} depicts the class diagram for the \texttt{Remote
-  Client} subsystem.
+Fig.~\ref{fig:class-diag-rc} depicts the class diagram for the \texttt{Remote Client} subsystem.
+The \texttt{UIApp} and \texttt{UIWindow} handle all the events made by the user with the \gls{ui}.
+The \texttt{CommManager} handles the communication between this system and the \texttt{Remote Server}, which has an enumerator to classify the connection status (\texttt{ConnStatus}) and also the class \texttt{DBManager} handles all the databases through its functions and enumerators \texttt{DB\_OPER} and \texttt{DB\_OBJ}.
+Then, there's the normal classes that are mandatory to have: \texttt{User} and \texttt{Admin} that have a relation (because an Admin is a User), \texttt{Station} with its \texttt{TimeTable}, \texttt{Date} and also \texttt{Ad} to handle the ads.
+
+There are some functions that are important to be referenced, such as \texttt{serialize()} - this function serializes all the members of the class in order to be more easier to build queries to the databases, that's why there is a function with that name in almost all classes.
+Also, the function \texttt{buildQuery} is important because it builds the queries to send to the databases having in mind the type of query and the table that it wants to access. In this way, it is more easier to handle all the application, with no need to save too much data unnecessarily.  
 %
 \begin{figure}[htb!]
 \centering
-    \includegraphics[width=1.0\columnwidth]{./img/class-diag-rc.png}
+    \includegraphics[width=1.0\columnwidth]{./img/class-diag-rc-hugo.png}
   \caption{Class diagram: \texttt{Remote Client}}%
 \label{fig:class-diag-rc}
 \end{figure}
@@ -401,7 +406,59 @@ Fig.~\ref{fig:class-diag-local-1} and Fig.~\ref{fig:class-diag-local-2} depicts 
 \label{fig:class-diag-local-2}
 \end{figure}
 
+\subsection{Flowcharts}
+\label{sec:flowcharts}
 
+In this section are presented the most important flowcharts of all the systems. 
+These flowcharts are important to implement because it gives to one the essentials to build all the system.
+
+\subsubsection{Remote Client}
+
+In the \texttt{Remote Client} there are several functions to implement.
+However, most of them have particularly the same implementation method.
+This is because the class diagrams designed are well designed for the code to be the more easy to implement as possible.
+
+In Fig.~\ref{fig:flow-rc-login} is the flowchart of the \texttt{Login} feature.
+After the login button being pressed, it is necessary to verify if all fields are filled. If so, the password is encrypted in order to compare with the passwords from the database (that are all encrypted).
+It is made a \texttt{query} to the users database to select a count and the role of all users that have the same username and password.
+If the count is equal to one, then the user has its credentials validated and it is shown the view according to its role. If not, then there's an error in the login.
+%
+\begin{figure}[htb!]
+\centering
+    \includegraphics[width=0.8\columnwidth]{./img/flow-rc-login.png}
+  \caption{Flowchart: \texttt{Remote Client} --- Login}%
+\label{fig:flow-rc-login}
+\end{figure}
+
+In Fig.~\ref{fig:flow-rc-register-user} is depicted the flowchart for registering a user.
+Basically, after the button being pressed and all the fields are filled, an user object is created. To know if the user can be created, it is made a \texttt{query} to the Users database to know if there is already an user with that username or that password. If not, then it is made another \texttt{query} to add that user to the users database and the registration is complete. 
+%
+\begin{figure}[htb!]
+\centering
+    \includegraphics[width=0.8\columnwidth]{./img/flow-rc-register-user.png}
+  \caption{Flowchart: \texttt{Remote Client} --- Register}%
+\label{fig:flow-rc-register-user}
+\end{figure}
+
+In Fig.~\ref{fig:flow-rc-delete-user} is depicted a flowchart of the delete user feature.
+Basically, the user is deleted using its id, and for that it is made a \texttt{query} to the users database to delete the row with that user id. After that query, the delete process is completed
+%
+\begin{figure}[htb!]
+\centering
+    \includegraphics[width=0.8\columnwidth]{./img/flow-rc-delete-user.png}
+  \caption{Flowchart: \texttt{Remote Client} --- Delete User}%
+\label{fig:flow-rc-delete-user}
+\end{figure}
+
+In Fig.~\ref{fig:flow-rc-rent-ad} is the flowchart of how it behaves the rent ad feature.
+Basically an ad object is created and added to the timetable object. After that, it is made a \texttt{query} to the time table database to add the ad to the specific time slots. Then, if everything occurs as expected, the Ad is then added to the database by a \texttt{query}. If that query don't occur as expected, then the timetable previously added needs to be removed from the database.
+%
+\begin{figure}[htb!]
+\centering
+    \includegraphics[width=0.8\columnwidth]{./img/flow-rc-rent-ad.png}
+  \caption{Flowchart: \texttt{Remote Client} --- Rent Ad}%
+\label{fig:flow-rc-rent-ad}
+\end{figure}
 
 \section{Software interfaces definition}
 \label{sec:sw-interf-def}
