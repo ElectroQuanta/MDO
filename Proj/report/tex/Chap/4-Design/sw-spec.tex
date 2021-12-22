@@ -350,6 +350,41 @@ comprising the relevant entities and its relationships, namely:
 \label{fig:erd}
 \end{figure}
 
+\subsection{Data formats}
+\label{sec:data-formats}
+After devising the \gls{sw} architecture the data flow across the several
+subsystems became clearer, with data frames being conveyed through \gls{tcp-ip}
+sockets. Thus, it is important to define the data formats for internal
+representation and communication between the subsystems, as illustrated in
+Fig.~\ref{fig:data-formats}. In gray are depicted the several subsystems, in
+white the data frames and in blue the legend.
+
+The several subsystems will communicate using a basic data frame ---
+\texttt{rxFrame} --- which contains a \texttt{header}, the data length, and the
+actual data. The \texttt{header} defines the frame type which can be \texttt{DB}
+(database queries), \texttt{CMD} (commands sent to be executed), and \texttt{AD}
+(ads to be reproduced --- only for \texttt{Local System}). It is important to
+note the usefulness of \texttt{data}'s datatype being \texttt{void *}, as it is
+generic, and thus enables the encapsulation of other data frames --- e.g., the
+\texttt{AdFrame} is encapsulated within a \texttt{rxFrame}.
+
+The \texttt{AdFrame} contains the information about the advertisement to be
+reproduced, namely its type, intensity, start time, duration, media length, and media \glspl{url}. The
+first identifies the fragrance within the \texttt{Local System}, the second is
+used to calculate the fragrance diffusion timing, the start time is the elapsed
+time from the start of the day, the duration is the reproduction time of the ad
+(in minutes), and the \texttt{mediaURLs} contain the \glspl{url} from where the
+media files can be downloaded and stored in the \texttt{Local System}.
+%
+\begin{figure}[htb!]
+\centering
+    \includegraphics[width=1.0\columnwidth]{./img/data-formats.png}
+  \caption{Data formats}%
+\label{fig:data-formats}
+\end{figure}
+%
+
+
 \subsection{Static architecture --- Class diagrams}
 \label{sec:stat-arch-class}
 In this section the static architecture is derived from the \gls{sw}
