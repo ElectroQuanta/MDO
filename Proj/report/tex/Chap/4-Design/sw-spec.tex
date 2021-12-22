@@ -406,6 +406,79 @@ Fig.~\ref{fig:class-diag-local-1} and Fig.~\ref{fig:class-diag-local-2} depicts 
 \label{fig:class-diag-local-2}
 \end{figure}
 
+\subsection{Threads specification}
+\label{sec:thre-spec}
+In this section the threads specification are performed for the several
+subsystems, assigning them the respective priority. A color scheme is used to
+define thread priority, with red being the highest and green the
+lowest. Additionally, the threads are ranked from highest (at the top) to lowest
+(at the bottom) in each frame.
+
+\subsubsection{Local System}
+\label{sec:local-system-2}
+%
+Fig.~\ref{fig:thread-spec-local} illustrates the thread specification and the
+associated priorities for the \texttt{Local System}. There are four logical
+groups:
+\begin{enum-c}
+\item
+  \emph{\texttt{User Interface}}: the \texttt{UserDetection} detects when a user
+  is in range and is the top priority
+  thread, as it will determine the device's mode, stopping \emph{normal mode}
+  and going into \emph{interaction mode}.
+
+  The \texttt{FrameGrabber} and \texttt{UI} threads are \emph{high
+    priority}. The first grabs frames from the camera and stores it in a frame
+  buffer which is available to the \texttt{UI}, \texttt{ImgFilterOverlay}, and
+  \texttt{GestureRecognition} threads. The second is
+  responsible for providing user feedback on the \gls{lcd} display.
+
+  The \texttt{ImgFilterOverlay}, and the \texttt{GestureRecognition}, and the
+  threads are medium priority. The first is responsible
+  for detecting faces on the camera frame buffer and applying the selected image
+  filter overlay, and the second for recognizing \texttt{User} gestures.
+
+  It should be noted that only the \texttt{UserDetection} and \texttt{UI}
+  threads should be permanently running, while the others are only running while
+  an \texttt{User} is detected.
+\item
+  \emph{\texttt{Comm}}: these threads are responsible for communications
+  handling.
+  \texttt{LocalRx} is the top priority thread, as it needs to check if an
+  relevant command or database update has arrived. It stores the incoming data
+  frames into a \gls{fifo} buffer.
+
+  The \texttt{AppParser} and the \texttt{LocalTx} are high priority threads. The
+  first consumes incoming data frames and dispatches it for processing. The
+  second transmits outgoing data frames to the \texttt{RemoteServer}.
+
+  The \texttt{TwitterShare} and \texttt{FileTransfer} are low priority tasks, as
+  they don't impact the user experience or device operation significantly. The
+  first is responsible for sharing posts on Twitter. The second handles file
+  transferring between \texttt{RemoteServer} and the \texttt{LocalSystem}.
+\item
+  \emph{\texttt{Normal mode}}: these threads are only running when normal mode
+  is on.
+  \texttt{AudioMan} and \texttt{VidMan} are high priority tasks, and they are
+  responsible for Ad's audio and video management, respectively.
+
+  \texttt{FragMan} is a medium priority task, as variations in the fragrance
+  diffusion are less significant for user experience. It is responsible for
+  diffusing the fragrance.
+\item
+  \emph{\texttt{Multimedia mode}}: the \texttt{GifGenerator} is a low priority
+  thread, responsible for generating \glspl{gif}. It should only run after a
+  user request was acknowledged.
+\end{enum-c}
+%
+\begin{figure}[htb!]
+\centering
+    \includegraphics[width=0.8\columnwidth]{./img/thread-spec-local.png}
+  \caption{Thread specification: \texttt{Local System}}%
+\label{fig:thread-spec-local}
+\end{figure}
+%
+
 \subsection{Flowcharts}
 \label{sec:flowcharts}
 

@@ -370,16 +370,16 @@ Design Phase must include (some specifications may vary according to your projec
      - Custom PCB for ultrasonic sensors + fragrance diffuser actuator
    - [X] Tools
      - PADS, KiCad
-2) *Software Specification* [6/11]:
-   - [ ] Entity Relations Diagram
+2) *Software Specification* [9/11]:
+   - [X] Entity Relations Diagram
    - [X] Classes Diagram
      - [X] Remote Client
      - [X] Remote Server
      - [X] Local System
    - [ ] Data Formats
    - [ ] Flowcharts
-   - [ ] Tasks Division (accurate plan)
-   - [ ] Thread Priorities
+   - [X] Tasks Division (accurate plan)
+   - [X] Thread Priorities
    - [X] GUI Layouts
    - [X] Test Cases
    - [X] Software COTs
@@ -2393,6 +2393,120 @@ sockL_Transfer_sh -l-> [WEBRx]
 
   #+RESULTS:
   [[file:diags/plantuml/component-diag/output/component-diag-local-no-links.png]]
+
+***** Local System Threads
+  #+BEGIN_SRC plantuml :file diags/plantuml/component-diag/output/component-diag-local-threads.png
+@startuml
+''left to right direction
+skinparam fixCircleLabelOverlapping true
+'' src: https://www.augmentedmind.de/2021/01/17/plantuml-layout-tutorial-styles/
+''skinparam nodesep x (where x is an integer > 0) will increase the horizontal margin
+''skinparam ranksep x affects the vertical margin
+''With skinparam padding x (x also being an integer > 0) you will increase the padding of every kind of element, so use it carefully, with small values.
+skinparam nodesep 5
+skinparam ranksep 5
+skinparam padding 0.1
+
+<style>
+ ' scope to sequenceDiagram elements
+ ' scope to actor elements
+   component {
+       FontColor Blue
+       FontStyle bold
+   }
+   rectangle {
+       FontColor Blue
+       FontStyle bold
+   }
+</style>
+
+'' colors
+''!$highest = darkred
+''!$high = %lighten($highest, 40)
+''!$medium = %lighten($highest, 80)
+''!$low = %lighten($highest, 120)
+!$highest = red
+!$high = "#orange"
+!$medium = "#yellow"
+!$low = "#lightgreen"
+
+'' participants definition
+
+  frame "Comm" as LCM #bisque{
+  [LocalRx] as LCR #$highest
+  together {
+  [LocalTx] as LCT $high
+  [AppParser] as AP $high
+  }
+  together {
+  [FileTransfer] as FT $low
+  [TwitterShare] as TS $low
+  }
+  }
+  frame "User Interface" as USIN #bisque{
+  [UserDetection] as UD #$highest
+  together {
+  [UI] as UI $high
+  [FrameGrabber] as FG $high
+  }
+  together {
+  ''[FaceDetection] as FD $medium 
+  '' ImgFilterOverlay encapsulates face detection
+  [GestureRecognition] as GRE $medium
+  [ImgFilterOverlay] as IFO $medium
+  }
+  }
+  frame "Normal mode" as NMM #bisque{
+  together {
+  [VidMan] as VIDM $high
+  [AudioMan] as AUDM $high
+  }
+  [FragMan] as FRAGM $medium
+  }
+  frame "Multimedia mode" as MMM #bisque{
+  [GIFGenerator] as GIFG $low
+  }
+  
+  rectangle "Legend - Priority" as PRIO{
+  rectangle "Highest" as P0 #$highest
+  rectangle "High" as P1 $high
+  rectangle "Medium" as P2 $medium
+  rectangle "Low" as P3 $low
+  }
+'' ------------------------------
+
+'' ------------ INTERACTIONS
+'' (with hidden links)
+'' UI
+ UD-[hidden]d-UI
+ UI-[hidden]l-FG
+ ''FG-[hidden]d-FD
+ FG-[hidden]d-GRE
+ GRE-[hidden]l-IFO
+'' Normal mode
+ VIDM-[hidden]l-AUDM
+ AUDM-[hidden]d-FRAGM
+'' Comm
+ LCR-[hidden]d-LCT
+ LCT-[hidden]l-AP
+ LCT-[hidden]d-FT
+ FT-[hidden]l-TS
+'' Normal and Multimedia Mode
+ UI-[hidden]u-LCM
+ UI--[hidden]-NMM
+ UI--[hidden]-MMM
+ NMM-[hidden]-MMM
+'' Legend
+ MMM--[hidden]-PRIO
+ P0-[hidden]l-P1
+ P1-[hidden]l-P2
+ P2-[hidden]l-P3
+
+@enduml
+  #+END_SRC
+
+  #+RESULTS:
+  [[file:diags/plantuml/component-diag/output/component-diag-local-threads.png]]
 
 *** ✔ DONE Deployment diagrams
     :LOGBOOK:
@@ -4543,7 +4657,10 @@ UI "1" *-u- "1" FragranceManager: contains
   #+RESULTS:
   [[file:diags/plantuml/class-diag/output/class-diag-local.png]]
 
-*** Entity-Relationship diagram
+*** ✔ DONE Entity-Relationship diagram
+    :LOGBOOK:
+    - State "✔ DONE"     from              [2021-12-22 qua 03:26]
+    :END:
 [[https://plantuml.com/ie-diagram][src]]
 
 Based on the Information Engineering notation.
@@ -4778,7 +4895,10 @@ The HTML markup in comments (after --) is stripped.
 
 **** [[file:db.org][DB design and implementation using SQL]]                       :Important:
 
-*** Flowcharts (activity diagram)
+*** ▭▭ IN-PROGRESS Flowcharts (activity diagram)
+    :LOGBOOK:
+    - State "▭▭ IN-PROGRESS" from              [2021-12-22 qua 03:26]
+    :END:
 
 **** Conditionals
   #+BEGIN_SRC plantuml :file diags/plantuml/flowchart/output/cond.png
