@@ -5074,9 +5074,6 @@ stop
   #+RESULTS:
   [[file:diags/plantuml/flowchart/output/full-example.png]]
 
-
-**** Mine (to generate report)                                    :Important:
-
   #+BEGIN_SRC plantuml :file diags/plantuml/flowchart/output/test1.png
 @startuml
 '-----------------------
@@ -5185,6 +5182,8 @@ start
   #+RESULTS:
   [[file:diags/plantuml/flowchart/output/test2.png]]
 
+
+**** Mine (to generate report)                                    :Important:
 
 ***** ✔ DONE User Detection
 	  :LOGBOOK:
@@ -5421,6 +5420,67 @@ start
   [[file:diags/plantuml/flowchart/output/local-tx.png]]
 
 ***** AppParser
+
+  #+BEGIN_SRC plantuml :file diags/plantuml/flowchart/output/local-app-parser.png
+@startuml
+'-----------------------
+  note right
+  <b>AppParser</b>
+    Local System 
+    parser execution
+  end note
+'-----------------------
+start
+	(1)
+	:pthread_mutex_lock( &msgRx_mut )
+	pthread_cond_wait( &msgRx_cond, &msgRx_mut )
+	pthread_mutex_unlock( &msgRx_mut );
+	repeat
+		:pthread_mutex_lock( &RxVec_mut )
+		empty = RxVec.empty()
+		pthread_mutex_unlock( &RxVec_mut );
+	
+            if (empty) then (No)
+		:pthread_mutex_lock( &RxVec_mut )
+                tmp_rx = RxVec->pop()
+		pthread_mutex_unlock( &RxVec_mut );
+                note left
+                    pop the rx frame from the
+                    vector and process it
+                end note
+                :transform the tmp_rx->data into
+                string in order to be processed;
+                if(tmp_rx->header == CMD?) then (Yes)
+		    :process command;
+                (No) elseif (tmp_buff->header == AD?)
+		:adFrame *adF = (adFrame *) tmp_rx->data;
+		    note right
+			cast the rxFrame 
+			data to an adFrame
+		    end note
+		:pthread_mutex_lock( &ad_frame_avail_mut )
+		adFrameVec.push( &adF )
+		pthread_cond_signal( &ad_frame_avail_cond )
+		pthread_mutex_unlock( &ad_frame_avail_mut );
+                note right
+		    push the Ad frame to the
+		    vector so FileTransfer thread
+		    can download media files
+                end note
+                else (No)
+                    :Ignore data;
+                endif
+        else (Yes)
+        endif
+   repeat while()
+ 
+'-----------------------
+@enduml
+  #+END_SRC
+
+  #+RESULTS:
+  [[file:diags/plantuml/flowchart/output/local-app-parser.png]]
+
 ***** ✔ DONE TwitterShare
 	  :LOGBOOK:
 	  - State "✔ DONE"     from              [2021-12-23 qui 18:07]
