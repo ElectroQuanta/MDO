@@ -421,7 +421,7 @@ Also, the function \texttt{buildQuery} is important because it builds the querie
 \label{sec:remote-server-class}
 %
 Fig.~\ref{fig:class-diag-rs} depicts the class diagram for the \texttt{Remote Server} subsystem.
-The \texttt{CLI} is the Command Line Interface and handles almost everything in this subsystem. It has several members, the more important ones are the send and receive vectors that have the type of frame os \texttt{serverFrame} containing the rxFrame and the socket to which the server is connected, this facilitates the work when sending and receiving because there is already the knowledge of the socket to or from the message is being received or sent. Allied to this, there's all the conditional variables and mutexes that maintain the stability of all variables and avoid collisions between classes, communications and so on.
+The \texttt{CLI} is the Command Line Interface and handles almost everything in this subsystem. It has several members, the more important ones are the send and receive vectors that have the type of data \texttt{serverFrame} containing the rxFrame and the socket to which the server is connected, this facilitates the work when sending and receiving because there is already the knowledge of the socket to or from the message is being received or sent. Allied to this, there's all the conditional variables and mutexes that maintain the stability of all variables and avoid collisions between classes, communications and so on.
 
 The \texttt{CommManager} handles all the communication and has the most important functions: the \texttt{send} thread, the \texttt{receive} thread and the \texttt{connect} thread.
 
@@ -472,9 +472,9 @@ There are four logical groups:
 \begin{enum-c}
 \item\emph{\texttt{CLI}}: the command line interface has a thread to transfer files because it can be necessary to transfer them to both subsystems.
 This thread has low priority because it is not a critical feature that need to happen as soon as possible and, depending on the file, it can take a while until its transfer, so, it can have a lower priority and take its time to transfer.
-\item\emph{\texttt{Parser}}: the parser has one thread that is its execution and another to handle the commands that come from the remote client or from the user that is typing directly in the remote server. This thread has high priority because it is mandatory to parse and execute the commands that are received, as soon as they are received.
+\item\emph{\texttt{Parser}}: the parser has one thread that is its execution. This thread has high priority because it is mandatory to parse and execute the commands that are received, as soon as they are received.
 \item\emph{\texttt{Comm}}: the communication manager has three threads that are important: the \texttt{receive}, the \texttt{send}, and the \texttt{accept connection}. The one with most priority is the \texttt{receive} thread, because it is necessary to receive the messages to then parse and execute them. Then, the other two threads have medium priority because receiving and parsing messages is more important than this.
-\item\emph{\texttt{DB}}: the database management has two threads that have high priority, that's because it is important to always have the databases updated. These two threads make queries to the databases, but they are controlled one by another in order to avoid the risk to make queries at the same time or some queries to be lost.
+\item\emph{\texttt{DB}}: the database management has three threads that have high priority, that's because it is important to always have the databases updated. These three threads make queries to the databases, but they are controlled one by another in order to avoid the risk to make queries at the same time or some queries to be lost. There's another thread that handles the commands sent to the server or between the two subsystems
 \end{enum-c}
 %
 \begin{figure}[htb!]
@@ -619,7 +619,7 @@ The \texttt{Remote Server} is the connection node between the \texttt{Remote Cli
 The most important functions to implement are the thread functions. Some of them can be analogous which can be good because most of the code can be replicated.
 
 Fig.~\ref{fig:flow-rs-recv} shows how the receive thread is implemented.
-Basically this thread waits to receive data from a socket and after that, add that received command to the vector RxVec. In this situation it is mandatory to use mutexes to avoid accessing the same RxVec in different threads. Also it is used a semaphore to handle the number of threads that can use this vector.
+Basically this thread waits to receive data from a socket and after that, add that received command to the vector RxVec. In this situation it is mandatory to use mutexes to avoid accessing RxVec at the same time in different threads. Also it is used a semaphore to handle the number of threads that can use this vector.
 The send thread is particularly the same thing, with the difference that it is necessary to know if there is something to send and send it. The information of the socket is already in the txVec and it is easy to send the information to the specific side.
 %
 \begin{figure}[htb!]
@@ -629,7 +629,7 @@ The send thread is particularly the same thing, with the difference that it is n
 \label{fig:flow-rs-recv}
 \end{figure}
 
-Fig.~ref{fig:flow-rs-parser} shows how the parser is executed.
+Fig.~\ref{fig:flow-rs-parser} shows how the parser is executed.
 Basically this thread verifies if it exists messages received to read, if so, they are popped from the \gls{fifo} and it is dropped the semaphore that was being used.
 Then, by the structure rxFrame it is verified if the data is a command or a database query. If it is a command, it is signalized that it is a command and it is added to the vector, if it is a database query, it does the same but for the signal of the database handle and the db vector.
 It is always mandatory to avoid collisions of data, using for that the mutexes to lock the usage of the vectors.
@@ -641,7 +641,7 @@ It is always mandatory to avoid collisions of data, using for that the mutexes t
 \label{fig:flow-rs-parser}
 \end{figure}
 
-Fig.~\ref{fig:flow-rs-handle-cmd} shows hoe the handleCmd thread is processed.
+Fig.~\ref{fig:flow-rs-handle-cmd} shows how the handleCmd thread is processed.
 Firstly, it is necessary to pop a command from the cmdVec and then execute it.
 It is necessary to know if the command is to execute in the remote server or to send to the local system. If it is to send to the local system, it is needed to make a query to the database to know the ip of the local system and then send to the machine. 
 %
@@ -652,9 +652,9 @@ It is necessary to know if the command is to execute in the remote server or to 
 \label{fig:flow-rs-handle-query}
 \end{figure}
 
-Fig.~\ref{fig:flow-rs-handle-query} shows hoe the handleQuery thread is processed.
+Fig.~\ref{fig:flow-rs-handle-query} shows how the handleQuery thread is processed.
 Firstly, it is necessary to retrieve a query from the vector dbQueries (using the mutex to save the vector from other usage) and then make the query if no one is querying the database.
-After the query, it is received and stored the response to then send to the other side. SO, the response is saved on the TxVec that already has the destination socket.
+After the query, it is received and stored the response to then send to the other side. So, the response is saved on the TxVec that already has the destination socket.
 %
 \begin{figure}[htb!]
 \centering
@@ -666,7 +666,7 @@ After the query, it is received and stored the response to then send to the othe
 
 Fig.~\ref{fig:flow-rs-update-local-sys} illustrates how the update local system works.
 Basically, when some field from the database is changed and it is necessary to inform the local system to change its behavior, the database sends a trigger that is received from this thread. After that, the thread needs to make the query to the explicit database that made the trigger to ask for all the information that changed to send to the station.
-After receiving the responses from the queries, everything is wrapped in the txVec (that also will contain to which station to send) and it is signalized the need to send information.
+After receiving the responses from the queries, everything is wrapped in the txVec (that also will contain to which station to send) and it is signaled the need to send information.
 %
 \begin{figure}[htb!]
 \centering
