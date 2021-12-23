@@ -557,7 +557,6 @@ groups:
 \label{fig:thread-spec-local}
 \end{figure}
 %
-
 \subsection{Flowcharts}
 \label{sec:flowcharts}
 
@@ -678,7 +677,7 @@ After receiving the responses from the queries, everything is wrapped in the txV
 
 
 %\section{Software interfaces definition}
-\label{sec:sw-interf-def}
+%\label{sec:sw-interf-def}
 %- Define the APIs in detail:
 %  - header files with:
 %    - functions prototypes
@@ -699,7 +698,7 @@ After receiving the responses from the queries, everything is wrapped in the txV
 % style=customc]{./listing/api.h}%%%%%%%%%%%%%%%%%%%%
 %
 %\section{Start-up/shutdown process specification}
-\label{sec:startup-shutdown}
+%\label{sec:startup-shutdown}
 %As highlighted in Fig.~\ref{fig:state-mach}, the process starts with battery
 %power being supplied to the system, going into sleep mode and waiting for
 %events, minimizing power consumption. However, there is still residual power
@@ -708,7 +707,7 @@ After receiving the responses from the queries, everything is wrapped in the txV
 %associated. The shutdown results from batteries disconnection.\%%%%%%%
 %
 %\section{Error handling specification}
-\label{sec:error-handling-specification}
+%\label{sec:error-handling-specification}
 %Every system is prone to glitches, bugs and errors, thus, requiring it to be
 %handled. Errors should be handled gracefully by creating error handling
 %routines, which try to circumvent them and provide feedback.
@@ -724,6 +723,114 @@ After receiving the responses from the queries, everything is wrapped in the txV
 %good design eases error-handling specification and should be an aspect to keep
 %in mind in this phase.
 %%
+
+\subsubsection{Local System}
+\label{sec:local-system-3}
+Fig.~\ref{fig:flow-local-user-detect} through Fig.~\ref{fig:flow-local-gif-gen} present the flowcharts corresponding to the \texttt{Local System}
+threads specified in Section~\ref{sec:local-system-2}.
+
+\paragraph{UserDetection thread}
+Fig.~\ref{fig:flow-local-user-detect} depicts the flowchart for the
+\texttt{UserDetection} thread. It is executed periodically to check if an
+\texttt{User} was detected, consuming user detection events from a message
+queue that the ultrasonic sensor daemon must update.
+
+If an \texttt{User} was detected, then the current value is added to a sliding
+window to determine if its a valid user detection. If the user was detected,
+this event is signaled.
+%
+\begin{figure}[htb!]
+\centering
+    \includegraphics[width=0.6\columnwidth]{./img/flow-local-user-detect.png}
+  \caption{Flowchart: \texttt{Local System} --- \texttt{UserDetect} thread}%
+\label{fig:flow-local-user-detect}
+\end{figure}
+%
+\paragraph{FrameGrabber thread}
+Fig.~\ref{fig:flow-local-frame-grabber} depicts the flowchart for the
+\texttt{FrameGrabber} thread. It is executed periodically, accordingly to the
+frame rate defined, to grab frames from camera and store them. It produces
+camera frames that are stored into a shared \gls{fifo} and it uses a semaphore
+to handle multiple consumer threads access.
+%
+\begin{figure}[htb!]
+\centering
+    \includegraphics[width=0.6\columnwidth]{./img/flow-local-frame-grabber.png}
+  \caption{Flowchart: \texttt{Local System} --- \texttt{FrameGrabber} thread}%
+\label{fig:flow-local-frame-grabber}
+\end{figure}
+%
+\paragraph{LocalRx thread}
+Fig.~\ref{fig:flow-local-rx} depicts the flowchart for the \texttt{LocalRx}
+thread. It is listening on the socket used to communicate with the
+\texttt{Remote Server} for incoming data packets. When data arrives, it is
+validated by checking for the \texttt{ACK} signal. If the frame is correct and
+terminated it is pushed to a shared \gls{fifo} and this event is signaled for
+the consuming thread --- \texttt{AppParser}.
+%
+\begin{figure}[htb!]
+\centering
+    \includegraphics[width=0.6\columnwidth]{./img/flow-local-rx.png}
+  \caption{Flowchart: \texttt{Local System} --- \texttt{LocalRx} thread}%
+\label{fig:flow-local-rx}
+\end{figure}
+%
+\begin{figure}[htb!]
+\centering
+    \includegraphics[width=0.6\columnwidth]{./img/flow-local-tx.png}
+  \caption{Flowchart: \texttt{Local System} --- \texttt{LocalTx} thread}%
+\label{fig:flow-local-tx}
+\end{figure}
+%
+\begin{figure}[htb!]
+\centering
+    \includegraphics[width=0.6\columnwidth]{./img/flow-local-app-parser.png}
+  \caption{Flowchart: \texttt{Local System} --- \texttt{AppParser} thread}%
+\label{fig:flow-local-app-parser}
+\end{figure}
+%
+\begin{figure}[htb!]
+\centering
+    \includegraphics[width=0.6\columnwidth]{./img/flow-local-cmd-handler.png}
+  \caption{Flowchart: \texttt{Local System} --- \texttt{CmdHandler} thread}%
+\label{fig:flow-local-cmd-handler}
+\end{figure}
+%
+\begin{figure}[htb!]
+\centering
+    \includegraphics[width=0.6\columnwidth]{./img/flow-local-twitter-share.png}
+  \caption{Flowchart: \texttt{Local System} --- \texttt{TwitterShare} thread}%
+\label{fig:flow-local-twitter-share}
+\end{figure}
+%
+\begin{figure}[htb!]
+\centering
+    \includegraphics[width=0.6\columnwidth]{./img/flow-local-file-transfer.png}
+  \caption{Flowchart: \texttt{Local System} --- \texttt{FileTransfer} thread}%
+\label{fig:flow-local-file-transfer}
+\end{figure}
+%
+\begin{figure}[htb!]
+\centering
+    \includegraphics[width=0.6\columnwidth]{./img/flow-local-video-man.png}
+  \caption{Flowchart: \texttt{Local System} --- \texttt{VidMan} thread}%
+\label{fig:flow-local-video-man}
+\end{figure}
+%
+\begin{figure}[htb!]
+\centering
+    \includegraphics[width=0.6\columnwidth]{./img/flow-local-frag-man.png}
+  \caption{Flowchart: \texttt{Local System} --- \texttt{FragMan} thread}%
+\label{fig:flow-local-frag-man}
+\end{figure}
+%
+\begin{figure}[htb!]
+\centering
+    \includegraphics[width=0.6\columnwidth]{./img/flow-local-gif-gen.png}
+  \caption{Flowchart: \texttt{Local System} --- \texttt{GIFGenerator} thread}%
+\label{fig:flow-local-gif-gen}
+\end{figure}
+
 
 \section{Test cases}
 \label{sec:sw-test-cases}
