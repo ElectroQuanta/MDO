@@ -463,3 +463,5 @@ UI "1" *-u- "1" FragranceManager: contains
 ''UIView <|-- UIWindow: inherits
 
 '' ------------------------------
+
+@enduml
