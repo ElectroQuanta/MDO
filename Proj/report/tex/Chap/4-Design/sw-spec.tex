@@ -393,7 +393,6 @@ media files can be downloaded and stored in the \texttt{Local System}.
 \end{figure}
 %
 
-
 \subsection{Static architecture --- Class diagrams}
 \label{sec:stat-arch-class}
 In this section the static architecture is derived from the \gls{sw}
@@ -490,7 +489,7 @@ This thread has low priority because it is not a critical feature that need to h
 \label{sec:local-system-2}
 %
 Fig.~\ref{fig:thread-spec-local} illustrates the thread specification and the
-associated priorities for the \texttt{Local System}. There are four logical
+associated priorities for the \texttt{Local System}. There are five logical
 groups:
 \begin{enum-c}
 \item
@@ -520,14 +519,22 @@ groups:
   relevant command or database update has arrived. It stores the incoming data
   frames into a \gls{fifo} buffer.
 
-  The \texttt{AppParser} and the \texttt{LocalTx} are high priority threads. The
-  first consumes incoming data frames and dispatches it for processing. The
-  second transmits outgoing data frames to the \texttt{RemoteServer}.
+  The \texttt{LocalTx} is a high priority threads, responsible for
+  transmitting outgoing data frames to the \texttt{RemoteServer}.
 
   The \texttt{TwitterShare} and \texttt{FileTransfer} are low priority tasks, as
   they don't impact the user experience or device operation significantly. The
   first is responsible for sharing posts on Twitter. The second handles file
   transferring between \texttt{RemoteServer} and the \texttt{LocalSystem}.
+\item
+  \emph{\texttt{App}}: these threads handle app specific tasks.
+  The \texttt{AppParser} is a high priority thread, consuming incoming data
+  frames and dispatches it for additional processing of commands ---
+  \texttt{CmdHandler} --- or of \texttt{Ad}s requiring file transfer ---
+  \texttt{FileTransfer}.
+
+  The \texttt{CmdHandler} is a medium priority task responsible for responding
+  to commands sent to the \texttt{Local System}.
 \item
   \emph{\texttt{Normal mode}}: these threads are only running when normal mode
   is on.
@@ -670,7 +677,7 @@ After receiving the responses from the queries, everything is wrapped in the txV
 \end{figure}
 
 
-\section{Software interfaces definition}
+%\section{Software interfaces definition}
 \label{sec:sw-interf-def}
 %- Define the APIs in detail:
 %  - header files with:
@@ -689,18 +696,18 @@ After receiving the responses from the queries, everything is wrapped in the txV
 % %
 % \lstinputlisting[language=c, firstline=1,caption={\gls{api} example with
 %   builtin documentation},label=lst:api,
-% style=customc]{./listing/api.h}%
-
-\section{Start-up/shutdown process specification}
+% style=customc]{./listing/api.h}%%%%%%%%%%%%%%%%%%%%
+%
+%\section{Start-up/shutdown process specification}
 \label{sec:startup-shutdown}
 %As highlighted in Fig.~\ref{fig:state-mach}, the process starts with battery
 %power being supplied to the system, going into sleep mode and waiting for
 %events, minimizing power consumption. However, there is still residual power
 %being drawn. This could be overcome by placing a power button for the remote
 %itself, but with the inconvenience of MCU reset and the initial delays
-%associated. The shutdown results from batteries disconnection.\
-
-\section{Error handling specification}
+%associated. The shutdown results from batteries disconnection.\%%%%%%%
+%
+%\section{Error handling specification}
 \label{sec:error-handling-specification}
 %Every system is prone to glitches, bugs and errors, thus, requiring it to be
 %handled. Errors should be handled gracefully by creating error handling
