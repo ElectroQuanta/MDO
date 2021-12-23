@@ -1,0 +1,108 @@
+@startuml
+''left to right direction
+skinparam fixCircleLabelOverlapping true
+'' src: https://www.augmentedmind.de/2021/01/17/plantuml-layout-tutorial-styles/
+''skinparam nodesep x (where x is an integer > 0) will increase the horizontal margin
+''skinparam ranksep x affects the vertical margin
+''With skinparam padding x (x also being an integer > 0) you will increase the padding of every kind of element, so use it carefully, with small values.
+skinparam nodesep 5
+skinparam ranksep 5
+skinparam padding 0.1
+
+<style>
+ ' scope to sequenceDiagram elements
+ ' scope to actor elements
+   component {
+       FontColor Blue
+       FontStyle bold
+   }
+   rectangle {
+       FontColor Blue
+       FontStyle bold
+   }
+</style>
+
+'' colors
+''!$highest = darkred
+''!$high = %lighten($highest, 40)
+''!$medium = %lighten($highest, 80)
+''!$low = %lighten($highest, 120)
+!$highest = red
+!$high = "#orange"
+!$medium = "#yellow"
+!$low = "#lightgreen"
+
+'' participants definition
+frame "DB" as DB #bisque{
+    together {
+    [updatdeLocalSys] as ULS $high
+    [handleQuery] as HQU $high
+  }
+  }
+  frame "Comm" as LCM #bisque{
+  together {
+    [recv_Cli_th_fcn] as RCL #$highest
+    [recv_Loc_th_fcn] as RLC #$highest
+  }
+  together {
+  [send_Cli_th_fcn] as SCL $medium
+  [send_Loc_th_fcn] as SLC $medium
+  }
+  }
+  frame "CLI" as CLI #bisque{
+  [filetransfer] $low
+  }
+  frame "Parser" as PAR #bisque{
+  together {
+  [CliParser::exec] as CLE $high
+  [LocalParser::exec] as LCE $high
+  }
+  }
+  'frame "Normal mode" as NMM #bisque{
+  'together {
+  '[VidMan] as VIDM $high
+  '[AudioMan] as AUDM $high
+  '}
+  '[FragMan] as FRAGM $medium
+  '}
+  'frame "Multimedia mode" as MMM #bisque{
+  '[GIFGenerator] as GIFG $low
+  '}
+  
+  rectangle "Legend - Priority" as PRIO{
+  rectangle "Highest" as P0 #$highest
+  rectangle "High" as P1 $high
+  rectangle "Medium" as P2 $medium
+  rectangle "Low" as P3 $low
+  }
+'' ------------------------------
+
+'' ------------ INTERACTIONS
+'' (with hidden links)
+'' UI
+ PAR-[hidden]d-DB
+ PAR-[hidden]d-CLI
+ 'UI-[hidden]l-FG
+ ''FG-[hidden]d-FD
+ 'FG-[hidden]d-GRE
+ 'GRE-[hidden]l-IFO
+'' Normal mode
+' VIDM-[hidden]l-AUDM
+' AUDM-[hidden]d-FRAGM
+'' Comm
+ RCL-[hidden]d-SCL
+ 'LCT-[hidden]l-AP
+ 'LCT-[hidden]d-FT
+ 'FT-[hidden]l-TS
+'' Normal and Multimedia Mode
+' UI-[hidden]u-LCM
+' UI--[hidden]-NMM
+' UI--[hidden]-MMM
+' NMM-[hidden]-MMM
+'' Legend
+' MMM--[hidden]-PRIO
+ P0-[hidden]l-P1
+ P1-[hidden]l-P2
+ P2-[hidden]l-P3
+
+@enduml
