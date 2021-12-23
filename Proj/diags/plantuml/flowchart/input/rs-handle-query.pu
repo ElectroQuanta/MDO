@@ -1,0 +1,31 @@
+@startuml
+'-----------------------
+  note right
+    Thread to handle 
+    DB queries
+  end note
+'-----------------------
+start
+    repeat
+
+        :pthread_mutex_lock(&dbQueriesAccess)
+        query = dbQueries.pop()
+        pthread_mutex_unlock(&dbQueriesAccess);
+        repeat
+            :send query to the DB;
+            note left
+                send the query and wait
+                for the DB response
+            end note
+            :wait for response;
+        repeat while(response received?) is (No) not (Yes)
+        :Construct the response rxFrame
+        Construct the send serverFrame;
+        :pthread_mutex_lock(&TxVecAccess)
+        txVec.push(response)
+        pthread_mutex_unlock(&TxVecAccess)
+        pthread_con_signal(&msgTx);
+    repeat while(execution aborted?) is (No) not (Yes)
+    stop
+'-----------------------
+@enduml

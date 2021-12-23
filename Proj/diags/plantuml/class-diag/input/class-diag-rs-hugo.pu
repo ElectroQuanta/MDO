@@ -46,6 +46,10 @@ class cmd <<(S,lightgrey)struct>>{
 size_t len
 void *data
 }
+class serverFrame <<(S,lightgrey)struct>>{
+int sd
+rxFrame *data
+}
 ' ---------
 
 enum ConnStatus{
@@ -80,17 +84,23 @@ class CLIApp{
     UI event loop
     end note
 class CLI{
+  - vector<string> dbQueries
+  - mutex dbQueriesAccess
   - vector<rxFrame> cliRxVec
   - mutex cliRxAccess
-  - vector<rxFrame> cliTxVec
+  - vector<serverFrame> txVec
   - vector<rxFrame> LocRxVec
+  - vector<FILE *> files;
+  - mutex filesAccess 
   - mutex LocRxAccess
   - vector<rxFrame> LocTxVec
   - vector<string> userInput
   - mutex _sockCliAccess
+  - mutex TxVecAccess
   - condition_variable _msgRxCli
   - mutex _sockLocAccess
   - condition_variable _msgLocCli
+  - condition_variable msgTx
   == constr/destr ==
   +CLI()
   ~CLI()
@@ -98,6 +108,7 @@ class CLI{
   bool init()
   bool validateAccess(string username, string password)
   void show()
+  void filetransfer()
 }
 
 
@@ -169,6 +180,8 @@ class DBClient{
   == helpers ==
   + string validateQuery(string q)
   + void extract(rxFrame *f)
+  + void updatdeLocalSys()
+  + void handleQuery()
 }
 class Parser{
   -mutex parseExec
@@ -218,6 +231,7 @@ rxFrame "1" *- "1" frameT: contains
 CLI "1" *-u- "many" rxFrame: contains
 CLI "1" *-u- "many" dbRsp: contains
 CLI "1" *-u- "many" cmd: contains
+CLI "1" *-u- "many" serverFrame: contains
 CliParser --|> Parser
 LocalParser --|> Parser
 ''UIView <|-- UIWindow: inherits
