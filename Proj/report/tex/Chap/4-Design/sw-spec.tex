@@ -468,7 +468,7 @@ There are four logical groups:
 \begin{enum-c}
 \item\emph{\texttt{CLI}}: the command line interface has a thread to transfer files because it can be necessary to transfer them to both subsystems.
 This thread has low priority because it is not a critical feature that need to happen as soon as possible and, depending on the file, it can take a while until its transfer, so, it can have a lower priority and take its time to transfer.
-\item\emph{\texttt{Parser}}: the parser has only one thread that is its execution. This thread has high priority because it is mandatory to parse and execute the commands that are received, as soon as they are received.
+\item\emph{\texttt{Parser}}: the parser has one thread that is its execution and another to handle the commands that come from the remote client or from the user that is typing directly in the remote server. This thread has high priority because it is mandatory to parse and execute the commands that are received, as soon as they are received.
 \item\emph{\texttt{Comm}}: the communication manager has three threads that are important: the \texttt{receive}, the \texttt{send}, and the \texttt{accept connection}. The one with most priority is the \texttt{receive} thread, because it is necessary to receive the messages to then parse and execute them. Then, the other two threads have medium priority because receiving and parsing messages is more important than this.
 \item\emph{\texttt{DB}}: the database management has two threads that have high priority, that's because it is important to always have the databases updated. These two threads make queries to the databases, but they are controlled one by another in order to avoid the risk to make queries at the same time or some queries to be lost.
 \end{enum-c}
@@ -557,7 +557,7 @@ These flowcharts are important to implement because it gives to one the essentia
 
 In the \texttt{Remote Client} there are several functions to implement.
 However, most of them have particularly the same implementation method.
-This is because the class diagrams designed are well designed for the code to be the more easy to implement as possible.
+This is because the class diagrams are designed in order to replicate most of the code and to have many things in common, turning everything more easy to implement and to execute.
 
 In Fig.~\ref{fig:flow-rc-login} is the flowchart of the \texttt{Login} feature.
 After the login button being pressed, it is necessary to verify if all fields are filled. If so, the password is encrypted in order to compare with the passwords from the database (that are all encrypted).
@@ -613,14 +613,14 @@ The send thread is particularly the same thing, with the difference that it is n
 %
 \begin{figure}[htb!]
 \centering
-    \includegraphics[width=1\columnwidth]{./img/flow-rs-recv.png}
+    \includegraphics[width=0.7\columnwidth]{./img/flow-rs-recv.png}
   \caption{Flowchart: \texttt{Remote Server} --- Receive Thread}%
 \label{fig:flow-rs-recv}
 \end{figure}
 
 Fig.~ref{fig:flow-rs-parser} shows how the parser is executed.
 Basically this thread verifies if it exists messages received to read, if so, they are popped from the \gls{fifo} and it is dropped the semaphore that was being used.
-Then, by the structure rxFrame it is verified if the data is a command or a database query. If it is a command, the command is processed and operated and if it is a database query, it queries the command. 
+Then, by the structure rxFrame it is verified if the data is a command or a database query. If it is a command, it is signalized that it is a command and it is added to the vector, if it is a database query, it does the same but for the signal of the database handle and the db vector.
 It is always mandatory to avoid collisions of data, using for that the mutexes to lock the usage of the vectors.
 %
 \begin{figure}[htb!]
@@ -630,9 +630,9 @@ It is always mandatory to avoid collisions of data, using for that the mutexes t
 \label{fig:flow-rs-parser}
 \end{figure}
 
-Fig.~\ref{fig:flow-rs-handle-query} shows hoe the handleQuery thread is processed.
-Firstly, it is necessary to retrieve a query from the vector dbQueries (using the mutex to save the vector from other usage) and then make the query if no one is querying the database.
-After the query, it is received and stored the response to then send to the other side. SO, the response is saved on the TxVec that already has the destination socket.
+Fig.~\ref{fig:flow-rs-handle-cmd} shows hoe the handleCmd thread is processed.
+Firstly, it is necessary to pop a command from the cmdVec and then execute it.
+It is necessary to know if the command is to execute in the remote server or to send to the local system. If it is to send to the local system, it is needed to make a query to the database to know the ip of the local system and then send to the machine. 
 %
 \begin{figure}[htb!]
 \centering
@@ -640,6 +640,18 @@ After the query, it is received and stored the response to then send to the othe
   \caption{Flowchart: \texttt{Remote Server} --- handleQuery}%
 \label{fig:flow-rs-handle-query}
 \end{figure}
+
+Fig.~\ref{fig:flow-rs-handle-query} shows hoe the handleQuery thread is processed.
+Firstly, it is necessary to retrieve a query from the vector dbQueries (using the mutex to save the vector from other usage) and then make the query if no one is querying the database.
+After the query, it is received and stored the response to then send to the other side. SO, the response is saved on the TxVec that already has the destination socket.
+%
+\begin{figure}[htb!]
+\centering
+    \includegraphics[width=0.4\columnwidth]{./img/flow-rs-handleCmd.png}
+  \caption{Flowchart: \texttt{Remote Server} --- handleCmd}%
+\label{fig:flow-rs-handle-cmd}
+\end{figure}
+
 
 Fig.~\ref{fig:flow-rs-update-local-sys} illustrates how the update local system works.
 Basically, when some field from the database is changed and it is necessary to inform the local system to change its behavior, the database sends a trigger that is received from this thread. After that, the thread needs to make the query to the explicit database that made the trigger to ask for all the information that changed to send to the station.

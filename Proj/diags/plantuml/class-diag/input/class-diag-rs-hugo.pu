@@ -179,10 +179,13 @@ class DBClient{
   + void extract(rxFrame *f)
   + void updatdeLocalSys()
   + void handleQuery()
+  + void handleCmd()
 }
 class Parser{
   -mutex parseExec
   -condition_variable parsing
+  - vector<string> cmdVec
+  - vector<string> dbVec
   == constr/destr ==
   +Parser()
   +~Parser()

@@ -35,8 +35,9 @@ skinparam padding 0.1
 '' participants definition
 frame "DB" as DB #bisque{
     together {
-    [updatdeLocalSys] as ULS $high
+    [updateLocalSys] as ULS $high
     [handleQuery] as HQU $high
+    [handleCmd] as HCMD $high
   }
   }
   frame "Comm" as LCM #bisque{
@@ -81,6 +82,7 @@ frame "DB" as DB #bisque{
 '' ------------ INTERACTIONS
 '' (with hidden links)
 '' UI
+ HCMD-[hidden]l-ULS
  PAR-[hidden]d-DB
  PAR-[hidden]d-CLI
  'UI-[hidden]l-FG
