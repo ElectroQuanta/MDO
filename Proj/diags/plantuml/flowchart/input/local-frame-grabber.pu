@@ -1,0 +1,30 @@
+@startuml
+!$end_bracket = "<b> </b>"
+'-----------------------
+  note right
+    <b>FrameGrabber Thread</b>
+	Executed periodically, accordingly to the frame rate,
+	to grab frames from camera and store them
+  end note
+'-----------------------
+  start
+  repeat
+	''(1)
+	:cam_frame = camera_capture()
+	pthread_mutex_lock (&cam_fifo_mutex)
+	push cam_frame to cam_fifo
+	sem_post (&cam_fifo_count)
+	pthread_mutex_unlock (&cam_fifo_mutex);
+	''
+	note right
+		producing camera frames 
+		into shared FIFO and using 
+		a semaphore to handle 
+		multiple threads access
+	end note
+  repeat while(execution aborted?) is (N)
+  ->Y;
+
+  stop
+  
+@enduml

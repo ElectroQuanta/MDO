@@ -5361,8 +5361,111 @@ start
   [[file:diags/plantuml/flowchart/output/local-rx.png]]
 
 ***** LocalTx
+  #+BEGIN_SRC plantuml :file diags/plantuml/flowchart/output/local-tx.png
+@startuml
+'-----------------------
+  note right
+        <b>LocalTx</b>
+  Thread to send
+  to Remote Server
+  end note
+'-----------------------
+start
+(1)
+	:rxFrame* frame;
+    repeat
+		:pthread_mutex_lock( &tx_avail_mut )
+		RxVec.pop( &frame )
+		pthread_cond_wait( &tx_avail_cond, &tx_avail_mut )
+		pthread_mutex_unlock( &rx_avail_mut );
+			''
+            note right
+				wait for tx_avail 
+				event and pop data 
+				frame from tx FIFO
+            end note
+			''
+		(2)
+		:nbytes = send(sd, size, frame, 0);
+		''
+		note right
+			blocking call
+		end note
+
+		if (nbytes > 0) then (Yes)
+		else (No)
+		(2)
+		detach
+		endif
+    repeat while(execution aborted?) is (N)
+	->Y;
+	stop
+  
+'-----------------------
+@enduml
+  #+END_SRC
+
+  #+RESULTS:
+  [[file:diags/plantuml/flowchart/output/local-tx.png]]
+
 ***** AppParser
 ***** TwitterShare
+  #+BEGIN_SRC plantuml :file diags/plantuml/flowchart/output/twitter-share.png
+@startuml
+'-----------------------
+  note right
+        <b>TwitterShare</b>
+  Thread to share
+  posts on Twitter
+  end note
+'-----------------------
+start
+(1)
+	:post* Post;
+    repeat
+		:pthread_mutex_lock( &post_avail_mut )
+		PostVec.pop( &post )
+		pthread_cond_wait( &post_avail_cond, &post_avail_mut )
+		pthread_mutex_unlock( &post_avail_mut );
+			''
+            note right
+				wait for pop_avail 
+				event and pop data 
+				frame from post FIFO
+            end note
+			''
+		(2)
+		:resp = twitter.share(post)|
+		''
+		note right
+			<b>share post on Twitter</b>
+			it uses curl and HTTP 
+			POST under the hood
+		end note
+
+		:pthread_mutex_lock( &share_status_mut )
+		twitter.shareStatus = resp
+		pthread_cond_signal( &share_status_cond )
+		pthread_mutex_unlock( &share_status_mut );
+
+		note right
+			<b>Share post status</b>
+			store it and warn UI
+			it is available for 
+			processing
+		end note
+
+    repeat while(execution aborted?) is (N)
+	->Y;
+	stop
+  
+'-----------------------
+@enduml
+  #+END_SRC
+
+  #+RESULTS:
+  [[file:diags/plantuml/flowchart/output/twitter-share.png]]
+
 ***** FileTransfer
 ***** AudioMan
 ***** VideoMan
@@ -5392,7 +5495,7 @@ skinparam padding 0.0
        FontStyle bold
    }
    rectangle {
-       FontColor Blue
+       FontColor black
        FontStyle bold
        ''BackGroundColor lightgrey
        Shadowing 0.0
@@ -5429,6 +5532,8 @@ skinparam RectangleBorderColor<<legStyle>> black
 !$fragIntTClr = "#bisque"
 !$mediaClr = "#tan"
 !$ackClr = "#pink"
+!$sdClr = "#greenyellow"
+!$rxClr = "#white"
 
 '' participants definition
 package "MDO-RC: AppManager" as MDORC #lightgrey{ 
@@ -5447,6 +5552,10 @@ package "MDO-RS: AppManager" as MDORS #lightgrey{
   rectangle "len\nsize_t" as P11 
   rectangle "data\nvoid*" as P21
   rectangle "int\nACK" as P31 $ackClr
+  }
+  rectangle "serverFrame" as serverFrame{
+  rectangle "sd\nint" as PS1 $sdClr
+  rectangle "rx\nrxFrame" as PS2 $rxClr
   }
 }
 
@@ -5475,6 +5584,7 @@ package "MDO-L: AppManager" as MDOL #lightgrey{
   rectangle "LOW\nMEDIUM\nMEDIUM_HIGH\nHIGH\nTOP" as P34 $fragIntTClr
   rectangle "Comma\nSeparated\nValues\n(CSV)\n" as P44 $mediaClr
   rectangle "Acknowledge\nSignal\n\n\n" as P54 $ackClr
+  rectangle "Socket\ndescriptor\n\n\n" as P64 $sdClr
   }
 
   hide <<legStyle>> stereotype
@@ -5489,6 +5599,8 @@ package "MDO-L: AppManager" as MDOL #lightgrey{
  P01-[hidden]r-P11
  P11-[hidden]r-P21
  P21-[hidden]r-P31
+
+ PS1-[hidden]r-PS2
 ''
  P02-[hidden]r-P12
  P12-[hidden]r-P22
@@ -5501,6 +5613,7 @@ package "MDO-L: AppManager" as MDOL #lightgrey{
  P43-[hidden]r-P53
  P53-[hidden]r-P63
 ''
+ rxFrameRS--[hidden]-serverFrame
  rxFrameL--[hidden]-adFrame
 
 '' Legend
@@ -5509,7 +5622,8 @@ package "MDO-L: AppManager" as MDOL #lightgrey{
  P24-[hidden]r-P34
  P34-[hidden]r-P44
  P44-[hidden]r-P54
- MDORC--[hidden]-LEG
+ P54-[hidden]r-P64
+ MDORS---[hidden]d-LEG
 
 
 @enduml
