@@ -2434,14 +2434,15 @@ skinparam padding 0.1
 
   frame "Comm" as LCM #bisque{
   [LocalRx] as LCR #$highest
-  together {
   [LocalTx] as LCT $high
-  [AppParser] as AP $high
-  }
   together {
   [FileTransfer] as FT $low
   [TwitterShare] as TS $low
   }
+  }
+  frame "App" as APP #bisque{
+  [AppParser] as AP $high
+  [CmdHandler] as CH $medium
   }
   frame "User Interface" as USIN #bisque{
   [UserDetection] as UD #$highest
@@ -2488,16 +2489,18 @@ skinparam padding 0.1
  AUDM-[hidden]d-FRAGM
 '' Comm
  LCR-[hidden]d-LCT
- LCT-[hidden]l-AP
  LCT-[hidden]d-FT
  FT-[hidden]l-TS
+'' App
+ AP--[hidden]-CH
 '' Normal and Multimedia Mode
  UI-[hidden]u-LCM
+ UI--[hidden]-APP
  UI--[hidden]-NMM
  UI--[hidden]-MMM
  NMM-[hidden]-MMM
 '' Legend
- MMM--[hidden]-PRIO
+ APP---[hidden]-PRIO
  P0-[hidden]l-P1
  P1-[hidden]l-P2
  P2-[hidden]l-P3
@@ -5419,7 +5422,10 @@ start
   #+RESULTS:
   [[file:diags/plantuml/flowchart/output/local-tx.png]]
 
-***** AppParser
+***** ✔ DONE AppParser
+      :LOGBOOK:
+      - State "✔ DONE"     from              [2021-12-23 qui 22:25]
+      :END:
 
   #+BEGIN_SRC plantuml :file diags/plantuml/flowchart/output/local-app-parser.png
 @startuml
@@ -5451,12 +5457,25 @@ start
                 :transform the tmp_rx->data into
                 string in order to be processed;
                 if(tmp_rx->header == CMD?) then (Yes)
-		    :process command;
+		:cmdFrame *cmdF = (cmdFrame *) tmp_rx->data;
+		    note right
+			cast the rxFrame 
+			data to an adFrame
+		    end note
+		:pthread_mutex_lock( &cmd_avail_mut )
+		cmdVec.push( &adF )
+		pthread_cond_signal( &cmd_avail_cond )
+		pthread_mutex_unlock( &cmd_avail_mut );
+                note right
+		    push the cmd frame to the
+		    vector so it can be processed
+		    later
+                end note
                 (No) elseif (tmp_buff->header == AD?)
 		:adFrame *adF = (adFrame *) tmp_rx->data;
 		    note right
 			cast the rxFrame 
-			data to an adFrame
+			data to an cmdFrame
 		    end note
 		:pthread_mutex_lock( &ad_frame_avail_mut )
 		adFrameVec.push( &adF )
@@ -5480,6 +5499,57 @@ start
 
   #+RESULTS:
   [[file:diags/plantuml/flowchart/output/local-app-parser.png]]
+
+***** CmdHandler
+  #+BEGIN_SRC plantuml :file diags/plantuml/flowchart/output/local-cmd-handler.png
+@startuml
+'-----------------------
+  note right
+  <b>CmdHandler</b>
+  Thread to handle commands
+  end note
+'-----------------------
+start
+	(1)
+	repeat
+	:pthread_mutex_lock( &cmd_avail_mut )
+	pthread_cond_wait( &cmd_avail_cond, &cmd_avail_mut )
+	pthread_mutex_unlock( &cmd_avail_mut );
+	(2)
+	''repeat
+		:pthread_mutex_lock( &CmdVec_mut )
+		empty = CmdVec.empty()
+		pthread_mutex_unlock( &CmdVec_mut );
+	
+            if (empty) then (No)
+		:pthread_mutex_lock( &cmdVec_mut )
+                tmp_cmd = cmdVec->pop()
+		pthread_mutex_unlock( &cmdVec_mut );
+                note left
+		pop the cmd frame from 
+		the vector and process it
+                end note
+		:process tmp_cmd->data;
+		    note left
+		    process 
+		    the command
+		    end note
+		(2)
+		detach
+		else (Yes)
+		''break
+		endif
+	''repeat while()
+   repeat while(execution aborted?) is (N)
+   ->Y;
+ 
+stop
+'-----------------------
+@enduml
+  #+END_SRC
+
+  #+RESULTS:
+  [[file:diags/plantuml/flowchart/output/local-cmd-handler.png]]
 
 ***** ✔ DONE TwitterShare
 	  :LOGBOOK:
