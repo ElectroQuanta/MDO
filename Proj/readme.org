@@ -5186,7 +5186,10 @@ start
   [[file:diags/plantuml/flowchart/output/test2.png]]
 
 
-***** User Detection
+***** ✔ DONE User Detection
+	  :LOGBOOK:
+	  - State "✔ DONE"     from              [2021-12-23 qui 20:24]
+	  :END:
 
   #+BEGIN_SRC plantuml :file diags/plantuml/flowchart/output/local-user-detect.png
 @startuml
@@ -5257,7 +5260,10 @@ start
    #+RESULTS:
    [[file:diags/plantuml/flowchart/output/local-user-detect.png]]
 
-***** FrameGrabber
+***** ✔ DONE FrameGrabber
+	  :LOGBOOK:
+	  - State "✔ DONE"     from              [2021-12-23 qui 18:07]
+	  :END:
   #+BEGIN_SRC plantuml :file diags/plantuml/flowchart/output/local-frame-grabber.png
 @startuml
 !$end_bracket = "<b> </b>"
@@ -5295,7 +5301,10 @@ start
   #+RESULTS:
   [[file:diags/plantuml/flowchart/output/local-frame-grabber.png]]
 
-***** LocalRx
+***** ✔ DONE LocalRx
+	  :LOGBOOK:
+	  - State "✔ DONE"     from              [2021-12-23 qui 18:07]
+	  :END:
   #+BEGIN_SRC plantuml :file diags/plantuml/flowchart/output/local-rx.png
 @startuml
 '-----------------------
@@ -5360,7 +5369,10 @@ start
   #+RESULTS:
   [[file:diags/plantuml/flowchart/output/local-rx.png]]
 
-***** LocalTx
+***** ✔ DONE LocalTx
+	  :LOGBOOK:
+	  - State "✔ DONE"     from              [2021-12-23 qui 18:07]
+	  :END:
   #+BEGIN_SRC plantuml :file diags/plantuml/flowchart/output/local-tx.png
 @startuml
 '-----------------------
@@ -5375,8 +5387,8 @@ start
 	:rxFrame* frame;
     repeat
 		:pthread_mutex_lock( &tx_avail_mut )
-		RxVec.pop( &frame )
 		pthread_cond_wait( &tx_avail_cond, &tx_avail_mut )
+		RxVec.pop( &frame )
 		pthread_mutex_unlock( &rx_avail_mut );
 			''
             note right
@@ -5409,8 +5421,11 @@ start
   [[file:diags/plantuml/flowchart/output/local-tx.png]]
 
 ***** AppParser
-***** TwitterShare
-  #+BEGIN_SRC plantuml :file diags/plantuml/flowchart/output/twitter-share.png
+***** ✔ DONE TwitterShare
+	  :LOGBOOK:
+	  - State "✔ DONE"     from              [2021-12-23 qui 18:07]
+	  :END:
+  #+BEGIN_SRC plantuml :file diags/plantuml/flowchart/output/local-twitter-share.png
 @startuml
 '-----------------------
   note right
@@ -5424,8 +5439,8 @@ start
 	:post* Post;
     repeat
 		:pthread_mutex_lock( &post_avail_mut )
-		PostVec.pop( &post )
 		pthread_cond_wait( &post_avail_cond, &post_avail_mut )
+		PostVec.pop( &post )
 		pthread_mutex_unlock( &post_avail_mut );
 			''
             note right
@@ -5464,13 +5479,466 @@ start
   #+END_SRC
 
   #+RESULTS:
-  [[file:diags/plantuml/flowchart/output/twitter-share.png]]
+  [[file:diags/plantuml/flowchart/output/local-twitter-share.png]]
 
-***** FileTransfer
-***** AudioMan
-***** VideoMan
-***** FragMan
-***** GIFGenerator
+***** ✔ DONE FileTransfer
+	  :LOGBOOK:
+	  - State "✔ DONE"     from              [2021-12-23 qui 19:11]
+	  :END:
+
+  #+BEGIN_SRC plantuml :file diags/plantuml/flowchart/output/local-file-transfer.png
+@startuml
+!$end_bracket = "<b> </b>"
+'-----------------------
+  note right
+        <b>FileTransfer</b>
+  Thread to download files
+  from WebProxy using the
+  AdFrame data
+  end note
+'-----------------------
+start
+(1)
+	:adFrame* adF
+	Ad *ad;
+    repeat
+		:pthread_mutex_lock( &ad_frame_avail_mut )
+		pthread_cond_wait( &ad_frame_avail_cond, &ad_frame_avail_mut )
+		adFrameVec.pop( &adF )
+		pthread_mutex_unlock( &ad_frame_avail_mut );
+			''
+            note right
+				wait for ad_frame_avail 
+				event and pop data 
+				frame from adFrame FIFO
+            end note
+			''
+		(2)
+		:ad = new Ad(adF->frag, adF->inten, 
+                       adF->startTime, adF->duration);
+			''
+            note right
+				construct an Ad
+            end note
+			''
+		:construct mediaURLs string from
+		mediaLen;
+		:cnt = 0;
+		''repeat
+		:url = tokenize(mediaURLs, ',')|
+		''
+		note right
+			<b>Tokenize</b>
+			obtain individual URL 
+			from CSV list
+		end note
+		repeat
+		if(url empty?) then (Y)
+		(1)
+		detach
+		else (N)
+		(3)
+		:char fname[24]$end_bracket
+		char fext [ ] = ".mp4"
+		fname = sprintf(fname, "ad_%d_%d.%s", 
+                           Ad.id(), cnt, fext)
+		res = curl.save(fname, url);
+			note right
+				<b>Download file</b>
+				from URL into 
+				local storage
+			end note
+			if(res == OK) then (N)
+			(3)
+			note right
+				try again
+			end note
+			detach
+			else (Y)
+			:ad->fifo->push(strlen(fname), fname)
+			cnt++;
+			note right
+				<b>Save reference to file</b>
+				in a media FIFO
+			end note
+			endif
+
+		endif
+		repeat while()
+
+    repeat while(execution aborted?) is (N)
+	->Y;
+	stop
+  
+'-----------------------
+@enduml
+  #+END_SRC
+
+  #+RESULTS:
+  [[file:diags/plantuml/flowchart/output/local-file-transfer.png]]
+
+***** ✘ CANCELED AudioMan
+	  :LOGBOOK:
+	  - State "✘ CANCELED" from              [2021-12-23 qui 20:24] \\
+		The VidMan thread may handle this
+	  :END:
+  #+BEGIN_SRC plantuml :file diags/plantuml/flowchart/output/local-audio-man.png
+@startuml
+!$end_bracket = "<b> </b>"
+'-----------------------
+  note right
+        <b>AudioMan</b>
+  Thread to manage
+  from WebProxy using the
+  AdFrame data
+  end note
+'-----------------------
+start
+(1)
+	:adFrame* adF
+	Ad *ad;
+    repeat
+		:pthread_mutex_lock( &ad_frame_avail_mut )
+		pthread_cond_wait( &ad_frame_avail_cond, &ad_frame_avail_mut )
+		adFrameVec.pop( &adF )
+		pthread_mutex_unlock( &ad_frame_avail_mut );
+			''
+            note right
+				wait for ad_frame_avail 
+				event and pop data 
+				frame from adFrame FIFO
+            end note
+			''
+		(2)
+		:ad = new Ad(adF->frag, adF->inten, 
+                       adF->startTime, adF->duration);
+			''
+            note right
+				construct an Ad
+            end note
+			''
+		:construct mediaURLs string from
+		mediaLen;
+		:cnt = 0;
+		''repeat
+		:url = tokenize(mediaURLs, ',')|
+		''
+		note right
+			<b>Tokenize</b>
+			obtain individual URL 
+			from CSV list
+		end note
+		repeat
+		if(url empty?) then (Y)
+		(1)
+		detach
+		else (N)
+		(3)
+		:char fname[24]$end_bracket
+		char fext [ ] = ".mp4"
+		fname = sprintf(fname, "ad_%d_%d.%s", 
+                           Ad.id(), cnt, fext)
+		res = curl.save(fname, url);
+			note right
+				<b>Download file</b>
+				from URL into 
+				local storage
+			end note
+			if(res == OK) then (N)
+			(3)
+			note right
+				try again
+			end note
+			detach
+			else (Y)
+			:ad->fifo->push(strlen(fname), fname)
+			cnt++;
+			note right
+				<b>Save reference to file</b>
+				in a media FIFO
+			end note
+			endif
+
+		endif
+		repeat while()
+
+    repeat while(execution aborted?) is (N)
+	->Y;
+	stop
+  
+'-----------------------
+@enduml
+  #+END_SRC
+***** ✔ DONE VideoMan
+	  :LOGBOOK:
+	  - State "✔ DONE"     from              [2021-12-23 qui 20:05]
+	  :END:
+  #+BEGIN_SRC plantuml :file diags/plantuml/flowchart/output/local-video-man.png
+@startuml
+!$end_bracket = "<b> </b>"
+'-----------------------
+  note right
+        <b>VideoMan</b>
+  Thread to manage video
+  reproduction in normal mode
+  end note
+'-----------------------
+start
+	:Ad *curAd;
+	(1)
+    repeat
+		:sem_wait(&user_detect_status_mut)
+		mode = app.Mode()
+		sem_post(&app_mode_count);
+''		:pthread_mutex_lock( &user_detect_not_mut )
+''		pthread_cond_wait( &user_detect_not_cond, &user_detect_not_mut )
+''		adFrameVec.pop( &adF )
+''		pthread_mutex_unlock( &ad_frame_avail_mut );
+			''
+            note right
+				check start 
+				condition
+			end note
+			''
+		(2)
+		if(mode == NORMAL) then (N)
+			'' go back to start
+			(1)
+			detach
+		else (Y)
+			'' play video
+		endif
+		:curAd = this->ad
+		cnt = 0;
+			''
+            note right
+				get current ad
+            end note
+			''
+		repeat 
+		:sem_wait(&user_detect_status_mut)
+		mode = app.Mode()
+		sem_post(&app_mode_count);
+            note right
+				check stop
+				condition
+			end note
+		if(mode == NORMAL) then (N)
+			'' go back to start
+			(1)
+			''
+			detach
+		else (Y)
+			'' play video
+		endif
+		:playVideo(ad->fifo->buff[cnt])
+		cnt++;
+			''
+            note right
+				play video
+				from media list
+            end note
+			''
+		repeat while()
+    repeat while(execution aborted?) is (N)
+	->Y;
+	stop
+  
+'-----------------------
+@enduml
+  #+END_SRC
+
+  #+RESULTS:
+  [[file:diags/plantuml/flowchart/output/local-video-man.png]]
+
+***** ✔ DONE FragMan
+	  :LOGBOOK:
+	  - State "✔ DONE"     from              [2021-12-23 qui 20:24]
+	  :END:
+  #+BEGIN_SRC plantuml :file diags/plantuml/flowchart/output/local-frag-man.png
+@startuml
+!$end_bracket = "<b> </b>"
+'-----------------------
+  note right
+        <b>FragMan</b>
+  Thread to manage fragrance
+  diffusion in normal mode
+  end note
+'-----------------------
+start
+	:Ad *curAd;
+	(1)
+    repeat
+		:sem_wait(&user_detect_status_mut)
+		mode = app.Mode()
+		sem_post(&app_mode_count);
+''		:pthread_mutex_lock( &user_detect_not_mut )
+''		pthread_cond_wait( &user_detect_not_cond, &user_detect_not_mut )
+''		adFrameVec.pop( &adF )
+''		pthread_mutex_unlock( &ad_frame_avail_mut );
+			''
+            note right
+				check start 
+				condition
+			end note
+			''
+		(2)
+		if(mode == NORMAL) then (N)
+			'' go back to start
+			(1)
+			detach
+		else (Y)
+			'' play video
+		endif
+		:curAd = this->ad
+		cnt = 0;
+			''
+            note right
+				get current ad
+            end note
+			''
+		:frag.calc_times(curAd->intens(), 
+		                 &duration_on, &duration_off);
+			''
+            note right
+				calculate times for
+				fragrance diffusion
+            end note
+			''
+		:start timer(&tim_on, duration_on)
+		frag.enable(ON);
+			''
+            note right
+				Start ON timer and
+				actuate fragrance
+            end note
+			''
+		repeat 
+		:sem_wait(&user_detect_status_mut)
+		mode = app.Mode()
+		sem_post(&app_mode_count);
+            note right
+				check stop
+				condition
+			end note
+		if(mode == NORMAL) then (N)
+			'' go back to start
+			(1)
+			''
+			detach
+		else (Y)
+			'' diffuse fragrance
+		endif
+		if(tim_on == elapsed?) then (Y)
+		:frag.enable(OFF)
+		start timer(&tim_off, duration_off);
+			''
+            note right
+			Turn off diffusion and
+			start OFF timer 
+            end note
+			''
+		else (N)
+		endif
+		if(tim_off == elapsed?) then (Y)
+		:start timer(&tim_on, duration_on)
+		frag.enable(ON);
+			''
+            note right
+				Start ON timer and
+				actuate fragrance
+            end note
+			''
+		else (N)
+		endif
+		repeat while()
+    repeat while(execution aborted?) is (N)
+	->Y;
+	stop
+  
+'-----------------------
+@enduml
+  #+END_SRC
+
+  #+RESULTS:
+  [[file:diags/plantuml/flowchart/output/local-frag-man.png]]
+
+***** ✔ DONE GIFGenerator
+	  :LOGBOOK:
+	  - State "✔ DONE"     from              [2021-12-23 qui 20:52]
+	  :END:
+  #+BEGIN_SRC plantuml :file diags/plantuml/flowchart/output/local-gif-gen.png
+@startuml
+!$end_bracket = "<b> </b>"
+'-----------------------
+  note right
+        <b>GIFGenerator</b>
+  Thread to generate GIFs
+  end note
+'-----------------------
+start
+	(1)
+	:pthread_mutex_lock( &gif_generate_mut )
+	pthread_cond_wait( &gif_generate_cond, &gif_generate_mut )
+	pthread_mutex_unlock( &gif_generate_mut );
+			''
+            note right
+				check start 
+				condition
+			end note
+			''
+    repeat
+		:start timer(&tim_on, duration_on);
+			''
+            note right
+				Start ON timer
+            end note
+			''
+		if(tim_on == elapsed?) then (Y)
+			:fname = 'gif.gif'
+			:gif.save(fname,'w')
+			:pthread_mutex_lock( &gif_done_mut )
+			pthread_cond_wait( &gif_done_cond, &gif_done_mut )
+			pthread_mutex_unlock( &gif_done_mut );
+            note left
+				Save gif file
+				and signal that
+				GIF is done
+            end note
+			''
+			(1)
+			detach
+		else (N)
+		endif
+		:pthread_mutex_lock (&cam_fifo_mutex)
+		sem_wait (&cam_fifo_count)
+		pop cam_frame from cam_fifo
+		pthread_mutex_unlock (&cam_fifo_mutex);
+			''
+            note right
+				get camera frame
+            end note
+			''
+		repeat 
+		:gif.push(cam_frame);
+			''
+            note right
+				store image
+				in GIF buffer
+            end note
+			''
+		repeat while()
+    repeat while(execution aborted?) is (N)
+	->Y;
+	stop
+  
+'-----------------------
+@enduml
+  #+END_SRC
+
+  #+RESULTS:
+  [[file:diags/plantuml/flowchart/output/local-gif-gen.png]]
+
 *** ✔ DONE Data formats
     :LOGBOOK:
     - State "✔ DONE"     from              [2021-12-22 qua 23:46]
