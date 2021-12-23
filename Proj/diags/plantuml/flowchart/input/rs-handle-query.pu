@@ -7,8 +7,10 @@
 '-----------------------
 start
     repeat
-
-        :pthread_mutex_lock(&dbQueriesAccess)
+      if(make_query == 1?) then (Yes)
+        :make_query = 0
+        query = cmdVec.pop()
+        pthread_mutex_lock(&dbQueriesAccess)
         query = dbQueries.pop()
         pthread_mutex_unlock(&dbQueriesAccess);
         repeat
@@ -31,6 +33,8 @@ start
         txVec.push(response)
         pthread_mutex_unlock(&TxVecAccess)
         pthread_con_signal(&msgTx);
+      else (No)
+      endif
     repeat while(execution aborted?) is (No) not (Yes)
     stop
 '-----------------------

@@ -1,0 +1,35 @@
+@startuml
+'-----------------------
+  note right
+    Thread to handle 
+    commands
+  end note
+'-----------------------
+start
+    repeat
+        if(make_cmd == 1?) then (Yes)
+            :make_cmd = 0
+            cmd = cmdVec.pop();
+            if(cmd to send to a station?) then (Yes)
+                :make query to know the 
+                ip of the station;
+                :construct the frame to send to
+                the local system the command;
+                :push to the txVec 
+                and signal msgRx;
+            else (No)
+                switch (cmd type?)
+                    case (help)
+                        :show help;
+                    case (authenticate)
+                        :authenticate;
+                    case (logout)
+                        :logout;
+                endswitch
+            endif
+        else (No)
+        endif
+    repeat while(execution aborted?) is (No) not (Yes)
+    stop
+'-----------------------
+@enduml
