@@ -412,11 +412,18 @@ Also, the function \texttt{buildQuery} is important because it builds the querie
   \caption{Class diagram: \texttt{Remote Client}}%
 \label{fig:class-diag-rc}
 \end{figure}
+
 \subsubsection{Remote Server}
 \label{sec:remote-server-class}
 %
-Fig.~\ref{fig:class-diag-rs} depicts the class diagram for the \texttt{Remote
-  Server} subsystem.
+Fig.~\ref{fig:class-diag-rs} depicts the class diagram for the \texttt{Remote Server} subsystem.
+The \texttt{CLI} is the Command Line Interface and handles almost everything in this subsystem. It has several members, the more important ones are the send and receive vectors that have the type of frame os \texttt{serverFrame} containing the rxFrame and the socket to which the server is connected, this facilitates the work when sending and receiving because there is already the knowledge of the socket to or from the message is being received or sent. Allied to this, there's all the conditional variables and mutexes that maintain the stability of all variables and avoid collisions between classes, communications and so on.
+
+The \texttt{CommManager} handles all the communication and has the most important functions: the \texttt{send} thread, the \texttt{receive} thread and the \texttt{connect} thread.
+
+The \texttt{Parser} class has the finality to parse and execute all the commands that are received either to handle the database or to communicate to the remote client or the local system.
+
+The  \texttt{DBClient} is used to handle all the mechanisms of all the databases, making queries, receiving responses and so on. Finally, the \texttt{Crypt} class is to encrypt something that can be necessary, such as files, passwords or some commands. 
 %
 \begin{figure}[htb!]
 \centering
@@ -452,6 +459,27 @@ subsystems, assigning them the respective priority. A color scheme is used to
 define thread priority, with red being the highest and green the
 lowest. Additionally, the threads are ranked from highest (at the top) to lowest
 (at the bottom) in each frame.
+
+\subsubsection{Remote Server}
+\label{sec:remote-server-threads}
+
+Fig.~\ref{fig:thread-spec-rs} illustrates the thread specification and the associated priorities for the \texttt{Remote Server}. 
+There are four logical groups:
+\begin{enum-c}
+\item\emph{\texttt{CLI}}: the command line interface has a thread to transfer files because it can be necessary to transfer them to both subsystems.
+This thread has low priority because it is not a critical feature that need to happen as soon as possible and, depending on the file, it can take a while until its transfer, so, it can have a lower priority and take its time to transfer.
+\item\emph{\texttt{Parser}}: the parser has only one thread that is its execution. This thread has high priority because it is mandatory to parse and execute the commands that are received, as soon as they are received.
+\item\emph{\texttt{Comm}}: the communication manager has three threads that are important: the \texttt{receive}, the \texttt{send}, and the \texttt{accept connection}. The one with most priority is the \texttt{receive} thread, because it is necessary to receive the messages to then parse and execute them. Then, the other two threads have medium priority because receiving and parsing messages is more important than this.
+\item\emph{\texttt{DB}}: the database management has two threads that have high priority, that's because it is important to always have the databases updated. These two threads make queries to the databases, but they are controlled one by another in order to avoid the risk to make queries at the same time or some queries to be lost.
+\end{enum-c}
+%
+\begin{figure}[htb!]
+\centering
+    \includegraphics[width=0.8\columnwidth]{./img/thread-spec-rs.png}
+  \caption{Thread specification: \texttt{Remote Server}}%
+\label{fig:thread-spec-rs}
+\end{figure}
+%
 
 \subsubsection{Local System}
 \label{sec:local-system-2}
@@ -525,6 +553,7 @@ In this section are presented the most important flowcharts of all the systems.
 These flowcharts are important to implement because it gives to one the essentials to build all the system.
 
 \subsubsection{Remote Client}
+\label{sec:rc-flowcharts}
 
 In the \texttt{Remote Client} there are several functions to implement.
 However, most of them have particularly the same implementation method.
@@ -571,6 +600,58 @@ Basically an ad object is created and added to the timetable object. After that,
   \caption{Flowchart: \texttt{Remote Client} --- Rent Ad}%
 \label{fig:flow-rc-rent-ad}
 \end{figure}
+
+\subsubsection{Remote Server}
+\label{sec:rs-flowcharts}
+%
+The \texttt{Remote Server} is the connection node between the \texttt{Remote Client} and the \texttt{Local System}. Also, it has an important influence in the databases. So, there are several functions to implement.
+The most important functions to implement are the thread functions. Some of them can be analogous which can be good because most of the code can be replicated.
+
+Fig.~\ref{fig:flow-rs-recv} shows how the receive thread is implemented.
+Basically this thread waits to receive data from a socket and after that, add that received command to the vector RxVec. In this situation it is mandatory to use mutexes to avoid accessing the same RxVec in different threads. Also it is used a semaphore to handle the number of threads that can use this vector.
+The send thread is particularly the same thing, with the difference that it is necessary to know if there is something to send and send it. The information of the socket is already in the txVec and it is easy to send the information to the specific side.
+%
+\begin{figure}[htb!]
+\centering
+    \includegraphics[width=1\columnwidth]{./img/flow-rs-recv.png}
+  \caption{Flowchart: \texttt{Remote Server} --- Receive Thread}%
+\label{fig:flow-rs-recv}
+\end{figure}
+
+Fig.~ref{fig:flow-rs-parser} shows how the parser is executed.
+Basically this thread verifies if it exists messages received to read, if so, they are popped from the \gls{fifo} and it is dropped the semaphore that was being used.
+Then, by the structure rxFrame it is verified if the data is a command or a database query. If it is a command, the command is processed and operated and if it is a database query, it queries the command. 
+It is always mandatory to avoid collisions of data, using for that the mutexes to lock the usage of the vectors.
+%
+\begin{figure}[htb!]
+\centering
+    \includegraphics[width=0.8\columnwidth]{./img/flow-rs-parser.png}
+  \caption{Flowchart: \texttt{Remote Server} --- Parser}%
+\label{fig:flow-rs-parser}
+\end{figure}
+
+Fig.~\ref{fig:flow-rs-handle-query} shows hoe the handleQuery thread is processed.
+Firstly, it is necessary to retrieve a query from the vector dbQueries (using the mutex to save the vector from other usage) and then make the query if no one is querying the database.
+After the query, it is received and stored the response to then send to the other side. SO, the response is saved on the TxVec that already has the destination socket.
+%
+\begin{figure}[htb!]
+\centering
+    \includegraphics[width=0.4\columnwidth]{./img/flow-rs-handle-query.png}
+  \caption{Flowchart: \texttt{Remote Server} --- handleQuery}%
+\label{fig:flow-rs-handle-query}
+\end{figure}
+
+Fig.~\ref{fig:flow-rs-update-local-sys} illustrates how the update local system works.
+Basically, when some field from the database is changed and it is necessary to inform the local system to change its behavior, the database sends a trigger that is received from this thread. After that, the thread needs to make the query to the explicit database that made the trigger to ask for all the information that changed to send to the station.
+After receiving the responses from the queries, everything is wrapped in the txVec (that also will contain to which station to send) and it is signalized the need to send information.
+%
+\begin{figure}[htb!]
+\centering
+    \includegraphics[width=0.6\columnwidth]{./img/flow-rs-updt-local-sys.png}
+  \caption{Flowchart: \texttt{Remote Server} --- updateLocalSys}%
+\label{fig:flow-rs-update-local-sys}
+\end{figure}
+
 
 \section{Software interfaces definition}
 \label{sec:sw-interf-def}
