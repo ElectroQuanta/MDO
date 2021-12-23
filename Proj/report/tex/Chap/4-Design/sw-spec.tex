@@ -372,6 +372,11 @@ data frames than the maximum ones, and to prevent ill-intentioned data frames
 usage to corrupt the system --- of type \texttt{int} to prevent collisions with
 normal messages sent.
 
+The \texttt{Remote Server} contains an additional data frame ---
+\texttt{serverFrame} --- which encapsulates a received \texttt{rxFrame} and
+pairs it with the sender socket descriptor information to enable appropriate
+message routing.
+
 The \texttt{AdFrame} contains the information about the advertisement to be
 reproduced, namely its type, intensity, start time, duration, media length, and media \glspl{url}. The
 first identifies the fragrance within the \texttt{Local System}, the second is
