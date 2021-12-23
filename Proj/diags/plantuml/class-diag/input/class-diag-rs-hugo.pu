@@ -79,28 +79,26 @@ class CLIApp{
     == mutators ==
     void exec()
 }
-    note right of CLIApp::exec
+    note left of CLIApp::exec
     executes the 
     UI event loop
     end note
 class CLI{
   - vector<string> dbQueries
   - mutex dbQueriesAccess
-  - vector<rxFrame> cliRxVec
-  - mutex cliRxAccess
+  - vector<serverFrame> RxVec
+  - mutex RxVecAccess
   - vector<serverFrame> txVec
-  - vector<rxFrame> LocRxVec
   - vector<FILE *> files;
   - mutex filesAccess 
-  - mutex LocRxAccess
-  - vector<rxFrame> LocTxVec
   - vector<string> userInput
   - mutex _sockCliAccess
   - mutex TxVecAccess
-  - condition_variable _msgRxCli
+  - condition_variable _msgRx
   - mutex _sockLocAccess
   - condition_variable _msgLocCli
   - condition_variable msgTx
+  - condition_variable making_query 
   == constr/destr ==
   +CLI()
   ~CLI()
@@ -153,10 +151,9 @@ class CommManager{
   - int localPort() const
   == mutators ==
   + int run()
-  - static void send_Cli_th_fcn( void* arg)
-  - static void recv_Cli_th_fcn( void* arg)
-  - static void send_Loc_th_fcn( void* arg) 
-  - static void recv_Loc_th_fcn( void* arg)
+  - static void send_th_fcn( void* arg)
+  - static void recv_th_fcn( void* arg)
+  - acceptConnection(void* arg)
 ''  + int Send(int sd, const void *obj, size_t len);
 ''  + int Recv(int sd, void *obj, size_t len);
 }
@@ -190,22 +187,22 @@ class Parser{
   +Parser()
   +~Parser()
   == helpers ==
-  + bool exec(Vector<rxFrame> *l)
-}
-class CliParser{
-  == constr/destr ==
-  +CliParser()
-  +~CliParser()
-  == helpers ==
   + bool exec()
 }
-class LocalParser{
-  == constr/destr ==
-  +LocalParser()
-  +~LocalParser()
-  == helpers ==
-  + bool exec()
-}
+'class CliParser{
+'  == constr/destr ==
+'  +CliParser()
+'  +~CliParser()
+'  == helpers ==
+'  + bool exec()
+'}
+'class LocalParser{
+'  == constr/destr ==
+'  +LocalParser()
+'  +~LocalParser()
+'  == helpers ==
+'  + bool exec()
+'}
 
 '' ----------------
 
@@ -232,8 +229,8 @@ CLI "1" *-u- "many" rxFrame: contains
 CLI "1" *-u- "many" dbRsp: contains
 CLI "1" *-u- "many" cmd: contains
 CLI "1" *-u- "many" serverFrame: contains
-CliParser --|> Parser
-LocalParser --|> Parser
+'CliParser --|> Parser
+'LocalParser --|> Parser
 ''UIView <|-- UIWindow: inherits
 
 '' ------------------------------

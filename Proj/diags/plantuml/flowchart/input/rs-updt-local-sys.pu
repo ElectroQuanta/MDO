@@ -7,23 +7,30 @@
 '-----------------------
 start
     repeat
-        if (received trigger from database?) then (Yes)
-            
-            :make query to the specific database;
-            note left
-                when a DB is updated
-                it triggers and sends
-                that trigger to the RS
-                sending the station and the
-                table that have been updated
-            end note
-            :wait for response;
-            :pthread_mutex_lock(&TxVecAccess);
+        if(received trigger from database?) then (Yes)
+            repeat
+                if(making_query == 1) then (Yes)
+                    :wait;
+                else (No)
+                endif
+                :pthread_cond_signal(&making_query)
+                make query to the specific database;
+                note left
+                    when a DB is updated
+                    it triggers and sends
+                    that trigger to the RS
+                    sending the station and the
+                    table that have been updated
+                end note
+                :wait for response;
+            repeat while (Response received?) is (No) not (Yes)
+            :making_query = 0
+            pthread_mutex_lock(&TxVecAccess);
             note left
                 Lock mutex to access
                 tx local vector
             end note
-            :push to LocTxVec the data to send;
+            :push to TxVec the data to send;
             :pthread_cond_signal(&msgTx)
             pthread_mutex_unlock(&TxVecAccess);
             note left

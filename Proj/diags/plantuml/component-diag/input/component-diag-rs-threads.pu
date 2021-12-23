@@ -41,12 +41,13 @@ frame "DB" as DB #bisque{
   }
   frame "Comm" as LCM #bisque{
   together {
-    [recv_Cli_th_fcn] as RCL #$highest
-    [recv_Loc_th_fcn] as RLC #$highest
+    [recv_th_fcn] as RCL #$highest
+    '[recv_Loc_th_fcn] as RLC #$highest
   }
   together {
-  [send_Cli_th_fcn] as SCL $medium
-  [send_Loc_th_fcn] as SLC $medium
+  [send_th_fcn] as SCL $medium
+  '[send_Loc_th_fcn] as SLC $medium
+  [acceptConnection] as ACC $medium
   }
   }
   frame "CLI" as CLI #bisque{
@@ -54,8 +55,8 @@ frame "DB" as DB #bisque{
   }
   frame "Parser" as PAR #bisque{
   together {
-  [CliParser::exec] as CLE $high
-  [LocalParser::exec] as LCE $high
+  [exec] as CLE $high
+  '[LocalParser::exec] as LCE $high
   }
   }
   'frame "Normal mode" as NMM #bisque{

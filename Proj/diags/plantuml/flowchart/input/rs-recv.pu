@@ -2,7 +2,6 @@
 '-----------------------
   note right
     Thread to Receive 
-    from client
   end note
 '-----------------------
 start
@@ -26,12 +25,19 @@ start
                 endif
             else (No)
             endif
-            :cli.cliRxVec.push(frame);
+            :server_frame.sd = sd 
+            server_frame.rxFrame = &tmp_buff
+            pthread_mutex_lock(&RxVecAccess)
+            semaphore_wait(receive_sem)
+            cli.RxVec.push(server_frame)
+            pthread_mutex_unlock(&RxVecAccess);
             note right
                 push to the rx vector
+                grab a semaphore 
+                protect the vector with the mutex
             end note
 
-            :msgRxCli = 1; 
+            :pthread_cond_signal(msgRx); 
             note right
                 notify the reception
                 of the data

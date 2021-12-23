@@ -1,0 +1,70 @@
+@startuml
+'-----------------------
+  note right
+    Client parser 
+    execution
+  end note
+'-----------------------
+start
+    repeat
+        :pthread_mutex_lock(&sockCliAccess);
+        note right
+            lock conditional 
+            variable mutex
+        end note
+        if (msgRx == 1?) then (Yes)
+            :msgRx = 0;
+            :pthread_mutex_unlock(&sockCliAccess);
+            :pthread_mutex_lock(&RxVecAccess);
+            note right
+                lock RxVector mutex
+            end note
+            if (RxVec is empty?) then (No)
+                :tmp_rx = cliRxVec->pop()
+                semaphore_post(receive_sem)
+                pthread_mutex_unlock(&RxVecAccess);
+                note left
+                    pop the command from the
+                    vector and process it
+                    Leave spot on the semaphore
+                    to be grabbed for another thread
+                end note
+                :transform the tmp_rx->rxFrame into
+                string in order to be processed;
+                if(tmp_rx->rxFrame->header == CMD?) then (Yes)
+                    switch (CMD type)
+                        case (help)
+                            :show help;
+                        case (authenticate)
+                            :authenticate;
+                        case (test operation)
+                            :operate a test on a station;
+                        case (logout)
+                            :logout;
+                    endswitch
+                (No) elseif (tmp_buff->rxFrame->header == DB?)
+                    :pthread_cond_signal(&making_query);
+                    switch (DB type)
+                        case (read)
+                            :read fields;
+                        case (add)
+                            :add row;
+                        case (delete)
+                            :delete row;
+                        case (modify)
+                            :modify fields;
+                    endswitch
+                    :making_query = 0;
+                else (No)
+                    :Ignore data;
+                endif
+            else (Yes)
+                :pthread_mutex_unlock(&RxVecAccess);
+            endif
+        else (No)
+            :pthread_mutex_unlock(&sockCliAccess);
+        endif
+   repeat while()
+ 
+'-----------------------
+@enduml

@@ -12,14 +12,20 @@ start
         query = dbQueries.pop()
         pthread_mutex_unlock(&dbQueriesAccess);
         repeat
-            :send query to the DB;
+            if(making_query == 1) then (Yes)
+              :wait;
+            else (No)
+            endif
+            :pthread_cond_signal(&making_query)
+            send query to the DB;
             note left
                 send the query and wait
                 for the DB response
             end note
             :wait for response;
         repeat while(response received?) is (No) not (Yes)
-        :Construct the response rxFrame
+        :making_query = 0
+        Construct the response rxFrame
         Construct the send serverFrame;
         :pthread_mutex_lock(&TxVecAccess)
         txVec.push(response)
