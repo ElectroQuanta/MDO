@@ -1,0 +1,62 @@
+@startuml
+!$end_bracket = "<b> </b>"
+'-----------------------
+  note right
+    UserDetection Thread
+  end note
+'-----------------------
+  start
+  repeat
+  (1)
+  :unsigned int sender
+  char msg[ MSG_MAX ]$end_bracket
+  ud_rx = mq_receive(mq_id, msg, MSG_MAX, sender);
+''
+  note right
+	consuming msg queue
+	user detection events
+  end note
+''
+  if(ud_rx == -1?) then (Y)
+	(1)
+	''
+	note right
+		error reading from 
+		msg queue
+		go back to start
+	end note
+	''
+	detach
+  else (N)
+	:detected = calc_sliding_window(ud_rx)|
+	''
+	note right
+		Use a sliding window
+		(moving average)
+		to determine if a user
+		was detected
+	end note
+	''
+	if(detected?) then (Y)
+		:pthread_mutex_lock( &user_detect_mut )
+		pthread_cond_signal( &user_detect_cond )
+		pthread_mutex_unlock( &user_detect_mut );
+	''
+	note right
+		Signal that the user 
+		was detected to
+		other threads
+	end note
+	''
+	else (N)
+	(1)
+	detach
+	endif
+  endif
+  repeat while(execution not aborted?) is (Y)
+  ->N;
+
+  stop
+  
+'-----------------------
+@enduml

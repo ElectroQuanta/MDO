@@ -1,0 +1,58 @@
+@startuml
+'-----------------------
+  note right
+  <b>LocalRx</b>
+    Thread to receive 
+    from Remote Server
+  end note
+'-----------------------
+start
+(1)
+:frame_ended = 0;
+    repeat
+        repeat
+			:nbytes = recv(sd, size, tmp_buff, 0);
+			''
+			note right
+				blocking call
+			end note
+
+			if (nbytes > 0) then (Yes)
+				:frame = (rxFrame*) tmp_buff;
+				''
+				note right
+					cast the received data
+				end note
+				if (tmp_buffer[nbytes - sizeof(int)] == ACK) then (Yes)
+						:frame_ended = 1;
+				else (Yes)
+					:receive rest of the data and
+					add that data to frame.data;
+				endif
+			else (No)
+			(1)
+			detach
+			endif
+		repeat while(frame ended?) is (N)
+		->Y;
+		''if(arroz) then(Y)
+		:pthread_mutex_lock( &rx_avail_mut )
+		RxVec.push(frame)
+		pthread_cond_signal( &rx_avail_cond )
+		pthread_mutex_unlock( &rx_avail_mut );
+			''
+            note right
+				push to the rx vector
+				and notify the reception
+				of the data
+            end note
+			''
+        ''else (No)
+        ''endif
+        'backward
+    repeat while(execution aborted?) is (N)
+	->Y;
+	stop
+  
+'-----------------------
+@enduml

@@ -1,0 +1,140 @@
+@startuml
+''left to right direction
+skinparam fixCircleLabelOverlapping true
+'' src: https://www.augmentedmind.de/2021/01/17/plantuml-layout-tutorial-styles/
+''skinparam nodesep x (where x is an integer > 0) will increase the horizontal margin
+''skinparam ranksep x affects the vertical margin
+''With skinparam padding x (x also being an integer > 0) you will increase the padding of every kind of element, so use it carefully, with small values.
+skinparam nodesep 1
+skinparam ranksep 1
+skinparam padding 0.0
+
+<style>
+ ' scope to sequenceDiagram elements
+ ' scope to actor elements
+   component {
+       FontColor Blue
+       FontStyle bold
+   }
+   rectangle {
+       FontColor Blue
+       FontStyle bold
+       ''BackGroundColor lightgrey
+       Shadowing 0.0
+   }
+   frame {
+       BackGroundColor bisque
+   }
+   package {
+       BackGroundColor lightgrey
+       FontStyle bold
+   }
+''   .legStyle{
+''       BackGroundColor lightgrey
+''       Shadowing 0.0
+''   }
+</style>
+
+''skinparam RectangleBackgroundColor<<legStyle>> black
+skinparam RectangleBorderColor<<legStyle>> black
+''skinparam handwritten <<legStyle>> true
+
+'' colors
+''!$highest = darkred
+''!$high = %lighten($highest, 40)
+''!$medium = %lighten($highest, 80)
+''!$low = %lighten($highest, 120)
+!$highest = red
+!$high = "#orange"
+!$medium = "#yellow"
+!$low = "#lightgreen"
+!$basic = "#yellow"
+!$local = "#orange"
+!$fragTClr = "#lightgreen"
+!$fragIntTClr = "#bisque"
+!$mediaClr = "#tan"
+!$ackClr = "#pink"
+
+'' participants definition
+package "MDO-RC: AppManager" as MDORC #lightgrey{ 
+''
+  rectangle "rxFrame" as rxFrameRC{
+  rectangle "header\nenum frameT" as P0 $basic
+  rectangle "len\nsize_t" as P1 
+  rectangle "data\nvoid*" as P2
+  rectangle "int\nACK" as P3 $ackClr
+  }
+}
+
+package "MDO-RS: AppManager" as MDORS #lightgrey{ 
+  rectangle "rxFrame" as rxFrameRS{
+  rectangle "header\nenum frameT" as P01 $basic
+  rectangle "len\nsize_t" as P11 
+  rectangle "data\nvoid*" as P21
+  rectangle "int\nACK" as P31 $ackClr
+  }
+}
+
+package "MDO-L: AppManager" as MDOL #lightgrey{
+  rectangle "rxFrame" as rxFrameL{
+  rectangle "header\nenum frameT" as P02 $local
+  rectangle "len\nsize_t" as P12
+  rectangle "data\nvoid*" as P22
+  rectangle "int\nACK" as P32 $ackClr
+  }
+  rectangle "AdFrame" as adFrame{
+  rectangle "fragrance\nenum fragT" as P03 $fragTClr
+  rectangle "intensity\nenum fragIntT" as P13 $fragIntTClr
+  rectangle "startTime\nlong int" as P23
+  rectangle "duration\nint" as P33
+  rectangle "mediaLen\nsize_t" as P43
+  rectangle "mediaURLs\nvoid*" as P53 $mediaClr
+  rectangle "int\nACK" as P63 $ackClr
+  }
+}
+
+  rectangle "Legend" <<legStyle>> as LEG #lightblue {
+  rectangle "DB\nCMD\n\n\n" as P04 $basic
+  rectangle "DB\nCMD\nAD\n\n" as P14 $local
+  rectangle "NONE\nCOFFEE\n...\nCHICKEN\n" as P24 $fragTClr
+  rectangle "LOW\nMEDIUM\nMEDIUM_HIGH\nHIGH\nTOP" as P34 $fragIntTClr
+  rectangle "Comma\nSeparated\nValues\n(CSV)\n" as P44 $mediaClr
+  rectangle "Acknowledge\nSignal\n\n\n" as P54 $ackClr
+  }
+
+  hide <<legStyle>> stereotype
+
+'' ------------------------------
+
+'' ------------ INTERACTIONS
+ P0-[hidden]r-P1
+ P1-[hidden]r-P2
+ P2-[hidden]r-P3
+''
+ P01-[hidden]r-P11
+ P11-[hidden]r-P21
+ P21-[hidden]r-P31
+''
+ P02-[hidden]r-P12
+ P12-[hidden]r-P22
+ P22-[hidden]r-P32
+''
+ P03-[hidden]r-P13
+ P13-[hidden]r-P23
+ P23-[hidden]r-P33
+ P33-[hidden]r-P43
+ P43-[hidden]r-P53
+ P53-[hidden]r-P63
+''
+ rxFrameL--[hidden]-adFrame
+
+'' Legend
+ P04-[hidden]r-P14
+ P14-[hidden]r-P24
+ P24-[hidden]r-P34
+ P34-[hidden]r-P44
+ P44-[hidden]r-P54
+ MDORC--[hidden]-LEG
+
+
+@enduml

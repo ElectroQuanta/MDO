@@ -4973,8 +4973,405 @@ The HTML markup in comments (after --) is stripped.
   #+RESULTS:
   [[file:diags/plantuml/flowchart/output/switch-case.png]]
 
-**** Switch-case
-*** Data formats
+**** Connector
+  #+BEGIN_SRC plantuml :file diags/plantuml/flowchart/output/connector.png
+@startuml
+start
+:Some activity;
+(A)
+detach
+(A)
+:Other activity;
+@enduml
+  #+END_SRC
+
+  #+RESULTS:
+  [[file:diags/plantuml/flowchart/output/connector.png]]
+
+**** Specification and Description Language (SDL)
+By changing the final ; separator, you can set different rendering for the activity:
+- |
+- <
+- >
+- /
+- \\
+- ]
+- }
+
+  #+BEGIN_SRC plantuml :file diags/plantuml/flowchart/output/sdl.png
+@startuml
+:Ready;
+:next(o)|
+:Receiving;
+split
+ :nak(i)<
+ :ack(o)>
+split again
+ :ack(i)<
+ :next(o)
+ on several lines|
+ :i := i + 1]
+ :ack(o)>
+split again
+ :err(i)<
+ :nak(o)>
+split again
+ :foo/
+split again
+ :bar\\
+split again
+ :i > 5}
+stop
+end split
+:finish;
+@enduml
+  #+END_SRC
+
+  #+RESULTS:
+  [[file:diags/plantuml/flowchart/output/sdl.png]]
+
+**** Full example
+
+  #+BEGIN_SRC plantuml :file diags/plantuml/flowchart/output/full-example.png
+@startuml
+
+start
+:ClickServlet.handleRequest();
+:new page;
+if (Page.onSecurityCheck) then (true)
+  :Page.onInit();
+  if (isForward?) then (no)
+    :Process controls;
+    if (continue processing?) then (no)
+      stop
+    endif
+
+    if (isPost?) then (yes)
+      :Page.onPost();
+    else (no)
+      :Page.onGet();
+    endif
+    :Page.onRender();
+  endif
+else (false)
+endif
+
+if (do redirect?) then (yes)
+  :redirect process;
+else
+  if (do forward?) then (yes)
+    :Forward request;
+  else (no)
+    :Render page template;
+  endif
+endif
+
+stop
+
+@enduml
+  #+END_SRC
+
+  #+RESULTS:
+  [[file:diags/plantuml/flowchart/output/full-example.png]]
+
+
+**** Mine (to generate report)                                    :Important:
+
+  #+BEGIN_SRC plantuml :file diags/plantuml/flowchart/output/test1.png
+@startuml
+'-----------------------
+  note right
+    Login menu
+    (Verifying Credentials)
+  end note
+'-----------------------
+  start
+    repeat
+    repeat while(login_btn pressed?) is (No) not (Yes)
+    
+    if (All fields are filled?) then (Yes)  
+    
+        :pass_encrypt = crypt.encrypt(password)
+        db_query = "select count (*), role from user where
+        (username = " + username + " and pass_encrypt = " + pass_encrypt + ");";
+
+        note left
+            Encrypt the pass and 
+            then query to the db
+            in order to receive 
+            the count of 1
+        end note
+
+        :rxFrame.header = DB
+        rxFrame.len = db_query.length
+        rxFrame.data = db_query
+        server.send(rxFrame, rxFrame.len);
+
+        :wait for server response (async);
+      
+        if(Count == 1?) then (Yes)
+          if (role == ADMIN) then (Yes)
+              :Show ADMIN view;
+          (No) elseif (role == BRAND) then (Yes)
+              :Show BRAND view;
+          else (No)
+            :Error logging in!;
+            stop
+          endif
+
+        else (No)
+            :Error logging in! Credentials are wrong;
+        endif
+    else (No)
+        :Error! Fill all the fields;
+    endif   
+  stop
+  
+'-----------------------
+@enduml
+  #+END_SRC
+
+  #+RESULTS:
+  [[file:diags/plantuml/flowchart/output/test1.png]]
+
+  #+BEGIN_SRC plantuml :file diags/plantuml/flowchart/output/test2.png
+@startuml
+'-----------------------
+  note right
+    Thread to Receive 
+    from local system
+  end note
+'-----------------------
+start
+    repeat
+        :nbytes = recv(sd, size, tmp_buff, 0);
+        note left
+            It only exits from here
+            when it receives something
+        end note
+
+        if (nbytes > 0) then (Yes)
+            :frame = (rxFrame*) tmp_buff;
+            note right
+                cast the received data
+            end note
+            if (nbytes == MAX_BYTES) then (Yes)
+                if(Last byte is end of string?) then (No)
+                    :receive rest of the data and
+                    add that data to frame.data;
+                else (Yes)
+                endif
+            else (No)
+            endif
+            :cli.LocRxVec.push(frame);
+            note right
+                push to the rx vector
+            end note
+
+            :msgLocCli = 1; 
+            note right
+                notify the reception
+                of the data
+            end note
+        else (No)
+        endif
+        'backward
+    repeat while()
+  
+'-----------------------
+@enduml
+  #+END_SRC
+
+  #+RESULTS:
+  [[file:diags/plantuml/flowchart/output/test2.png]]
+
+
+***** User Detection
+
+  #+BEGIN_SRC plantuml :file diags/plantuml/flowchart/output/local-user-detect.png
+@startuml
+!$end_bracket = "<b> </b>"
+'-----------------------
+  note right
+    <b>UserDetection Thread</b>
+	Executed periodically to check 
+	if an User was detected
+  end note
+'-----------------------
+  start
+  repeat
+  (1)
+  :unsigned int sender
+  char msg[ MSG_MAX ]$end_bracket
+  ud_rx = mq_receive(mq_id, msg, MSG_MAX, sender);
+''
+  note right
+	consuming msg queue
+	user detection events
+  end note
+''
+  if(ud_rx == -1?) then (Y)
+	(1)
+	''
+	note right
+		error reading from 
+		msg queue
+		go back to start
+	end note
+	''
+	detach
+  else (N)
+	:detected = calc_sliding_window(ud_rx)|
+	''
+	note right
+		Use a sliding window
+		(moving average)
+		to determine if a user
+		was detected
+	end note
+	''
+	if(detected?) then (Y)
+		:pthread_mutex_lock( &user_detect_mut )
+		pthread_cond_signal( &user_detect_cond )
+		pthread_mutex_unlock( &user_detect_mut );
+	''
+	note right
+		Signal that the user 
+		was detected to
+		other threads
+	end note
+	''
+	else (N)
+	(1)
+	detach
+	endif
+  endif
+  repeat while(execution aborted?) is (N)
+  ->Y;
+
+  stop
+  
+'-----------------------
+@enduml
+  #+END_SRC
+   #+RESULTS:
+   [[file:diags/plantuml/flowchart/output/local-user-detect.png]]
+
+***** FrameGrabber
+  #+BEGIN_SRC plantuml :file diags/plantuml/flowchart/output/local-frame-grabber.png
+@startuml
+!$end_bracket = "<b> </b>"
+'-----------------------
+  note right
+    <b>FrameGrabber Thread</b>
+	Executed periodically, accordingly to the frame rate,
+	to grab frames from camera and store them
+  end note
+'-----------------------
+  start
+  repeat
+	''(1)
+	:cam_frame = camera_capture()
+	pthread_mutex_lock (&cam_fifo_mutex)
+	push cam_frame to cam_fifo
+	sem_post (&cam_fifo_count)
+	pthread_mutex_unlock (&cam_fifo_mutex);
+	''
+	note right
+		producing camera frames 
+		into shared FIFO and using 
+		a semaphore to handle 
+		multiple threads access
+	end note
+  repeat while(execution aborted?) is (N)
+  ->Y;
+
+  stop
+  
+'-----------------------
+@enduml
+  #+END_SRC
+
+  #+RESULTS:
+  [[file:diags/plantuml/flowchart/output/local-frame-grabber.png]]
+
+***** LocalRx
+  #+BEGIN_SRC plantuml :file diags/plantuml/flowchart/output/local-rx.png
+@startuml
+'-----------------------
+  note right
+  <b>LocalRx</b>
+    Thread to receive 
+    from Remote Server
+  end note
+'-----------------------
+start
+(1)
+:frame_ended = 0;
+    repeat
+        repeat
+			:nbytes = recv(sd, size, tmp_buff, 0);
+			''
+			note right
+				blocking call
+			end note
+
+			if (nbytes > 0) then (Yes)
+				:frame = (rxFrame*) tmp_buff;
+				''
+				note right
+					cast the received data
+				end note
+				if (tmp_buffer[nbytes - sizeof(int)] == ACK) then (Yes)
+						:frame_ended = 1;
+				else (Yes)
+					:receive rest of the data and
+					add that data to frame.data;
+				endif
+			else (No)
+			(1)
+			detach
+			endif
+		repeat while(frame ended?) is (N)
+		->Y;
+		''if(arroz) then(Y)
+		:pthread_mutex_lock( &rx_avail_mut )
+		RxVec.push(frame)
+		pthread_cond_signal( &rx_avail_cond )
+		pthread_mutex_unlock( &rx_avail_mut );
+			''
+            note right
+				push to the rx vector
+				and notify the reception
+				of the data
+            end note
+			''
+        ''else (No)
+        ''endif
+        'backward
+    repeat while(execution aborted?) is (N)
+	->Y;
+	stop
+  
+'-----------------------
+@enduml
+  #+END_SRC
+
+  #+RESULTS:
+  [[file:diags/plantuml/flowchart/output/local-rx.png]]
+
+***** LocalTx
+***** AppParser
+***** TwitterShare
+***** FileTransfer
+***** AudioMan
+***** VideoMan
+***** FragMan
+***** GIFGenerator
+*** ✔ DONE Data formats
+    :LOGBOOK:
+    - State "✔ DONE"     from              [2021-12-22 qua 23:46]
+    :END:
   #+BEGIN_SRC plantuml :file diags/plantuml/misc/output/data-formats.png
 @startuml
 ''left to right direction
@@ -5031,6 +5428,7 @@ skinparam RectangleBorderColor<<legStyle>> black
 !$fragTClr = "#lightgreen"
 !$fragIntTClr = "#bisque"
 !$mediaClr = "#tan"
+!$ackClr = "#pink"
 
 '' participants definition
 package "MDO-RC: AppManager" as MDORC #lightgrey{ 
@@ -5039,6 +5437,7 @@ package "MDO-RC: AppManager" as MDORC #lightgrey{
   rectangle "header\nenum frameT" as P0 $basic
   rectangle "len\nsize_t" as P1 
   rectangle "data\nvoid*" as P2
+  rectangle "int\nACK" as P3 $ackClr
   }
 }
 
@@ -5047,6 +5446,7 @@ package "MDO-RS: AppManager" as MDORS #lightgrey{
   rectangle "header\nenum frameT" as P01 $basic
   rectangle "len\nsize_t" as P11 
   rectangle "data\nvoid*" as P21
+  rectangle "int\nACK" as P31 $ackClr
   }
 }
 
@@ -5055,6 +5455,7 @@ package "MDO-L: AppManager" as MDOL #lightgrey{
   rectangle "header\nenum frameT" as P02 $local
   rectangle "len\nsize_t" as P12
   rectangle "data\nvoid*" as P22
+  rectangle "int\nACK" as P32 $ackClr
   }
   rectangle "AdFrame" as adFrame{
   rectangle "fragrance\nenum fragT" as P03 $fragTClr
@@ -5063,6 +5464,7 @@ package "MDO-L: AppManager" as MDOL #lightgrey{
   rectangle "duration\nint" as P33
   rectangle "mediaLen\nsize_t" as P43
   rectangle "mediaURLs\nvoid*" as P53 $mediaClr
+  rectangle "int\nACK" as P63 $ackClr
   }
 }
 
@@ -5072,6 +5474,7 @@ package "MDO-L: AppManager" as MDOL #lightgrey{
   rectangle "NONE\nCOFFEE\n...\nCHICKEN\n" as P24 $fragTClr
   rectangle "LOW\nMEDIUM\nMEDIUM_HIGH\nHIGH\nTOP" as P34 $fragIntTClr
   rectangle "Comma\nSeparated\nValues\n(CSV)\n" as P44 $mediaClr
+  rectangle "Acknowledge\nSignal\n\n\n" as P54 $ackClr
   }
 
   hide <<legStyle>> stereotype
@@ -5081,16 +5484,23 @@ package "MDO-L: AppManager" as MDOL #lightgrey{
 '' ------------ INTERACTIONS
  P0-[hidden]r-P1
  P1-[hidden]r-P2
+ P2-[hidden]r-P3
+''
  P01-[hidden]r-P11
  P11-[hidden]r-P21
+ P21-[hidden]r-P31
+''
  P02-[hidden]r-P12
  P12-[hidden]r-P22
+ P22-[hidden]r-P32
+''
  P03-[hidden]r-P13
  P13-[hidden]r-P23
  P23-[hidden]r-P33
  P33-[hidden]r-P43
  P43-[hidden]r-P53
-
+ P53-[hidden]r-P63
+''
  rxFrameL--[hidden]-adFrame
 
 '' Legend
@@ -5098,6 +5508,7 @@ package "MDO-L: AppManager" as MDOL #lightgrey{
  P14-[hidden]r-P24
  P24-[hidden]r-P34
  P34-[hidden]r-P44
+ P44-[hidden]r-P54
  MDORC--[hidden]-LEG
 
 

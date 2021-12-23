@@ -360,13 +360,17 @@ Fig.~\ref{fig:data-formats}. In gray are depicted the several subsystems, in
 white the data frames and in blue the legend.
 
 The several subsystems will communicate using a basic data frame ---
-\texttt{rxFrame} --- which contains a \texttt{header}, the data length, and the
-actual data. The \texttt{header} defines the frame type which can be \texttt{DB}
+\texttt{rxFrame} --- which contains a \texttt{header}, the data length, the
+actual data, and an \texttt{ACK} (acknowledge) signal. The \texttt{header} defines the frame type which can be \texttt{DB}
 (database queries), \texttt{CMD} (commands sent to be executed), and \texttt{AD}
 (ads to be reproduced --- only for \texttt{Local System}). It is important to
-note the usefulness of \texttt{data}'s datatype being \texttt{void *}, as it is
+note: the usefulness of \texttt{data}'s datatype being \texttt{void *}, as it is
 generic, and thus enables the encapsulation of other data frames --- e.g., the
-\texttt{AdFrame} is encapsulated within a \texttt{rxFrame}.
+\texttt{AdFrame} is encapsulated within a \texttt{rxFrame}; the \texttt{ACK}
+signal is a valid terminator for all data frames --- helping to identify bigger
+data frames than the maximum ones, and to prevent ill-intentioned data frames
+usage to corrupt the system --- of type \texttt{int} to prevent collisions with
+normal messages sent.
 
 The \texttt{AdFrame} contains the information about the advertisement to be
 reproduced, namely its type, intensity, start time, duration, media length, and media \glspl{url}. The
