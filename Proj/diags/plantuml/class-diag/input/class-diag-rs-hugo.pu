@@ -1,0 +1,227 @@
+@startuml
+'' ---------------- THEMES (some only work on the web server) -----------
+''!theme plain
+''!theme toy
+''!theme spacelab
+''!theme mars (does not work)
+'' -------------------- Splitting into several files -----------
+'page 2x2
+'skinparam pageMargin 10
+'skinparam pageExternalColor gray
+'skinparam pageBorderColor black
+'' --------------------------------------------------------------
+'' remove attributes and methods icons
+skinparam classAttributeIconSize 0
+'' --------------------------------------------------------------
+'' ------- defining elements --------
+''interface       interface
+'' ------- structures
+''class Ad_DB <<(S,#FF7700)struct>>
+''class User_DB <<(S,#FF7700)struct>>
+''class Station <<(S,#FF7700)struct>>
+hide <<struct>> methods
+hide enum methods
+''hide <<struct>> circle
+''class Ad_DB {
+''+FILE vid_f
+''+fragType frag
+''+bool rented
+''}
+''
+''class User_DB{
+''+bool admin
+''+char* name
+''+char* encrypted_pass
+''}
+class rxFrame <<(S,lightgrey)struct>>{
+enum frameT header
+size_t len
+void *data
+}
+class dbRsp <<(S,lightgrey)struct>>{
+size_t len
+void *data
+}
+class cmd <<(S,lightgrey)struct>>{
+size_t len
+void *data
+}
+' ---------
+
+enum ConnStatus{
+CREATED
+ONLINE
+CLOSED
+ERROR
+}
+
+enum frameT{
+DB
+CMD
+}
+'' ---------
+
+
+'' -------- Classes 
+'' APP
+''class AppManager{
+''    - UIApp uiApp()
+''    - UIWidget win()
+''}
+class CLIApp{
+    == constr/destr ==
+    +CLIApp()
+    ~CLIApp()
+    == mutators ==
+    void exec()
+}
+    note right of CLIApp::exec
+    executes the 
+    UI event loop
+    end note
+class CLI{
+  - vector<rxFrame> cliRxVec
+  - mutex cliRxAccess
+  - vector<rxFrame> cliTxVec
+  - vector<rxFrame> LocRxVec
+  - mutex LocRxAccess
+  - vector<rxFrame> LocTxVec
+  - vector<string> userInput
+  - mutex _sockCliAccess
+  - condition_variable _msgRxCli
+  - mutex _sockLocAccess
+  - condition_variable _msgLocCli
+  == constr/destr ==
+  +CLI()
+  ~CLI()
+  == mutators ==
+  bool init()
+  bool validateAccess(string username, string password)
+  void show()
+}
+
+
+'' Crypt
+class Crypt{
+  -int _key
+  == constr/destr ==
+  +Crypt()
+  +~Crypt()
+  == mutators ==
+  + string encrypt(string msg)
+  + string decrypt(string msg)
+}
+note right of Crypt
+Encrypts strings
+requested by
+multiple classes
+end note
+'' COMM MANAGER
+class CommManager{
+  -ConnStatus _status
+  -int _cliSock
+  -string _cliAddr
+  -int _cliPort
+  -int _localSock
+  -string _localAddr
+  -int _localPort
+  -mutex _sockCliAccess
+  -mutex _RxCliAccess
+  -condition_variable _msgRxCli
+  -mutex _sockLocAccess
+  -mutex _RxLocAccess
+  -condition_variable _msgRxLoc
+  == constr/destr ==
+  +CommManager(string addr)
+  +~CommManager()
+  == accessors ==
+  + ConnStatus status() const
+  - string cliAddr() const
+  - int cliPort() const
+  - string localAddr() const
+  - int localPort() const
+  == mutators ==
+  + int run()
+  - static void send_Cli_th_fcn( void* arg)
+  - static void recv_Cli_th_fcn( void* arg)
+  - static void send_Loc_th_fcn( void* arg) 
+  - static void recv_Loc_th_fcn( void* arg)
+''  + int Send(int sd, const void *obj, size_t len);
+''  + int Recv(int sd, void *obj, size_t len);
+}
+'' DB Client
+class DBClient{
+  -mutex RxExtract
+  -condition_variable extract
+  -ConnStatus _status
+  -int _dbSock
+  -string _dbAddr
+  -int _dbPort
+  == constr/destr ==
+  +DBClient()
+  +~DBClient()
+  == accessors ==
+  + ConnStatus status() const
+  - string dbAddr() const
+  - int dbPort() const
+  == mutators ==
+  + bool connect()
+  == helpers ==
+  + string validateQuery(string q)
+  + void extract(rxFrame *f)
+}
+class Parser{
+  -mutex parseExec
+  -condition_variable parsing
+  == constr/destr ==
+  +Parser()
+  +~Parser()
+  == helpers ==
+  + bool exec(Vector<rxFrame> *l)
+}
+class CliParser{
+  == constr/destr ==
+  +CliParser()
+  +~CliParser()
+  == helpers ==
+  + bool exec()
+}
+class LocalParser{
+  == constr/destr ==
+  +LocalParser()
+  +~LocalParser()
+  == helpers ==
+  + bool exec()
+}
+
+'' ----------------
+
+'' ----------- Containers
+
+'' ----------------
+
+'' --------------------------------------------------------------
+
+
+'' ---------- Relation between classes -----------
+'' Types
+'' - extension (inheritance):   <|--
+'' - composition: *--
+'' - Aggregation: o--
+CLIApp "1" *- "1" CLI: contains
+CLI "1" *- "1" CommManager: contains
+CLI "1" *-- "1" DBClient: contains
+CommManager "1" *- "1" ConnStatus: contains
+CLI "1" *-- "1" Crypt: contains
+CLI "1" *-- "1" Parser: contains
+rxFrame "1" *- "1" frameT: contains
+CLI "1" *-u- "many" rxFrame: contains
+CLI "1" *-u- "many" dbRsp: contains
+CLI "1" *-u- "many" cmd: contains
+CliParser --|> Parser
+LocalParser --|> Parser
+''UIView <|-- UIWindow: inherits
+
+'' ------------------------------
+
+@enduml

@@ -7,8 +7,10 @@
 '-----------------------
   start
     repeat
-    repeat while(login_btn pressed?) is (No) not (Yes)
-    
+      repeat
+      repeat while(login_btn pressed?) is (No) not (Yes)
+      backward: No connection to Server!;
+    repeat while(conected?) is (No) not (Yes)  
     if (All fields are filled?) then (Yes)  
     
         :pass_encrypt = crypt.encrypt(password)

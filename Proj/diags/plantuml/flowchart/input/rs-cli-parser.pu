@@ -1,0 +1,65 @@
+@startuml
+'-----------------------
+  note right
+    Client parser 
+    execution
+  end note
+'-----------------------
+start
+    repeat
+        :sockCliAccess = 1;
+        note right
+            lock conditional 
+            variable mutex
+        end note
+        if (msgRxCli == 1?) then (Yes)
+            :msgRxCli = 0;
+            :sockCliAccess = 0;
+            :cliRxAccess = 1;
+            note right
+                lock vector mutex
+            end note
+            if (cliRxVec is empty?) then (No)
+                :tmp_rx = cliRxVec->pop();
+                note left
+                    pop the command from the
+                    vector and process it
+                end note
+                :cliRxAccess = 0;
+                :transform the tmp_rx->data into
+                string in order to be processed;
+                if(tmp_rx->header == CMD?) then (Yes)
+                    switch (CMD type)
+                        case (help)
+                            :show help;
+                        case (authenticate)
+                            :authenticate;
+                        case (test operation)
+                            :operate a test on a station;
+                        case (logout)
+                            :logout;
+                    endswitch
+                (No) elseif (tmp_buff->header == DB?)
+                    switch (DB type)
+                        case (read)
+                            :read fields;
+                        case (add)
+                            :add row;
+                        case (delete)
+                            :delete row;
+                        case (modify)
+                            :modify fields;
+                    endswitch
+                else (No)
+                    :Ignore data;
+                endif
+            else (Yes)
+                :cliRxAccess = 0;
+            endif
+        else (No)
+            :sockCliAccess = 0;
+        endif
+   repeat while()
+ 
+'-----------------------
+@enduml
