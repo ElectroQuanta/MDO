@@ -5500,7 +5500,10 @@ start
   #+RESULTS:
   [[file:diags/plantuml/flowchart/output/local-app-parser.png]]
 
-***** CmdHandler
+***** ✔ DONE CmdHandler
+      :LOGBOOK:
+      - State "✔ DONE"     from              [2021-12-24 sex 01:02]
+      :END:
   #+BEGIN_SRC plantuml :file diags/plantuml/flowchart/output/local-cmd-handler.png
 @startuml
 '-----------------------
@@ -5803,7 +5806,7 @@ start
 	  :LOGBOOK:
 	  - State "✔ DONE"     from              [2021-12-23 qui 20:05]
 	  :END:
-  #+BEGIN_SRC plantuml :file diags/plantuml/flowchart/output/local-video-man.png
+  #+BEGIN_SRC plantuml :file diags/plantuml/flowchart/output/flow-local-video-man.png
 @startuml
 !$end_bracket = "<b> </b>"
 '-----------------------
@@ -5838,13 +5841,20 @@ start
 		else (Y)
 			'' play video
 		endif
-		:curAd = this->ad
-		cnt = 0;
+		:curAd = this->ad; 
 			''
             note right
-				get current ad
+		check if there is 
+		an ad to reproduce
             end note
 			''
+		if(curAd == NULL) then (Y)
+		(1)
+		detach
+		else (N)
+		endif
+		:cnt = 0
+		start_timer(&tim_on, curAd->duration);
 		repeat 
 		:sem_wait(&user_detect_status_mut)
 		mode = app.Mode()
@@ -5853,7 +5863,7 @@ start
 				check stop
 				condition
 			end note
-		if(mode == NORMAL) then (N)
+		if(mode == NORMAL && tim_on != elapsed ?) then (N)
 			'' go back to start
 			(1)
 			''
@@ -5879,13 +5889,13 @@ start
   #+END_SRC
 
   #+RESULTS:
-  [[file:diags/plantuml/flowchart/output/local-video-man.png]]
+  [[file:diags/plantuml/flowchart/output/flow-local-video-man.png]]
 
 ***** ✔ DONE FragMan
 	  :LOGBOOK:
 	  - State "✔ DONE"     from              [2021-12-23 qui 20:24]
 	  :END:
-  #+BEGIN_SRC plantuml :file diags/plantuml/flowchart/output/local-frag-man.png
+  #+BEGIN_SRC plantuml :file diags/plantuml/flowchart/output/flow-local-frag-man.png
 @startuml
 !$end_bracket = "<b> </b>"
 '-----------------------
@@ -5920,12 +5930,18 @@ start
 		else (Y)
 			'' play video
 		endif
-		:curAd = this->ad
-		cnt = 0;
+		:curAd = this->ad; 
 			''
             note right
-				get current ad
+		check if there is 
+		an ad to reproduce
             end note
+			''
+		if(curAd == NULL) then (Y)
+		(1)
+		detach
+		else (N)
+		endif
 			''
 		:frag.calc_times(curAd->intens(), 
 		                 &duration_on, &duration_off);
@@ -5991,7 +6007,7 @@ start
   #+END_SRC
 
   #+RESULTS:
-  [[file:diags/plantuml/flowchart/output/local-frag-man.png]]
+  [[file:diags/plantuml/flowchart/output/flow-local-frag-man.png]]
 
 ***** ✔ DONE GIFGenerator
 	  :LOGBOOK:

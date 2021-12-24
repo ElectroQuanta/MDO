@@ -729,7 +729,7 @@ After receiving the responses from the queries, everything is wrapped in the txV
 Fig.~\ref{fig:flow-local-user-detect} through Fig.~\ref{fig:flow-local-gif-gen} present the flowcharts corresponding to the \texttt{Local System}
 threads specified in Section~\ref{sec:local-system-2}.
 
-\paragraph{UserDetection thread}
+\paragraph{\textbf{UserDetection thread}}
 Fig.~\ref{fig:flow-local-user-detect} depicts the flowchart for the
 \texttt{UserDetection} thread. It is executed periodically to check if an
 \texttt{User} was detected, consuming user detection events from a message
@@ -746,7 +746,7 @@ this event is signaled.
 \label{fig:flow-local-user-detect}
 \end{figure}
 %
-\paragraph{FrameGrabber thread}
+\paragraph{\textbf{FrameGrabber thread}}
 Fig.~\ref{fig:flow-local-frame-grabber} depicts the flowchart for the
 \texttt{FrameGrabber} thread. It is executed periodically, accordingly to the
 frame rate defined, to grab frames from camera and store them. It produces
@@ -760,7 +760,7 @@ to handle multiple consumer threads access.
 \label{fig:flow-local-frame-grabber}
 \end{figure}
 %
-\paragraph{LocalRx thread}
+\paragraph{\textbf{LocalRx thread}}
 Fig.~\ref{fig:flow-local-rx} depicts the flowchart for the \texttt{LocalRx}
 thread. It is listening on the socket used to communicate with the
 \texttt{Remote Server} for incoming data packets. When data arrives, it is
@@ -774,7 +774,7 @@ the consuming thread --- \texttt{AppParser}.
   \caption{Flowchart: \texttt{Local System} --- \texttt{LocalRx} thread}%
 \label{fig:flow-local-rx}
 \end{figure}
-\paragraph{LocalTx thread}
+\paragraph{\textbf{LocalTx thread}}
 Fig.~\ref{fig:flow-local-tx} depicts the flowchart for the \texttt{LocalTx}
 thread. It waits for data to be transmitted to become available, pops it from
 the shared \gls{fifo} and sends it to the \texttt{Remote Server}.
@@ -786,7 +786,7 @@ the shared \gls{fifo} and sends it to the \texttt{Remote Server}.
 \label{fig:flow-local-tx}
 \end{figure}
 %
-\paragraph{AppParser thread}
+\paragraph{\textbf{AppParser thread}}
 Fig.~\ref{fig:flow-local-app-parser} depicts the flowchart for the \texttt{AppParser}
 thread.
 It waits for received data to become available, and then processes all frames in
@@ -805,7 +805,7 @@ download media files.
 \label{fig:flow-local-app-parser}
 \end{figure}
 % 
-\paragraph{CmdHandler thread}
+\paragraph{\textbf{CmdHandler thread}}
 Fig.~\ref{fig:flow-local-cmd-handler} depicts the flowchart for the
 \texttt{CmdHandler} thread. It waits for commands to be available, and then
 processes all commands in that shared \gls{fifo}.
@@ -816,7 +816,7 @@ processes all commands in that shared \gls{fifo}.
   \caption{Flowchart: \texttt{Local System} --- \texttt{CmdHandler} thread}%
 \label{fig:flow-local-cmd-handler}
 \end{figure}
-\paragraph{TwitterShare thread}
+\paragraph{\textbf{TwitterShare thread}}
 Fig.~\ref{fig:flow-local-twitter-share} depicts the flowchart for the
 \texttt{TwitterShare} thread. It waits for a post to be available, and then
 shares it on \texttt{Twitter} --- using \texttt{curl} and \texttt{HTTP POST}
@@ -831,7 +831,7 @@ to the waiting thread --- \texttt{UI} --- to provide appropriate feedback to the
 \label{fig:flow-local-twitter-share}
 \end{figure}
 %
-\paragraph{FileTransfer thread}
+\paragraph{\textbf{FileTransfer thread}}
 Fig.~\ref{fig:flow-local-file-transfer} depicts the flowchart for the
 \texttt{FileTransfer} thread. It waits for \texttt{Ad} frame data to be
 available and then pops it. It constructs a new \texttt{Ad} object. It then
@@ -847,19 +847,45 @@ and the filename is stored in a \gls{fifo} for later reference.
 \label{fig:flow-local-file-transfer}
 \end{figure}
 %
-\begin{figure}[htb!]
-\centering
-    \includegraphics[width=0.6\columnwidth]{./img/flow-local-video-man.png}
-  \caption{Flowchart: \texttt{Local System} --- \texttt{VidMan} thread}%
-\label{fig:flow-local-video-man}
-\end{figure}
+\paragraph{\textbf{VidMan thread}}
+Fig.~\ref{fig:flow-local-video-man} depicts the flowchart for the
+\texttt{VidMan} thread. It checks for the current mode, and if it is the normal
+one, it retrieves the current \texttt{Ad} to be played, if any. If there is an
+\texttt{Ad} to be played a counter and a timer are initialized. While an
+\texttt{User} is not detected and the timer is not elapsed, the videos are
+fetched from a buffer and reproduced.
 %
 \begin{figure}[htb!]
 \centering
-    \includegraphics[width=0.6\columnwidth]{./img/flow-local-frag-man.png}
+    \includegraphics[width=0.42\columnwidth]{./img/flow-local-video-man.png}
+  \caption{Flowchart: \texttt{Local System} --- \texttt{VidMan} thread}%
+\label{fig:flow-local-video-man}
+\end{figure}
+\paragraph{\textbf{FragMan thread}}
+Fig.~\ref{fig:flow-local-frag-man} depicts the flowchart for the
+\texttt{FragMan} thread. It checks for the current mode, and if it is the normal
+one, it retrieves the current \texttt{Ad} to be played, if any. If there is an
+\texttt{Ad} to be played the on and off durations are calculated, based on the
+\texttt{Ad} intensity, the timer \texttt{tim\_on} is initialized and the
+fragrance diffusion is enabled. While an
+\texttt{User} is not detected for the duration of the \texttt{Ad}, the fragrance
+is diffused in intervals of \texttt{tim\_on} and \texttt{tim\_off}.
+%
+\begin{figure}[htb!]
+\centering
+    \includegraphics[width=0.4\columnwidth]{./img/flow-local-frag-man.png}
   \caption{Flowchart: \texttt{Local System} --- \texttt{FragMan} thread}%
 \label{fig:flow-local-frag-man}
 \end{figure}
+%
+\paragraph{\textbf{GIFGenerator thread}}
+Fig.~\ref{fig:flow-local-gif-gen} depicts the flowchart for the
+\texttt{GIFGenerator} thread. It waits for an event signaled by the \texttt{UI}
+thread to start and then starts a timer. While the timer is not elapsed, the
+camera frame is popped from the shared \gls{fifo} and stored in an internal
+buffer. When the timer elapses, the \gls{gif} is stored in disk and this event
+is signaled to the waiting thread --- the \texttt{UI} thread --- so it can
+inform the user.
 %
 \begin{figure}[htb!]
 \centering
@@ -867,7 +893,6 @@ and the filename is stored in a \gls{fifo} for later reference.
   \caption{Flowchart: \texttt{Local System} --- \texttt{GIFGenerator} thread}%
 \label{fig:flow-local-gif-gen}
 \end{figure}
-
 
 \subsection{Test cases}
 \label{sec:sw-test-cases}
