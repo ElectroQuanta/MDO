@@ -331,6 +331,8 @@ CIGAR
 RED_EYES
 ...
 }
+
+
 class ImageFilterEngine{
   -int _status
   -enum ImgFilterType _filt
@@ -430,12 +432,23 @@ MULTIMEDIA
 SHARING
 }
 
+class adFrame <<(S,lightgrey)struct>>{
+fragType _frag
+int inten
+Date startTime
+Date duration
+}
+
 class Ad {
   -FILE* _vid
   -fragType _frag
   -bool _rented
+  -int inten
+  -Date startTime
+  -Date duration
   == constr/destr ==
   +Ad()
+  +Ad(fragType _frag, int inten, Time startTime, Time duration)
   +~Ad()
   == accessors ==
   + bool rented() const
@@ -450,6 +463,33 @@ class Ad {
   + void print() const
   + string serialize() 
   + void deserialize(string values) 
+}
+
+class Date{
+  - int _year
+  - int _month
+  - int _day
+  - int _week
+  - int _hour
+  == constr/destr ==
+  +Date(int year, int month, int day, int hour)
+  +~Date()
+  == accessors ==
+  + Date year() const
+  + Date month() const
+  + Date day() const
+  + Date week() const
+  + Date hour() const
+  == mutators ==
+  + bool addDay(int day)
+  + bool addYear(int year)
+  + bool addMonth(int month)
+  + bool addWeek(int week)
+  + bool addHour(int hour)
+  == helpers ==
+  + void print() const
+  + void serialize(map<string col, string val> &m) 
+  + void deserialize(map<string col, string val> &m) 
 }
 
 'class FSM{
@@ -474,14 +514,16 @@ CALM
 
 ImageFilterEngine "1" *- "1" ImgFilterType: contains
 FragranceManager "1" *- "1" fragType: contains
-UI "1" *- "1" Mode: contains
-UI "1" *-- "many" Ad: contains
-UI "1" *-- "1" ImageFilterEngine: contains
+UI "1" *-d- "1" Mode: contains
+UI "1" *-l- "many" Ad: contains
+Ad "1" *-d- "1" Date: contains
+Ad "1" *-u- "1" adFrame: contains
+UI "1" *-r- "1" ImageFilterEngine: contains
 UI "1" *-- "1" CameraEngine: contains
 UI "1" *-u- "1" GIFGenerator: contains
 UI "1" *-u- "1" VideoManager: contains
 UI "1" *-u- "1" AudioManager: contains
-UI "1" *-u- "1" FragranceManager: contains
+UI "1" *-d- "1" FragranceManager: contains
 ''UIView <|-- UIWindow: inherits
 
 '' ------------------------------
