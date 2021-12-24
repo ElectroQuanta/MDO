@@ -11,13 +11,22 @@ phase}, the use case diagrams helped to identify the main features required for
 the system and the respective sequence diagrams helped to clarify the
 intervening objects and the interaction among them.
 
-In this section, the analysis phase information is used to derive the static
-architecture of the system --- classes diagram --- and to specify algorithms for
-its implementation through flowcharts, keeping in mind that the several
-subsystems operate multiple tasks concurrently, thus requiring the tasks'
-specification and its priorities. The data frame formats are specified for
-communication between the different modules. The \acrfull{erd} are depicted to
-design the required databases and the \gls{ui} mock-ups are recalled. The test
+In this section, the analysis phase information is used to derive the
+\gls{sw} design specification, i.e., the set of \gls{sw} artifacts that
+translate the gathered information into an implementable form.
+
+Thus, firstly, the \gls{sw} architecture is devised using components diagrams
+for all subsystems, alongside with the deployment specification, mapping the
+\gls{sw} components to the \gls{hw} nodes. The database is designed using the
+\gls{er} model and the \gls{erd}. Then, the data formats for communication
+between subsystems in devised, determining a well-established protocol for communication.
+
+Next, the static architecture of the system --- classes diagram --- is devised
+and the threads are specified, alongside with its priorities, as all subsystems
+operate multiple tasks concurrently. The flowcharts are then devised for all
+subsystems, oriented towards events and threads.
+
+The test
 cases for each subsystem are listed, defining its operation and the expected
 result. The \gls{cots} \gls{sw} and the third-party libraries are identified
 and a mapping between class topics and the foreseeable implementation is
