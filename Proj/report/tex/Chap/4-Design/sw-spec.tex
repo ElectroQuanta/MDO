@@ -441,6 +441,22 @@ The  \texttt{DBClient} is used to handle all the mechanisms of all the databases
 %
 Fig.~\ref{fig:class-diag-local-1} and Fig.~\ref{fig:class-diag-local-2} depicts the class diagram for the
 \texttt{Local System}.
+
+In Fig.~\ref{fig:class-diag-local-1} is illustrated a partial view of the class
+diagram of the \texttt{Local System}, containing the \texttt{UIApp} which
+executes the \texttt{UI} event loop. As the majority of the events are triggered
+by the \texttt{User} it is reasonable to compose the \texttt{UI} object of all
+the other ones, and the relevant data structures.
+
+The \texttt{CommManager} handles all communications to the
+\texttt{RemoteServer}, the \texttt{UserDetectionEngine} handles the user
+detection and the \texttt{GestureRecognitionEngine} handles the recognition of
+user gestures.
+%
+A \texttt{Parser} abstract class is derived to obtain specialized parsers for
+\gls{db}, commands and Twitter. \texttt{Twitter} is derived from
+\texttt{SocialMedia} abstract class to handle \texttt{Post} objects and share
+them on \texttt{Twitter}.
 %
 \begin{figure}[htb!]
 \centering
@@ -451,11 +467,14 @@ Fig.~\ref{fig:class-diag-local-1} and Fig.~\ref{fig:class-diag-local-2} depicts 
 
 In Fig.~\ref{fig:class-diag-local-2} is illustrated the second part of the class diagram of the \texttt{Local System}.
 
-As it can be seen, there are some classes that handle some features of the station, such as \texttt{GIFGenerator}, \texttt{VideoManager}, \texttt{AudioManager}, \texttt{ImageFilterEngine}, \texttt{CamreaEngine} and \texttt{FragranceManager}. All these classes handles all modes of the local system and, obviously they all interact with the \texttt{UI}.
+As it can be seen, there are some classes that handle some features of the station, such as \texttt{GIFGenerator}, \texttt{VideoManager}, \texttt{AudioManager}, \texttt{ImageFilterEngine}, \texttt{CameraEngine} and \texttt{FragranceManager}. All these classes handles all modes of the local system and, obviously they all interact with the \texttt{UI}.
 
-There is also the class \texttt{Ad} that handles the ads and has the structure adFrame containing some information that are relevant to play the ad on the station.
+There is also the class \texttt{Ad} that handles the ads and has the structure
+\texttt{adFrame} containing some information that are relevant to download the
+associated media
+files and play the ad on the station.
 
-There are several threads in various classes that will be explained next in section \ref{sec:thre-spec}  
+There are several threads in various classes that will be explained next in section \ref{sec:thre-spec}.
 %
 \begin{figure}[htb!]
 \centering
