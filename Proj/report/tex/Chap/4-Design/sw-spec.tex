@@ -448,6 +448,14 @@ Fig.~\ref{fig:class-diag-local-1} and Fig.~\ref{fig:class-diag-local-2} depicts 
   \caption{Class diagram: \texttt{Local System} --- part 1/2}%
 \label{fig:class-diag-local-1}
 \end{figure}
+
+In Fig.~\ref{fig:class-diag-local-2} is illustrated the second part of the class diagram of the \texttt{Local System}.
+
+As it can be seen, there are some classes that handle some features of the station, such as \texttt{GIFGenerator}, \texttt{VideoManager}, \texttt{AudioManager}, \texttt{ImageFilterEngine}, \texttt{CamreaEngine} and \texttt{FragranceManager}. All these classes handles all modes of the local system and, obviously they all interact with the \texttt{UI}.
+
+There is also the class \texttt{Ad} that handles the ads and has the structure adFrame containing some information that are relevant to play the ad on the station.
+
+There are several threads in various classes that will be explained next in section \ref{sec:thre-spec}  
 %
 \begin{figure}[htb!]
 \centering

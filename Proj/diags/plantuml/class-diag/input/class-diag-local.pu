@@ -435,28 +435,45 @@ SHARING
 class adFrame <<(S,lightgrey)struct>>{
 fragType _frag
 int inten
-Date startTime
-Date duration
+long int startTime
+int duration
+size_t mediaLen
+void* mediaURLs
+int ACK
+}
+
+enum fragIntT {
+  LOW
+  MEDIUM_L
+  MEDIUM
+  MEDIUM_H
+  HIGH
+  VERY_HIGH
 }
 
 class Ad {
   -FILE* _vid
   -fragType _frag
   -bool _rented
-  -int inten
-  -Date startTime
-  -Date duration
+  -fragIntT inten
+  - long int startTime
+  -int duration
   == constr/destr ==
   +Ad()
-  +Ad(fragType _frag, int inten, Time startTime, Time duration)
+  +Ad(fragType _frag, fragIntT inten, long int startTime, int duration)
   +~Ad()
   == accessors ==
   + bool rented() const
   + enum fragType frag() const
+  + fragIntT inten() const
+  + long int startTime() const
+  + int duration() const
   + FILE* video() const
   + boold compareAd(const Ad &otherAd) const
   == mutators ==
-  + void rent(bool r)
+  + modifyStartTime(long int startTime)
+  + modifyInten(fragIntT int)
+  + modifyDuration(int duration)
   + void modifyFrag(enum fragType f)
   + void modifyVideo(FILE* f)
   == helpers ==
@@ -465,32 +482,6 @@ class Ad {
   + void deserialize(string values) 
 }
 
-class Date{
-  - int _year
-  - int _month
-  - int _day
-  - int _week
-  - int _hour
-  == constr/destr ==
-  +Date(int year, int month, int day, int hour)
-  +~Date()
-  == accessors ==
-  + Date year() const
-  + Date month() const
-  + Date day() const
-  + Date week() const
-  + Date hour() const
-  == mutators ==
-  + bool addDay(int day)
-  + bool addYear(int year)
-  + bool addMonth(int month)
-  + bool addWeek(int week)
-  + bool addHour(int hour)
-  == helpers ==
-  + void print() const
-  + void serialize(map<string col, string val> &m) 
-  + void deserialize(map<string col, string val> &m) 
-}
 
 'class FSM{
 '  -int _status
@@ -516,8 +507,8 @@ ImageFilterEngine "1" *- "1" ImgFilterType: contains
 FragranceManager "1" *- "1" fragType: contains
 UI "1" *-d- "1" Mode: contains
 UI "1" *-l- "many" Ad: contains
-Ad "1" *-d- "1" Date: contains
 Ad "1" *-u- "1" adFrame: contains
+adFrame "1" *-r- fragIntT: contains
 UI "1" *-r- "1" ImageFilterEngine: contains
 UI "1" *-- "1" CameraEngine: contains
 UI "1" *-u- "1" GIFGenerator: contains
