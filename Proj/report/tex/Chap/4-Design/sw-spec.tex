@@ -774,6 +774,10 @@ the consuming thread --- \texttt{AppParser}.
   \caption{Flowchart: \texttt{Local System} --- \texttt{LocalRx} thread}%
 \label{fig:flow-local-rx}
 \end{figure}
+\paragraph{LocalTx thread}
+Fig.~\ref{fig:flow-local-tx} depicts the flowchart for the \texttt{LocalTx}
+thread. It waits for data to be transmitted to become available, pops it from
+the shared \gls{fifo} and sends it to the \texttt{Remote Server}.
 %
 \begin{figure}[htb!]
 \centering
@@ -782,19 +786,43 @@ the consuming thread --- \texttt{AppParser}.
 \label{fig:flow-local-tx}
 \end{figure}
 %
-\begin{figure}[htb!]
-\centering
-    \includegraphics[width=0.6\columnwidth]{./img/flow-local-app-parser.png}
-  \caption{Flowchart: \texttt{Local System} --- \texttt{AppParser} thread}%
-\label{fig:flow-local-app-parser}
-\end{figure}
+\paragraph{AppParser thread}
+Fig.~\ref{fig:flow-local-app-parser} depicts the flowchart for the \texttt{AppParser}
+thread.
+It waits for received data to become available, and then processes all frames in
+that shared \gls{fifo}.
+It has two main flows, depending on the frame header. If it is a command the
+data is casted to a \texttt{cmdFrame}, pushed to a shared buffer and this event
+is signaled for the \texttt{CmdHandler} thread to process these data. If it is
+an \texttt{Ad}, the data is casted to a \texttt{adFrame}, pushed to a shared
+buffer and this event is signaled to the \texttt{FileTransfer} thread so it can
+download media files.
 %
 \begin{figure}[htb!]
 \centering
-    \includegraphics[width=0.6\columnwidth]{./img/flow-local-cmd-handler.png}
+    \includegraphics[width=1.0\columnwidth]{./img/flow-local-app-parser.png}
+  \caption{Flowchart: \texttt{Local System} --- \texttt{AppParser} thread}%
+\label{fig:flow-local-app-parser}
+\end{figure}
+% 
+\paragraph{CmdHandler thread}
+Fig.~\ref{fig:flow-local-cmd-handler} depicts the flowchart for the
+\texttt{CmdHandler} thread. It waits for commands to be available, and then
+processes all commands in that shared \gls{fifo}.
+%
+\begin{figure}[htb!]
+\centering
+    \includegraphics[width=0.55\columnwidth]{./img/flow-local-cmd-handler.png}
   \caption{Flowchart: \texttt{Local System} --- \texttt{CmdHandler} thread}%
 \label{fig:flow-local-cmd-handler}
 \end{figure}
+\paragraph{TwitterShare thread}
+Fig.~\ref{fig:flow-local-twitter-share} depicts the flowchart for the
+\texttt{TwitterShare} thread. It waits for a post to be available, and then
+shares it on \texttt{Twitter} --- using \texttt{curl} and \texttt{HTTP POST}
+method under the hood. The share status is then updated and a signal is emitted
+to the waiting thread --- \texttt{UI} --- to provide appropriate feedback to the
+\texttt{User}.
 %
 \begin{figure}[htb!]
 \centering
@@ -802,6 +830,15 @@ the consuming thread --- \texttt{AppParser}.
   \caption{Flowchart: \texttt{Local System} --- \texttt{TwitterShare} thread}%
 \label{fig:flow-local-twitter-share}
 \end{figure}
+%
+\paragraph{FileTransfer thread}
+Fig.~\ref{fig:flow-local-file-transfer} depicts the flowchart for the
+\texttt{FileTransfer} thread. It waits for \texttt{Ad} frame data to be
+available and then pops it. It constructs a new \texttt{Ad} object. It then
+retrieves the \gls{csv} string \texttt{mediaURLs} and tokenizes it, using the
+comma as the delimiter token, to extract all \glspl{url}. While there are
+\glspl{url} available, the file is downloaded from the \gls{url} proxy server
+and the filename is stored in a \gls{fifo} for later reference.
 %
 \begin{figure}[htb!]
 \centering
