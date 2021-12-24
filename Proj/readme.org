@@ -5375,7 +5375,7 @@ start
 	  :LOGBOOK:
 	  - State "✔ DONE"     from              [2021-12-23 qui 18:07]
 	  :END:
-  #+BEGIN_SRC plantuml :file diags/plantuml/flowchart/output/local-tx.png
+  #+BEGIN_SRC plantuml :file diags/plantuml/flowchart/output/flow-local-tx.png
 @startuml
 '-----------------------
   note right
@@ -5390,8 +5390,8 @@ start
     repeat
 		:pthread_mutex_lock( &tx_avail_mut )
 		pthread_cond_wait( &tx_avail_cond, &tx_avail_mut )
-		RxVec.pop( &frame )
-		pthread_mutex_unlock( &rx_avail_mut );
+		TxVec.pop( &frame )
+		pthread_mutex_unlock( &tx_avail_mut );
 			''
             note right
 				wait for tx_avail 
@@ -5420,7 +5420,7 @@ start
   #+END_SRC
 
   #+RESULTS:
-  [[file:diags/plantuml/flowchart/output/local-tx.png]]
+  [[file:diags/plantuml/flowchart/output/flow-local-tx.png]]
 
 ***** ✔ DONE AppParser
       :LOGBOOK:
