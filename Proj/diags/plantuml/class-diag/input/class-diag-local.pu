@@ -5,10 +5,10 @@
 ''!theme spacelab
 ''!theme mars (does not work)
 '' -------------------- Splitting into several files -----------
-page 2x2
-skinparam pageMargin 10
-skinparam pageExternalColor gray
-skinparam pageBorderColor black
+'page 2x2
+'skinparam pageMargin 10
+'skinparam pageExternalColor gray
+'skinparam pageBorderColor black
 '' --------------------------------------------------------------
 '' remove attributes and methods icons
 skinparam classAttributeIconSize 0
@@ -423,24 +423,46 @@ class AudioManager{
   - static void run_th_fcn( void* arg)
 }
 
-enum State{
+enum Mode{
 NORMAL
 INTERACTION
 MULTIMEDIA
 SHARING
 }
 
-class FSM{
-  -int _status
-  -enum State _curState
-  -enum State _nextState
+class Ad {
+  -FILE* _vid
+  -fragType _frag
+  -bool _rented
   == constr/destr ==
-  +FSM()
-  +~FSM()
+  +Ad()
+  +~Ad()
+  == accessors ==
+  + bool rented() const
+  + enum fragType frag() const
+  + FILE* video() const
+  + boold compareAd(const Ad &otherAd) const
   == mutators ==
-  + int init()
-  + int run(enum State s)
+  + void rent(bool r)
+  + void modifyFrag(enum fragType f)
+  + void modifyVideo(FILE* f)
+  == helpers ==
+  + void print() const
+  + string serialize() 
+  + void deserialize(string values) 
 }
+
+'class FSM{
+'  -int _status
+'  -enum State _curState
+'  -enum State _nextState
+'  == constr/destr ==
+'  +FSM()
+'  +~FSM()
+'  == mutators ==
+'  + int init()
+'  + int run(enum State s)
+'}
 
 enum fragType{
 COFFEE
@@ -452,8 +474,8 @@ CALM
 
 ImageFilterEngine "1" *- "1" ImgFilterType: contains
 FragranceManager "1" *- "1" fragType: contains
-FSM "1" *- "1" State: contains
-UI "1" *-- "1" FSM: contains
+UI "1" *- "1" Mode: contains
+UI "1" *-- "many" Ad: contains
 UI "1" *-- "1" ImageFilterEngine: contains
 UI "1" *-- "1" CameraEngine: contains
 UI "1" *-u- "1" GIFGenerator: contains
