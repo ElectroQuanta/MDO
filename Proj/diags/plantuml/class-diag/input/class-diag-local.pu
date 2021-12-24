@@ -436,7 +436,7 @@ class adFrame <<(S,lightgrey)struct>>{
 fragType _frag
 int inten
 Date startTime
-Date duration
+Time duration
 }
 
 class Ad {
@@ -445,7 +445,7 @@ class Ad {
   -bool _rented
   -int inten
   -Date startTime
-  -Date duration
+  -Time duration
   == constr/destr ==
   +Ad()
   +Ad(fragType _frag, int inten, Time startTime, Time duration)
