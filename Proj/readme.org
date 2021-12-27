@@ -370,14 +370,14 @@ Design Phase must include (some specifications may vary according to your projec
      - Custom PCB for ultrasonic sensors + fragrance diffuser actuator
    - [X] Tools
      - PADS, KiCad
-2) *Software Specification* [9/11]:
+2) *Software Specification* [11/11]:
    - [X] Entity Relations Diagram
    - [X] Classes Diagram
      - [X] Remote Client
      - [X] Remote Server
      - [X] Local System
-   - [ ] Data Formats
-   - [ ] Flowcharts
+   - [X] Data Formats
+   - [X] Flowcharts
    - [X] Tasks Division (accurate plan)
    - [X] Thread Priorities
    - [X] GUI Layouts
@@ -387,7 +387,173 @@ Design Phase must include (some specifications may vary according to your projec
    - [X] Tools
 
 It is compulsory to show/identify which/where all class topics are going to be implemented and used by you! Also third-party Libraries/apps must be identified so you can use other's software and materials with our consent. 
+*** Implementation [0/3]
+1) [ ] Remote Client
+2) [ ] Remote Server
+3) [ ] Local System
 
+**** Remote Client [0/3]
+1) [ ] *UI*
+   1) [ ] Design the UI, populating with items, by phases:
+      1) Initial view: Login + Register
+      2) Main view: only if Login was successful
+2) [ ] *Sockets & Client/Server Arch*
+   1) [ ] Connect
+   2) [ ] Send
+   3) [ ] Recv
+3) [ ] /Implement classes as needed/
+   1) [ ] User
+   2) [ ] Admin
+   3) [ ] Station
+   4) [ ] Timetable
+   5) [ ] Ad
+
+_Legend_:
+- *Top priority*
+- /Medium priority/
+- ~Low priority~
+**** Remote Server [0/6]
+1) [ ] *MySQL (DB Server)*
+   1) [ ] Create tables
+   2) [ ] Run some tests
+2) [ ] DB
+   1) [ ] *handleQuery*
+   2) [ ] /UpdateLocalSys/
+   3) [ ] ~handleCmd~
+3) [ ] *Sockets & Client/Server Arch*
+   1) [ ] Accept connection
+   2) [ ] Recv
+   3) [ ] Send
+4) [ ] *Parser*
+5) [ ] /File Transfer/
+6) [ ] ~CLI~
+
+_Legend_:
+- *Top priority*
+- /Medium priority/
+- ~Low priority~
+**** Local System
+1) UI
+**** Collaborative work
+***** Folder struct
+ - code [0/3]
+   - [ ] RC
+     - [ ] src
+     - [ ] inc
+     - [ ] obj
+     - [ ] bin
+     - [ ] doc
+     - [ ] ver
+   - [ ] RS
+     - [ ] src
+     - [ ] inc
+     - [ ] obj
+     - [ ] bin
+     - [ ] doc
+     - [ ] ver
+   - [ ] LS
+     - [ ] src
+     - [ ] inc
+     - [ ] obj
+     - [ ] bin
+     - [ ] doc
+     - [ ] ver
+***** Git workflow
+ 1) Create separate branches
+    1) Example
+       1) Main: stable
+       2) Developer: ongoing work
+       3) Feature: implement specific feature
+    2) ToDo
+       1) Main: stable
+       2) Hugo: RC + RS
+	  1) Login: implement specific feature
+       3) Ze: Local
+***** Documentation
+ 1) Doxygen
+    1) Add snippets
+    2) Scope of doc
+       1) *block*: used to describe classes, functions, structures, and enumerations.
+	  #+BEGIN_SRC c
+       /**
+	* allocate dynamic memory and initialze App
+	* @return initialized App_T
+	*/
+       App_T App_init();
+	  #+END_SRC
+	  1) *Public*: public interfaces are documented in the interface file (=.h=)
+	     #+BEGIN_SRC c
+	  /**
+	   * allocate dynamic memory and initialze App
+	   * @return initialized App_T
+	   */
+	  App_T App_init();
+	     #+END_SRC
+	  2) *Private*: private interfaces are documented in the implementation file (=.c=)
+	     #+BEGIN_SRC c
+	  /**
+	   * @brief Saves the database
+	   * @param db: a constructed database
+	   * @param list: a constructed list to save
+	   * @param serialize: pointer to generic function capable of serializing 
+	   * the specific data of the database
+	   * @param print: pointer to generic function to debug info
+	   * @return true, if successfull; false otherwise
+	   *
+	   * Used to save users, activities and packs to the database.
+	   * *serialize* functions must be implemented by clients.
+	   * *print* functions must be implemented by clients.
+	   * @see User.h
+	   * @see Activity.h
+	   * @see Pack.h
+	   */
+	  static bool App_save_database(Database_T db, List_T list, 
+					void * (*serialize)(Fifo_T fifo),
+					void(*print)(void *data))
+	  {
+	      void *data;
+	      if(List_isDirty(list)) {
+		  /* Reopen database and rewind list */
+		  Database_close(db);
+		  Database_open(db, "wb");
+		  List_rewind(list);
+		  /* While an user exists */
+		  while ( (data = List_pop(list)) != NULL ) {
+		      /* Serialize object to file and remove from the list */
+		      App_serialize(db, serialize, data);
+		      List_remove(&list, data);
+		      List_rewind(list);
+		      if(print) {
+			  print(data);
+			  print_msg_wait("Wait\n", -1); 
+		      }
+		  }
+		  return true;
+        
+	      }
+	      return false;
+
+	  }
+	     #+END_SRC
+       2) *file*: used to describe modules or classes.
+	 #+BEGIN_SRC c
+       /**
+	* @file App.h
+	* @author Jose Pires
+	* @date 12 Jan 2019
+	*
+	* @brief App module containing the application logic
+	*
+	* It contains only two public functions:
+	* 1. Init - to initialize the app's memory
+	* 2. Exec - contains all application logic
+	*/
+	 #+END_SRC
+       3) *inline*: used to describe =#defines=, parameters, class members, and
+       structure and enumeration fields.
+       #+BEGIN_SRC c
+       #define DATABASE_USERS "user.db" /**< Database file for users */
+       #+END_SRC
 * Diagrams
 Diagrams can be drawn using [2/2]:
 - [X] draw.io
@@ -6494,7 +6660,7 @@ Then we compare the model with a dictionary of Gestures defined in GestureAPI.py
 7) [ ] [[pdfview:/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/biblio/A-systematic-review-on-hand-gesture-recognition-techniques,-challenges-and-applications.pdf::1][A systematic review on hand gesture recognition techniques, challenges
    and applications]]
    1) Scholar overview about hand gesture recognition
-* RDBMS                                                            :noexport:
+* RDBMS
 ** SQLite vs MySQL
 1) https://www.hostinger.com/tutorials/sqlite-vs-mysql-whats-the-difference/
 ** mySQL
@@ -6592,7 +6758,7 @@ see Multiple-line Support.
      :LOGBOOK:
      - State "✔ DONE"     from              [2021-11-30 ter 01:58]
      :END:
-1) [X] Install using terminal ([[   https://dev.mysql.com/doc/mysql-shell/8.0/en/mysql-shell-install-linux-quick.html][src]])
+1) [X] Install using terminal ([[https://dev.mysql.com/doc/mysql-shell/8.0/en/mysql-shell-install-linux-quick.html][src]])
    #+BEGIN_SRC bash
    sudo apt install mysql-shell
    #+END_SRC

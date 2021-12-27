@@ -1,38 +1,47 @@
-- [Preamble](#orgd121a4d)
-- [Versions <code>[4/4]</code>](#org4c968d1)
-- [Notes](#org4cf5563)
-  - [Requirements](#org85e6950)
-  - [Problem statement](#org4500aaa)
-  - [Research](#orga6d1389)
-    - [Topics <code>[0/3]</code>](#org73ed118)
-    - [Selection](#orgc8e1965)
-  - [Report](#org9245c76)
-    - [Outline <code>[2/8]</code>](#org4830975)
-  - [Marketing Digital Outdoor](#orgb155335)
-    - [Topics](#org220d458)
-    - [Technologies <code>[0/11]</code>](#org13a7a28)
-    - [Problem statement](#org8e91137)
-    - [Market research <code>[3/3]</code>](#org0813bf3)
-    - [Project planning](#org38a62e4)
-    - [Analysis](#org8daffcd)
-    - [Theoretical foundations <code>[17/17]</code>](#orgb70e491)
-    - [Design](#orgd44f3f2)
-- [Diagrams](#org8e5df48)
-  - [PlantUML](#orgbcfcd63)
-    - [Setup <code>[0/6]</code>](#orgc0fa2d4)
-    - [Workflow <code>[0/4]</code>](#orgb1187f9)
-    - [Sequence diagrams](#org354f044)
-    - [Component diagrams](#orgc147f14)
-    - [Deployment diagrams](#org9bcccfe)
-    - [Class diagrams](#org157a64e)
-    - [Entity-Relationship diagram](#org0104a66)
-    - [Flowcharts (activity diagram)](#org8a455c8)
-- [GIF generation](#org7c6cc87)
-  - [C++ libraries and APIs <code>[0/1]</code>](#org41e1ad4)
+- [Preamble](#org478d961)
+- [Versions <code>[4/4]</code>](#orgceba81c)
+- [Notes](#org852988e)
+  - [Requirements](#org2bf3b94)
+  - [Problem statement](#org0996af1)
+  - [Research](#orge9ac254)
+    - [Topics <code>[0/3]</code>](#org5096ce2)
+    - [Selection](#org64d3ae4)
+  - [Report](#org358b048)
+    - [Outline <code>[2/8]</code>](#org0d946ee)
+  - [Marketing Digital Outdoor](#orgd2b75e3)
+    - [Topics](#org8dfb2a1)
+    - [Technologies <code>[0/11]</code>](#orgfabeb05)
+    - [Problem statement](#org19ea396)
+    - [Market research <code>[3/3]</code>](#org58e4465)
+    - [Project planning](#org78d1da3)
+    - [Analysis](#org075c0f7)
+    - [Theoretical foundations <code>[17/17]</code>](#org385e0a7)
+    - [Design](#orgcdf15d6)
+    - [Implementation <code>[0/3]</code>](#orgf0259a0)
+- [Diagrams](#orga48df42)
+  - [PlantUML](#orgcf610c9)
+    - [Setup <code>[0/6]</code>](#org06c8ed4)
+    - [Workflow <code>[0/4]</code>](#org6c59c36)
+    - [Sequence diagrams](#org342a743)
+    - [Component diagrams](#org92318ed)
+    - [Deployment diagrams](#org0175159)
+    - [Class diagrams](#org9bd311e)
+    - [Entity-Relationship diagram](#org248610a)
+    - [Flowcharts (activity diagram)](#org8e86dfe)
+    - [Data formats](#orgdc23044)
+- [RDBMS](#org7676204)
+  - [SQLite vs MySQL](#orgb0f8488)
+  - [mySQL](#org50bf8f2)
+    - [Installation <code>[1/1]</code>](#org1852926)
+    - [Server](#orgdf910da)
+    - [Shell](#org45558db)
+    - [C++ connector](#orgae4b071)
+- [GIF generation](#orgc032293)
+  - [C++ libraries and APIs <code>[0/1]</code>](#org894d0b9)
 
 
 
-<a id="orgd121a4d"></a>
+<a id="org478d961"></a>
 
 # Preamble
 
@@ -40,7 +49,7 @@
 -   It is written incrementally, i.e., as the several project phases take place, the document versions pertaining to each phase are stored in the folder **submission**.
 
 
-<a id="org4c968d1"></a>
+<a id="orgceba81c"></a>
 
 # Versions <code>[4/4]</code>
 
@@ -50,12 +59,12 @@
 4.  [X] Design phase: <span class="timestamp-wrapper"><span class="timestamp">&lt;2021-12-15 qua 23:00&gt;</span></span>
 
 
-<a id="org4cf5563"></a>
+<a id="org852988e"></a>
 
 # Notes     :Important:
 
 
-<a id="org85e6950"></a>
+<a id="org2bf3b94"></a>
 
 ## Requirements
 
@@ -67,19 +76,19 @@
 -   Makefiles
 
 
-<a id="org4500aaa"></a>
+<a id="org0996af1"></a>
 
 ## Problem statement
 
 Think about the project and deliver a document about it.
 
 
-<a id="orga6d1389"></a>
+<a id="orge9ac254"></a>
 
 ## Research
 
 
-<a id="org73ed118"></a>
+<a id="org5096ce2"></a>
 
 ### Topics <code>[0/3]</code>
 
@@ -88,19 +97,19 @@ Think about the project and deliver a document about it.
 -   [ ] Situate the project requirements, the project constraints
 
 
-<a id="orgc8e1965"></a>
+<a id="org64d3ae4"></a>
 
 ### Selection
 
 -   [Marketing digital Outdoor](readme.md)
 
 
-<a id="org9245c76"></a>
+<a id="org358b048"></a>
 
 ## Report
 
 
-<a id="org4830975"></a>
+<a id="org0d946ee"></a>
 
 ### Outline <code>[2/8]</code>
 
@@ -151,12 +160,12 @@ Think about the project and deliver a document about it.
 8.  [ ] Conclusions
 
 
-<a id="orgb155335"></a>
+<a id="orgd2b75e3"></a>
 
 ## Marketing Digital Outdoor     :Important:
 
 
-<a id="org220d458"></a>
+<a id="org8dfb2a1"></a>
 
 ### Topics
 
@@ -197,7 +206,7 @@ Think about the project and deliver a document about it.
             -   Additionally, brands can also monitor this by checking their social media accounts.
 
 
-<a id="org13a7a28"></a>
+<a id="orgfabeb05"></a>
 
 ### Technologies <code>[0/11]</code>
 
@@ -214,12 +223,12 @@ Think about the project and deliver a document about it.
 11. [ ] Social media and e-mail sharing APIs
 
 
-<a id="org8e91137"></a>
+<a id="org19ea396"></a>
 
 ### ✔ DONE Problem statement
 
 
-<a id="org0813bf3"></a>
+<a id="org58e4465"></a>
 
 ### ✔ DONE Market research <code>[3/3]</code>
 
@@ -228,7 +237,7 @@ Think about the project and deliver a document about it.
 3.  [X] Combined marketing: are they digital outdoor + scenting?
 
 
-<a id="org38a62e4"></a>
+<a id="org78d1da3"></a>
 
 ### Project planning
 
@@ -303,7 +312,7 @@ Think about the project and deliver a document about it.
     -   [X] Camera: 14 EUR - <https://shorturl.at/gnpCU>
 
 
-<a id="org8daffcd"></a>
+<a id="org075c0f7"></a>
 
 ### ✔ DONE Analysis
 
@@ -316,7 +325,7 @@ Think about the project and deliver a document about it.
     > COMPANY -> MDO-L Staff member login RC -> RS: q mdo systems RS -> DB: query mdo-systems DB -> RS: std::<vector> mdo<sub>systems</sub> for(i = 0; i < mdo<sub>systems.size</sub>(); i++ ) RS -> RC: mdo<sub>systems</sub>[i] RC -> RC: Select MDO-L machine Send command RC -> RS: mdo <nr> <command> (mdo 1 get mode) RS -> RS: parse command RS -> RS: get mdo<sub>nr</sub> IP (query mdo-systems 1 IP) RS -> MDO-L: connect IP:port MDO-L -> RS: connected RS -> MDO-L: get mode MDO-L -> RS: normal mode (example) RS -> RC: normal
 
 
-<a id="orgb70e491"></a>
+<a id="org385e0a7"></a>
 
 ### ✔ DONE Theoretical foundations <code>[17/17]</code>
 
@@ -348,7 +357,7 @@ Legend:
 -   *Hugo*
 
 
-<a id="orgd44f3f2"></a>
+<a id="orgcdf15d6"></a>
 
 ### ▭▭ IN-PROGRESS Design
 
@@ -386,16 +395,16 @@ Design Phase must include (some specifications may vary according to your projec
         -   Custom PCB for ultrasonic sensors + fragrance diffuser actuator
     -   [X] Tools
         -   PADS, KiCad
-2.  **Software Specification** <code>[6/11]</code>:
-    -   [ ] Entity Relations Diagram
+2.  **Software Specification** <code>[11/11]</code>:
+    -   [X] Entity Relations Diagram
     -   [X] Classes Diagram
         -   [X] Remote Client
         -   [X] Remote Server
         -   [X] Local System
-    -   [ ] Data Formats
-    -   [ ] Flowcharts
-    -   [ ] Tasks Division (accurate plan)
-    -   [ ] Thread Priorities
+    -   [X] Data Formats
+    -   [X] Flowcharts
+    -   [X] Tasks Division (accurate plan)
+    -   [X] Thread Priorities
     -   [X] GUI Layouts
     -   [X] Test Cases
     -   [X] Software COTs
@@ -405,7 +414,201 @@ Design Phase must include (some specifications may vary according to your projec
 It is compulsory to show/identify which/where all class topics are going to be implemented and used by you! Also third-party Libraries/apps must be identified so you can use other's software and materials with our consent.
 
 
-<a id="org8e5df48"></a>
+<a id="orgf0259a0"></a>
+
+### Implementation <code>[0/3]</code>
+
+1.  [ ] Remote Client
+2.  [ ] Remote Server
+3.  [ ] Local System
+
+1.  Remote Client <code>[0/3]</code>
+
+    1.  [ ] **UI**
+        1.  [ ] Design the UI, populating with items, by phases:
+            1.  Initial view: Login + Register
+            2.  Main view: only if Login was successful
+    2.  [ ] **Sockets & Client/Server Arch**
+        1.  [ ] Connect
+        2.  [ ] Send
+        3.  [ ] Recv
+    3.  [ ] *Implement classes as needed*
+        1.  [ ] User
+        2.  [ ] Admin
+        3.  [ ] Station
+        4.  [ ] Timetable
+        5.  [ ] Ad
+    
+    <span class="underline">Legend</span>:
+    
+    -   **Top priority**
+    -   *Medium priority*
+    -   `Low priority`
+
+2.  Remote Server <code>[0/6]</code>
+
+    1.  [ ] **MySQL (DB Server)**
+        1.  [ ] Create tables
+        2.  [ ] Run some tests
+    2.  [ ] DB
+        1.  [ ] **handleQuery**
+        2.  [ ] *UpdateLocalSys*
+        3.  [ ] `handleCmd`
+    3.  [ ] **Sockets & Client/Server Arch**
+        1.  [ ] Accept connection
+        2.  [ ] Recv
+        3.  [ ] Send
+    4.  [ ] **Parser**
+    5.  [ ] *File Transfer*
+    6.  [ ] `CLI`
+    
+    <span class="underline">Legend</span>:
+    
+    -   **Top priority**
+    -   *Medium priority*
+    -   `Low priority`
+
+3.  Local System
+
+    1.  UI
+
+4.  Collaborative work
+
+    1.  Folder struct
+    
+        -   code <code>[0/3]</code>
+            -   [ ] RC
+                -   [ ] src
+                -   [ ] inc
+                -   [ ] obj
+                -   [ ] bin
+                -   [ ] doc
+                -   [ ] ver
+            -   [ ] RS
+                -   [ ] src
+                -   [ ] inc
+                -   [ ] obj
+                -   [ ] bin
+                -   [ ] doc
+                -   [ ] ver
+            -   [ ] LS
+                -   [ ] src
+                -   [ ] inc
+                -   [ ] obj
+                -   [ ] bin
+                -   [ ] doc
+                -   [ ] ver
+    
+    2.  Git workflow
+    
+        1.  Create separate branches
+            1.  Example
+                1.  Main: stable
+                2.  Developer: ongoing work
+                3.  Feature: implement specific feature
+            2.  ToDo
+                1.  Main: stable
+                2.  Hugo: RC + RS
+                    1.  Login: implement specific feature
+                3.  Ze: Local
+    
+    3.  Documentation
+    
+        1.  Doxygen
+            1.  Add snippets
+            2.  Scope of doc
+                
+                1.  **block**: used to describe classes, functions, structures, and enumerations.
+                    
+                    ```c
+                    /**
+                     * allocate dynamic memory and initialze App
+                     * @return initialized App_T
+                     */
+                    App_T App_init();
+                    ```
+                    
+                    1.  **Public**: public interfaces are documented in the interface file (`.h`)
+                        
+                        ```c
+                        /**
+                         * allocate dynamic memory and initialze App
+                         * @return initialized App_T
+                         */
+                        App_T App_init();
+                        ```
+                    2.  **Private**: private interfaces are documented in the implementation file (`.c`)
+                        
+                        ```c
+                        /**
+                         * @brief Saves the database
+                         * @param db: a constructed database
+                         * @param list: a constructed list to save
+                         * @param serialize: pointer to generic function capable of serializing 
+                         * the specific data of the database
+                         * @param print: pointer to generic function to debug info
+                         * @return true, if successfull; false otherwise
+                         *
+                         * Used to save users, activities and packs to the database.
+                         * *serialize* functions must be implemented by clients.
+                         * *print* functions must be implemented by clients.
+                         * @see User.h
+                         * @see Activity.h
+                         * @see Pack.h
+                         */
+                        static bool App_save_database(Database_T db, List_T list, 
+                        			      void * (*serialize)(Fifo_T fifo),
+                        			      void(*print)(void *data))
+                        {
+                            void *data;
+                            if(List_isDirty(list)) {
+                        	/* Reopen database and rewind list */
+                        	Database_close(db);
+                        	Database_open(db, "wb");
+                        	List_rewind(list);
+                        	/* While an user exists */
+                        	while ( (data = List_pop(list)) != NULL ) {
+                        	    /* Serialize object to file and remove from the list */
+                        	    App_serialize(db, serialize, data);
+                        	    List_remove(&list, data);
+                        	    List_rewind(list);
+                        	    if(print) {
+                        		print(data);
+                        		print_msg_wait("Wait\n", -1); 
+                        	    }
+                        	}
+                        	return true;
+                        
+                            }
+                            return false;
+                        
+                        }
+                        ```
+                2.  **file**: used to describe modules or classes.
+                    
+                    ```c
+                    /**
+                     * @file App.h
+                     * @author Jose Pires
+                     * @date 12 Jan 2019
+                     *
+                     * @brief App module containing the application logic
+                     *
+                     * It contains only two public functions:
+                     * 1. Init - to initialize the app's memory
+                     * 2. Exec - contains all application logic
+                     */
+                    ```
+                3.  **inline**: used to describe `#defines`, parameters, class members, and
+                
+                structure and enumeration fields.
+                
+                ```c
+                #define DATABASE_USERS "user.db" /**< Database file for users */
+                ```
+
+
+<a id="orga48df42"></a>
 
 # Diagrams
 
@@ -414,7 +617,7 @@ Diagrams can be drawn using <code>[2/2]</code>:
 -   [X] draw.io
     -   User mockups
     -   State-machine
--   [X] [PlantUML](#orgbcfcd63) (stored in Proj/diags/plantuml)
+-   [X] [PlantUML](#orgcf610c9) (stored in Proj/diags/plantuml)
     -   Sequence diagram
     -   Class diagram
     -   Component diagram
@@ -422,14 +625,14 @@ Diagrams can be drawn using <code>[2/2]</code>:
     -   Entity-Relationship diagram
 
 
-<a id="orgbcfcd63"></a>
+<a id="orgcf610c9"></a>
 
 ## PlantUML
 
 [PlantUML](https://plantuml.com/) is a tool for quickly drawing diagrams from text based descriptions. It is specially adequate for sequence diagrams, as draw.io is not very fluid.
 
 
-<a id="orgc0fa2d4"></a>
+<a id="org06c8ed4"></a>
 
 ### Setup <code>[0/6]</code>
 
@@ -445,7 +648,7 @@ Diagrams can be drawn using <code>[2/2]</code>:
 6.  [ ] Check the generate png file: `output/test.png`
 
 
-<a id="orgb1187f9"></a>
+<a id="org6c59c36"></a>
 
 ### Workflow <code>[0/4]</code>
 
@@ -459,7 +662,7 @@ Diagrams can be drawn using <code>[2/2]</code>:
 4.  [ ] Check the generate png file: `output/test.png`
 
 
-<a id="org354f044"></a>
+<a id="org342a743"></a>
 
 ### ✔ DONE Sequence diagrams
 
@@ -976,7 +1179,7 @@ Diagrams can be drawn using <code>[2/2]</code>:
     ![img](diags/plantuml/seq-diag/examples/all-together.png)
 
 
-<a id="orgc147f14"></a>
+<a id="org92318ed"></a>
 
 ### ✔ DONE Component diagrams
 
@@ -1047,9 +1250,13 @@ You can use component diagrams to model the software architecture of a system. C
         ![img](diags/plantuml/component-diag/output/component-diag-local.png)
         
         ![img](diags/plantuml/component-diag/output/component-diag-local-no-links.png)
+    
+    4.  Local System Threads
+    
+        ![img](diags/plantuml/component-diag/output/component-diag-local-threads.png)
 
 
-<a id="org9bcccfe"></a>
+<a id="org0175159"></a>
 
 ### ✔ DONE Deployment diagrams
 
@@ -1098,7 +1305,7 @@ Deployment diagrams, which you typically prepare during the implementation phase
     ![img](diags/plantuml/deploy-diag/output/deploy-diag.png)
 
 
-<a id="org157a64e"></a>
+<a id="org9bd311e"></a>
 
 ### ▭▭ IN-PROGRESS Class diagrams
 
@@ -1166,7 +1373,7 @@ Deployment diagrams, which you typically prepare during the implementation phase
     -   class for all classes,
     -   interface for all interfaces,
     -   enum for all enums,
-    -   <a id="org2644d18"></a> for classes which are stereotyped with foo1,
+    -   <a id="orgac62182"></a> for classes which are stereotyped with foo1,
     -   an existing class name.
     
     You can use several show/hide commands to define rules and exceptions.
@@ -1247,9 +1454,9 @@ Deployment diagrams, which you typically prepare during the implementation phase
         ![img](diags/plantuml/class-diag/output/class-diag-local.png)
 
 
-<a id="org0104a66"></a>
+<a id="org248610a"></a>
 
-### Entity-Relationship diagram
+### ✔ DONE Entity-Relationship diagram
 
 [src](https://plantuml.com/ie-diagram)
 
@@ -1298,9 +1505,9 @@ Otherwise, the syntax for drawing diagrams is the same as for class diagrams. Al
 3.  [DB design and implementation using SQL](db.md)     :Important:
 
 
-<a id="org8a455c8"></a>
+<a id="org8e86dfe"></a>
 
-### Flowcharts (activity diagram)
+### ▭▭ IN-PROGRESS Flowcharts (activity diagram)
 
 1.  Conditionals
 
@@ -1308,15 +1515,233 @@ Otherwise, the syntax for drawing diagrams is the same as for class diagrams. Al
     
     ![img](diags/plantuml/flowchart/output/switch-case.png)
 
-2.  Switch-case
+2.  Connector
+
+    ![img](diags/plantuml/flowchart/output/connector.png)
+
+3.  Specification and Description Language (SDL)
+
+    By changing the final ; separator, you can set different rendering for the activity:
+    
+    -   |
+    -   <
+    -   >
+    -   /
+    -   
+    -   ]
+    -   }
+        
+        ![img](diags/plantuml/flowchart/output/sdl.png)
+
+4.  Full example
+
+    ![img](diags/plantuml/flowchart/output/full-example.png)
+    
+    ![img](diags/plantuml/flowchart/output/test1.png)
+    
+    ![img](diags/plantuml/flowchart/output/test2.png)
+
+5.  Mine (to generate report)     :Important:
+
+    1.  ✔ DONE User Detection
+    
+        ![img](diags/plantuml/flowchart/output/local-user-detect.png)
+    
+    2.  ✔ DONE FrameGrabber
+    
+        ![img](diags/plantuml/flowchart/output/local-frame-grabber.png)
+    
+    3.  ✔ DONE LocalRx
+    
+        ![img](diags/plantuml/flowchart/output/local-rx.png)
+    
+    4.  ✔ DONE LocalTx
+    
+        ![img](diags/plantuml/flowchart/output/flow-local-tx.png)
+    
+    5.  ✔ DONE AppParser
+    
+        ![img](diags/plantuml/flowchart/output/local-app-parser.png)
+    
+    6.  ✔ DONE CmdHandler
+    
+        ![img](diags/plantuml/flowchart/output/local-cmd-handler.png)
+    
+    7.  ✔ DONE TwitterShare
+    
+        ![img](diags/plantuml/flowchart/output/local-twitter-share.png)
+    
+    8.  ✔ DONE FileTransfer
+    
+        ![img](diags/plantuml/flowchart/output/local-file-transfer.png)
+    
+    9.  ✘ CANCELED AudioMan
+    
+    10. ✔ DONE VideoMan
+    
+        ![img](diags/plantuml/flowchart/output/flow-local-video-man.png)
+    
+    11. ✔ DONE FragMan
+    
+        ![img](diags/plantuml/flowchart/output/flow-local-frag-man.png)
+    
+    12. ✔ DONE GIFGenerator
+    
+        ![img](diags/plantuml/flowchart/output/local-gif-gen.png)
 
 
-<a id="org7c6cc87"></a>
+<a id="orgdc23044"></a>
+
+### ✔ DONE Data formats
+
+![img](diags/plantuml/misc/output/data-formats.png)
+
+
+<a id="org7676204"></a>
+
+# RDBMS
+
+
+<a id="orgb0f8488"></a>
+
+## SQLite vs MySQL
+
+1.  <https://www.hostinger.com/tutorials/sqlite-vs-mysql-whats-the-difference/>
+
+
+<a id="org50bf8f2"></a>
+
+## mySQL
+
+
+<a id="org1852926"></a>
+
+### Installation <code>[1/1]</code>
+
+1.  [X] Add APT repository (see [here](#org5bd22ff))
+2.  [ ] Install server (see [here](#org94d7ef2))
+3.  [X] Install client (see [here](#org455039c))
+
+1.  ✔ DONE Add APT repository <code>[4/4]</code>
+
+    1.  [X] Download APT repository: from [here](https://dev.mysql.com/downloads/repo/apt/)
+    2.  [X] Install APT repository using ([src](https://dev.mysql.com/doc/mysql-apt-repo-quick-guide/en/#apt-repo-setup)):
+        
+        ```bash
+        sudo dpkg -i /PATH/version-specific-package-name.deb
+        # example
+        # sudo dpkg -i /PATH/version-specific-package-name.deb
+        ```
+    3.  [X] During the installation, you'll be asked what components to install.
+        1.  Choose `none`
+        2.  Press `ok` to finish
+    4.  [X] Update package info from APT repository (this step is mandatory):
+        
+        ```bash
+        sudo apt get update
+        ```
+
+
+<a id="orgdf910da"></a>
+
+### Server
+
+1.  Installation <code>[2/5]</code>
+
+    1.  [X] Install mySQL server
+        
+        ```bash
+        sudo apt install mysql-server 
+        ```
+    2.  [X] Protect the server before deploying: perform secure installation
+        
+        ```bash
+        sudo mysql_secure_installation
+        # say yes to validate with password
+        y
+        # select security level of password: medium
+        1
+        # input password
+        ESRG-MDO-Hugo-Ze@2021
+        # continue with the password provided: yes
+        y
+        # Remove annonymous users from DB: yes (they can be added back later)
+        y
+        # disable root login remotely: yes
+        y
+        # Remove test database: yes
+        y
+        # Reload privilege tables: yes
+        y
+        ```
+    3.  [ ] Enable MySQL to run at boot
+        
+        ```bash
+        sudo systemctl enable --now mysql.service 
+        ```
+    4.  [ ] Check the status of the service
+        
+        ```bash
+        systemctl status mysql.service 
+        ```
+    5.  [ ] Whitelist mySQL service through firewall
+        1.  Check firewall status
+            
+            ```bash
+            sudo ufw status 
+            ```
+            
+            1.  No rule should be active, and so, it should only show `status: active`
+        2.  Whitelist it
+            
+            ```bash
+            sudo ufw allow mysql
+            ```
+        3.  Check firewall status
+            
+            ```bash
+            sudo ufw status 
+            ```
+            
+            1.  A rule should be active (mySQL), and available at port `3306` (the default for mySQL)
+
+
+<a id="org45558db"></a>
+
+### Shell
+
+MySQL Shell provides an interactive code execution mode, where you type code at the MySQL Shell prompt and each entered statement is processed, with the result of the processing printed onscreen. Unicode text input is supported if the terminal in use supports it. Color terminals are supported. ([src](https://dev.mysql.com/doc/mysql-shell/8.0/en/mysql-shell-features.html))
+
+Multiple-line code can be written using a command, enabling MySQL Shell to cache multiple lines and then execute them as a single statement. For more information see Multiple-line Support.
+
+1.  ✔ DONE Installation <code>[1/1]</code>
+
+    1.  [X] Install using terminal ([src](https://dev.mysql.com/doc/mysql-shell/8.0/en/mysql-shell-install-linux-quick.html))
+        
+        ```bash
+        sudo apt install mysql-shell
+        ```
+
+
+<a id="orgae4b071"></a>
+
+### C++ connector
+
+1.  Introduction
+
+    [src](https://dev.mysql.com/doc/connector-cpp/8.0/en/connector-cpp-introduction.html)
+
+2.  Usage examples
+
+    src
+
+
+<a id="orgc032293"></a>
 
 # GIF generation
 
 
-<a id="org41e1ad4"></a>
+<a id="org894d0b9"></a>
 
 ## C++ libraries and APIs <code>[0/1]</code>
 
