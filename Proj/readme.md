@@ -1,47 +1,47 @@
-- [Preamble](#org478d961)
-- [Versions <code>[4/4]</code>](#orgceba81c)
-- [Notes](#org852988e)
-  - [Requirements](#org2bf3b94)
-  - [Problem statement](#org0996af1)
-  - [Research](#orge9ac254)
-    - [Topics <code>[0/3]</code>](#org5096ce2)
-    - [Selection](#org64d3ae4)
-  - [Report](#org358b048)
-    - [Outline <code>[2/8]</code>](#org0d946ee)
-  - [Marketing Digital Outdoor](#orgd2b75e3)
-    - [Topics](#org8dfb2a1)
-    - [Technologies <code>[0/11]</code>](#orgfabeb05)
-    - [Problem statement](#org19ea396)
-    - [Market research <code>[3/3]</code>](#org58e4465)
-    - [Project planning](#org78d1da3)
-    - [Analysis](#org075c0f7)
-    - [Theoretical foundations <code>[17/17]</code>](#org385e0a7)
-    - [Design](#orgcdf15d6)
-    - [Implementation <code>[0/3]</code>](#orgf0259a0)
-- [Diagrams](#orga48df42)
-  - [PlantUML](#orgcf610c9)
-    - [Setup <code>[0/6]</code>](#org06c8ed4)
-    - [Workflow <code>[0/4]</code>](#org6c59c36)
-    - [Sequence diagrams](#org342a743)
-    - [Component diagrams](#org92318ed)
-    - [Deployment diagrams](#org0175159)
-    - [Class diagrams](#org9bd311e)
-    - [Entity-Relationship diagram](#org248610a)
-    - [Flowcharts (activity diagram)](#org8e86dfe)
-    - [Data formats](#orgdc23044)
-- [RDBMS](#org7676204)
-  - [SQLite vs MySQL](#orgb0f8488)
-  - [mySQL](#org50bf8f2)
-    - [Installation <code>[1/1]</code>](#org1852926)
-    - [Server](#orgdf910da)
-    - [Shell](#org45558db)
-    - [C++ connector](#orgae4b071)
-- [GIF generation](#orgc032293)
-  - [C++ libraries and APIs <code>[0/1]</code>](#org894d0b9)
+- [Preamble](#org378fcfc)
+- [Versions <code>[4/4]</code>](#orga06a8f8)
+- [Notes](#orgcaf0160)
+  - [Requirements](#orge60897b)
+  - [Problem statement](#orgaa42e67)
+  - [Research](#org59b79aa)
+    - [Topics <code>[0/3]</code>](#orgc7ca065)
+    - [Selection](#orgd8b8cfa)
+  - [Report](#org388451e)
+    - [Outline <code>[2/8]</code>](#orgb602c65)
+  - [Marketing Digital Outdoor](#orgd1ac3e1)
+    - [Topics](#org8e397c4)
+    - [Technologies <code>[0/11]</code>](#org3bc3cca)
+    - [Problem statement](#orgd6e841a)
+    - [Market research <code>[3/3]</code>](#orgd2d2459)
+    - [Project planning](#org0b738cc)
+    - [Analysis](#org9ee2755)
+    - [Theoretical foundations <code>[17/17]</code>](#org554feb9)
+    - [Design](#orgdf192ee)
+    - [Implementation <code>[0/3]</code>](#org0b533ad)
+- [Diagrams](#org612561d)
+  - [PlantUML](#orgeaa152d)
+    - [Setup <code>[0/6]</code>](#org2b2de13)
+    - [Workflow <code>[0/4]</code>](#org18529ba)
+    - [Sequence diagrams](#org4687913)
+    - [Component diagrams](#orgac93447)
+    - [Deployment diagrams](#orgd15c911)
+    - [Class diagrams](#orga5f2d0e)
+    - [Entity-Relationship diagram](#org6bd0b76)
+    - [Flowcharts (activity diagram)](#org66683c9)
+    - [Data formats](#orgabe7c5d)
+- [RDBMS](#orgde905c5)
+  - [SQLite vs MySQL](#orga09d462)
+  - [mySQL](#org495d3e0)
+    - [Installation <code>[1/1]</code>](#org186540c)
+    - [Server](#org64511c9)
+    - [Shell](#orge5b5b8b)
+    - [C++ connector](#org015c23d)
+- [GIF generation](#orgd4f15e6)
+  - [C++ libraries and APIs <code>[0/1]</code>](#orgd04f075)
 
 
 
-<a id="org478d961"></a>
+<a id="org378fcfc"></a>
 
 # Preamble
 
@@ -49,7 +49,7 @@
 -   It is written incrementally, i.e., as the several project phases take place, the document versions pertaining to each phase are stored in the folder **submission**.
 
 
-<a id="orgceba81c"></a>
+<a id="orga06a8f8"></a>
 
 # Versions <code>[4/4]</code>
 
@@ -59,12 +59,12 @@
 4.  [X] Design phase: <span class="timestamp-wrapper"><span class="timestamp">&lt;2021-12-15 qua 23:00&gt;</span></span>
 
 
-<a id="org852988e"></a>
+<a id="orgcaf0160"></a>
 
 # Notes     :Important:
 
 
-<a id="org2bf3b94"></a>
+<a id="orge60897b"></a>
 
 ## Requirements
 
@@ -76,19 +76,19 @@
 -   Makefiles
 
 
-<a id="org0996af1"></a>
+<a id="orgaa42e67"></a>
 
 ## Problem statement
 
 Think about the project and deliver a document about it.
 
 
-<a id="orge9ac254"></a>
+<a id="org59b79aa"></a>
 
 ## Research
 
 
-<a id="org5096ce2"></a>
+<a id="orgc7ca065"></a>
 
 ### Topics <code>[0/3]</code>
 
@@ -97,19 +97,19 @@ Think about the project and deliver a document about it.
 -   [ ] Situate the project requirements, the project constraints
 
 
-<a id="org64d3ae4"></a>
+<a id="orgd8b8cfa"></a>
 
 ### Selection
 
 -   [Marketing digital Outdoor](readme.md)
 
 
-<a id="org358b048"></a>
+<a id="org388451e"></a>
 
 ## Report
 
 
-<a id="org0d946ee"></a>
+<a id="orgb602c65"></a>
 
 ### Outline <code>[2/8]</code>
 
@@ -160,12 +160,12 @@ Think about the project and deliver a document about it.
 8.  [ ] Conclusions
 
 
-<a id="orgd2b75e3"></a>
+<a id="orgd1ac3e1"></a>
 
 ## Marketing Digital Outdoor     :Important:
 
 
-<a id="org8dfb2a1"></a>
+<a id="org8e397c4"></a>
 
 ### Topics
 
@@ -206,7 +206,7 @@ Think about the project and deliver a document about it.
             -   Additionally, brands can also monitor this by checking their social media accounts.
 
 
-<a id="orgfabeb05"></a>
+<a id="org3bc3cca"></a>
 
 ### Technologies <code>[0/11]</code>
 
@@ -223,12 +223,12 @@ Think about the project and deliver a document about it.
 11. [ ] Social media and e-mail sharing APIs
 
 
-<a id="org19ea396"></a>
+<a id="orgd6e841a"></a>
 
 ### ✔ DONE Problem statement
 
 
-<a id="org58e4465"></a>
+<a id="orgd2d2459"></a>
 
 ### ✔ DONE Market research <code>[3/3]</code>
 
@@ -237,7 +237,7 @@ Think about the project and deliver a document about it.
 3.  [X] Combined marketing: are they digital outdoor + scenting?
 
 
-<a id="org78d1da3"></a>
+<a id="org0b738cc"></a>
 
 ### Project planning
 
@@ -312,7 +312,7 @@ Think about the project and deliver a document about it.
     -   [X] Camera: 14 EUR - <https://shorturl.at/gnpCU>
 
 
-<a id="org075c0f7"></a>
+<a id="org9ee2755"></a>
 
 ### ✔ DONE Analysis
 
@@ -325,7 +325,7 @@ Think about the project and deliver a document about it.
     > COMPANY -> MDO-L Staff member login RC -> RS: q mdo systems RS -> DB: query mdo-systems DB -> RS: std::<vector> mdo<sub>systems</sub> for(i = 0; i < mdo<sub>systems.size</sub>(); i++ ) RS -> RC: mdo<sub>systems</sub>[i] RC -> RC: Select MDO-L machine Send command RC -> RS: mdo <nr> <command> (mdo 1 get mode) RS -> RS: parse command RS -> RS: get mdo<sub>nr</sub> IP (query mdo-systems 1 IP) RS -> MDO-L: connect IP:port MDO-L -> RS: connected RS -> MDO-L: get mode MDO-L -> RS: normal mode (example) RS -> RC: normal
 
 
-<a id="org385e0a7"></a>
+<a id="org554feb9"></a>
 
 ### ✔ DONE Theoretical foundations <code>[17/17]</code>
 
@@ -357,7 +357,7 @@ Legend:
 -   *Hugo*
 
 
-<a id="orgcdf15d6"></a>
+<a id="orgdf192ee"></a>
 
 ### ▭▭ IN-PROGRESS Design
 
@@ -414,7 +414,7 @@ Design Phase must include (some specifications may vary according to your projec
 It is compulsory to show/identify which/where all class topics are going to be implemented and used by you! Also third-party Libraries/apps must be identified so you can use other's software and materials with our consent.
 
 
-<a id="orgf0259a0"></a>
+<a id="org0b533ad"></a>
 
 ### Implementation <code>[0/3]</code>
 
@@ -468,9 +468,60 @@ It is compulsory to show/identify which/where all class topics are going to be i
     -   *Medium priority*
     -   `Low priority`
 
-3.  Local System
+3.  Local System <code>[0/2]</code>
 
-    1.  UI
+    1.  [ ] `HW` <code>[0/3]</code>
+        1.  [ ] Tests <code>[0/6]</code>:
+            1.  [ ] Power Supply
+            2.  [ ] LCD Display
+            3.  [ ] Speakers
+            4.  [ ] Fragrance diffuser
+            5.  [ ] Camera
+            6.  [ ] Ultrasonic sensor
+        2.  [ ] Mechanical design
+        3.  [ ] PCB manufacturing
+    2.  [ ] SW: implementation <code>[0/2]</code>
+        1.  [ ] Linux & Raspbian tests <code>[0/8]</code>
+            1.  [ ] **UI**
+                1.  [ ] Design the UI, populating with items, by phases:
+                    1.  Initial view: Login + Register
+                    2.  Main view: only if Login was successful
+            2.  [ ] **Sockets & Client/Server Arch** <code>[0/3]</code>
+                1.  [ ] Connect
+                2.  [ ] Send
+                3.  [ ] Recv
+            3.  [ ] **Computer Vision** <code>[0/4]</code>
+                1.  [ ] **Frame grabbing**
+                2.  [ ] **Face detection**
+                3.  [ ] **Gesture recognition**
+                    1.  [ ] Determine set of gestures required
+                    2.  [ ] Create database of gestures
+                4.  [ ] *Image filter overlay*
+            4.  [ ] *Normal mode* <code>[0/3]</code>
+                1.  [ ] **Video reproduction**
+                2.  [ ] **Audio reproduction**
+                3.  [ ] *Fragrance diffusion* <code>[0/2]</code>
+                    1.  [ ] Device driver
+                    2.  [ ] Daemon
+            5.  [ ] *User detection*
+                1.  [ ] *Device driver*
+                2.  [ ] *Daemon*
+            6.  [ ] *Twitter sharing*
+                1.  [ ] Create post
+                2.  [ ] Share
+                3.  [ ] Handle response
+            7.  [ ] `GIF generator`
+            8.  [ ] `File transfer`
+        2.  [ ] Raspberry Pi deployment <code>[0/3]</code>
+            1.  [ ] Buildroot customization
+            2.  [ ] Startup/Shutdown sequence
+            3.  [ ] System verification
+    
+    <span class="underline">Legend</span>:
+    
+    -   **Top priority**
+    -   *Medium priority*
+    -   `Low priority`
 
 4.  Collaborative work
 
@@ -608,7 +659,7 @@ It is compulsory to show/identify which/where all class topics are going to be i
                 ```
 
 
-<a id="orga48df42"></a>
+<a id="org612561d"></a>
 
 # Diagrams
 
@@ -617,7 +668,7 @@ Diagrams can be drawn using <code>[2/2]</code>:
 -   [X] draw.io
     -   User mockups
     -   State-machine
--   [X] [PlantUML](#orgcf610c9) (stored in Proj/diags/plantuml)
+-   [X] [PlantUML](#orgeaa152d) (stored in Proj/diags/plantuml)
     -   Sequence diagram
     -   Class diagram
     -   Component diagram
@@ -625,14 +676,14 @@ Diagrams can be drawn using <code>[2/2]</code>:
     -   Entity-Relationship diagram
 
 
-<a id="orgcf610c9"></a>
+<a id="orgeaa152d"></a>
 
 ## PlantUML
 
 [PlantUML](https://plantuml.com/) is a tool for quickly drawing diagrams from text based descriptions. It is specially adequate for sequence diagrams, as draw.io is not very fluid.
 
 
-<a id="org06c8ed4"></a>
+<a id="org2b2de13"></a>
 
 ### Setup <code>[0/6]</code>
 
@@ -648,7 +699,7 @@ Diagrams can be drawn using <code>[2/2]</code>:
 6.  [ ] Check the generate png file: `output/test.png`
 
 
-<a id="org6c59c36"></a>
+<a id="org18529ba"></a>
 
 ### Workflow <code>[0/4]</code>
 
@@ -662,7 +713,7 @@ Diagrams can be drawn using <code>[2/2]</code>:
 4.  [ ] Check the generate png file: `output/test.png`
 
 
-<a id="org342a743"></a>
+<a id="org4687913"></a>
 
 ### ✔ DONE Sequence diagrams
 
@@ -1179,7 +1230,7 @@ Diagrams can be drawn using <code>[2/2]</code>:
     ![img](diags/plantuml/seq-diag/examples/all-together.png)
 
 
-<a id="org92318ed"></a>
+<a id="orgac93447"></a>
 
 ### ✔ DONE Component diagrams
 
@@ -1256,7 +1307,7 @@ You can use component diagrams to model the software architecture of a system. C
         ![img](diags/plantuml/component-diag/output/component-diag-local-threads.png)
 
 
-<a id="org0175159"></a>
+<a id="orgd15c911"></a>
 
 ### ✔ DONE Deployment diagrams
 
@@ -1305,7 +1356,7 @@ Deployment diagrams, which you typically prepare during the implementation phase
     ![img](diags/plantuml/deploy-diag/output/deploy-diag.png)
 
 
-<a id="org9bd311e"></a>
+<a id="orga5f2d0e"></a>
 
 ### ▭▭ IN-PROGRESS Class diagrams
 
@@ -1373,7 +1424,7 @@ Deployment diagrams, which you typically prepare during the implementation phase
     -   class for all classes,
     -   interface for all interfaces,
     -   enum for all enums,
-    -   <a id="orgac62182"></a> for classes which are stereotyped with foo1,
+    -   <a id="org3d5c72d"></a> for classes which are stereotyped with foo1,
     -   an existing class name.
     
     You can use several show/hide commands to define rules and exceptions.
@@ -1454,7 +1505,7 @@ Deployment diagrams, which you typically prepare during the implementation phase
         ![img](diags/plantuml/class-diag/output/class-diag-local.png)
 
 
-<a id="org248610a"></a>
+<a id="org6bd0b76"></a>
 
 ### ✔ DONE Entity-Relationship diagram
 
@@ -1505,7 +1556,7 @@ Otherwise, the syntax for drawing diagrams is the same as for class diagrams. Al
 3.  [DB design and implementation using SQL](db.md)     :Important:
 
 
-<a id="org8e86dfe"></a>
+<a id="org66683c9"></a>
 
 ### ▭▭ IN-PROGRESS Flowcharts (activity diagram)
 
@@ -1590,37 +1641,37 @@ Otherwise, the syntax for drawing diagrams is the same as for class diagrams. Al
         ![img](diags/plantuml/flowchart/output/local-gif-gen.png)
 
 
-<a id="orgdc23044"></a>
+<a id="orgabe7c5d"></a>
 
 ### ✔ DONE Data formats
 
 ![img](diags/plantuml/misc/output/data-formats.png)
 
 
-<a id="org7676204"></a>
+<a id="orgde905c5"></a>
 
 # RDBMS
 
 
-<a id="orgb0f8488"></a>
+<a id="orga09d462"></a>
 
 ## SQLite vs MySQL
 
 1.  <https://www.hostinger.com/tutorials/sqlite-vs-mysql-whats-the-difference/>
 
 
-<a id="org50bf8f2"></a>
+<a id="org495d3e0"></a>
 
 ## mySQL
 
 
-<a id="org1852926"></a>
+<a id="org186540c"></a>
 
 ### Installation <code>[1/1]</code>
 
-1.  [X] Add APT repository (see [here](#org5bd22ff))
-2.  [ ] Install server (see [here](#org94d7ef2))
-3.  [X] Install client (see [here](#org455039c))
+1.  [X] Add APT repository (see [here](#orge55e9fd))
+2.  [ ] Install server (see [here](#orgf6d93e8))
+3.  [X] Install client (see [here](#orgc68909e))
 
 1.  ✔ DONE Add APT repository <code>[4/4]</code>
 
@@ -1642,7 +1693,7 @@ Otherwise, the syntax for drawing diagrams is the same as for class diagrams. Al
         ```
 
 
-<a id="orgdf910da"></a>
+<a id="org64511c9"></a>
 
 ### Server
 
@@ -1706,7 +1757,7 @@ Otherwise, the syntax for drawing diagrams is the same as for class diagrams. Al
             1.  A rule should be active (mySQL), and available at port `3306` (the default for mySQL)
 
 
-<a id="org45558db"></a>
+<a id="orge5b5b8b"></a>
 
 ### Shell
 
@@ -1723,7 +1774,7 @@ Multiple-line code can be written using a command, enabling MySQL Shell to cache
         ```
 
 
-<a id="orgae4b071"></a>
+<a id="org015c23d"></a>
 
 ### C++ connector
 
@@ -1736,12 +1787,12 @@ Multiple-line code can be written using a command, enabling MySQL Shell to cache
     src
 
 
-<a id="orgc032293"></a>
+<a id="orgd4f15e6"></a>
 
 # GIF generation
 
 
-<a id="org894d0b9"></a>
+<a id="orgd04f075"></a>
 
 ## C++ libraries and APIs <code>[0/1]</code>
 

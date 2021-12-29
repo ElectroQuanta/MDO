@@ -432,8 +432,58 @@ _Legend_:
 - *Top priority*
 - /Medium priority/
 - ~Low priority~
-**** Local System
-1) UI
+**** Local System [0/2]
+1) [ ] ~HW~ [0/3]
+   1) [ ] Tests [0/6]:
+      1) [ ] Power Supply
+      2) [ ] LCD Display
+      3) [ ] Speakers
+      4) [ ] Fragrance diffuser
+      5) [ ] Camera
+      6) [ ] Ultrasonic sensor
+   2) [ ] Mechanical design
+   3) [ ] PCB manufacturing
+2) [ ] SW: implementation [0/2]
+   1) [ ] Linux & Raspbian tests [0/8]
+      1) [ ] *UI*
+	 1) [ ] Design the UI, populating with items, by phases:
+	    1) Initial view: Login + Register
+	    2) Main view: only if Login was successful
+      2) [ ] *Sockets & Client/Server Arch* [0/3]
+	 1) [ ] Connect
+	 2) [ ] Send
+	 3) [ ] Recv
+      3) [ ] *Computer Vision* [0/4]
+	 1) [ ] *Frame grabbing*
+	 2) [ ] *Face detection*
+	 3) [ ] *Gesture recognition*
+	    1) [ ] Determine set of gestures required
+	    2) [ ] Create database of gestures
+	 4) [ ] /Image filter overlay/
+      4) [ ] /Normal mode/ [0/3]
+	 1) [ ] *Video reproduction*
+	 2) [ ] *Audio reproduction*
+	 3) [ ] /Fragrance diffusion/ [0/2]
+	    1) [ ] Device driver
+	    2) [ ] Daemon
+      5) [ ] /User detection/
+	 1) [ ] /Device driver/
+	 2) [ ] /Daemon/
+      6) [ ] /Twitter sharing/
+	 1) [ ] Create post
+	 2) [ ] Share
+	 3) [ ] Handle response
+      7) [ ] ~GIF generator~
+      8) [ ] ~File transfer~
+   2) [ ] Raspberry Pi deployment [0/3]
+      1) [ ] Buildroot customization
+      2) [ ] Startup/Shutdown sequence
+      3) [ ] System verification
+
+_Legend_:
+- *Top priority*
+- /Medium priority/
+- ~Low priority~
 **** Collaborative work
 ***** Folder struct
  - code [0/3]
@@ -7182,4 +7232,37 @@ advantage of size over the number of scent elements is decreased significantly,
    - One can user openCV to read frames and convert them to Magick++ structures
      and them save them as GIFs (see [[https://stackoverflow.com/questions/41841553/convert-magickimage-to-cvmat][here]] and [[https://gist.github.com/AlphaNext/20a74d872505a36d514778b9b0719e92][here]])
    - [[https://www.one-tab.com/page/fuqT5AkaRZGbzBcehZlXVQ][research]]
-
+* Qt                                                               :noexport:
+** ✔ DONE Installation
+   :LOGBOOK:
+   - State "✔ DONE"     from              [2021-12-27 seg 23:07]
+   :END:
+[[https://stackoverflow.com/a/48147461][src]]:
+#+BEGIN_SRC bash
+sudo apt-get install build-essential
+sudo apt-get install qt5-default
+sudo apt-get install qtcreator
+sudo apt-get install qt5-doc
+sudo apt-get install qt5-doc-html qtbase5-doc-html
+sudo apt-get install qtbase5-examples
+#+END_SRC
+*** No kits detected                                               :Solution:
+[[https://stackoverflow.com/questions/48147356/install-qt-on-ubuntu][src]]
+(Ubuntu 20.04): installing qtcreator before qt5-default (qt5-qmake) prevented
+qtcreator from automatically detecting qmake. This had to be manually added
+via; 1) qtcreator - tools - options - Qt Versions - Manual - Add - qmake
+location: /usr/lib/x86_64-linux-gnu/qt5/bin/qmake, 2) qtcreator - tools -
+options - Manual - Desktop (default) - Qt version - Qt 5.xx
+** ✔ DONE Run qmake externally
+   :LOGBOOK:
+   - State "✔ DONE"     from              [2021-12-27 seg 23:29]
+   :END:
+[[https://stackoverflow.com/a/19214180][src]]
+#+BEGIN_SRC bash
+cd /path/to/project
+qmake -project # if the project is not yet created, otherwise
+qmake -makefile
+make -j$(nproc) #
+#+END_SRC
+** Design UI for Local System
+** Setup for cross-compilation and deployment for Raspberry
