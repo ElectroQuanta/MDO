@@ -1,0 +1,7 @@
+[
+{
+  "directory": "/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/code/computer-vision/test-opencv/cmake-example/build",
+  "command": "/usr/bin/c++   -isystem /usr/local/include/opencv4    -o CMakeFiles/opencv_example.dir/example.cpp.o -c /home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/code/computer-vision/test-opencv/cmake-example/example.cpp",
+  "file": "/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/code/computer-vision/test-opencv/cmake-example/example.cpp"
+}
+]

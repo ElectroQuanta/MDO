@@ -1,0 +1,15 @@
+[
+    {
+        "arguments": [
+            "g++",
+            "-c",
+            "-Wall",
+            "-g",
+            "-o",
+            "find_contours.o",
+            "find_contours.cpp"
+        ],
+        "directory": "/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/code/computer-vision/test-opencv/find-contours/src",
+        "file": "find_contours.cpp"
+    }
+]

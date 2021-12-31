@@ -1,47 +1,53 @@
-- [Preamble](#org378fcfc)
-- [Versions <code>[4/4]</code>](#orga06a8f8)
-- [Notes](#orgcaf0160)
-  - [Requirements](#orge60897b)
-  - [Problem statement](#orgaa42e67)
-  - [Research](#org59b79aa)
-    - [Topics <code>[0/3]</code>](#orgc7ca065)
-    - [Selection](#orgd8b8cfa)
-  - [Report](#org388451e)
-    - [Outline <code>[2/8]</code>](#orgb602c65)
-  - [Marketing Digital Outdoor](#orgd1ac3e1)
-    - [Topics](#org8e397c4)
-    - [Technologies <code>[0/11]</code>](#org3bc3cca)
-    - [Problem statement](#orgd6e841a)
-    - [Market research <code>[3/3]</code>](#orgd2d2459)
-    - [Project planning](#org0b738cc)
-    - [Analysis](#org9ee2755)
-    - [Theoretical foundations <code>[17/17]</code>](#org554feb9)
-    - [Design](#orgdf192ee)
-    - [Implementation <code>[0/3]</code>](#org0b533ad)
-- [Diagrams](#org612561d)
-  - [PlantUML](#orgeaa152d)
-    - [Setup <code>[0/6]</code>](#org2b2de13)
-    - [Workflow <code>[0/4]</code>](#org18529ba)
-    - [Sequence diagrams](#org4687913)
-    - [Component diagrams](#orgac93447)
-    - [Deployment diagrams](#orgd15c911)
-    - [Class diagrams](#orga5f2d0e)
-    - [Entity-Relationship diagram](#org6bd0b76)
-    - [Flowcharts (activity diagram)](#org66683c9)
-    - [Data formats](#orgabe7c5d)
-- [RDBMS](#orgde905c5)
-  - [SQLite vs MySQL](#orga09d462)
-  - [mySQL](#org495d3e0)
-    - [Installation <code>[1/1]</code>](#org186540c)
-    - [Server](#org64511c9)
-    - [Shell](#orge5b5b8b)
-    - [C++ connector](#org015c23d)
-- [GIF generation](#orgd4f15e6)
-  - [C++ libraries and APIs <code>[0/1]</code>](#orgd04f075)
+- [Preamble](#org159cb7e)
+- [Versions <code>[4/4]</code>](#org2e23e23)
+- [Notes](#org335fc5a)
+  - [Requirements](#org9b25f64)
+  - [Problem statement](#org7ca2580)
+  - [Research](#org374dcad)
+    - [Topics <code>[0/3]</code>](#org9ad926f)
+    - [Selection](#org2936efc)
+  - [Report](#org6ca85c5)
+    - [Outline <code>[2/8]</code>](#orgc1edd61)
+  - [Marketing Digital Outdoor](#orgee451a2)
+    - [Topics](#org74e4685)
+    - [Technologies <code>[0/11]</code>](#org2b81b87)
+    - [Problem statement](#org8740e48)
+    - [Market research <code>[3/3]</code>](#org52cb62b)
+    - [Project planning](#org9093361)
+    - [Analysis](#org0829667)
+    - [Theoretical foundations <code>[17/17]</code>](#org4a78d48)
+    - [Design](#orgfc68db7)
+    - [Implementation <code>[0/3]</code>](#org8f952fa)
+- [Diagrams](#org88cd911)
+  - [PlantUML](#orgdd5c93c)
+    - [Setup <code>[0/6]</code>](#org4d53066)
+    - [Workflow <code>[0/4]</code>](#org280afea)
+    - [Sequence diagrams](#org85ebfec)
+    - [Component diagrams](#org489faed)
+    - [Deployment diagrams](#org7ea90ce)
+    - [Class diagrams](#orge9e6618)
+    - [Entity-Relationship diagram](#org963fe84)
+    - [Flowcharts (activity diagram)](#org03880b5)
+    - [Data formats](#org8b26fa3)
+- [RDBMS](#org3d8753e)
+  - [SQLite vs MySQL](#orgbc6910a)
+  - [mySQL](#org01093c4)
+    - [Installation <code>[1/1]</code>](#org1e40670)
+    - [Server](#org2957879)
+    - [Shell](#orgd339b4d)
+    - [C++ connector](#org8dd4fb9)
+- [GIF generation](#org88baee3)
+  - [C++ libraries and APIs <code>[0/1]</code>](#orgdd27d0c)
+- [CMake](#org7ef3800)
+- [OpenCV](#org81e3947)
+  - [Build and integrate with Qt5](#org1eeae7d)
+    - [Build opencv <code>[7/7]</code>](#orge74c237)
+    - [Compile a simple standlone project](#org4ab3afc)
+    - [Integrate with Qt <code>[6/6]</code>](#orgddf44df)
 
 
 
-<a id="org378fcfc"></a>
+<a id="org159cb7e"></a>
 
 # Preamble
 
@@ -49,7 +55,7 @@
 -   It is written incrementally, i.e., as the several project phases take place, the document versions pertaining to each phase are stored in the folder **submission**.
 
 
-<a id="orga06a8f8"></a>
+<a id="org2e23e23"></a>
 
 # Versions <code>[4/4]</code>
 
@@ -59,12 +65,12 @@
 4.  [X] Design phase: <span class="timestamp-wrapper"><span class="timestamp">&lt;2021-12-15 qua 23:00&gt;</span></span>
 
 
-<a id="orgcaf0160"></a>
+<a id="org335fc5a"></a>
 
 # Notes     :Important:
 
 
-<a id="orge60897b"></a>
+<a id="org9b25f64"></a>
 
 ## Requirements
 
@@ -76,19 +82,19 @@
 -   Makefiles
 
 
-<a id="orgaa42e67"></a>
+<a id="org7ca2580"></a>
 
 ## Problem statement
 
 Think about the project and deliver a document about it.
 
 
-<a id="org59b79aa"></a>
+<a id="org374dcad"></a>
 
 ## Research
 
 
-<a id="orgc7ca065"></a>
+<a id="org9ad926f"></a>
 
 ### Topics <code>[0/3]</code>
 
@@ -97,19 +103,19 @@ Think about the project and deliver a document about it.
 -   [ ] Situate the project requirements, the project constraints
 
 
-<a id="orgd8b8cfa"></a>
+<a id="org2936efc"></a>
 
 ### Selection
 
 -   [Marketing digital Outdoor](readme.md)
 
 
-<a id="org388451e"></a>
+<a id="org6ca85c5"></a>
 
 ## Report
 
 
-<a id="orgb602c65"></a>
+<a id="orgc1edd61"></a>
 
 ### Outline <code>[2/8]</code>
 
@@ -160,12 +166,12 @@ Think about the project and deliver a document about it.
 8.  [ ] Conclusions
 
 
-<a id="orgd1ac3e1"></a>
+<a id="orgee451a2"></a>
 
 ## Marketing Digital Outdoor     :Important:
 
 
-<a id="org8e397c4"></a>
+<a id="org74e4685"></a>
 
 ### Topics
 
@@ -206,7 +212,7 @@ Think about the project and deliver a document about it.
             -   Additionally, brands can also monitor this by checking their social media accounts.
 
 
-<a id="org3bc3cca"></a>
+<a id="org2b81b87"></a>
 
 ### Technologies <code>[0/11]</code>
 
@@ -223,12 +229,12 @@ Think about the project and deliver a document about it.
 11. [ ] Social media and e-mail sharing APIs
 
 
-<a id="orgd6e841a"></a>
+<a id="org8740e48"></a>
 
 ### ✔ DONE Problem statement
 
 
-<a id="orgd2d2459"></a>
+<a id="org52cb62b"></a>
 
 ### ✔ DONE Market research <code>[3/3]</code>
 
@@ -237,7 +243,7 @@ Think about the project and deliver a document about it.
 3.  [X] Combined marketing: are they digital outdoor + scenting?
 
 
-<a id="org0b738cc"></a>
+<a id="org9093361"></a>
 
 ### Project planning
 
@@ -312,7 +318,7 @@ Think about the project and deliver a document about it.
     -   [X] Camera: 14 EUR - <https://shorturl.at/gnpCU>
 
 
-<a id="org9ee2755"></a>
+<a id="org0829667"></a>
 
 ### ✔ DONE Analysis
 
@@ -325,7 +331,7 @@ Think about the project and deliver a document about it.
     > COMPANY -> MDO-L Staff member login RC -> RS: q mdo systems RS -> DB: query mdo-systems DB -> RS: std::<vector> mdo<sub>systems</sub> for(i = 0; i < mdo<sub>systems.size</sub>(); i++ ) RS -> RC: mdo<sub>systems</sub>[i] RC -> RC: Select MDO-L machine Send command RC -> RS: mdo <nr> <command> (mdo 1 get mode) RS -> RS: parse command RS -> RS: get mdo<sub>nr</sub> IP (query mdo-systems 1 IP) RS -> MDO-L: connect IP:port MDO-L -> RS: connected RS -> MDO-L: get mode MDO-L -> RS: normal mode (example) RS -> RC: normal
 
 
-<a id="org554feb9"></a>
+<a id="org4a78d48"></a>
 
 ### ✔ DONE Theoretical foundations <code>[17/17]</code>
 
@@ -357,7 +363,7 @@ Legend:
 -   *Hugo*
 
 
-<a id="orgdf192ee"></a>
+<a id="orgfc68db7"></a>
 
 ### ▭▭ IN-PROGRESS Design
 
@@ -414,7 +420,7 @@ Design Phase must include (some specifications may vary according to your projec
 It is compulsory to show/identify which/where all class topics are going to be implemented and used by you! Also third-party Libraries/apps must be identified so you can use other's software and materials with our consent.
 
 
-<a id="org0b533ad"></a>
+<a id="org8f952fa"></a>
 
 ### Implementation <code>[0/3]</code>
 
@@ -659,7 +665,7 @@ It is compulsory to show/identify which/where all class topics are going to be i
                 ```
 
 
-<a id="org612561d"></a>
+<a id="org88cd911"></a>
 
 # Diagrams
 
@@ -668,7 +674,7 @@ Diagrams can be drawn using <code>[2/2]</code>:
 -   [X] draw.io
     -   User mockups
     -   State-machine
--   [X] [PlantUML](#orgeaa152d) (stored in Proj/diags/plantuml)
+-   [X] [PlantUML](#orgdd5c93c) (stored in Proj/diags/plantuml)
     -   Sequence diagram
     -   Class diagram
     -   Component diagram
@@ -676,14 +682,14 @@ Diagrams can be drawn using <code>[2/2]</code>:
     -   Entity-Relationship diagram
 
 
-<a id="orgeaa152d"></a>
+<a id="orgdd5c93c"></a>
 
 ## PlantUML
 
 [PlantUML](https://plantuml.com/) is a tool for quickly drawing diagrams from text based descriptions. It is specially adequate for sequence diagrams, as draw.io is not very fluid.
 
 
-<a id="org2b2de13"></a>
+<a id="org4d53066"></a>
 
 ### Setup <code>[0/6]</code>
 
@@ -699,7 +705,7 @@ Diagrams can be drawn using <code>[2/2]</code>:
 6.  [ ] Check the generate png file: `output/test.png`
 
 
-<a id="org18529ba"></a>
+<a id="org280afea"></a>
 
 ### Workflow <code>[0/4]</code>
 
@@ -713,7 +719,7 @@ Diagrams can be drawn using <code>[2/2]</code>:
 4.  [ ] Check the generate png file: `output/test.png`
 
 
-<a id="org4687913"></a>
+<a id="org85ebfec"></a>
 
 ### ✔ DONE Sequence diagrams
 
@@ -1230,7 +1236,7 @@ Diagrams can be drawn using <code>[2/2]</code>:
     ![img](diags/plantuml/seq-diag/examples/all-together.png)
 
 
-<a id="orgac93447"></a>
+<a id="org489faed"></a>
 
 ### ✔ DONE Component diagrams
 
@@ -1307,7 +1313,7 @@ You can use component diagrams to model the software architecture of a system. C
         ![img](diags/plantuml/component-diag/output/component-diag-local-threads.png)
 
 
-<a id="orgd15c911"></a>
+<a id="org7ea90ce"></a>
 
 ### ✔ DONE Deployment diagrams
 
@@ -1356,7 +1362,7 @@ Deployment diagrams, which you typically prepare during the implementation phase
     ![img](diags/plantuml/deploy-diag/output/deploy-diag.png)
 
 
-<a id="orga5f2d0e"></a>
+<a id="orge9e6618"></a>
 
 ### ▭▭ IN-PROGRESS Class diagrams
 
@@ -1424,7 +1430,7 @@ Deployment diagrams, which you typically prepare during the implementation phase
     -   class for all classes,
     -   interface for all interfaces,
     -   enum for all enums,
-    -   <a id="org3d5c72d"></a> for classes which are stereotyped with foo1,
+    -   <a id="org751ca8c"></a> for classes which are stereotyped with foo1,
     -   an existing class name.
     
     You can use several show/hide commands to define rules and exceptions.
@@ -1505,7 +1511,7 @@ Deployment diagrams, which you typically prepare during the implementation phase
         ![img](diags/plantuml/class-diag/output/class-diag-local.png)
 
 
-<a id="org6bd0b76"></a>
+<a id="org963fe84"></a>
 
 ### ✔ DONE Entity-Relationship diagram
 
@@ -1556,7 +1562,7 @@ Otherwise, the syntax for drawing diagrams is the same as for class diagrams. Al
 3.  [DB design and implementation using SQL](db.md)     :Important:
 
 
-<a id="org66683c9"></a>
+<a id="org03880b5"></a>
 
 ### ▭▭ IN-PROGRESS Flowcharts (activity diagram)
 
@@ -1641,37 +1647,37 @@ Otherwise, the syntax for drawing diagrams is the same as for class diagrams. Al
         ![img](diags/plantuml/flowchart/output/local-gif-gen.png)
 
 
-<a id="orgabe7c5d"></a>
+<a id="org8b26fa3"></a>
 
 ### ✔ DONE Data formats
 
 ![img](diags/plantuml/misc/output/data-formats.png)
 
 
-<a id="orgde905c5"></a>
+<a id="org3d8753e"></a>
 
 # RDBMS
 
 
-<a id="orga09d462"></a>
+<a id="orgbc6910a"></a>
 
 ## SQLite vs MySQL
 
 1.  <https://www.hostinger.com/tutorials/sqlite-vs-mysql-whats-the-difference/>
 
 
-<a id="org495d3e0"></a>
+<a id="org01093c4"></a>
 
 ## mySQL
 
 
-<a id="org186540c"></a>
+<a id="org1e40670"></a>
 
 ### Installation <code>[1/1]</code>
 
-1.  [X] Add APT repository (see [here](#orge55e9fd))
-2.  [ ] Install server (see [here](#orgf6d93e8))
-3.  [X] Install client (see [here](#orgc68909e))
+1.  [X] Add APT repository (see [here](#org4731538))
+2.  [ ] Install server (see [here](#org5340aaf))
+3.  [X] Install client (see [here](#orgffaa012))
 
 1.  ✔ DONE Add APT repository <code>[4/4]</code>
 
@@ -1693,7 +1699,7 @@ Otherwise, the syntax for drawing diagrams is the same as for class diagrams. Al
         ```
 
 
-<a id="org64511c9"></a>
+<a id="org2957879"></a>
 
 ### Server
 
@@ -1757,7 +1763,7 @@ Otherwise, the syntax for drawing diagrams is the same as for class diagrams. Al
             1.  A rule should be active (mySQL), and available at port `3306` (the default for mySQL)
 
 
-<a id="orge5b5b8b"></a>
+<a id="orgd339b4d"></a>
 
 ### Shell
 
@@ -1774,7 +1780,7 @@ Multiple-line code can be written using a command, enabling MySQL Shell to cache
         ```
 
 
-<a id="org015c23d"></a>
+<a id="org8dd4fb9"></a>
 
 ### C++ connector
 
@@ -1787,12 +1793,12 @@ Multiple-line code can be written using a command, enabling MySQL Shell to cache
     src
 
 
-<a id="orgd4f15e6"></a>
+<a id="org88baee3"></a>
 
 # GIF generation
 
 
-<a id="orgd04f075"></a>
+<a id="orgdd27d0c"></a>
 
 ## C++ libraries and APIs <code>[0/1]</code>
 
@@ -1800,3 +1806,159 @@ Multiple-line code can be written using a command, enabling MySQL Shell to cache
     -   C++ wrapper for ImageMagick C library
     -   One can user openCV to read frames and convert them to Magick++ structures and them save them as GIFs (see [here](https://stackoverflow.com/questions/41841553/convert-magickimage-to-cvmat) and [here](https://gist.github.com/AlphaNext/20a74d872505a36d514778b9b0719e92))
     -   [research](https://www.one-tab.com/page/fuqT5AkaRZGbzBcehZlXVQ)
+
+
+<a id="org7ef3800"></a>
+
+# CMake
+
+-   [Cross compilation](https://gitlab.kitware.com/cmake/community/-/wikis/doc/cmake/CrossCompiling)
+
+
+<a id="org81e3947"></a>
+
+# OpenCV
+
+**Examples** <code>[4/4]</code>:
+
+1.  [X] [display<sub>img.cpp</sub>](code/computer-vision/test-opencv/display_img.cpp) (src):
+    1.  About: displays an image on screen
+    2.  Status: compiled but did not run, cuz its required to set up the path for samples (see [here](https://forum.opencv.org/t/why-does-the-tutorial-code-from-opencv-give-unspecified-error/5104/3))
+2.  [X] [basic<sub>draw.cpp</sub>](code/computer-vision/test-opencv/basic-draw/src/basic_draw.cpp) ([src](https://docs.opencv.org/4.x/d3/d96/tutorial_basic_geometric_drawing.html)):
+    1.  About: draws basic shapes on screen
+    2.  Status: compiled and runned successfully
+3.  [X] [find<sub>contours.cpp</sub>](code/computer-vision/test-opencv/find-contours/src/find_contours.cpp) ([src](https://docs.opencv.org/4.x/df/d0d/tutorial_find_contours.html)):
+    1.  About: finds contours on a image
+    2.  Status: compiled but did not run, cuz of the same
+4.  [X] [example.cpp](code/computer-vision/test-opencv/cmake-example/example.cpp) ([src](https://github.com/opencv/opencv/tree/master/samples/cpp/example_cmake)):
+    1.  About: Grabs frames from the camera and adds text to it
+    2.  Status: compiled and runned successfully
+
+
+<a id="org1eeae7d"></a>
+
+## Build and integrate with Qt5
+
+[src](https://lordsoftech.com/open-source/adding-opencv-libraries-to-a-qt5-project-in-ubuntu-20-04/)
+
+
+<a id="orge74c237"></a>
+
+### ✔ DONE Build opencv <code>[7/7]</code>
+
+1.  [X] Install dependencies ([src](https://www.itsfoss.net/how-to-install-and-configure-opencv-on-ubuntu-20-04/))
+    
+    ```bash
+    sudo apt install build-essential cmake git pkg-config libgtk- 3 -dev libavcodec-dev libavformat-dev libswscale-dev libv4l-dev libxvidcore-dev libx264-dev libjpeg-dev libpng-dev libtiff-dev gfortran openexr libatlas-base-dev python3-dev python3-numpy libtbb2 libtbb-dev libdc1394- 22 -dev
+    ```
+2.  [X] Clone the repository containing the last release and create a build folder
+    
+    ```bash
+    mkdir ~/opencv_build && cd ~/opencv_build
+    git clone https://github.com/opencv/opencv.git && git clone https://github.com/opencv/opencv_contrib.git
+    cd opencv && mkdir build && cd build
+    ```
+3.  [X] Set the flags
+    1.  WORK: it compiled
+        
+        ```bash
+        cmake -D CMAKE_BUILD_TYPE=RELEASE \ -D CMAKE_INSTALL_PREFIX=/usr/local \ -D INSTALL_PYTHON_EXAMPLES=ON \ -D BUILD_EXAMPLES=ON \ -D OPENCV_GENERATE_PKGCONFIG=ON \ -D OPENCV_EXTRA_MODULES_PATH=~/opencv_build/opencv_contrib/modules \ -D INSTALL_C_EXAMPLES=ON  .. 
+        ```
+    2.  WORK: failed to compile after
+        
+        ```bash
+        cmake -D CMAKE_BUILD_TYPE=RELEASE \ -D CMAKE_INSTALL_PREFIX=/usr/local \ -D INSTALL_PYTHON_EXAMPLES=ON \ -D BUILD_EXAMPLES=ON \ -D OPENCV_GENERATE_PKGCONFIG=ON \ -D OPENCV_EXTRA_MODULES_PATH=~/opencv_build/opencv_contrib/modules \ -D INSTALL_C_EXAMPLES=ON -D OPENCV_ENABLE_NONFREE=ON -D CMAKE_C_compiler=gcc -D CMAKE_C++_compiler=g++ -D WITH_QT=ON -D BUILD_PROTOBUF=OFF -D WITH_LAPACK=OFF -D WITH_VTK=OFF -D BUILD_opencv_viz=OFF .. 
+        ```
+4.  [X] Compile it: it may take a while
+    
+    ```bash
+    make -j$((`nproc`-1))
+    ```
+5.  [X] Install
+    
+    ```bash
+    sudo make install 
+    ```
+6.  [X] Check installation ([src](https://medium.com/@pokhrelsuruchi/setting-up-opencv-for-python-and-c-in-ubuntu-20-04-6b0331e37437))
+    
+    ```bash
+    ls /usr/local/lib
+    ```
+    
+    If the terminal shows list of files `libopencv*`, then the installation went successfully
+7.  [X] Configuring paths to link libraries and include directories ([src](https://medium.com/@pokhrelsuruchi/setting-up-opencv-for-python-and-c-in-ubuntu-20-04-6b0331e37437)):
+    1.  For the new opencv4, the file path for the actual installation and that which is mentioned in the header files is different. This is the reason why despite following all the proper steps of installation, your project will not execute due to library linking errors. The following command should be entered in order to fix this issue.
+        
+        ```bash
+        sudo ln -s /usr/local/include/opencv4/opencv2 /usr/local/include/opencv2
+        ```
+    2.  For linking the “.so” libraries, we create a new directory named opencv2 at /usr/local/lib and move all the .so files relating to the opencv at the ~/build/lib to /usr/local/lib/opencv2.
+        
+        ```bash
+        sudo mkdir /usr/local/lib/opencv2
+        sudo cp ~/build/lib /usr/local/lib/opencv2
+        ```
+
+
+<a id="org4ab3afc"></a>
+
+### ✔ DONE Compile a simple standlone project
+
+1.  ✔ DONE Makefile <code>[3/3]</code>
+
+    1.  [X] [create a makefile](code/computer-vision/test-opencv/src/makefile): it must define `INC` and `LIBS`
+        
+        ```makefile
+        INC=-I/usr/local/include/opencv4
+        LIBS += -L/usr/local/lib -lopencv_core -lopencv_highgui -lopencv_imgproc -lopencv_objdetect -lopencv_imgcodecs -lopencv_videoio -lopencv_features2d
+        ```
+    2.  [X] run `bear make` to obtain the `compile_commands.json` and setup the LSP mode helper
+    3.  [X] Run sample codes <code>[3/3]</code>
+        1.  [X] [display<sub>img.cpp</sub>](code/computer-vision/test-opencv/display_img.cpp) (src): compiled but did not run, cuz its required to set up the path for samples (see [here](https://forum.opencv.org/t/why-does-the-tutorial-code-from-opencv-give-unspecified-error/5104/3))
+        2.  [X] [basic<sub>draw.cpp</sub>](code/computer-vision/test-opencv/basic-draw/src/basic_draw.cpp) ([src](https://docs.opencv.org/4.x/d3/d96/tutorial_basic_geometric_drawing.html)): compiled and runned successfully
+        3.  [X] [find<sub>contours.cpp</sub>](code/computer-vision/test-opencv/find-contours/src/find_contours.cpp) ([src](https://docs.opencv.org/4.x/df/d0d/tutorial_find_contours.html)): compiled but did not run, cuz of the same problem of 1)
+
+2.  ✔ DONE Cmake
+
+    1.  [X] create a `CMakeLists.txt` file
+        1.  [src](https://github.com/opencv/opencv/blob/master/samples/cpp/example_cmake/CMakeLists.txt)
+        2.  [example](code/computer-vision/test-opencv/cmake-example/CMakeLists.txt)
+    2.  [X] create a build dir and navigate there
+        
+        ```bash
+        mkdir build && cd build
+        ```
+    3.  [X] run cmake with the following flag:
+        
+        ```bash
+        cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=1 ..
+        ```
+        
+        -   It generates the `compile_commands.json` file for LSP and the `makefile`
+    4.  [X] Run make
+        
+        ```bash
+        make 
+        ```
+    5.  [X] Run executable \#+END<sub>SRC</sub>
+
+
+<a id="orgddf44df"></a>
+
+### ✔ DONE Integrate with Qt <code>[6/6]</code>
+
+1.  [X] [Create a Qt Widget project](code/computer-vision/qt-test)
+    1.  Add a button
+    2.  Implement `on_button_pressed` event handler to open the camera and overlay text (see [example.cpp](code/computer-vision/test-opencv/cmake-example/example.cpp))
+2.  [X] Add this to qtcreator `.pro` file
+    
+    ```c
+    INCLUDEPATH += /usr/local/include/opencv4
+    
+    LIBS += -L/usr/local/lib -lopencv_core -lopencv_highgui -lopencv_imgproc -lopencv_objdetect -lopencv_imgcodecs -lopencv_videoio
+    ```
+3.  [X] Use the build system to externally to obtain a makefile: [see Qt workflow](readme.md)
+4.  [X] Generate `compile_commands.json` for LSP integration <code>[0/0]</code>: [see Qt workflow](readme.md)
+5.  [X] Run make
+6.  [X] Check the application output
+    1.  A GTK window should be generated when the push button is pressed
