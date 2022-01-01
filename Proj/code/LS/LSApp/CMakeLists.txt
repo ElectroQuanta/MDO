@@ -46,8 +46,10 @@ else()
     mainwindow.cpp
     mainwindow.h
     mainwindow.ui
+    resources.qrc
   )
 endif()
+
 
 # src: http://amin-ahmadi.com/2018/02/23/how-to-use-cmake-with-qt5-and-opencv-3-projects/
 # link required libs

@@ -7288,6 +7288,9 @@ make -j$(nproc) #
      ./execName
      #+END_SRC
 ** ✔ DONE Creating multiple UI screens
+   :PROPERTIES:
+   :ID:       ba04076c-5bcb-496c-adbe-eccb7fc6106f
+   :END:
    :LOGBOOK:
    - State "✔ DONE"     from "☛ TODO"     [2022-01-01 sáb 03:13]
    :END:
@@ -7866,11 +7869,80 @@ while (video.isOpened())
       2) You should symlink it (or simply copy it) to the root of your
 	source tree, if they are different.
 3) [ ] Design the UI
-   1) [ ] Draw the several UI views
-      1) [ ] =File->New file->Qt->Qt Designer form class->Widget= and name it
-	 1) [ ] Normal mode view: =MainWindow=
-	 2) [ ] Interaction mode view: =IntWindow=
-	 3) [ ] Image filtering view: =ImgFiltWindow=
-	 4) [ ] GIF view: =GIFWindow=
-	 5) [ ] Sharing mode: =SharWindow=
-   2) [ ] Use dummy pushbuttons to create/destroy the several UI views
+   1) [ ] Draw the several UI views following [[id:9fbc087a-a9db-49d1-83ff-f16804ee72dc][method 2]]
+      1) [ ] Welcome view: =MainWindow=
+	 - displayed when no Ad is supposed to be running
+	 - contains a description about the project, how to rent ads, etc.
+      2) [ ] Normal mode view: =NormalWindow=
+	 - Reproduces video in fullscreen (with audio)
+      3) [ ] Interaction mode view: =InterWindow=
+	 1) includes:
+	    1) =Main menu=: page0
+	    2) =Picture mode=: page1
+	    3) =GIF mode=: page2
+      4) [ ] Image filtering view: =ImgFiltWindow=
+	 1) includes:
+	    1) =Main menu=
+      5) [ ] Sharing mode: =SharWindow=
+	 1) includes:
+	    1) =Main menu=: selection (page 0)
+	    2) =Editing=: presents a virtual keyboard (page 1)
+	    3) =Status=: presents a status message box to the user (page 2)
+   2) [ ] Use dummy pushbuttons to navigate through the several UI views
+   3) [ ] =GestureRecognitionEngine= belongs to =MainWindow=.
+      1) It must detect a predefined user gesture
+      2) When matched, it emits a signal =gestureDetected()= for the
+         =MainWindow= to handle through a =on_gestureDetected()= slot
+      3) The =on_gestureDetected()= slot should identify the type of gesture and
+         the screen coordinates where the gesture was mapped too, i.e:
+	 #+BEGIN_SRC cpp
+	    void MainWindow::on_gestureDetected(){
+		enum gestType gestT = ui->GDE->gesture();
+		struct coords2D coords = ui->GDE->coords();
+		enum UIView curUI = ui->stackedWidget->currentIndex();
+		switch (curUI){
+		case UIView::INTER :
+		    emit gesture_detected_Inter(gestT, coords);
+		    break;
+		case UIView::IMGFILT :
+		    emit gesture_detected_ImgFilt(gestT, coords);
+		    break;
+		case UIView::SHARING :
+		    emit gesture_detected_Shar(gestT, coords);
+		    break;
+    // ignore these events
+		case UIView::WELCOME :
+		case UIView::NORMAL :
+		default:
+		    break;
+		}
+	    }
+	 #+END_SRC
+      4) Then each =Window= class, should have a slot to handle this specific
+         signal. E.g., for class =InterWindow=:
+	 #+BEGIN_SRC cpp
+	   InterWindow::InterWindow()
+	   {
+	       connect( UI::MainWindow *, gesture_detected_Inter(enum gestureType, struct coords2d), this, SLOT( on_gesture_detected_Inter(enum gestureType, struct coords2d ) ) )
+	   }
+
+	   InterWindow::on_gesture_detected_Inter(enum gestureType gestT, struct coords2d coords)
+	   {
+	       enum UIView curUI = ui->stackedWidget->currentIndex();
+	       switch (curUI){
+	       case UIPages::PAGE0 :
+		   if(coords.x > 240 && coords.x < 340 && coords.y > 100 && coords.y < 200)
+		       emit pushbutton_clicked();
+		   else
+		       if(coords.x > 20 && coords.x < 40 && coords.y > 10 && coords.y < 20)
+			   emit pushbutton_2_clicked();
+		   break;
+		   // TODO: add more buttons to handle
+	       case UIPages::PAGE1 :
+		   // TODO: add more pages 
+	       default:
+		   break;
+	       }
+	   }
+	 #+END_SRC
+
