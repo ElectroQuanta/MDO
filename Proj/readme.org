@@ -7602,7 +7602,7 @@ set(OpenCV_DIR "usr/local/lib/cmake/opencv4")
 find_package(OpenCV REQUIRED)
 include_directories(${OpenCV_INCLUDE_DIRS})
 
-target_link_libraries(testCmake PRIVATE Qt5::Widgets ${OpenCV_LIBS})
+target_link_libraries(${PROJECT_NAME} PRIVATE Qt5::Widgets ${OpenCV_LIBS})
     #+END_SRC
  3) [X] Use the build system to externally to obtain a makefile with LSP
     integration [[id:7e7c3a09-af4f-4395-a7f8-681dab1b95c1][see Qt workflow]]
@@ -7789,6 +7789,8 @@ while (video.isOpened())
 
 * Mine                                                             :noexport:
 ** Implementation
+*** Project: LS App
+- [[file:code/LS/LSApp/readme.org][readme]]
 *** Notes
 - Qt app is build with =qmake= for now
   - Maybe it will be better to use cmake for integration with opencv and other
@@ -7868,9 +7870,9 @@ while (video.isOpened())
       1) compile_commands.json will be written to your build directory.
       2) You should symlink it (or simply copy it) to the root of your
 	source tree, if they are different.
-3) [ ] Design the UI
-   1) [ ] Draw the several UI views following [[id:9fbc087a-a9db-49d1-83ff-f16804ee72dc][method 2]]
-      1) [ ] Welcome view: =MainWindow=
+3) [-] Design the UI
+   1) [-] Draw the several UI views following [[id:9fbc087a-a9db-49d1-83ff-f16804ee72dc][method 2]]
+      1) [X] Welcome view: =MainWindow=
 	 - displayed when no Ad is supposed to be running
 	 - contains a description about the project, how to rent ads, etc.
       2) [ ] Normal mode view: =NormalWindow=
