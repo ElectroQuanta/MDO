@@ -7264,12 +7264,187 @@ qmake -project # if the project is not yet created, otherwise
 qmake -makefile
 make -j$(nproc) #
 #+END_SRC
+** ✔ DONE Build with CMake
+   :LOGBOOK:
+   - State "✔ DONE"     from              [2021-12-31 sex 20:54]
+   :END:
+*** ✔ DONE Test project [3/3]
+    :PROPERTIES:
+    :ID:       8387549a-aa60-47d8-ab41-245bd8be131e
+    :END:
+    :LOGBOOK:
+    - State "✔ DONE"     from              [2021-12-31 sex 20:52]
+    :END:
+1) [X] Create a new Qt Widget app: see [[file:~/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/Qt/testCmake][here]]
+   1) Select =CMake= as the build system
+   2) A =CMakeLists.txt= is automatically created for the project: see [[file:~/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/Qt/testCmake/CMakeLists.txt][here]]
+2) [X] Build the project in QtCreator to check if everything is OK
+   1) Status: compilation and execution successfull
+3) [X] Build manually using =cmake= with LSP integration
+     #+BEGIN_SRC bash
+     mkdir build && cd build
+     cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=1 ..
+     make -j11
+     ./execName
+     #+END_SRC
+** ✔ DONE Creating multiple UI screens
+   :LOGBOOK:
+   - State "✔ DONE"     from "☛ TODO"     [2022-01-01 sáb 03:13]
+   :END:
+Two methods can be used [1/2]:
+1) [ ] [[id:82b9b4cd-bcc6-4931-a62c-067c7eeeb752][QStackedWidget and 1 form only]]
+2) [X] [[id:9fbc087a-a9db-49d1-83ff-f16804ee72dc][QStackedWidget and several forms (classes)]]: this was the preferred one
+*** Method 1: QStackedWidget and 1 form only
+    :PROPERTIES:
+    :ID:       82b9b4cd-bcc6-4931-a62c-067c7eeeb752
+    :END:
+[[https://www.youtube.com/watch?v=oFw-erSp3W8][src]]
+
+*Notes*:
+- Easiest method
+- Straightforward for simple UIs
+- It tends to became messy for more complex UIs
+
+*Steps* [0/5]:
+1) [ ] Add a =QStackedWidget= to the UI form
+2) [ ] Customize it: resize, set bg color, etc
+3) [ ] Add page: in the Form Designer, pages can be added in the objects
+   hierarchy
+4) [ ] Populate pages with items
+5) [ ] Implement pages transitions: most easily done with =on_button_pressed=
+*** ✔ DONE Method 2: QStackedWidget and several forms (classes)
+    :PROPERTIES:
+    :ID:       9fbc087a-a9db-49d1-83ff-f16804ee72dc
+    :END:
+    :LOGBOOK:
+    - State "✔ DONE"     from              [2022-01-01 sáb 03:13]
+    :END:
+[[https://www.youtube.com/watch?v=27PvtxWlV-o][src]]
+
+*Notes*:
+- More complex method
+- It pays off for larger applications
+- It can be used to grouped related info, such as, UserInfo, AdminInfo,
+  ImageFilter, etc.
+
+*Steps* [9/9]:
+1) [X] Start a [[file:code/qt/multipleViews/multViews/][Qt Widgets application]] on Qt
+2) [X] Add a =QStackedWidget= to the main UI form
+3) [X] Customize it: resize, set bg color, etc
+4) [X] Remove additional pages: in the Form Designer, pages can be removed in
+   the objects hierarchy
+5) [X] Populate the page with items: a label and pushbuttons for other forms
+6) [X] Add a new UI form [4/4]: 
+   1) [X] =File->New file->Qt->Qt Designer form class->Widget= and name it:
+      e.g., =MachineInfo=
+   2) [X] Customize it: resize, set bg color, etc
+   3) [X] Populate the page with items: a label and pushbuttons for other forms
+   4) [X] If it has a =QStackedWidget= don't forget to initialize it in the
+      constructor:
+      #+BEGIN_SRC cpp
+      MachineInfo::MachineInfo(QWidget *parent)
+      : QMainWindow(parent)
+      , ui(new Ui::MachineInfo)
+      {
+      ui->setupUi(this);
+
+      // Initialize to first page
+      ui->stackedWidget->setCurrentIndex(0);
+      }
+      #+END_SRC
+7) [X] Declare pointers for each UI form in the main UI form header file
+   (=mainwindow.h=) [2/2]
+   1) [X] include the headers for each UI form class added
+      #+BEGIN_SRC cpp
+      #include "MachineInfo.h"
+      #+END_SRC
+   2) [X] add the private member
+      #+BEGIN_SRC cpp
+      private:
+      MachineInfo *_machInfo; // as a pointer
+      //MachineInfo _machInfo; // as a static object
+      #+END_SRC
+      1) Probably creating the static object is better for performance, since a
+         new object is not created each time.
+      2) But one could maintain the pointer, as just make sure we initialize it
+         in the =mainwindow= constructor
+8) [X] Add each UI form as a page to the =QStackedWidget= of the main UI form
+   1) =mainwindow.cpp=
+      #+BEGIN_SRC cpp
+      MainWindow::MainWindow(QWidget *parent)
+      : QMainWindow(parent)
+      , ui(new Ui::MainWindow)
+      {
+      ui->setupUi(this);
+
+      // Initialize to first page
+      ui->stackedWidget->setCurrentIndex(0);
+
+      ui->stackedWidget->insertWidget(1, _machInfo);
+      ui->stackedWidget->insertWidget(2, _settingsInfo);
+      }
+      #+END_SRC
+9) [X] Implement pages transitions: most easily done with =on_button_pressed=
+   1) [X] for =mainwindow=: in =mainwindow.cpp=
+      #+BEGIN_SRC cpp
+      void MainWindow::on_pushbutton_clicked(){
+      // using index
+      ui->stackedWidget->setCurrentIndex(1);
+      }
+      void MainWindow::on_pushbutton2_clicked(){
+      // using pointer
+      ui->stackedWidget->setCurrentWidget(_settingsInfo);
+      }
+      #+END_SRC
+   2) [X] for other forms: one must avoid circular dependency. Thus, signals and
+      slots are preferred. The child form sents a signal and the main UI form
+      handles that signal, by connecting a slot to it.
+      1) [X] =MachineInfo.h=: declare a signal
+	 #+BEGIN_SRC cpp
+	 signals:
+	 void MI_home_pressed();
+	 #+END_SRC
+      2) [X] =MachineInfo.cpp=: emit the signal from this UI pushbutton
+	 #+BEGIN_SRC cpp
+	 void MachineInfo::on_pushbutton_clicked(){
+	 // using index
+	 emit MI_home_pressed();
+	 }
+	 #+END_SRC
+      3) [X] Create a slot to handle the signal
+	 1) [X] =mainwindow.h=
+	    #+BEGIN_SRC cpp
+	   slots:
+	   void on_MI_home_pressed();
+	    #+END_SRC
+	 2) [X] =mainwindow.cpp=
+	    #+BEGIN_SRC cpp
+	    MainWindow::on_MI_home_pressed(){
+	    ui->stackedWidget->setCurrentIndex(0);
+	    }
+	    #+END_SRC
+      4) [X] =MainWindow.cpp=: connect the signal and the slot together
+	 #+BEGIN_SRC cpp
+	 MainWindow::MainWindow(QWidget *parent)
+	 : QMainWindow(parent)
+	 , ui(new Ui::MainWindow)
+	 {
+	 ui->setupUi(this);
+
+	 ui->stackedWidget->insertWidget(1, _machInfo);
+	 ui->stackedWidget->insertWidget(2, _settingsInfo);
+
+	 connect(_machInfo, SIGNAL(MI_home_pressed()) , 
+	 this, SLOT(on_MI_home_pressed()) );
+	 }
+	 #+END_SRC
+
 ** Design UI for Local System
 ** Setup for cross-compilation and deployment for Raspberry
 * CMake
 - [[https://gitlab.kitware.com/cmake/community/-/wikis/doc/cmake/CrossCompiling][Cross compilation]]
 * OpenCV
-*Examples* [4/4]:
+*Examples* [5/5]:
 1) [X] [[file:code/computer-vision/test-opencv/display_img.cpp][display_img.cpp]] (src):
    1) About: displays an image on screen
    2) Status: compiled but did not run, cuz its required to
@@ -7282,6 +7457,9 @@ make -j$(nproc) #
    2) Status: compiled but did not run, cuz of the same
 4) [X] [[file:code/computer-vision/test-opencv/cmake-example/example.cpp][example.cpp]] ([[https://github.com/opencv/opencv/tree/master/samples/cpp/example_cmake][src]]):
    1) About: Grabs frames from the camera and adds text to it
+   2) Status: compiled and runned successfully
+5) [X] [[file:code/computer-vision/qt-test/videoprocessor][videoprocessor]] ([[https://amin-ahmadi.com/2018/03/29/how-to-read-process-and-display-videos-using-qt-and-opencv/][src]]):
+   1) About: it grabs frames from camera using opencv and displays it on Qt
    2) Status: compiled and runned successfully
 
 ** Build and integrate with Qt5
@@ -7383,26 +7561,228 @@ cd opencv && mkdir build && cd build
    #+END_SRC
 5) [X] Run executable
    #+END_SRC
-*** ✔ DONE Integrate with Qt [6/6]
+*** ✔ DONE Integrate with Qt [2/2]
     :LOGBOOK:
     - State "✔ DONE"     from              [2021-12-31 sex 03:19]
     :END:
-1) [X] [[file:code/computer-vision/qt-test][Create a Qt Widget project]]
-   1) Add a button
-   2) Implement =on_button_pressed= event handler to open the camera and overlay
-      text (see [[file:code/computer-vision/test-opencv/cmake-example/example.cpp][example.cpp]])
-2) [X] Add this to qtcreator =.pro= file
-   #+BEGIN_SRC c
-INCLUDEPATH += /usr/local/include/opencv4
+**** ✔ DONE Qmake [6/6]
+     :LOGBOOK:
+     - State "✔ DONE"     from              [2021-12-31 sex 20:58]
+     :END:
+ 1) [X] [[file:code/computer-vision/qt-test][Create a Qt Widget project]]
+    1) Add a button
+    2) Implement =on_button_pressed= event handler to open the camera and overlay
+       text (see [[file:code/computer-vision/test-opencv/cmake-example/example.cpp][example.cpp]])
+ 2) [X] Add this to qtcreator =.pro= file
+    #+BEGIN_SRC c
+ INCLUDEPATH += /usr/local/include/opencv4
 
-LIBS += -L/usr/local/lib -lopencv_core -lopencv_highgui -lopencv_imgproc -lopencv_objdetect -lopencv_imgcodecs -lopencv_videoio
-   #+END_SRC
-3) [X] Use the build system to externally to obtain a makefile: [[id:7e7c3a09-af4f-4395-a7f8-681dab1b95c1][see Qt workflow]]
-4) [X] Generate =compile_commands.json= for LSP integration [0/0]: [[id:7e7c3a09-af4f-4395-a7f8-681dab1b95c1][see Qt
-   workflow]]
-5) [X] Run make
-6) [X] Check the application output
-   1) A GTK window should be generated when the push button is pressed
+ LIBS += -L/usr/local/lib -lopencv_core -lopencv_highgui -lopencv_imgproc -lopencv_objdetect -lopencv_imgcodecs -lopencv_videoio
+    #+END_SRC
+ 3) [X] Use the build system to externally to obtain a makefile: [[id:7e7c3a09-af4f-4395-a7f8-681dab1b95c1][see Qt workflow]]
+ 4) [X] Generate =compile_commands.json= for LSP integration [0/0]: [[id:7e7c3a09-af4f-4395-a7f8-681dab1b95c1][see Qt
+    workflow]]
+ 5) [X] Run make
+ 6) [X] Check the application output
+    1) A GTK window should be generated when the push button is pressed
+**** ✔ DONE Cmake
+     :LOGBOOK:
+     - State "✔ DONE"     from              [2021-12-31 sex 21:28]
+     :END:
+ 1) [X] [[file:code/computer-vision/qt-test/opencv-cmake-test][Create a Qt Widget project]]
+    1) Add a button
+    2) Implement =on_button_pressed= event handler to open the camera and overlay
+       text (see [[file:code/computer-vision/test-opencv/cmake-example/example.cpp][example.cpp]])
+ 2) [X] Add this to =CMakeLists.txt= file ([[http://amin-ahmadi.com/2018/02/23/how-to-use-cmake-with-qt5-and-opencv-3-projects/][src]])
+    #+BEGIN_SRC cmake
+set(OpenCV_DIR "usr/local/lib/cmake/opencv4")
+find_package(OpenCV REQUIRED)
+include_directories(${OpenCV_INCLUDE_DIRS})
+
+target_link_libraries(testCmake PRIVATE Qt5::Widgets ${OpenCV_LIBS})
+    #+END_SRC
+ 3) [X] Use the build system to externally to obtain a makefile with LSP
+    integration [[id:7e7c3a09-af4f-4395-a7f8-681dab1b95c1][see Qt workflow]]
+     #+BEGIN_SRC bash
+     mkdir build && cd build
+     cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=1 ..
+     #+END_SRC
+ 4) [X] Run make
+    #+BEGIN_SRC c
+    make -j11
+    #+END_SRC
+ 5) [X] Check the application output
+    #+BEGIN_SRC 
+     ./execName
+    #+END_SRC
+    1) A GTK window should be generated when the push button is pressed
+*** Read, display and process videos with Qt and OpenCV
+[[https://amin-ahmadi.com/2018/03/29/how-to-read-process-and-display-videos-using-qt-and-opencv/][src]]
+- [[https://bitbucket.org/amahta/videoprocessor/src/master/][Repo]]
+
+*Steps* [0/8]
+1) [ ] Create a Qt Widget app using Qt Creator
+   1) In the =.pro= file add the include and libs path
+2) [ ] Design the UI
+   1) [ ] =QGraphicsView= widget: display video frames reas using OpenCV
+      =VideoCapture= class
+   2) [ ] =QLineEdit= widget: get the user entered camera index, file path or
+      RTSP feed URL
+3) [ ] =mainwindow.h=
+   1) [ ] Add includes and definitions
+      #+BEGIN_SRC cpp
+#include <QMainWindow>
+#include <QDebug>
+#include <QGraphicsScene>
+#include <QGraphicsPixmapItem>
+#include <QImage>
+#include <QPixmap>
+#include <QCloseEvent>
+#include <QMessageBox>
+
+#include "opencv2/opencv.hpp"
+      
+      #+END_SRC
+   2) [ ] Add protected and privated entries
+      #+BEGIN_SRC cpp
+protected:
+    void closeEvent(QCloseEvent *event);
+
+private:
+    Ui::MainWindow *ui;
+
+    QGraphicsPixmapItem pixmap;
+    cv::VideoCapture video;
+      #+END_SRC
+      1) We'll be using the =closeEvent= to prevent closing the UI before
+         stopping the video
+4) [ ] Prepare the graphics viewer
+   1) [ ] =mainwindow.cpp= constructor:
+      #+BEGIN_SRC cpp
+ui->graphicsView->setScene(new QGraphicsScene(this));
+ui->graphicsView->scene()->addItem(&pixmap);
+      #+END_SRC
+5) [ ] Prevent closing the window:
+   1) while the video is being read and processed or the camera is being
+      accessed, we need to make sure =MainWindow= can't be closed
+      #+BEGIN_SRC cpp
+void MainWindow::closeEvent(QCloseEvent* event)
+{
+	if (video.isOpened())
+	{
+		QMessageBox::warning(this,
+			"Warning",
+			"Stop the video before closing the application!");
+		event->ignore();
+	}
+	else
+	{
+		event->accept();
+	}
+}
+      #+END_SRC
+   2) In general, if you want to prevent closing a Qt window you have to
+      override closeEvent as seen in the preceding code, and accept() or
+      ignore() the event based on a condition.
+6) [ ] Opening the video or camera
+   1) [ ] Choose between camera, video file or RSTP feed URL: try the entered
+      text in =QLineEdit= field
+   2) [ ] use to =open()= function of =VideoCapture= class
+   3) [ ] display relevant messages using QMessageBox in case of a wrong camera
+      index, unsupported file or a RTSP feed URL that doesn’t work.
+      #+BEGIN_SRC cpp
+      using namespace cv;
+bool isCamera;
+int cameraIndex = ui->videoEdit->text().toInt(&isCamera);
+if (isCamera)
+{
+	if (!video.open(cameraIndex))
+	{
+		QMessageBox::critical(this,
+			"Camera Error",
+			"Make sure you entered a correct camera index,"
+			"<br>or that the camera is not being accessed by another program!");
+		return;
+	}
+}
+else
+{
+	if (!video.open(ui->videoEdit->text().trimmed().toStdString()))
+	{
+		QMessageBox::critical(this,
+			"Video Error",
+			"Make sure you entered a correct and supported video file path,"
+			"<br>or a correct RTSP feed URL!");
+		return;
+	}
+}
+      #+END_SRC
+7) [ ] Reading and processing frames
+   1) Reading video frames using OpenCV’s VideoCapture class is quite
+      simple.
+      1) The trick here is that you need to put in =qApp->processEvents()=
+	 into each iteration of your loop to make sure the GUI thread and other
+	 events are processed
+      2) otherwise you video will be stuck, your screen will
+	 not be refreshed with new frames and most probably you’ll need to crash
+	 your app to be able to stop or quit it.
+      3) This is basically the most simple way of making sure your user
+         interface is responsive while you read and process video frames.
+      4) For more tutorials about this topic, and especially to learn how this
+         is done using QThread classes and proper multi-threading, you can refer
+         to my book [[file:biblio/computer-vision/OpenCV3&Qt5][Computer Vision with OpenCV 3 and Qt5]], which also contains
+         tons of examples to boost your Qt and OpenCV skills.
+	 #+BEGIN_SRC cpp
+Mat frame;
+while (video.isOpened())
+{
+	video >> frame;
+	if (!frame.empty())
+	{
+		// process and display frames
+	}
+	qApp->processEvents();
+}
+	 #+END_SRC
+8) [ ] Display video frames (and images): to be able to properly display OpenCV
+   Mat images on a Qt QGraphicsView, you need to do the following:
+   1) [ ] Convert Mat to QImage (This obviously means convert OpenCV Mat class
+      to Qt QImage class)
+   2) [ ] Since default OpenCV color space is BGR (Blue-Green-Red), you need to
+      swap Red and Blue channels so that it’s a standards RGB image. (Miss this
+      and you’ll get all funny colors 🙂 )
+   3) [ ] Convert QImage to QPixmap (image to pixmap)
+   4) [ ] Create a QGraphicsPixmapItem using the QPixmap (create an item using
+      the pixmap)
+   5) [ ] Add the QGraphicsPixmapItem to the QGraphicsScene of the view (set the
+      item to the scene of the view)
+      #+BEGIN_SRC cpp
+      QImage qimg(frame.data, frame.cols, frame.rows, frame.step, QImage::Format_RGB888);
+      pixmap.setPixmap( QPixmap::fromImage(qimg.rgbSwapped()) );
+      #+END_SRC
+      1) Using =Format_RGB888= ensures that image data is converted as it is
+         supposed to,
+      2) and =rgbSwapped()= takes care of swapping the Blue and Red channels in
+         a QImage.
+      3) Note that the item was added to the scene at the initialization,
+         remember the following in MainWindow constructor:
+	 #+BEGIN_SRC cpp
+	 ui->graphicsView->scene()->addItem(&pixmap);
+	 #+END_SRC
+      4) Optionally you can use the following to make sure the image always fits
+         the view no matter the window size of your application:
+	 #+BEGIN_SRC cpp
+	 ui->graphicsView->fitInView(&pixmap, Qt::KeepAspectRatio);
+	 #+END_SRC
+	 1) Note that you can replace =KeepAspectRatio= with any of the
+            following to change how your images and video frames are resize to
+            fit the view:
+	    1) =IgnoreAspectRatio=
+	    2) =KeepAspectRatio=
+	    3) =KeepAspectRatioByExpanding=
+9) Example using =copyMakeBorder= process ([[https://amin-ahmadi.com/2018/03/29/how-to-read-process-and-display-videos-using-qt-and-opencv/][src]]):
+   1) it mirrors multiple images to fill the view
+
 
 * Mine                                                             :noexport:
 ** Implementation
@@ -7410,6 +7790,7 @@ LIBS += -L/usr/local/lib -lopencv_core -lopencv_highgui -lopencv_imgproc -lopenc
 - Qt app is build with =qmake= for now
   - Maybe it will be better to use cmake for integration with opencv and other
     external libraries
+  - It works with cmake and qmake, so one can choose it after
 *** Local System [0/2]
  1) [ ] ~HW~ [0/3]
     1) [ ] Tests [0/6]:
@@ -7462,12 +7843,13 @@ LIBS += -L/usr/local/lib -lopencv_core -lopencv_highgui -lopencv_imgproc -lopenc
  - *Top priority*
  - /Medium priority/
  - ~Low priority~
-*** Qt [0/3]
+*** Qt [1/3]
     :PROPERTIES:
     :ID:       7e7c3a09-af4f-4395-a7f8-681dab1b95c1
     :END:
-1) [ ] Start a QWidget application on Qt
-2) [ ] Use the build system to externally to obtain a makefile [0/2]
+1) [X] Start a [[file:code/LS/LSApp][QWidget application]] on Qt
+2) [-] Use the build system to externally to obtain a makefile with LSP
+   integration [1/2]
    1) [ ] =qmake=
        #+BEGIN_SRC bash
        cd /path/to/project
@@ -7475,17 +7857,20 @@ LIBS += -L/usr/local/lib -lopencv_core -lopencv_highgui -lopencv_imgproc -lopenc
        qmake -makefile
        make -j$(nproc) #
        #+END_SRC
-   2) [ ] =cmake=
-3) [ ] Generate =compile_commands.json= for LSP integration [0/2]
-   1) [ ] Cmake-based projects: If your project builds with CMake, it can
-      generate this file. You should enable it with:
-     #+BEGIN_SRC bash
-     cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=1
-     #+END_SRC
-     compile_commands.json will be written to your build directory. 
-     You should symlink it (or simply copy it) to the root of your
-     source tree, if they are different.
-   2) [ ] other build systems, using =bear=: For a make-based build, you can 
-      1) =make clean=;
-      2) =bear -- make=: to generate the file (and run a clean build!).
+      1) LSP integration: using =bear=: For a make-based build, you can 
+      2) =make clean=;
+      3) =bear -- make=: to generate the file (and run a clean build!).
 	 1) if it is an older copy of bear, [[https://github.com/rizsotto/Bear/issues/304#issuecomment-703194531][use]]: =bear make=
+   2) [X] =cmake=: see [[id:8387549a-aa60-47d8-ab41-245bd8be131e][here]]:
+      1) compile_commands.json will be written to your build directory.
+      2) You should symlink it (or simply copy it) to the root of your
+	source tree, if they are different.
+3) [ ] Design the UI
+   1) [ ] Draw the several UI views
+      1) [ ] =File->New file->Qt->Qt Designer form class->Widget= and name it
+	 1) [ ] Normal mode view: =MainWindow=
+	 2) [ ] Interaction mode view: =IntWindow=
+	 3) [ ] Image filtering view: =ImgFiltWindow=
+	 4) [ ] GIF view: =GIFWindow=
+	 5) [ ] Sharing mode: =SharWindow=
+   2) [ ] Use dummy pushbuttons to create/destroy the several UI views

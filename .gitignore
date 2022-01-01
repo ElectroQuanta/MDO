@@ -27,12 +27,26 @@
 *.fdb_latexmk
 *.aux
 
+# ignore the designated subfolders
+auto/
+biblio/
+research/
+
 #ignore vim temp files
 *.swp
 *.save
 *.swo
 
-# ignore the designated subfolders
-auto/
-biblio/
-research/
+# ignore cmake files and folders
+build/
+*.user
+
+# ignore Qt files and folders
+*build-*
+moc_*
+*.o
+*.qmake*
+
+# ignore clangd files and folders
+.cache/
+compile_commands.json

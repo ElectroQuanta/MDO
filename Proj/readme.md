@@ -1,53 +1,54 @@
-- [Preamble](#org159cb7e)
-- [Versions <code>[4/4]</code>](#org2e23e23)
-- [Notes](#org335fc5a)
-  - [Requirements](#org9b25f64)
-  - [Problem statement](#org7ca2580)
-  - [Research](#org374dcad)
-    - [Topics <code>[0/3]</code>](#org9ad926f)
-    - [Selection](#org2936efc)
-  - [Report](#org6ca85c5)
-    - [Outline <code>[2/8]</code>](#orgc1edd61)
-  - [Marketing Digital Outdoor](#orgee451a2)
-    - [Topics](#org74e4685)
-    - [Technologies <code>[0/11]</code>](#org2b81b87)
-    - [Problem statement](#org8740e48)
-    - [Market research <code>[3/3]</code>](#org52cb62b)
-    - [Project planning](#org9093361)
-    - [Analysis](#org0829667)
-    - [Theoretical foundations <code>[17/17]</code>](#org4a78d48)
-    - [Design](#orgfc68db7)
-    - [Implementation <code>[0/3]</code>](#org8f952fa)
-- [Diagrams](#org88cd911)
-  - [PlantUML](#orgdd5c93c)
-    - [Setup <code>[0/6]</code>](#org4d53066)
-    - [Workflow <code>[0/4]</code>](#org280afea)
-    - [Sequence diagrams](#org85ebfec)
-    - [Component diagrams](#org489faed)
-    - [Deployment diagrams](#org7ea90ce)
-    - [Class diagrams](#orge9e6618)
-    - [Entity-Relationship diagram](#org963fe84)
-    - [Flowcharts (activity diagram)](#org03880b5)
-    - [Data formats](#org8b26fa3)
-- [RDBMS](#org3d8753e)
-  - [SQLite vs MySQL](#orgbc6910a)
-  - [mySQL](#org01093c4)
-    - [Installation <code>[1/1]</code>](#org1e40670)
-    - [Server](#org2957879)
-    - [Shell](#orgd339b4d)
-    - [C++ connector](#org8dd4fb9)
-- [GIF generation](#org88baee3)
-  - [C++ libraries and APIs <code>[0/1]</code>](#orgdd27d0c)
-- [CMake](#org7ef3800)
-- [OpenCV](#org81e3947)
-  - [Build and integrate with Qt5](#org1eeae7d)
-    - [Build opencv <code>[7/7]</code>](#orge74c237)
-    - [Compile a simple standlone project](#org4ab3afc)
-    - [Integrate with Qt <code>[6/6]</code>](#orgddf44df)
+- [Preamble](#orgd606ce1)
+- [Versions <code>[4/4]</code>](#orgd015793)
+- [Notes](#orgd63ea60)
+  - [Requirements](#orgae80c42)
+  - [Problem statement](#orgd1f5dea)
+  - [Research](#org747a801)
+    - [Topics <code>[0/3]</code>](#org9476edc)
+    - [Selection](#org8063d08)
+  - [Report](#orgd175120)
+    - [Outline <code>[2/8]</code>](#orgef4f436)
+  - [Marketing Digital Outdoor](#orgeb56a3f)
+    - [Topics](#org4c72e6a)
+    - [Technologies <code>[0/11]</code>](#orgdfd0619)
+    - [Problem statement](#org8498007)
+    - [Market research <code>[3/3]</code>](#org28a09c6)
+    - [Project planning](#orgecca33f)
+    - [Analysis](#orgfd738d2)
+    - [Theoretical foundations <code>[17/17]</code>](#orge940db6)
+    - [Design](#orge2ab0a3)
+    - [Implementation <code>[0/3]</code>](#org571697b)
+- [Diagrams](#org6d7f93a)
+  - [PlantUML](#org0540b98)
+    - [Setup <code>[0/6]</code>](#org6a15290)
+    - [Workflow <code>[0/4]</code>](#orgb9a214b)
+    - [Sequence diagrams](#org3b42cad)
+    - [Component diagrams](#org527077d)
+    - [Deployment diagrams](#org9dbb708)
+    - [Class diagrams](#orge2ef6d5)
+    - [Entity-Relationship diagram](#orga1bce8a)
+    - [Flowcharts (activity diagram)](#org4ecbb8a)
+    - [Data formats](#orga4caf4e)
+- [RDBMS](#org385fdf0)
+  - [SQLite vs MySQL](#org4977e45)
+  - [mySQL](#org350b277)
+    - [Installation <code>[1/1]</code>](#org228cf81)
+    - [Server](#orgf2541aa)
+    - [Shell](#orgc6643af)
+    - [C++ connector](#org667d971)
+- [GIF generation](#orgcd96466)
+  - [C++ libraries and APIs <code>[0/1]</code>](#org900cd0e)
+- [CMake](#org10f467c)
+- [OpenCV](#org6793d38)
+  - [Build and integrate with Qt5](#orga6c64dc)
+    - [Build opencv <code>[7/7]</code>](#org9c208c1)
+    - [Compile a simple standlone project](#org505d2c6)
+    - [Integrate with Qt <code>[2/2]</code>](#orgfde27fd)
+    - [Read, display and process videos with Qt and OpenCV](#org1bb1125)
 
 
 
-<a id="org159cb7e"></a>
+<a id="orgd606ce1"></a>
 
 # Preamble
 
@@ -55,7 +56,7 @@
 -   It is written incrementally, i.e., as the several project phases take place, the document versions pertaining to each phase are stored in the folder **submission**.
 
 
-<a id="org2e23e23"></a>
+<a id="orgd015793"></a>
 
 # Versions <code>[4/4]</code>
 
@@ -65,12 +66,12 @@
 4.  [X] Design phase: <span class="timestamp-wrapper"><span class="timestamp">&lt;2021-12-15 qua 23:00&gt;</span></span>
 
 
-<a id="org335fc5a"></a>
+<a id="orgd63ea60"></a>
 
 # Notes     :Important:
 
 
-<a id="org9b25f64"></a>
+<a id="orgae80c42"></a>
 
 ## Requirements
 
@@ -82,19 +83,19 @@
 -   Makefiles
 
 
-<a id="org7ca2580"></a>
+<a id="orgd1f5dea"></a>
 
 ## Problem statement
 
 Think about the project and deliver a document about it.
 
 
-<a id="org374dcad"></a>
+<a id="org747a801"></a>
 
 ## Research
 
 
-<a id="org9ad926f"></a>
+<a id="org9476edc"></a>
 
 ### Topics <code>[0/3]</code>
 
@@ -103,19 +104,19 @@ Think about the project and deliver a document about it.
 -   [ ] Situate the project requirements, the project constraints
 
 
-<a id="org2936efc"></a>
+<a id="org8063d08"></a>
 
 ### Selection
 
 -   [Marketing digital Outdoor](readme.md)
 
 
-<a id="org6ca85c5"></a>
+<a id="orgd175120"></a>
 
 ## Report
 
 
-<a id="orgc1edd61"></a>
+<a id="orgef4f436"></a>
 
 ### Outline <code>[2/8]</code>
 
@@ -166,12 +167,12 @@ Think about the project and deliver a document about it.
 8.  [ ] Conclusions
 
 
-<a id="orgee451a2"></a>
+<a id="orgeb56a3f"></a>
 
 ## Marketing Digital Outdoor     :Important:
 
 
-<a id="org74e4685"></a>
+<a id="org4c72e6a"></a>
 
 ### Topics
 
@@ -212,7 +213,7 @@ Think about the project and deliver a document about it.
             -   Additionally, brands can also monitor this by checking their social media accounts.
 
 
-<a id="org2b81b87"></a>
+<a id="orgdfd0619"></a>
 
 ### Technologies <code>[0/11]</code>
 
@@ -229,12 +230,12 @@ Think about the project and deliver a document about it.
 11. [ ] Social media and e-mail sharing APIs
 
 
-<a id="org8740e48"></a>
+<a id="org8498007"></a>
 
 ### ✔ DONE Problem statement
 
 
-<a id="org52cb62b"></a>
+<a id="org28a09c6"></a>
 
 ### ✔ DONE Market research <code>[3/3]</code>
 
@@ -243,7 +244,7 @@ Think about the project and deliver a document about it.
 3.  [X] Combined marketing: are they digital outdoor + scenting?
 
 
-<a id="org9093361"></a>
+<a id="orgecca33f"></a>
 
 ### Project planning
 
@@ -318,7 +319,7 @@ Think about the project and deliver a document about it.
     -   [X] Camera: 14 EUR - <https://shorturl.at/gnpCU>
 
 
-<a id="org0829667"></a>
+<a id="orgfd738d2"></a>
 
 ### ✔ DONE Analysis
 
@@ -331,7 +332,7 @@ Think about the project and deliver a document about it.
     > COMPANY -> MDO-L Staff member login RC -> RS: q mdo systems RS -> DB: query mdo-systems DB -> RS: std::<vector> mdo<sub>systems</sub> for(i = 0; i < mdo<sub>systems.size</sub>(); i++ ) RS -> RC: mdo<sub>systems</sub>[i] RC -> RC: Select MDO-L machine Send command RC -> RS: mdo <nr> <command> (mdo 1 get mode) RS -> RS: parse command RS -> RS: get mdo<sub>nr</sub> IP (query mdo-systems 1 IP) RS -> MDO-L: connect IP:port MDO-L -> RS: connected RS -> MDO-L: get mode MDO-L -> RS: normal mode (example) RS -> RC: normal
 
 
-<a id="org4a78d48"></a>
+<a id="orge940db6"></a>
 
 ### ✔ DONE Theoretical foundations <code>[17/17]</code>
 
@@ -363,7 +364,7 @@ Legend:
 -   *Hugo*
 
 
-<a id="orgfc68db7"></a>
+<a id="orge2ab0a3"></a>
 
 ### ▭▭ IN-PROGRESS Design
 
@@ -420,7 +421,7 @@ Design Phase must include (some specifications may vary according to your projec
 It is compulsory to show/identify which/where all class topics are going to be implemented and used by you! Also third-party Libraries/apps must be identified so you can use other's software and materials with our consent.
 
 
-<a id="org8f952fa"></a>
+<a id="org571697b"></a>
 
 ### Implementation <code>[0/3]</code>
 
@@ -665,7 +666,7 @@ It is compulsory to show/identify which/where all class topics are going to be i
                 ```
 
 
-<a id="org88cd911"></a>
+<a id="org6d7f93a"></a>
 
 # Diagrams
 
@@ -674,7 +675,7 @@ Diagrams can be drawn using <code>[2/2]</code>:
 -   [X] draw.io
     -   User mockups
     -   State-machine
--   [X] [PlantUML](#orgdd5c93c) (stored in Proj/diags/plantuml)
+-   [X] [PlantUML](#org0540b98) (stored in Proj/diags/plantuml)
     -   Sequence diagram
     -   Class diagram
     -   Component diagram
@@ -682,14 +683,14 @@ Diagrams can be drawn using <code>[2/2]</code>:
     -   Entity-Relationship diagram
 
 
-<a id="orgdd5c93c"></a>
+<a id="org0540b98"></a>
 
 ## PlantUML
 
 [PlantUML](https://plantuml.com/) is a tool for quickly drawing diagrams from text based descriptions. It is specially adequate for sequence diagrams, as draw.io is not very fluid.
 
 
-<a id="org4d53066"></a>
+<a id="org6a15290"></a>
 
 ### Setup <code>[0/6]</code>
 
@@ -705,7 +706,7 @@ Diagrams can be drawn using <code>[2/2]</code>:
 6.  [ ] Check the generate png file: `output/test.png`
 
 
-<a id="org280afea"></a>
+<a id="orgb9a214b"></a>
 
 ### Workflow <code>[0/4]</code>
 
@@ -719,7 +720,7 @@ Diagrams can be drawn using <code>[2/2]</code>:
 4.  [ ] Check the generate png file: `output/test.png`
 
 
-<a id="org85ebfec"></a>
+<a id="org3b42cad"></a>
 
 ### ✔ DONE Sequence diagrams
 
@@ -1236,7 +1237,7 @@ Diagrams can be drawn using <code>[2/2]</code>:
     ![img](diags/plantuml/seq-diag/examples/all-together.png)
 
 
-<a id="org489faed"></a>
+<a id="org527077d"></a>
 
 ### ✔ DONE Component diagrams
 
@@ -1313,7 +1314,7 @@ You can use component diagrams to model the software architecture of a system. C
         ![img](diags/plantuml/component-diag/output/component-diag-local-threads.png)
 
 
-<a id="org7ea90ce"></a>
+<a id="org9dbb708"></a>
 
 ### ✔ DONE Deployment diagrams
 
@@ -1362,7 +1363,7 @@ Deployment diagrams, which you typically prepare during the implementation phase
     ![img](diags/plantuml/deploy-diag/output/deploy-diag.png)
 
 
-<a id="orge9e6618"></a>
+<a id="orge2ef6d5"></a>
 
 ### ▭▭ IN-PROGRESS Class diagrams
 
@@ -1430,7 +1431,7 @@ Deployment diagrams, which you typically prepare during the implementation phase
     -   class for all classes,
     -   interface for all interfaces,
     -   enum for all enums,
-    -   <a id="org751ca8c"></a> for classes which are stereotyped with foo1,
+    -   <a id="orgff95f1a"></a> for classes which are stereotyped with foo1,
     -   an existing class name.
     
     You can use several show/hide commands to define rules and exceptions.
@@ -1511,7 +1512,7 @@ Deployment diagrams, which you typically prepare during the implementation phase
         ![img](diags/plantuml/class-diag/output/class-diag-local.png)
 
 
-<a id="org963fe84"></a>
+<a id="orga1bce8a"></a>
 
 ### ✔ DONE Entity-Relationship diagram
 
@@ -1562,7 +1563,7 @@ Otherwise, the syntax for drawing diagrams is the same as for class diagrams. Al
 3.  [DB design and implementation using SQL](db.md)     :Important:
 
 
-<a id="org03880b5"></a>
+<a id="org4ecbb8a"></a>
 
 ### ▭▭ IN-PROGRESS Flowcharts (activity diagram)
 
@@ -1647,37 +1648,37 @@ Otherwise, the syntax for drawing diagrams is the same as for class diagrams. Al
         ![img](diags/plantuml/flowchart/output/local-gif-gen.png)
 
 
-<a id="org8b26fa3"></a>
+<a id="orga4caf4e"></a>
 
 ### ✔ DONE Data formats
 
 ![img](diags/plantuml/misc/output/data-formats.png)
 
 
-<a id="org3d8753e"></a>
+<a id="org385fdf0"></a>
 
 # RDBMS
 
 
-<a id="orgbc6910a"></a>
+<a id="org4977e45"></a>
 
 ## SQLite vs MySQL
 
 1.  <https://www.hostinger.com/tutorials/sqlite-vs-mysql-whats-the-difference/>
 
 
-<a id="org01093c4"></a>
+<a id="org350b277"></a>
 
 ## mySQL
 
 
-<a id="org1e40670"></a>
+<a id="org228cf81"></a>
 
 ### Installation <code>[1/1]</code>
 
-1.  [X] Add APT repository (see [here](#org4731538))
-2.  [ ] Install server (see [here](#org5340aaf))
-3.  [X] Install client (see [here](#orgffaa012))
+1.  [X] Add APT repository (see [here](#org069324b))
+2.  [ ] Install server (see [here](#org4157eb8))
+3.  [X] Install client (see [here](#org13411db))
 
 1.  ✔ DONE Add APT repository <code>[4/4]</code>
 
@@ -1699,7 +1700,7 @@ Otherwise, the syntax for drawing diagrams is the same as for class diagrams. Al
         ```
 
 
-<a id="org2957879"></a>
+<a id="orgf2541aa"></a>
 
 ### Server
 
@@ -1763,7 +1764,7 @@ Otherwise, the syntax for drawing diagrams is the same as for class diagrams. Al
             1.  A rule should be active (mySQL), and available at port `3306` (the default for mySQL)
 
 
-<a id="orgd339b4d"></a>
+<a id="orgc6643af"></a>
 
 ### Shell
 
@@ -1780,7 +1781,7 @@ Multiple-line code can be written using a command, enabling MySQL Shell to cache
         ```
 
 
-<a id="org8dd4fb9"></a>
+<a id="org667d971"></a>
 
 ### C++ connector
 
@@ -1793,12 +1794,12 @@ Multiple-line code can be written using a command, enabling MySQL Shell to cache
     src
 
 
-<a id="org88baee3"></a>
+<a id="orgcd96466"></a>
 
 # GIF generation
 
 
-<a id="orgdd27d0c"></a>
+<a id="org900cd0e"></a>
 
 ## C++ libraries and APIs <code>[0/1]</code>
 
@@ -1808,18 +1809,18 @@ Multiple-line code can be written using a command, enabling MySQL Shell to cache
     -   [research](https://www.one-tab.com/page/fuqT5AkaRZGbzBcehZlXVQ)
 
 
-<a id="org7ef3800"></a>
+<a id="org10f467c"></a>
 
 # CMake
 
 -   [Cross compilation](https://gitlab.kitware.com/cmake/community/-/wikis/doc/cmake/CrossCompiling)
 
 
-<a id="org81e3947"></a>
+<a id="org6793d38"></a>
 
 # OpenCV
 
-**Examples** <code>[4/4]</code>:
+**Examples** <code>[5/5]</code>:
 
 1.  [X] [display<sub>img.cpp</sub>](code/computer-vision/test-opencv/display_img.cpp) (src):
     1.  About: displays an image on screen
@@ -1833,16 +1834,19 @@ Multiple-line code can be written using a command, enabling MySQL Shell to cache
 4.  [X] [example.cpp](code/computer-vision/test-opencv/cmake-example/example.cpp) ([src](https://github.com/opencv/opencv/tree/master/samples/cpp/example_cmake)):
     1.  About: Grabs frames from the camera and adds text to it
     2.  Status: compiled and runned successfully
+5.  [X] [videoprocessor](code/computer-vision/qt-test/videoprocessor) ([src](https://amin-ahmadi.com/2018/03/29/how-to-read-process-and-display-videos-using-qt-and-opencv/)):
+    1.  About: it grabs frames from camera using opencv and displays it on Qt
+    2.  Status: compiled and runned successfully
 
 
-<a id="org1eeae7d"></a>
+<a id="orga6c64dc"></a>
 
 ## Build and integrate with Qt5
 
 [src](https://lordsoftech.com/open-source/adding-opencv-libraries-to-a-qt5-project-in-ubuntu-20-04/)
 
 
-<a id="orge74c237"></a>
+<a id="org9c208c1"></a>
 
 ### ✔ DONE Build opencv <code>[7/7]</code>
 
@@ -1900,7 +1904,7 @@ Multiple-line code can be written using a command, enabling MySQL Shell to cache
         ```
 
 
-<a id="org4ab3afc"></a>
+<a id="org505d2c6"></a>
 
 ### ✔ DONE Compile a simple standlone project
 
@@ -1943,22 +1947,213 @@ Multiple-line code can be written using a command, enabling MySQL Shell to cache
     5.  [X] Run executable \#+END<sub>SRC</sub>
 
 
-<a id="orgddf44df"></a>
+<a id="orgfde27fd"></a>
 
-### ✔ DONE Integrate with Qt <code>[6/6]</code>
+### ✔ DONE Integrate with Qt <code>[2/2]</code>
 
-1.  [X] [Create a Qt Widget project](code/computer-vision/qt-test)
-    1.  Add a button
-    2.  Implement `on_button_pressed` event handler to open the camera and overlay text (see [example.cpp](code/computer-vision/test-opencv/cmake-example/example.cpp))
-2.  [X] Add this to qtcreator `.pro` file
-    
-    ```c
-    INCLUDEPATH += /usr/local/include/opencv4
-    
-    LIBS += -L/usr/local/lib -lopencv_core -lopencv_highgui -lopencv_imgproc -lopencv_objdetect -lopencv_imgcodecs -lopencv_videoio
-    ```
-3.  [X] Use the build system to externally to obtain a makefile: [see Qt workflow](readme.md)
-4.  [X] Generate `compile_commands.json` for LSP integration <code>[0/0]</code>: [see Qt workflow](readme.md)
-5.  [X] Run make
-6.  [X] Check the application output
-    1.  A GTK window should be generated when the push button is pressed
+1.  ✔ DONE Qmake <code>[6/6]</code>
+
+    1.  [X] [Create a Qt Widget project](code/computer-vision/qt-test)
+        1.  Add a button
+        2.  Implement `on_button_pressed` event handler to open the camera and overlay text (see [example.cpp](code/computer-vision/test-opencv/cmake-example/example.cpp))
+    2.  [X] Add this to qtcreator `.pro` file
+        
+        ```c
+        INCLUDEPATH += /usr/local/include/opencv4
+        
+        LIBS += -L/usr/local/lib -lopencv_core -lopencv_highgui -lopencv_imgproc -lopencv_objdetect -lopencv_imgcodecs -lopencv_videoio
+        ```
+    3.  [X] Use the build system to externally to obtain a makefile: [see Qt workflow](readme.md)
+    4.  [X] Generate `compile_commands.json` for LSP integration <code>[0/0]</code>: [see Qt workflow](readme.md)
+    5.  [X] Run make
+    6.  [X] Check the application output
+        1.  A GTK window should be generated when the push button is pressed
+
+2.  ✔ DONE Cmake
+
+    1.  [X] [Create a Qt Widget project](code/computer-vision/qt-test/opencv-cmake-test)
+        1.  Add a button
+        2.  Implement `on_button_pressed` event handler to open the camera and overlay text (see [example.cpp](code/computer-vision/test-opencv/cmake-example/example.cpp))
+    2.  [X] Add this to `CMakeLists.txt` file ([src](http://amin-ahmadi.com/2018/02/23/how-to-use-cmake-with-qt5-and-opencv-3-projects/))
+        
+        ```cmake
+        set(OpenCV_DIR "usr/local/lib/cmake/opencv4")
+        find_package(OpenCV REQUIRED)
+        include_directories(${OpenCV_INCLUDE_DIRS})
+        
+        target_link_libraries(testCmake PRIVATE Qt5::Widgets ${OpenCV_LIBS})
+        ```
+    3.  [X] Use the build system to externally to obtain a makefile with LSP integration [see Qt workflow](readme.md)
+        
+        ```bash
+        mkdir build && cd build
+        cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=1 ..
+        ```
+    4.  [X] Run make
+        
+        ```c
+        make -j11
+        ```
+    5.  [X] Check the application output
+        
+        ```
+        ./execName
+        ```
+        
+        1.  A GTK window should be generated when the push button is pressed
+
+
+<a id="org1bb1125"></a>
+
+### Read, display and process videos with Qt and OpenCV
+
+[src](https://amin-ahmadi.com/2018/03/29/how-to-read-process-and-display-videos-using-qt-and-opencv/)
+
+-   [Repo](https://bitbucket.org/amahta/videoprocessor/src/master/)
+
+**Steps** <code>[0/8]</code>
+
+1.  [ ] Create a Qt Widget app using Qt Creator
+    1.  In the `.pro` file add the include and libs path
+2.  [ ] Design the UI
+    1.  [ ] `QGraphicsView` widget: display video frames reas using OpenCV `VideoCapture` class
+    2.  [ ] `QLineEdit` widget: get the user entered camera index, file path or RTSP feed URL
+3.  [ ] `mainwindow.h`
+    1.  [ ] Add includes and definitions
+        
+        ```cpp
+        #include <QMainWindow>
+        #include <QDebug>
+        #include <QGraphicsScene>
+        #include <QGraphicsPixmapItem>
+        #include <QImage>
+        #include <QPixmap>
+        #include <QCloseEvent>
+        #include <QMessageBox>
+        
+        #include "opencv2/opencv.hpp"
+        
+        ```
+    2.  [ ] Add protected and privated entries
+        
+        ```cpp
+        protected:
+            void closeEvent(QCloseEvent *event);
+        
+        private:
+            Ui::MainWindow *ui;
+        
+            QGraphicsPixmapItem pixmap;
+            cv::VideoCapture video;
+        ```
+        
+        1.  We'll be using the `closeEvent` to prevent closing the UI before stopping the video
+4.  [ ] Prepare the graphics viewer
+    1.  [ ] `mainwindow.cpp` constructor:
+        
+        ```cpp
+        ui->graphicsView->setScene(new QGraphicsScene(this));
+        ui->graphicsView->scene()->addItem(&pixmap);
+        ```
+5.  [ ] Prevent closing the window:
+    1.  while the video is being read and processed or the camera is being accessed, we need to make sure `MainWindow` can't be closed
+        
+        ```cpp
+        void MainWindow::closeEvent(QCloseEvent* event)
+        {
+        	if (video.isOpened())
+        	{
+        		QMessageBox::warning(this,
+        			"Warning",
+        			"Stop the video before closing the application!");
+        		event->ignore();
+        	}
+        	else
+        	{
+        		event->accept();
+        	}
+        }
+        ```
+    2.  In general, if you want to prevent closing a Qt window you have to override closeEvent as seen in the preceding code, and accept() or ignore() the event based on a condition.
+6.  [ ] Opening the video or camera
+    1.  [ ] Choose between camera, video file or RSTP feed URL: try the entered text in `QLineEdit` field
+    2.  [ ] use to `open()` function of `VideoCapture` class
+    3.  [ ] display relevant messages using QMessageBox in case of a wrong camera index, unsupported file or a RTSP feed URL that doesn’t work.
+        
+        ```cpp
+              using namespace cv;
+        bool isCamera;
+        int cameraIndex = ui->videoEdit->text().toInt(&isCamera);
+        if (isCamera)
+        {
+        	if (!video.open(cameraIndex))
+        	{
+        		QMessageBox::critical(this,
+        			"Camera Error",
+        			"Make sure you entered a correct camera index,"
+        			"<br>or that the camera is not being accessed by another program!");
+        		return;
+        	}
+        }
+        else
+        {
+        	if (!video.open(ui->videoEdit->text().trimmed().toStdString()))
+        	{
+        		QMessageBox::critical(this,
+        			"Video Error",
+        			"Make sure you entered a correct and supported video file path,"
+        			"<br>or a correct RTSP feed URL!");
+        		return;
+        	}
+        }
+        ```
+7.  [ ] Reading and processing frames
+    1.  Reading video frames using OpenCV’s VideoCapture class is quite simple.
+        1.  The trick here is that you need to put in `qApp->processEvents()` into each iteration of your loop to make sure the GUI thread and other events are processed
+        2.  otherwise you video will be stuck, your screen will not be refreshed with new frames and most probably you’ll need to crash your app to be able to stop or quit it.
+        3.  This is basically the most simple way of making sure your user interface is responsive while you read and process video frames.
+        4.  For more tutorials about this topic, and especially to learn how this is done using QThread classes and proper multi-threading, you can refer to my book [Computer Vision with OpenCV 3 and Qt5](biblio/computer-vision/OpenCV3&Qt5), which also contains tons of examples to boost your Qt and OpenCV skills.
+            
+            ```cpp
+            Mat frame;
+            while (video.isOpened())
+            {
+            	video >> frame;
+            	if (!frame.empty())
+            	{
+            		// process and display frames
+            	}
+            	qApp->processEvents();
+            }
+            ```
+8.  [ ] Display video frames (and images): to be able to properly display OpenCV Mat images on a Qt QGraphicsView, you need to do the following:
+    1.  [ ] Convert Mat to QImage (This obviously means convert OpenCV Mat class to Qt QImage class)
+    2.  [ ] Since default OpenCV color space is BGR (Blue-Green-Red), you need to swap Red and Blue channels so that it’s a standards RGB image. (Miss this and you’ll get all funny colors 🙂 )
+    3.  [ ] Convert QImage to QPixmap (image to pixmap)
+    4.  [ ] Create a QGraphicsPixmapItem using the QPixmap (create an item using the pixmap)
+    5.  [ ] Add the QGraphicsPixmapItem to the QGraphicsScene of the view (set the item to the scene of the view)
+        
+        ```cpp
+        QImage qimg(frame.data, frame.cols, frame.rows, frame.step, QImage::Format_RGB888);
+        pixmap.setPixmap( QPixmap::fromImage(qimg.rgbSwapped()) );
+        ```
+        
+        1.  Using `Format_RGB888` ensures that image data is converted as it is supposed to,
+        2.  and `rgbSwapped()` takes care of swapping the Blue and Red channels in a QImage.
+        3.  Note that the item was added to the scene at the initialization, remember the following in MainWindow constructor:
+            
+            ```cpp
+            ui->graphicsView->scene()->addItem(&pixmap);
+            ```
+        4.  Optionally you can use the following to make sure the image always fits the view no matter the window size of your application:
+            
+            ```cpp
+            ui->graphicsView->fitInView(&pixmap, Qt::KeepAspectRatio);
+            ```
+            
+            1.  Note that you can replace `KeepAspectRatio` with any of the following to change how your images and video frames are resize to fit the view:
+                1.  `IgnoreAspectRatio`
+                2.  `KeepAspectRatio`
+                3.  `KeepAspectRatioByExpanding`
+9.  Example using `copyMakeBorder` process ([src](https://amin-ahmadi.com/2018/03/29/how-to-read-process-and-display-videos-using-qt-and-opencv/)):
+    1.  it mirrors multiple images to fill the view
