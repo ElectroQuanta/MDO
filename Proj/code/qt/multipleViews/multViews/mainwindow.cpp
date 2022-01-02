@@ -47,7 +47,7 @@ void MainWindow::on_pushButton_2_clicked()
     ui->stackedWidget->setCurrentIndex(UIViews::SETTINGS);
 }
 
-void MainWindow::on_home_pressed()
+void MainWindow::onHome_pressed()
 {
     ui->stackedWidget->setCurrentIndex(UIViews::MAIN);
 }

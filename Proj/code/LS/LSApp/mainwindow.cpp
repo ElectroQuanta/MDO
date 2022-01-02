@@ -38,20 +38,54 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+    /**< TITLE BAR */
     // remove title bar (we dont want this in the embedded display)
     // UNCOMMENT this at the end
     // src: https://amin-ahmadi.com/2016/07/14/how-to-make-a-frameless-qt-window/
     //setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
 
-    // STATUSBAR: remove
-    // programatically:
+    /**< STATUS BAR */
+    // remove programatically:
     // if(ui->statusbar)
     //     delete ui->statusbar;
     // it is done in the Qt designer
+
+    /**< stackedWidget: manages the UI views - set default view */
+    ui->stackedWidget->setCurrentIndex(UIViews::WELCOME);
+
+    /**< Instantiate other UI Windows */
+    _nWind = new NormalWindow();
+
+    /**< Add more UI views */
+    ui->stackedWidget->insertWidget(UIViews::NORMAL, _nWind);
+
+    /**< Connect signals to slots */
+    connect(_nWind, SIGNAL( home_pressed() ),
+            this, SLOT( onHome_pressed() ));
+
 }
 
-MainWindow::~MainWindow()
-{
-    delete ui;
+MainWindow::~MainWindow() { delete ui; }
+
+
+/* ------------- START DUMMY --------------------
+ * DUMMY buttons to navigate to other windows */
+void MainWindow::on_pushButton_clicked(){
+    ui->stackedWidget->setCurrentIndex(UIViews::NORMAL);
 }
 
+void MainWindow::on_pushButton_2_clicked(){
+    
+}
+
+void MainWindow::on_pushButton_3_clicked(){
+    
+}
+
+void MainWindow::on_pushButton_4_clicked() {}
+
+void MainWindow::onHome_pressed(){
+    ui->stackedWidget->setCurrentIndex(UIViews::WELCOME);
+}
+
+/* ----------------- END DUMMY --------------------- */

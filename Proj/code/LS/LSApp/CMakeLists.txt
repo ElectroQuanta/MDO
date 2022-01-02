@@ -11,6 +11,7 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+#set(CMAKE_PREFIX_PATH $ENV{QTDIR})
 # src: http://amin-ahmadi.com/2018/02/23/how-to-use-cmake-with-qt5-and-opencv-3-projects/
 # Specify OpenCV folder, and take care of dependenciesand includes
 #set(OpenCV_DIR "path_to_folder_of_OpenCVConfig.cmake_file")
@@ -31,6 +32,7 @@ include_directories(${OpenCV_INCLUDE_DIRS})
 #    endif()
 #endif()
 
+#find_package(Qt5 COMPONENTS Widgets VirtualKeyboard REQUIRED)
 find_package(Qt5 COMPONENTS Widgets REQUIRED)
 
 if(ANDROID)
@@ -47,11 +49,23 @@ else()
     mainwindow.h
     mainwindow.ui
     resources.qrc
+    normalwindow.h
+    normalwindow.cpp
+    normalwindow.ui
+    interwindow.h
+    interwindow.cpp
+    interwindow.ui
+    imgfiltwindow.h
+    imgfiltwindow.cpp
+    imgfiltwindow.ui
+    sharwindow.h
+    sharwindow.cpp
+    sharwindow.ui
   )
 endif()
-
 
 # src: http://amin-ahmadi.com/2018/02/23/how-to-use-cmake-with-qt5-and-opencv-3-projects/
 # link required libs
 #target_link_libraries(${PROJECT_NAME} Qt5::Core Qt5::Gui Qt5::Widgets ${OpenCV_LIBS})
+#target_link_libraries(${PROJECT_NAME} PRIVATE Qt5::Widgets Qt5::VirtualKeyboard ${OpenCV_LIBS})
 target_link_libraries(${PROJECT_NAME} PRIVATE Qt5::Widgets ${OpenCV_LIBS})

@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "normalwindow.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -15,7 +16,19 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+private slots:
+    
+/* ----- DUMMY ------------- */
+    void on_pushButton_clicked(); /**< Dummy button to go to Normal Mode */
+    void on_pushButton_2_clicked(); /**< Dummy button to go to Interaction Mode */
+    void on_pushButton_3_clicked(); /**< Dummy button to go to ImgFilt Mode */
+    void on_pushButton_4_clicked(); /**< Dummy button to go to Sharing Mode */
+    void onHome_pressed(); /**< slot to handle dummy signal to return to main window */
+/* ----- END DUMMY ------------- */
+
 private:
-    Ui::MainWindow *ui;
+    Ui::MainWindow *ui; /**< UI main view */
+    NormalWindow *_nWind; /**< Normal Window ptr */
+    
 };
 #endif // MAINWINDOW_H

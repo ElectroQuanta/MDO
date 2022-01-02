@@ -1,5 +1,18 @@
 <RCC>
     <qresource prefix="/">
         <file>resources/img/welcome.png</file>
+        <file>resources/icons/swipe_right.png</file>
+        <file>resources/icons/swipe_left.png</file>
+        <file>resources/icons/insta.png</file>
+        <file>resources/icons/fb.png</file>
+        <file>resources/icons/twitter.png</file>
+        <file>resources/icons/ok.png</file>
+        <file>resources/icons/finger_pointing.png</file>
+        <file>resources/icons/gif.png</file>
+        <file>resources/icons/camera.png</file>
+        <file>resources/icons/imgfilt.png</file>
+        <file>resources/icons/share.png</file>
+        <file>resources/icons/cancel.png</file>
+        <file>resources/icons/finger_pointing_inverted.png</file>
     </qresource>
 </RCC>
