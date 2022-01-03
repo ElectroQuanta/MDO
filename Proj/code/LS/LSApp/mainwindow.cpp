@@ -1,7 +1,11 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
+#include <qgraphicsitem.h>
 #include <qnamespace.h>
+#include <QImage>
+#include <qwidget.h>
 
+#define WELCOME_IMG_PATH ":/resources/img/welcome.png"
 
 /**
  * @brief Screen resolution for embedded display
@@ -78,6 +82,14 @@ MainWindow::MainWindow(QWidget *parent)
             this, SLOT( onInter_mode_pressed() ));
     connect(_sharWind, SIGNAL( inter_mode_pressed() ),
             this, SLOT( onInter_mode_pressed() ));
+
+    /* Load resource images */
+    QImage img = QImage(WELCOME_IMG_PATH);
+    _welcome_img = new QGraphicsPixmapItem( QPixmap::fromImage(img) );
+    
+    ui->graphicsView->setScene(new QGraphicsScene(this));
+    ui->graphicsView->scene()->addItem(_welcome_img);
+    ui->graphicsView->fitInView(_welcome_img, Qt::KeepAspectRatio);
 }
 
 MainWindow::~MainWindow() { delete ui; }
@@ -102,6 +114,8 @@ void MainWindow::on_pushButton_4_clicked() {
 }
 
 void MainWindow::onHome_pressed(){
+//    ui->graphicsView->set
+    ui->graphicsView->fitInView(_welcome_img, Qt::KeepAspectRatio);
     ui->stackedWidget->setCurrentIndex(UIViews::WELCOME);
 }
 

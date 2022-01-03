@@ -7,6 +7,12 @@
 #include "imgfiltwindow.h"
 #include "sharwindow.h"
 
+#include <QGraphicsScene>
+#include <QGraphicsPixmapItem>
+#include <QImage>
+#include <qgraphicsitem.h>
+#include <qwidget.h>
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -40,5 +46,8 @@ private:
     InterWindow *_interWind; /**< Normal Window ptr */
     ImgFiltWindow *_imgFiltWind; /**< Normal Window ptr */
     SharWindow *_sharWind; /**< Normal Window ptr */
+
+    QGraphicsPixmapItem *_pixmap;
+    QGraphicsPixmapItem *_welcome_img;
 };
 #endif // MAINWINDOW_H
