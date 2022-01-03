@@ -28,6 +28,8 @@ private slots:
 
     void on_pb_gif_share_clicked();
 
+    void on_pb_create_gif_clicked();
+
 private:
     Ui::InterWindow *ui;
 };

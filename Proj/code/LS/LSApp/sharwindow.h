@@ -15,6 +15,21 @@ public:
     explicit SharWindow(QWidget *parent = nullptr);
     ~SharWindow();
 
+private slots:
+    void on_pb_cancel_share_clicked();
+
+    void on_pb_twitter_share_clicked();
+
+    void on_pb_edit_cancel_clicked();
+
+    void on_pb_edit_ok_clicked();
+
+    void on_pb_status_cancel_clicked();
+
+    void on_pb_status_ok_clicked();
+
+    void on_pushButton_clicked();
+
 private:
     Ui::SharWindow *ui;
 };

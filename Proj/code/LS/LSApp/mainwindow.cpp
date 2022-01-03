@@ -54,13 +54,19 @@ MainWindow::MainWindow(QWidget *parent)
     ui->stackedWidget->setCurrentIndex(UIViews::WELCOME);
 
     /**< Instantiate other UI Windows */
-    _nWind = new NormalWindow();
+    _normalWind = new NormalWindow();
+    _interWind = new InterWindow();
+    _imgFiltWind = new ImgFiltWindow();
+    _sharWind = new SharWindow();
 
     /**< Add more UI views */
-    ui->stackedWidget->insertWidget(UIViews::NORMAL, _nWind);
+    ui->stackedWidget->insertWidget(UIViews::NORMAL, _normalWind);
+    ui->stackedWidget->insertWidget(UIViews::INTER, _interWind);
+    ui->stackedWidget->insertWidget(UIViews::IMGFILT, _imgFiltWind);
+    ui->stackedWidget->insertWidget(UIViews::SHAR, _sharWind);
 
     /**< Connect signals to slots */
-    connect(_nWind, SIGNAL( home_pressed() ),
+    connect(_normalWind, SIGNAL( home_pressed() ),
             this, SLOT( onHome_pressed() ));
 
 }
@@ -75,14 +81,16 @@ void MainWindow::on_pushButton_clicked(){
 }
 
 void MainWindow::on_pushButton_2_clicked(){
-    
+    ui->stackedWidget->setCurrentIndex(UIViews::INTER);
 }
 
 void MainWindow::on_pushButton_3_clicked(){
-    
+    ui->stackedWidget->setCurrentIndex(UIViews::IMGFILT);
 }
 
-void MainWindow::on_pushButton_4_clicked() {}
+void MainWindow::on_pushButton_4_clicked() {
+    ui->stackedWidget->setCurrentIndex(UIViews::SHAR);
+}
 
 void MainWindow::onHome_pressed(){
     ui->stackedWidget->setCurrentIndex(UIViews::WELCOME);

@@ -3,6 +3,9 @@
 
 #include <QMainWindow>
 #include "normalwindow.h"
+#include "interwindow.h"
+#include "imgfiltwindow.h"
+#include "sharwindow.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -28,7 +31,9 @@ private slots:
 
 private:
     Ui::MainWindow *ui; /**< UI main view */
-    NormalWindow *_nWind; /**< Normal Window ptr */
-    
+    NormalWindow *_normalWind; /**< Normal Window ptr */
+    InterWindow *_interWind; /**< Normal Window ptr */
+    ImgFiltWindow *_imgFiltWind; /**< Normal Window ptr */
+    SharWindow *_sharWind; /**< Normal Window ptr */
 };
 #endif // MAINWINDOW_H
