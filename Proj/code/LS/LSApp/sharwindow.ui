@@ -7,19 +7,22 @@
     <x>0</x>
     <y>0</y>
     <width>600</width>
-    <height>1024</height>
+    <height>224</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(0, 0, 0);</string>
+  </property>
   <widget class="QStackedWidget" name="stackedWidget">
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>803</y>
+     <y>0</y>
      <width>600</width>
-     <height>221</height>
+     <height>224</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -795,22 +798,6 @@ background-repeat: no-repeat;
      </layout>
     </widget>
    </widget>
-  </widget>
-  <widget class="QGraphicsView" name="graphicsView">
-   <property name="enabled">
-    <bool>true</bool>
-   </property>
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>600</width>
-     <height>804</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(0, 0, 0);</string>
-   </property>
   </widget>
  </widget>
  <resources>

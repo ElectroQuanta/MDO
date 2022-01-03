@@ -17,21 +17,21 @@ The UI is Qt-based.
 - =main.cpp=: driver file - contains the =main()= function that drives the Qt
   App execution
 
-** UI Views [1/5]
+** UI Views [5/5]
 1) [X] Welcome view: =MainWindow=
    - displayed when no Ad is supposed to be running
    - contains a description about the project, how to rent ads, etc.
-2) [ ] Normal mode view: =NormalWindow=
+2) [X] Normal mode view: =NormalWindow=
    - Reproduces video in fullscreen (with audio)
-3) [ ] Interaction mode view: =InterWindow=
+3) [X] Interaction mode view: =InterWindow=
    1) includes:
       1) =Main menu=: page0
       2) =Picture mode=: page1
       3) =GIF mode=: page2
-4) [ ] Image filtering view: =ImgFiltWindow=
+4) [X] Image filtering view: =ImgFiltWindow=
    1) includes:
       1) =Main menu=
-5) [ ] Sharing mode: =SharWindow=
+5) [X] Sharing mode: =SharWindow=
    1) includes:
       1) =Main menu=: selection (page 0)
       2) =Editing=: presents a virtual keyboard (page 1)
