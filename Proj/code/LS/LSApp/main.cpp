@@ -21,8 +21,8 @@ int main(int argc, char *argv[])
     // QString styleSheet = QLatin1String( file.readAll() );
     // a.setStyleSheet(styleSheet);
     /* setting string directly */
-    a.setStyleSheet("QWidget{ background-color: black; color: rgb(186, 189, 182); } QPushButton{ background-color: rgb(186, 189, 182); color: black; }");
-
+    a.setStyleSheet(
+        "QWidget{ background-color: black; color: rgb(186, 189, 182); } QPushButton{ background-color: rgb(186, 189, 182); color: black; } QLineEdit{ border-color: rgb(186, 189, 182); border-width: 2px; border-style: solid}");
 
     /**< Creating the main window and displaying it */
     MainWindow w;

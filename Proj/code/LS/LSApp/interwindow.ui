@@ -92,7 +92,7 @@ border-radius: 5px
          </font>
         </property>
         <property name="toolTip">
-         <string>Dummy button to navigate to Normal mode view</string>
+         <string/>
         </property>
         <property name="layoutDirection">
          <enum>Qt::LeftToRight</enum>
@@ -146,7 +146,7 @@ Filter</string>
          </font>
         </property>
         <property name="toolTip">
-         <string>Dummy button to navigate to Normal mode view</string>
+         <string/>
         </property>
         <property name="layoutDirection">
          <enum>Qt::LeftToRight</enum>
@@ -200,7 +200,7 @@ Pic</string>
          </font>
         </property>
         <property name="toolTip">
-         <string>Dummy button to navigate to Normal mode view</string>
+         <string/>
         </property>
         <property name="layoutDirection">
          <enum>Qt::LeftToRight</enum>
@@ -480,7 +480,7 @@ background-repeat: no-repeat;
          </font>
         </property>
         <property name="toolTip">
-         <string>Dummy button to navigate to Normal mode view</string>
+         <string/>
         </property>
         <property name="layoutDirection">
          <enum>Qt::LeftToRight</enum>
@@ -533,7 +533,7 @@ border-radius: 5px
          </font>
         </property>
         <property name="toolTip">
-         <string>Dummy button to navigate to Normal mode view</string>
+         <string/>
         </property>
         <property name="layoutDirection">
          <enum>Qt::LeftToRight</enum>
@@ -755,7 +755,7 @@ background-repeat: no-repeat;
          </font>
         </property>
         <property name="toolTip">
-         <string>Dummy button to navigate to Normal mode view</string>
+         <string/>
         </property>
         <property name="layoutDirection">
          <enum>Qt::LeftToRight</enum>
@@ -812,7 +812,7 @@ border-radius: 5px
          </font>
         </property>
         <property name="toolTip">
-         <string>Dummy button to navigate to Normal mode view</string>
+         <string/>
         </property>
         <property name="layoutDirection">
          <enum>Qt::LeftToRight</enum>

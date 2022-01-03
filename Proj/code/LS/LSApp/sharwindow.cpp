@@ -27,37 +27,41 @@ SharWindow::~SharWindow()
 
 void SharWindow::on_pb_cancel_share_clicked()
 {
-
+    /**< Go to INTERACTION mode */
 }
 
 
 void SharWindow::on_pb_twitter_share_clicked()
 {
-
+    /**< Go to EDIT */
+    ui->stackedWidget->setCurrentIndex(UIPages::EDIT);
 }
 
 
 void SharWindow::on_pb_edit_cancel_clicked()
 {
-
+    /**< Go to MAIN */
+    ui->stackedWidget->setCurrentIndex(UIPages::MAIN);
 }
 
 
 void SharWindow::on_pb_edit_ok_clicked()
 {
-
+    /**< Go to Status */
+    ui->stackedWidget->setCurrentIndex(UIPages::STATUS);
 }
 
 
 void SharWindow::on_pb_status_cancel_clicked()
 {
-
+    /**< Go to MAIN */
+    ui->stackedWidget->setCurrentIndex(UIPages::MAIN);
 }
 
 
 void SharWindow::on_pb_status_ok_clicked()
 {
-
+    /**< Go to INTERACTION mode */
 }
 
 

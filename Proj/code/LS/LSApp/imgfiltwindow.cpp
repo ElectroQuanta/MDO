@@ -26,13 +26,15 @@ ImgFiltWindow::~ImgFiltWindow()
 
 void ImgFiltWindow::on_pb_cancel_share_clicked()
 {
+    /**< Go to INTERACTION mode */
 
 }
 
 
 void ImgFiltWindow::on_pb_img_filt_clicked()
 {
-
+    // DUMMY: for navigation only
+    ui->stackedWidget->setCurrentIndex(UIPages::PAGE2);
 }
 
 
@@ -62,19 +64,12 @@ void ImgFiltWindow::on_pb_img_filt_5_clicked()
 
 void ImgFiltWindow::on_pb_cancel_share_2_clicked()
 {
-
-}
-
-
-void ImgFiltWindow::on_pb_img_filt_10_clicked()
-{
-
+    ui->stackedWidget->setCurrentIndex(UIPages::MAIN);
 }
 
 
 void ImgFiltWindow::on_pb_img_filt_6_clicked()
 {
-
 }
 
 
@@ -91,6 +86,11 @@ void ImgFiltWindow::on_pb_img_filt_8_clicked()
 
 
 void ImgFiltWindow::on_pb_img_filt_9_clicked()
+{
+
+}
+
+void ImgFiltWindow::on_pb_img_filt_10_clicked()
 {
 
 }

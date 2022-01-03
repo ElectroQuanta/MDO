@@ -58,7 +58,7 @@
       <item>
        <widget class="QPushButton" name="pushButton">
         <property name="toolTip">
-         <string>Dummy button to navigate to Normal mode view</string>
+         <string/>
         </property>
         <property name="styleSheet">
          <string notr="true">color: rgb(255, 255, 255);
@@ -108,7 +108,7 @@ border-radius: 5px
          </font>
         </property>
         <property name="toolTip">
-         <string>Dummy button to navigate to Normal mode view</string>
+         <string/>
         </property>
         <property name="layoutDirection">
          <enum>Qt::LeftToRight</enum>
@@ -161,7 +161,7 @@ border-radius: 5px
          </font>
         </property>
         <property name="toolTip">
-         <string>Dummy button to navigate to Normal mode view</string>
+         <string/>
         </property>
         <property name="layoutDirection">
          <enum>Qt::LeftToRight</enum>
@@ -212,7 +212,7 @@ Filter
          </font>
         </property>
         <property name="toolTip">
-         <string>Dummy button to navigate to Normal mode view</string>
+         <string/>
         </property>
         <property name="layoutDirection">
          <enum>Qt::LeftToRight</enum>
@@ -263,7 +263,7 @@ Filter
          </font>
         </property>
         <property name="toolTip">
-         <string>Dummy button to navigate to Normal mode view</string>
+         <string/>
         </property>
         <property name="layoutDirection">
          <enum>Qt::LeftToRight</enum>
@@ -314,7 +314,7 @@ Filter
          </font>
         </property>
         <property name="toolTip">
-         <string>Dummy button to navigate to Normal mode view</string>
+         <string/>
         </property>
         <property name="layoutDirection">
          <enum>Qt::LeftToRight</enum>
@@ -365,7 +365,7 @@ Filter
          </font>
         </property>
         <property name="toolTip">
-         <string>Dummy button to navigate to Normal mode view</string>
+         <string/>
         </property>
         <property name="layoutDirection">
          <enum>Qt::LeftToRight</enum>
@@ -757,7 +757,7 @@ background-repeat: no-repeat;
          </font>
         </property>
         <property name="toolTip">
-         <string>Dummy button to navigate to Normal mode view</string>
+         <string/>
         </property>
         <property name="layoutDirection">
          <enum>Qt::LeftToRight</enum>
@@ -810,7 +810,7 @@ border-radius: 5px
          </font>
         </property>
         <property name="toolTip">
-         <string>Dummy button to navigate to Normal mode view</string>
+         <string/>
         </property>
         <property name="layoutDirection">
          <enum>Qt::LeftToRight</enum>
@@ -861,7 +861,7 @@ Filter
          </font>
         </property>
         <property name="toolTip">
-         <string>Dummy button to navigate to Normal mode view</string>
+         <string/>
         </property>
         <property name="layoutDirection">
          <enum>Qt::LeftToRight</enum>
@@ -912,7 +912,7 @@ Filter
          </font>
         </property>
         <property name="toolTip">
-         <string>Dummy button to navigate to Normal mode view</string>
+         <string/>
         </property>
         <property name="layoutDirection">
          <enum>Qt::LeftToRight</enum>
@@ -963,7 +963,7 @@ Filter
          </font>
         </property>
         <property name="toolTip">
-         <string>Dummy button to navigate to Normal mode view</string>
+         <string/>
         </property>
         <property name="layoutDirection">
          <enum>Qt::LeftToRight</enum>
@@ -1014,7 +1014,7 @@ Filter
          </font>
         </property>
         <property name="toolTip">
-         <string>Dummy button to navigate to Normal mode view</string>
+         <string/>
         </property>
         <property name="layoutDirection">
          <enum>Qt::LeftToRight</enum>
