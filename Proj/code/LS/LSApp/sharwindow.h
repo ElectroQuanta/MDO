@@ -28,7 +28,14 @@ private slots:
 
     void on_pb_status_ok_clicked();
 
-    void on_pushButton_clicked();
+    /**< Dummy */
+    //void on_pushButton_clicked();
+
+signals:
+    void inter_mode_pressed();
+
+    /**< Dummy */
+    //void home_pressed();
 
 private:
     Ui::SharWindow *ui;

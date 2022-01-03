@@ -27,7 +27,9 @@ ImgFiltWindow::~ImgFiltWindow()
 void ImgFiltWindow::on_pb_cancel_share_clicked()
 {
     /**< Go to INTERACTION mode */
-
+    // Reset view to main before emiting signal
+    ui->stackedWidget->setCurrentIndex(UIPages::MAIN);
+    emit inter_mode_pressed();
 }
 
 
@@ -95,9 +97,9 @@ void ImgFiltWindow::on_pb_img_filt_10_clicked()
 
 }
 
-
-void ImgFiltWindow::on_pushButton_clicked()
-{
-
-}
+/**< Dummy */
+//void ImgFiltWindow::on_pushButton_clicked()
+//{
+//
+//}
 

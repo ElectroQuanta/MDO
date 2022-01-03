@@ -40,7 +40,11 @@ private slots:
 
     void on_pb_img_filt_9_clicked();
 
-    void on_pushButton_clicked();
+    /**< dummy */
+    //void on_pushButton_clicked();
+
+signals:
+    void inter_mode_pressed();
 
 private:
     Ui::ImgFiltWindow *ui;

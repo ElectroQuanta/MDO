@@ -28,6 +28,7 @@ SharWindow::~SharWindow()
 void SharWindow::on_pb_cancel_share_clicked()
 {
     /**< Go to INTERACTION mode */
+    emit inter_mode_pressed();
 }
 
 
@@ -62,11 +63,17 @@ void SharWindow::on_pb_status_cancel_clicked()
 void SharWindow::on_pb_status_ok_clicked()
 {
     /**< Go to INTERACTION mode */
+    // Reset view to main before emiting signal
+    ui->stackedWidget->setCurrentIndex(UIPages::MAIN);
+    emit inter_mode_pressed();
 }
 
-
-void SharWindow::on_pushButton_clicked()
-{
-
-}
+/**< Dummy */
+//void SharWindow::on_pushButton_clicked()
+//{
+//    /**< Go to INTERACTION mode */
+//    // Reset view to main before emiting signal
+//    ui->stackedWidget->setCurrentIndex(UIPages::MAIN);
+//    emit home_pressed();
+//}
 

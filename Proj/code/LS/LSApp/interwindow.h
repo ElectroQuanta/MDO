@@ -30,6 +30,14 @@ private slots:
 
     void on_pb_create_gif_clicked();
 
+    /**< Dummy */
+    void on_pushButton_clicked();
+
+signals:
+    void shar_mode_pressed();
+    void imgfilt_mode_pressed();
+    void home_pressed();
+
 private:
     Ui::InterWindow *ui;
 };

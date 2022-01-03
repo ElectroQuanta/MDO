@@ -68,7 +68,16 @@ MainWindow::MainWindow(QWidget *parent)
     /**< Connect signals to slots */
     connect(_normalWind, SIGNAL( home_pressed() ),
             this, SLOT( onHome_pressed() ));
-
+    connect(_interWind, SIGNAL( home_pressed() ),
+            this, SLOT( onHome_pressed() ));
+    connect(_interWind, SIGNAL( imgfilt_mode_pressed() ),
+            this, SLOT( onImgFilt_mode_pressed() ));
+    connect(_interWind, SIGNAL( shar_mode_pressed() ),
+            this, SLOT( onShar_mode_pressed() ));
+    connect(_imgFiltWind, SIGNAL( inter_mode_pressed() ),
+            this, SLOT( onInter_mode_pressed() ));
+    connect(_sharWind, SIGNAL( inter_mode_pressed() ),
+            this, SLOT( onInter_mode_pressed() ));
 }
 
 MainWindow::~MainWindow() { delete ui; }
@@ -94,6 +103,18 @@ void MainWindow::on_pushButton_4_clicked() {
 
 void MainWindow::onHome_pressed(){
     ui->stackedWidget->setCurrentIndex(UIViews::WELCOME);
+}
+
+void MainWindow::onInter_mode_pressed(){
+    ui->stackedWidget->setCurrentIndex(UIViews::INTER);
+}
+
+void MainWindow::onImgFilt_mode_pressed(){
+    ui->stackedWidget->setCurrentIndex(UIViews::IMGFILT);
+}
+
+void MainWindow::onShar_mode_pressed(){
+    ui->stackedWidget->setCurrentIndex(UIViews::SHAR);
 }
 
 /* ----------------- END DUMMY --------------------- */

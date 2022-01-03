@@ -29,6 +29,11 @@ private slots:
     void onHome_pressed(); /**< slot to handle dummy signal to return to main window */
 /* ----- END DUMMY ------------- */
 
+    /**< Signals handlers */
+    void onInter_mode_pressed();
+    void onShar_mode_pressed();
+    void onImgFilt_mode_pressed();
+
 private:
     Ui::MainWindow *ui; /**< UI main view */
     NormalWindow *_normalWind; /**< Normal Window ptr */
