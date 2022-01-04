@@ -133,23 +133,6 @@ Version 1.0</string>
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_2">
          <item>
-          <widget class="QPushButton" name="pushButton_2">
-           <property name="toolTip">
-            <string>Dummy button to navigate to Interaction mode view</string>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">color: rgb(255, 255, 255);
-border: 1px solid rgb(193, 125, 17)
-/*border-color: rgb(193, 125, 17);
-border-radius: 5px
-*/</string>
-           </property>
-           <property name="text">
-            <string>Interaction</string>
-           </property>
-          </widget>
-         </item>
-         <item>
           <widget class="QPushButton" name="pushButton">
            <property name="toolTip">
             <string>Dummy button to navigate to Normal mode view</string>
@@ -163,6 +146,23 @@ border-radius: 5px
            </property>
            <property name="text">
             <string>Normal</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_2">
+           <property name="toolTip">
+            <string>Dummy button to navigate to Interaction mode view</string>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color: rgb(255, 255, 255);
+border: 1px solid rgb(193, 125, 17)
+/*border-color: rgb(193, 125, 17);
+border-radius: 5px
+*/</string>
+           </property>
+           <property name="text">
+            <string>Interaction</string>
            </property>
           </widget>
          </item>

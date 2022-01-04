@@ -7786,7 +7786,6 @@ while (video.isOpened())
 9) Example using =copyMakeBorder= process ([[https://amin-ahmadi.com/2018/03/29/how-to-read-process-and-display-videos-using-qt-and-opencv/][src]]):
    1) it mirrors multiple images to fill the view
 
-
 * Mine                                                             :noexport:
 ** Implementation
 *** Project: LS App

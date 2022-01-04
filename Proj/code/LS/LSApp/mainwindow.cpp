@@ -98,23 +98,36 @@ MainWindow::~MainWindow() { delete ui; }
 /* ------------- START DUMMY --------------------
  * DUMMY buttons to navigate to other windows */
 void MainWindow::on_pushButton_clicked(){
+    /**< Remove background image from Welcome screen */
+    ui->graphicsView->scene()->removeItem(_welcome_img);
+
     ui->stackedWidget->setCurrentIndex(UIViews::NORMAL);
 }
 
 void MainWindow::on_pushButton_2_clicked(){
+    /**< Remove background image from Welcome screen */
+    ui->graphicsView->scene()->removeItem(_welcome_img);
+
     ui->stackedWidget->setCurrentIndex(UIViews::INTER);
 }
 
 void MainWindow::on_pushButton_3_clicked(){
+    /**< Remove background image from Welcome screen */
+    ui->graphicsView->scene()->removeItem(_welcome_img);
+
     ui->stackedWidget->setCurrentIndex(UIViews::IMGFILT);
 }
 
 void MainWindow::on_pushButton_4_clicked() {
+    /**< Remove background image from Welcome screen */
+    ui->graphicsView->scene()->removeItem(_welcome_img);
+
     ui->stackedWidget->setCurrentIndex(UIViews::SHAR);
 }
 
 void MainWindow::onHome_pressed(){
 //    ui->graphicsView->set
+    ui->graphicsView->scene()->addItem(_welcome_img);
     ui->graphicsView->fitInView(_welcome_img, Qt::KeepAspectRatio);
     ui->stackedWidget->setCurrentIndex(UIViews::WELCOME);
 }
