@@ -3,6 +3,9 @@
 
 #include <QWidget>
 
+/**< OpenCV */
+#include "opencv2/opencv.hpp"
+
 namespace Ui {
 class InterWindow;
 }
@@ -40,6 +43,8 @@ signals:
 
 private:
     Ui::InterWindow *ui;
+
+//    cv::VideoCapture video; /**< CV video object to handle video */
 };
 
 #endif // INTERWINDOW_H

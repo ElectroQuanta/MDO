@@ -18,6 +18,12 @@ InterWindow::InterWindow(QWidget *parent) :
 
     /**< stackedWidget: manages the UI views - set default view */
     ui->stackedWidget->setCurrentIndex(UIPages::MAIN);
+
+    /**< TODO: add a status bar to display error and info messages */
+
+
+    /**< Open camera to capture video */
+    
 }
 
 InterWindow::~InterWindow() { delete ui; }
