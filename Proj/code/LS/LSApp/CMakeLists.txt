@@ -11,14 +11,26 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+set(OpenCV_DIR "/usr/local/lib/cmake/opencv4")
+find_package(OpenCV REQUIRED)
+#find_package(OpenCV REQUIRED PATHS "/usr/local/lib/")
+#include_directories(${OpenCV_INCLUDE_DIRS})
+
+# If the package has been found, several variables will
+# be set, you can find the full list with descriptions
+# in the OpenCVConfig.cmake file.
+# Print some message showing some of them
+message(STATUS "OpenCV library status:")
+message(STATUS "    version: ${OpenCV_VERSION}")
+message(STATUS "    libraries: ${OpenCV_LIBS}")
+message(STATUS "    include path: ${OpenCV_INCLUDE_DIRS}")
+
 set(CMAKE_PREFIX_PATH "/home/zmpl/Qt/5.13.2/gcc_64/lib/cmake")
 
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets VirtualKeyboard REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets VirtualKeyboard REQUIRED)
 
-set(OpenCV_DIR "usr/local/lib/cmake/opencv4")
-find_package(OpenCV REQUIRED)
-include_directories(${OpenCV_INCLUDE_DIRS})
+
 
 set(PROJECT_SOURCES
     main.cpp
@@ -63,7 +75,12 @@ else()
     endif()
 endif()
 
-target_link_libraries(${PROJECT_NAME} PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::VirtualKeyboard ${OPENCV_LIBS})
+# CMAKE IS CASE SENSITIVE
+# src: https://stackoverflow.com/a/60693001/17836786
+target_link_libraries(${PROJECT_NAME} PRIVATE ${OpenCV_LIBS} Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::VirtualKeyboard)
+
+# my_tgt can be an executable, library, or module.
+#target_link_options(${PROJECT_NAME} PRIVATE "LINKER:-lopencv_core -lopencv_video -lopencv_videoio")
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com

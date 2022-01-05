@@ -20,13 +20,17 @@
 /**
  * @brief Enumeration of the UI Views the MainWindow controls
  */
-enum UIViews{
-    WELCOME = 0, /**< Welcome screen; displayed when no ad is running */
-    NORMAL, /**< Reproduces video in fullscreen (with audio) */
-    INTER, /**< Interaction mode: main menu; picture mode; GIF mode */
-    IMGFILT, /**< Image filtering menu */
-    SHAR /**< Sharing mode: main menu; editing post; status */
+enum UIViews {
+  WELCOME = 0, /**< Welcome screen; displayed when no ad is running */
+  NORMAL,      /**< Reproduces video in fullscreen (with audio) */
+  INTER,       /**< Interaction mode: main menu; picture mode; GIF mode */
+  IMGFILT,     /**< Image filtering menu */
+  SHAR         /**< Sharing mode: main menu; editing post; status */
 };
+
+/**< Camera index */
+#define CAM_IDX 0
+
 
 /**
  * @brief Constructs the mainwindow
@@ -70,6 +74,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->stackedWidget->insertWidget(UIViews::SHAR, _sharWind);
 
     /**< Connect signals to slots */
+    /* UIs */ 
     connect(_normalWind, SIGNAL( home_pressed() ),
             this, SLOT( onHome_pressed() ));
     connect(_interWind, SIGNAL( home_pressed() ),
@@ -82,6 +87,9 @@ MainWindow::MainWindow(QWidget *parent)
             this, SLOT( onInter_mode_pressed() ));
     connect(_sharWind, SIGNAL( inter_mode_pressed() ),
             this, SLOT( onInter_mode_pressed() ));
+    /* Others */
+    connect(_interWind, SIGNAL(cam_start() ),
+            this, SLOT( onCam_started() ) );
 
     /* Load resource images */
     QImage img = QImage(WELCOME_IMG_PATH);
@@ -90,10 +98,42 @@ MainWindow::MainWindow(QWidget *parent)
     ui->graphicsView->setScene(new QGraphicsScene(this));
     ui->graphicsView->scene()->addItem(_welcome_img);
     ui->graphicsView->fitInView(_welcome_img, Qt::KeepAspectRatio);
+
+
+    
 }
 
 MainWindow::~MainWindow() { delete ui; }
 
+
+void MainWindow::onCam_started(){
+    using namespace cv;
+
+    /**< Open camera to capture video */
+    if(! _video.open( CAM_IDX )){
+        emit interWindUpdateStatus("ERROR: could not open camera...");
+        return;
+    }
+
+    ui->graphicsView->scene()->addItem(_pixmap);
+
+    Mat frame;
+    while(_video.isOpened())
+    {
+        _video >> frame;
+        if(!frame.empty())
+        {
+            QImage qimg(frame.data,
+                        frame.cols,
+                        frame.rows,
+                        frame.step,
+                        QImage::Format_RGB888);
+            _pixmap->setPixmap( QPixmap::fromImage(qimg.rgbSwapped()) );
+            ui->graphicsView->fitInView( _pixmap , Qt::KeepAspectRatio);
+        }
+        qApp->processEvents();
+    }
+}
 
 /* ------------- START DUMMY --------------------
  * DUMMY buttons to navigate to other windows */

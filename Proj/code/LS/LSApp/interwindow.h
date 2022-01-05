@@ -3,9 +3,6 @@
 
 #include <QWidget>
 
-/**< OpenCV */
-#include "opencv2/opencv.hpp"
-
 namespace Ui {
 class InterWindow;
 }
@@ -19,19 +16,17 @@ public:
     ~InterWindow();
 
 private slots:
+    /**< UI */
     void on_pb_take_pic_clicked();
-
     void on_pb_img_filt_clicked();
-
     void on_pb_pic_cancel_clicked();
-
     void on_pb_pic_share_clicked();
-
     void on_pb_gif_cancel_clicked();
-
     void on_pb_gif_share_clicked();
-
     void on_pb_create_gif_clicked();
+
+    /**< Signal handlers */
+    //void oninterWindUpdateStatus(const QString str);
 
     /**< Dummy */
     void on_pushButton_clicked();
@@ -40,11 +35,11 @@ signals:
     void shar_mode_pressed();
     void imgfilt_mode_pressed();
     void home_pressed();
+    void cam_start();
 
 private:
     Ui::InterWindow *ui;
 
-//    cv::VideoCapture video; /**< CV video object to handle video */
 };
 
 #endif // INTERWINDOW_H

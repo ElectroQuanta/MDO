@@ -13,6 +13,10 @@
 #include <qgraphicsitem.h>
 #include <qwidget.h>
 
+/**< OpenCV */
+#include <opencv2/opencv.hpp>
+
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -39,6 +43,10 @@ private slots:
     void onInter_mode_pressed();
     void onShar_mode_pressed();
     void onImgFilt_mode_pressed();
+    void onCam_started();
+
+signals:
+    void interWindUpdateStatus(const QString str);
 
 private:
     Ui::MainWindow *ui; /**< UI main view */
@@ -49,5 +57,7 @@ private:
 
     QGraphicsPixmapItem *_pixmap;
     QGraphicsPixmapItem *_welcome_img;
+
+    cv::VideoCapture _video; /**< CV video object to handle video */
 };
 #endif // MAINWINDOW_H

@@ -4,11 +4,7 @@
 /**
  * @brief Enum describing UI pages for this Window
  */
-enum UIPages{
-    MAIN = 0,
-    PIC,
-    GIF
-};
+enum UIPages { MAIN = 0, PIC, GIF };
 
 InterWindow::InterWindow(QWidget *parent) :
     QWidget(parent),
@@ -19,14 +15,19 @@ InterWindow::InterWindow(QWidget *parent) :
     /**< stackedWidget: manages the UI views - set default view */
     ui->stackedWidget->setCurrentIndex(UIPages::MAIN);
 
-    /**< TODO: add a status bar to display error and info messages */
+    /**< Connect signals to slots */
+    //connect(this, SIGNAL(interWindUpdateStatus(const QString str)),
+    //        this, SLOT(oninterWindUpdateStatus(const QString str)) );
 
-
-    /**< Open camera to capture video */
+    emit cam_start();
     
 }
 
 InterWindow::~InterWindow() { delete ui; }
+
+//void InterWindow::oninterWindUpdateStatus(const QString str){
+//    ui->label_status->setText(str);
+//}
 
 void InterWindow::on_pb_img_filt_clicked() {
 
