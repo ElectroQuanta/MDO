@@ -34,6 +34,12 @@ if(ANDROID)
     mainwindow.cpp
     mainwindow.h
     mainwindow.ui
+    adminwindow.cpp
+    adminwindow.h
+    adminwindow.ui
+    brandwindow.cpp
+    brandwindow.h
+    brandwindow.ui
     ${TS_FILES}
   )
 else()
@@ -42,6 +48,12 @@ else()
     mainwindow.cpp
     mainwindow.h
     mainwindow.ui
+    adminwindow.cpp
+    adminwindow.h
+    adminwindow.ui
+    brandwindow.cpp
+    brandwindow.h
+    brandwindow.ui
     ${TS_FILES}
   )
 endif()
