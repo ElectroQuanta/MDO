@@ -10,6 +10,7 @@
 #include <QGraphicsScene>
 #include <QGraphicsPixmapItem>
 #include <QImage>
+#include <opencv2/objdetect.hpp>
 #include <qgraphicsitem.h>
 #include <qwidget.h>
 
@@ -53,6 +54,7 @@ private slots:
     void on_pushButton_3_clicked(); /**< Dummy button to go to ImgFilt Mode */
     void on_pushButton_4_clicked(); /**< Dummy button to go to Sharing Mode */
     void onHome_pressed(); /**< slot to handle dummy signal to return to main window */
+    void detectAndDisplay(cv::Mat *frame);
 /* ----- END DUMMY ------------- */
 
     /**< Signals handlers */
@@ -60,7 +62,7 @@ private slots:
     void onShar_mode_pressed();
     void onImgFilt_mode_pressed();
     void onCam_started();
-    void displayImg(QImage);
+    void displayImg(cv::Mat frame);
 
     bool eventFilter(QObject *, QEvent *);
 
@@ -69,7 +71,7 @@ private slots:
 signals:
     void interWindUpdateStatus(const QString str);
     void textChanged(QString);
-    void imgGrabbed(QImage);
+    void imgGrabbed(cv::Mat frame);
 
 private:
     Ui::MainWindow *ui; /**< UI main view */
@@ -82,6 +84,7 @@ private:
     QGraphicsPixmapItem *_welcome_img; /**< Welcome img for the UI */
 
     cv::VideoCapture _video; /**< CV video object to handle video */
+    cv::CascadeClassifier _face_cascade; /**< Haar cascade to detect faces */
 
     AppMode_t _appmode; /**< Stores app mode */
 

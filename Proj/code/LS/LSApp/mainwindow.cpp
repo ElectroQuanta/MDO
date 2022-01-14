@@ -6,7 +6,10 @@
 #include <qwidget.h>
 #include <qdebug.h>
 
+/**< Define relevant paths */
 #define WELCOME_IMG_PATH ":/resources/img/welcome.png"
+#define FACE_CASCADE_FNAME "../models/haarcascade_frontalface_alt.xml"
+
 
 /**
  * @brief Screen resolution for embedded display
@@ -92,10 +95,11 @@ MainWindow::MainWindow(QWidget *parent)
     /* Others */
     // connect(_interWind, SIGNAL(cam_start() ),
     //         this, SLOT( onCam_started() ) );
+    qRegisterMetaType< cv::Mat >("cv::Mat");
     connect(this, SIGNAL(textChanged(QString)), ui->label_status,
             SLOT(setText(QString)), Qt::QueuedConnection);
-    connect(this, SIGNAL(imgGrabbed(QImage)), this,
-            SLOT(displayImg(QImage)), Qt::QueuedConnection);
+    connect(this, SIGNAL(imgGrabbed(cv::Mat)), this,
+            SLOT(displayImg(cv::Mat)), Qt::QueuedConnection);
 
     //connect()
 
@@ -125,8 +129,12 @@ MainWindow::MainWindow(QWidget *parent)
       ui->graphicsView->scene()->addItem(&_pixmap);
       //ui->graphicsView->installEventFilter(eventFilter);
 
-
-
+     /**< Initialize CV cascades */
+    if( !_face_cascade.load( FACE_CASCADE_FNAME ) )
+    {
+      ui->label_status->setText("Status:  ERROR:  Could not load face cascade");
+    };
+      
 
     /**< Threads */
     /*--*
@@ -160,6 +168,20 @@ MainWindow::~MainWindow() {
     delete ui;
 }
 
+void MainWindow::detectAndDisplay(cv::Mat *frame){
+    using namespace cv;
+    Mat frame_gray;
+    cvtColor( *frame, frame_gray, COLOR_BGR2GRAY );
+    equalizeHist( frame_gray, frame_gray );
+    //-- Detect faces
+    std::vector<Rect> faces;
+    _face_cascade.detectMultiScale( frame_gray, faces );
+    for ( size_t i = 0; i < faces.size(); i++ )
+    {
+        Point center( faces[i].x + faces[i].width/2, faces[i].y + faces[i].height/2 );
+        ellipse( *frame, center, Size( faces[i].width/2, faces[i].height/2 ), 0, 0, 360, Scalar( 255, 0, 255 ), 4 );
+    }
+}
 
 void MainWindow::onCam_started(){
     using namespace cv;
@@ -254,13 +276,7 @@ void* MainWindow::frame_grabber_worker_thr(void *arg){
             /**< Acquiring frame */
             mw->_video >> frame;
             if (!frame.empty()) {
-                QImage qimg(frame.data, frame.cols, frame.rows, frame.step,
-                            QImage::Format_RGB888);
-                //img.fromData(frame.data, COLS*ROWS*3);
-              //qDebug() << frame.cols << ',' // 1280
-              //         << frame.rows << ',' // 720
-              //         << frame.step ; // 3840
-              emit mw->imgGrabbed(qimg);
+                emit mw->imgGrabbed(frame);
             }
           }
           else{
@@ -285,8 +301,18 @@ void* MainWindow::frame_grabber_worker_thr(void *arg){
     return NULL;
 }
  
-void MainWindow::displayImg(QImage img){
-    this->_pixmap.setPixmap(QPixmap::fromImage(img.rgbSwapped()));
+void MainWindow::displayImg(cv::Mat frame){
+
+    this->detectAndDisplay(&frame);
+
+    QImage qimg(frame.data, frame.cols, frame.rows, frame.step,
+                            QImage::Format_RGB888);
+                //img.fromData(frame.data, COLS*ROWS*3);
+              //qDebug() << frame.cols << ',' // 1280
+              //         << frame.rows << ',' // 720
+              //         << frame.step ; // 3840
+
+    this->_pixmap.setPixmap(QPixmap::fromImage(qimg.rgbSwapped()));
 
     /**< Aspect ratio */
     /* KeepAspectRatio is what works best */
