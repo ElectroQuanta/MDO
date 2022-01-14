@@ -54,7 +54,7 @@ private slots:
     void on_pushButton_3_clicked(); /**< Dummy button to go to ImgFilt Mode */
     void on_pushButton_4_clicked(); /**< Dummy button to go to Sharing Mode */
     void onHome_pressed(); /**< slot to handle dummy signal to return to main window */
-    void detectAndDisplay(cv::Mat *frame);
+    void detectFaces(cv::Mat *frame);
 /* ----- END DUMMY ------------- */
 
     /**< Signals handlers */

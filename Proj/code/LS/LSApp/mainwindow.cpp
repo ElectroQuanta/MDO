@@ -168,7 +168,7 @@ MainWindow::~MainWindow() {
     delete ui;
 }
 
-void MainWindow::detectAndDisplay(cv::Mat *frame){
+void MainWindow::detectFaces(cv::Mat *frame){
     using namespace cv;
     Mat frame_gray;
     cvtColor( *frame, frame_gray, COLOR_BGR2GRAY );
@@ -269,8 +269,8 @@ void* MainWindow::frame_grabber_worker_thr(void *arg){
         if(_mode == AppMode::QUIT) 
             return NULL;
 
-        /**< Check for interaction mode */
-        if(_mode == AppMode::INTER){
+        /**< Check for interaction or img filter modes */
+        if(_mode == AppMode::INTER || _mode == AppMode::IMGFILT){
 
           if (mw->_video.isOpened()) {
             /**< Acquiring frame */
@@ -303,7 +303,8 @@ void* MainWindow::frame_grabber_worker_thr(void *arg){
  
 void MainWindow::displayImg(cv::Mat frame){
 
-    this->detectAndDisplay(&frame);
+    if(_appmode == AppMode::IMGFILT)
+        this->detectFaces(&frame);
 
     QImage qimg(frame.data, frame.cols, frame.rows, frame.step,
                             QImage::Format_RGB888);

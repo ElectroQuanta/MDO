@@ -7957,13 +7957,13 @@ while (video.isOpened())
 	 #+BEGIN_SRC bash
 	 QObject::startTimer: Timers cannot be started from another thread 
 	 #+END_SRC
-*** ☛ TODO PRIORITIES [0/6]
+*** ☛ TODO PRIORITIES [1/6]
     :LOGBOOK:
     - State "☛ TODO"     from              [2022-01-06 qui 01:35]
     :END:
-1) [-] Implement face detection algorithm (see [[file:code/computer-vision/face-detection/c++/main.cpp][here]])
+1) [X] Implement face detection algorithm (see [[file:code/computer-vision/face-detection/c++/main.cpp][here]])
    1) [X] Data models are in /models
-   2) [ ] Add it to mainWindow
+   2) [X] Add it to mainWindow
 2) [ ] Implement gesture recognition algorithm
 3) [ ] Implement image filter overlay
 4) [ ] Wrap it in the gesture recognition engine
