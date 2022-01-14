@@ -7848,7 +7848,7 @@ while (video.isOpened())
  - *Top priority*
  - /Medium priority/
  - ~Low priority~
-*** Qt [1/4]
+*** Qt [1/5]
     :PROPERTIES:
     :ID:       7e7c3a09-af4f-4395-a7f8-681dab1b95c1
     :END:
@@ -7949,4 +7949,29 @@ while (video.isOpened())
 	 #+END_SRC
 4) [ ] Classes
    1) [ ] =Camera=: manages the camera
+5) [ ] Threads [0/1]
+   1) [ ] Frame grabber implemented
+      1) Need to emit the correct signals to trigger it
+      2) Need to check resources; it is lagging, complaining about not being
+         able to start timers from anoter thread
+	 #+BEGIN_SRC bash
+	 QObject::startTimer: Timers cannot be started from another thread 
+	 #+END_SRC
+*** ☛ TODO PRIORITIES [0/6]
+    :LOGBOOK:
+    - State "☛ TODO"     from              [2022-01-06 qui 01:35]
+    :END:
+1) [-] Implement face detection algorithm (see [[file:code/computer-vision/face-detection/c++/main.cpp][here]])
+   1) [X] Data models are in /models
+   2) [ ] Add it to mainWindow
+2) [ ] Implement gesture recognition algorithm
+3) [ ] Implement image filter overlay
+4) [ ] Wrap it in the gesture recognition engine
+5) [ ] Implement Twitter sharing
+6) [ ] Implement client-server architecture
 
+My gf is a big fan of this channel. Unfortunately, she got diagnosed with cancer
+and she shut me off. 
+I've traveled from Portugal to UK to find her. 
+Sofia, if you're reading this, I'm in Bolton looking for you. 
+Please say something... Love you so much

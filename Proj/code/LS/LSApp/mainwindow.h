@@ -16,6 +16,22 @@
 /**< OpenCV */
 #include <opencv2/opencv.hpp>
 
+/**< Pthreads */
+#include <pthread.h>
+
+/**
+ * @brief App modes
+ *
+ * Used to handle application logic and UIs views
+ * - WELCOME = 0,  Welcome screen; displayed when no ad is running
+ * - NORMAL,       Reproduces video in fullscreen (with audio)
+ * - INTER,        Interaction mode: main menu; picture mode; GIF mode
+ * - IMGFILT,      Image filtering menu
+ * - SHAR,         Sharing mode: main menu; editing post; status
+ * - QUIT          Quit application
+ */
+enum AppMode { WELCOME = 0, NORMAL, INTER, IMGFILT, SHAR, QUIT };
+typedef enum AppMode AppMode_t;
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -44,9 +60,16 @@ private slots:
     void onShar_mode_pressed();
     void onImgFilt_mode_pressed();
     void onCam_started();
+    void displayImg(QImage);
+
+    bool eventFilter(QObject *, QEvent *);
+
+    static void* frame_grabber_worker_thr(void* arg);
 
 signals:
     void interWindUpdateStatus(const QString str);
+    void textChanged(QString);
+    void imgGrabbed(QImage);
 
 private:
     Ui::MainWindow *ui; /**< UI main view */
@@ -55,9 +78,25 @@ private:
     ImgFiltWindow *_imgFiltWind; /**< Normal Window ptr */
     SharWindow *_sharWind; /**< Normal Window ptr */
 
-    QGraphicsPixmapItem *_pixmap;
-    QGraphicsPixmapItem *_welcome_img;
+    QGraphicsPixmapItem _pixmap; /**< Holds the grabbed frames */
+    QGraphicsPixmapItem *_welcome_img; /**< Welcome img for the UI */
 
     cv::VideoCapture _video; /**< CV video object to handle video */
+
+    AppMode_t _appmode; /**< Stores app mode */
+
+    /**< Mutexes */
+    /* Normal */
+    pthread_mutex_t 	_m_status_bar; /**< Protects access to UI status bar */
+    pthread_mutex_t 	_m_canvas; /**< Protects access to Graphics view */
+    pthread_mutex_t 	_m_mode; /**< Protects access to mode state variable */
+    /* For condition variables */
+    pthread_mutex_t _m_cond_cam_started;
+
+    /**< Condition variables */
+    pthread_cond_t _cond_cam_started;
+
+    /**< Threads */
+    pthread_t _frame_grab_thr; /**< Frame Grabber thread */
 };
 #endif // MAINWINDOW_H

@@ -18,8 +18,6 @@ InterWindow::InterWindow(QWidget *parent) :
     /**< Connect signals to slots */
     //connect(this, SIGNAL(interWindUpdateStatus(const QString str)),
     //        this, SLOT(oninterWindUpdateStatus(const QString str)) );
-
-    emit cam_start();
     
 }
 
