@@ -9,6 +9,7 @@
 /**< Define relevant paths */
 #define WELCOME_IMG_PATH ":/resources/img/welcome.png"
 #define FACE_CASCADE_FNAME "../models/haarcascade_frontalface_alt.xml"
+#define FILTERS_PATH_PREFIX "../filters/"
 
 
 /**
@@ -100,6 +101,8 @@ MainWindow::MainWindow(QWidget *parent)
             SLOT(setText(QString)), Qt::QueuedConnection);
     connect(this, SIGNAL(imgGrabbed(cv::Mat)), this,
             SLOT(displayImg(cv::Mat)), Qt::QueuedConnection);
+    connect(_imgFiltWind, SIGNAL(imgFiltSelected(QString)),
+            this, SLOT(onImgFiltSelected(QString)) );
 
     //connect()
 
@@ -174,12 +177,69 @@ void MainWindow::detectFaces(cv::Mat *frame){
     cvtColor( *frame, frame_gray, COLOR_BGR2GRAY );
     equalizeHist( frame_gray, frame_gray );
     //-- Detect faces
+//void cv::CascadeClassifier::detectMultiScale 	( 	InputArray  	image,
+//		std::vector< Rect > &  	objects,
+//		double  	scaleFactor = 1.1,
+//		int  	minNeighbors = 3,
+//		int  	flags = 0,
+//		Size  	minSize = Size(),
+//		Size  	maxSize = Size() 
+//	) 	
     std::vector<Rect> faces;
-    _face_cascade.detectMultiScale( frame_gray, faces );
+    _face_cascade.detectMultiScale( frame_gray, faces, 1.1, 3, 0,
+                                    Size(150,150) );
     for ( size_t i = 0; i < faces.size(); i++ )
     {
         Point center( faces[i].x + faces[i].width/2, faces[i].y + faces[i].height/2 );
         ellipse( *frame, center, Size( faces[i].width/2, faces[i].height/2 ), 0, 0, 360, Scalar( 255, 0, 255 ), 4 );
+    }
+}
+
+void MainWindow::applyFilter(){
+    
+}
+
+void MainWindow::transparentOverlay(cv::Mat *frame, cv::Mat *overlay, cv::Point pos = {0,0}, int scale = 1.0){
+    using namespace cv;
+    cv::Mat ov;
+
+    /**< resize foreground (overlay) according to scale */
+    cv::resize(*overlay, ov, cv::Size(), scale, scale, INTER_LINEAR);
+
+    /**< Get size of foreground and background images */
+    int h = ov.rows;
+    int w = ov.cols;
+    int rows = frame->rows;
+    int cols = frame->cols;
+
+    /**< Position of foreground/overlay image */
+    int x = pos.x;
+    int y = pos.y;
+
+    /**< Loop over all pixels and apply the blending equation */
+
+    for(int i = 0; i < h; i++){
+        for(int j = 0; j < w; j++){
+            if( (x + i >= rows) || (y + j >= cols) )
+                continue;
+            //Vec3b pix = ov.at<Vec3b>(y,x);
+            float alpha = ov.at<Vec3b>(y,x)[3] / 255.0f;
+            frame->at<cv::Vec3b>(j, i) =
+                (alpha) * ov.at<cv::Vec3b>(j, i) +
+                (1.0f - alpha)* frame->at<cv::Vec3b>(j, i);
+        }
+    }
+
+}
+
+void MainWindow::onImgFiltSelected(QString filt){
+    _filtName = "" + QString(FILTERS_PATH_PREFIX) + filt;
+    //qDebug() << _filtName;
+    using namespace cv;
+    _filter = imread(_filtName.toStdString(), -1);
+    if(_filter.empty()){
+        ui->label_status->setText("Status: ERROR - could not load filter!");
+        return;
     }
 }
 

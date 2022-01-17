@@ -45,6 +45,7 @@ private slots:
 
 signals:
     void inter_mode_pressed();
+    void imgFiltSelected(QString);
 
 private:
     Ui::ImgFiltWindow *ui;

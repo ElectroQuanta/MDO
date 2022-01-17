@@ -55,6 +55,8 @@ private slots:
     void on_pushButton_4_clicked(); /**< Dummy button to go to Sharing Mode */
     void onHome_pressed(); /**< slot to handle dummy signal to return to main window */
     void detectFaces(cv::Mat *frame);
+    
+    void transparentOverlay(cv::Mat *frame, cv::Mat *overlay, cv::Point pos, int scale);
 /* ----- END DUMMY ------------- */
 
     /**< Signals handlers */
@@ -63,6 +65,7 @@ private slots:
     void onImgFilt_mode_pressed();
     void onCam_started();
     void displayImg(cv::Mat frame);
+    void onImgFiltSelected(QString);
 
     bool eventFilter(QObject *, QEvent *);
 
@@ -87,6 +90,9 @@ private:
     cv::CascadeClassifier _face_cascade; /**< Haar cascade to detect faces */
 
     AppMode_t _appmode; /**< Stores app mode */
+
+    QString _filtName; /**< Filter name */
+    cv::Mat _filter;
 
     /**< Mutexes */
     /* Normal */

@@ -7966,6 +7966,325 @@ while (video.isOpened())
    2) [X] Add it to mainWindow
 2) [ ] Implement gesture recognition algorithm
 3) [ ] Implement image filter overlay
+   1) Image overlay algorithm ([[http://opencv-tutorials-hub.blogspot.com/2016/04/how-to-overlay-smaller-image-over-bigger-image-in-opencv.html][src]])
+      1) Read the bigger image (frame)
+      2) Read the smaller image (filter)
+      3) Create a region of interest (ROI) over the bigger image
+	 #+BEGIN_SRC c++
+	 cv::Mat small_img;
+	 cv::Mat big_img;
+	 // somehow fill small_img and big_img with your data
+	 small_image.copyTo( big_image ( 
+	 cv::Rect( x, y, small_image.cols, small_image.rows))
+	 );
+	 #+END_SRC
+      4) Full code
+	 #+BEGIN_SRC c++
+	   //Copying One Image/Overlaying one image over the other
+	   #include <opencv2/core/core.hpp>
+	   #include <opencv2/highgui/highgui.hpp>
+	   #include <iostream>
+
+	   using namespace cv;
+	   using namespace std;
+
+	   int main()
+	   {
+		Mat src1, src2;
+		src1 = imread("C:\\Users\\arjun\\Desktop\\image1.jpg",1);
+		src2 = imread("C:\\Users\\arjun\\Desktop\\opencv-logo.png",1);
+		if(!src1.data){
+		    cout<<"Error loading src1"<<endl;
+		    return -1;
+		}
+		if(!src2.data){
+		    cout<<"Error loading src2"<<endl;
+		    return -1;
+		}
+		if(src1.size <= src2.size){
+		    cout<<"Error First Image should be larger than Second Image"<<endl;
+		}
+		src2.copyTo( src1( cv::Rect(10,10,src2.cols, src2.rows) ) );
+
+		namedWindow("Image Window src1", CV_WINDOW_AUTOSIZE);
+		imshow("Image Window src1", src1);
+
+		waitKey(0);
+		return(0);
+	}
+
+
+	 #+END_SRC
+   2) Image overlay with blending
+      #+BEGIN_SRC python
+   import numpy as np
+   import cv2
+
+   face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+
+   specs_ori = cv2.imread('glass.png', -1)
+   cigar_ori = cv2.imread('cigar.png', -1)
+   mus_ori = cv2.imread('mustache.png', -1)
+
+   # Camera Init
+   cap = cv2.VideoCapture(0) 
+   cap.set(cv2.CAP_PROP_FPS, 30)
+
+
+   def transparentOverlay(src, overlay, pos=(0, 0), scale=1):
+       overlay = cv2.resize(overlay, (0, 0), fx=scale, fy=scale)
+       h, w, _ = overlay.shape  # Size of foreground
+       rows, cols, _ = src.shape  # Size of background Image
+       y, x = pos[0], pos[1]  # Position of foreground/overlay image
+
+       for i in range(h):
+           for j in range(w):
+               if x + i >= rows or y + j >= cols:
+                   continue
+               alpha = float(overlay[i][j][3] / 255.0)  # read the alpha channel
+               src[x + i][y + j] = alpha * overlay[i][j][:3] + (1 - alpha) * src[x + i][y + j]
+       return src
+
+   while 1:
+       ret, img = cap.read()
+       gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+       faces = face_cascade.detectMultiScale(img, 1.2, 5, 0, (120, 120), (350, 350))
+    
+	   for (x, y, w, h) in faces:
+           if h > 0 and w > 0:
+               glass_symin = int(y + 1.5 * h / 5)
+               glass_symax = int(y + 2.5 * h / 5)
+               sh_glass = glass_symax - glass_symin
+               face_glass_roi_color = img[glass_symin:glass_symax, x:x + w]
+               specs = cv2.resize(specs_ori, (w, sh_glass), interpolation=cv2.INTER_CUBIC)
+
+               cigar_symin = int(y + 4 * h / 6)
+               cigar_symax = int(y + 5.5 * h / 6)
+               sh_cigar = cigar_symax - cigar_symin
+               face_cigar_roi_color = img[cigar_symin:cigar_symax, x:x + w]
+               cigar = cv2.resize(cigar_ori, (w, sh_cigar), interpolation=cv2.INTER_CUBIC)
+
+               mus_symin = int(y + 3.5 * h / 6)
+               mus_symax = int(y + 5 * h / 6)
+               sh_mus = mus_symax - mus_symin
+               face_mus_roi_color = img[mus_symin:mus_symax, x:x + w]
+               mustache = cv2.resize(mus_ori, (w, sh_mus), interpolation=cv2.INTER_CUBIC)
+
+               transparentOverlay(face_glass_roi_color, specs)
+               transparentOverlay(face_cigar_roi_color, cigar, (int(w / 2), int(sh_cigar / 2)))
+               #transparentOverlay(face_mus_roi_color, mustache)
+
+       cv2.imshow('Thug Life', img)
+       key = cv2.waitKey(1) & 0xFF
+       if key == ord("q"):
+           break
+
+       k = cv2.waitKey(30) & 0xff
+       if k == 27:
+           cv2.imwrite('img.jpg', img)
+           break
+
+   cap.release()
+   cv2.destroyAllWindows()
+      #+END_SRC
+   3) Image overlay linear blending method ([[https://www.codetd.com/en/article/12880310][src]])
+      1) Use the ROI of the region of interest to achieve image overlay
+	 1) Create ROI area
+	    #+BEGIN_SRC c++
+	    Mat img;
+	    img = imread("file.png", -1);
+	    Mat imgROI;
+	    imgROI = img(cv::Rect(800, 350, logo.cols, logo.rows));
+	    #+END_SRC
+	    1) This is equivalent to using pointer knowledge to point the roi
+               area to the corresponding area of ​​the image Rect(x,y,w,h)
+	    2) x,y are the coordinates of the *upper left corner* of the ROI
+               area of ​​the image; the coordinates of the upper left corner of
+               the image (0, 0)
+	    3) =x+logo.cols= cannot be greater than the width of the image
+               object image
+	    4) =y+logo.rows= cannot be greater than the height of the image
+               object image
+	 2) Constructing ROI area mask (basic of image overlay)
+	    #+BEGIN_SRC c++
+	    Mat ROI = image(Rect(200, 250, logo.cols, logo.rows));
+	    Mat mask = imread("logo.jpg", 0);
+	    logo.copyTo(ROI, mask);
+	    #+END_SRC
+	 3) Code implementation and effect: The following shows how to use ROI
+            to add a picture to the specified position of another picture
+	    #+BEGIN_SRC c++
+	      #include <opencv2/core/core.hpp>
+	      #include <opencv2/highgui/highgui.hpp>
+	      using namespace cv;
+
+	      int main()
+	      {
+		      Mat srcImage1 = imread("49.jpg");
+		      Mat logoImage = imread("61.jpg");
+       
+		      namedWindow("[1]");
+		      imshow("[1] src", srcImage1);
+		      namedWindow("[2]");
+		      imshow("[2] logo", logoImage);
+
+		      Mat imageROI = srcImage1(Rect(320, 120,
+						    logoImage.cols, logoImage.rows));
+
+		      Mat mask = imread("61.jpg", 0);
+		      logoImage.copyTo(imageROI, mask);
+
+		      namedWindow("[3]");
+		      imshow("[3] ROI", srcImage1);
+
+		      waitKey();
+		      return 0;
+	      }
+	    
+	    #+END_SRC
+	    1) This function first loads two jpg images into srcImage1 and
+               logoImage, then defines a Mat type imageROI, and uses cv::Rect to
+               set its region of interest to a region in srcImage1, and
+               associate imageROI with srcImage1.
+	    2) Then define a Mat type mask and read in dota_logo.jpg, use Mat::
+               copyTo to copy the contents of the mask to the imageROI, and then
+               get the final rendering, namedWindow and imshow are used together
+               to show the final the result of.
+      2) The =addWeighted= function realizes linear blending of images
+	 #+BEGIN_QUOTE
+Linear mixing means that two pictures or two videos are superimposed and presented in a certain functional relationship.
+
+For the two input images A and B, take the pixel values ​​at the same position and linearly add them, and then assign the result to the pixel at the same position in the target image. The parameter α controls the weight of the two pictures in the target image.
+
+                              g(x)=αA(x)+(1−α)B(x)
+
+What is the effect of linear blending of images? In slideshow page turning or film production, it is often necessary to produce the effect of screen superimposition. In the above formula, as long as α is gradually reduced from 1 to 0, the superimposition effect when transitioning from image I0 to image I1 can be produced.
+
+OpenCV provides an API for linear blending of two images. The calculation formula on which the API is based is as follows:
+
+                     dst = src1[i] * α + src2[i] * β + γ;
+
+*addWeighted original function*: 
+=void addWeighted(InputArray src1, double alpha, InputArray src2, double beta, double gamma, OutputArray dst, int dtype = -1);=
+- Parameters:
+  1) the first image to be superimposed Mat
+  2) Identifies the weight of the superposition of the first parameter
+  3) represents the second superimposed image, it needs to have the same size
+     and number of channels as the first array
+  4) represents the weight of the second superimposed image
+  5) the output parameter, which needs to have the same number of channels and
+     size as the first two images
+  6) a scalar value added to the total weight (fill in 0 just fine)
+  7) the depth of the output array has a default value of -1, when the two
+     superimposed images have the same depth, the parameter is -1
+
+     =addWeighted(imageROI, 0.5, logo, 0.5, 0, imageROI);=
+
+*Notes*:
+1) It is worth noting that the size and type of the two images must be the
+   same. If the two images are inconsistent, first use the ROI to extract the
+   smaller image and then superimpose it.
+2) Although it is not mandatory that the two weights must add up to 1, but it is
+   usually that dry.
+	 #+END_QUOTE
+	 1) Code
+	    #+BEGIN_SRC c++
+	      #include <opencv2/core/core.hpp>
+	      #include <opencv2/highgui/highgui.hpp>
+	      using namespace cv;
+
+	      int main()
+	      {
+		  double α = 0.4;
+		  double β;
+		  Mat srcImage2, srcImage3, dstImage;
+
+		  srcImage2 = imread("67.jpg");
+		  srcImage3 = imread("68.jpg");
+
+		  β = (1.0 - α);
+		  addWeighted(srcImage2, α, srcImage3, β, 0., dstImage);
+
+		  namedWindow("<1>");
+		  imshow("<1>", srcImage2);
+		  namedWindow("<2>");
+		  imshow("<2>", srcImage3);
+
+		  namedWindow("<3>");
+		  imshow("<3>", dstImage);
+
+		  waitKey();
+		      return 0;
+	      }
+	    #+END_SRC
+	    1) Picture 1 and Picture 2 Original picture ( two pictures must be
+               the same size)
+	       1) here is a screenshot picture, the size may be different, it
+                  will not run
+	       2) If you download less than two identical pictures, you can
+                  refer to this link to change any size
+                  https://blog.csdn.net/m0_51233386/article/details/112393204.
+      3) ROI and =addWeighted= combined with image blending operation: sometimes
+         we want to process certain regions in the image,
+         that is, only interested in certain regions, then the ROI and
+         addWeighted function are used in combination. Specify the area to
+         perform image blending operations.
+	 #+BEGIN_SRC c++
+	   #include <opencv2/core/core.hpp>
+	   #include <opencv2/highgui/highgui.hpp>
+	   using namespace cv;
+
+	   int main()
+	   {
+		   Mat image = imread("49.jpg");
+		   Mat logo = imread("61.jpg");
+
+		   Mat imageROI;
+		   imageROI = image(Rect(300, 80, logo.cols, logo.rows));
+
+		   addWeighted(imageROI, 1, logo, 0.5, 0, imageROI);
+
+		   namedWindow("[3] 49");
+		   imshow("[3] 49+61", image);
+
+		   imwrite("blend.jpg", image);
+		   waitKey();
+		   return 0;
+	   }
+	 #+END_SRC
+      4) Direct addition (non-linear)
+	 #+BEGIN_SRC c++
+	   #include <opencv2/core/core.hpp>
+	   #include <opencv2/highgui/highgui.hpp>
+	   using namespace cv;
+
+	   int main()
+	   { 
+	       Mat src1, src2, dst_add;
+	       src1 = imread("67.jpg");
+	       src2 = imread("68.jpg");
+
+	       add(src1, src2, dst_add);
+
+	       imshow("src1", src1);
+	       imshow("src2", src2);
+	       imshow("dst_add", dst_add);
+	       waitKey();
+
+	       return 0;
+	   } 
+	 #+END_SRC
+      5) Only works if the images have the same nr of channels
+	 1) Overlaying a png (4-channels BGRA) over a frame (3-channels BGR),
+            even after conversion, does not use the alpha channel, so it's not
+            useful
+	    #+BEGIN_SRC c++
+	    /**< Extract ROI from frame */
+            cv::cvtColor(frame, frame, cv::COLOR_BGR2BGRA);
+            roi = frame(Rect(x, y + 0.6 * h, overlay.cols, overlay.rows));
+            addWeighted(roi, alpha, overlay, beta, 0, roi);
+	    #+END_SRC
+
 4) [ ] Wrap it in the gesture recognition engine
 5) [ ] Implement Twitter sharing
 6) [ ] Implement client-server architecture

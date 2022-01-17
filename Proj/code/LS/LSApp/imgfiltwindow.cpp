@@ -4,10 +4,14 @@
 /**
  * @brief Enum describing UI pages for this Window
  */
-enum UIPages{
-    MAIN = 0,
-    PAGE2 /**< more img filters */
+enum UIPages {
+  MAIN = 0,
+  PAGE2 /**< more img filters */
 };
+
+/**< Filters file names */
+#define FILT1 "mustache.png"
+#define FILT2 "glass.png"
 
 ImgFiltWindow::ImgFiltWindow(QWidget *parent) :
     QWidget(parent),
@@ -35,20 +39,20 @@ void ImgFiltWindow::on_pb_cancel_share_clicked()
 
 void ImgFiltWindow::on_pb_img_filt_clicked()
 {
-    // DUMMY: for navigation only
-    ui->stackedWidget->setCurrentIndex(UIPages::PAGE2);
+    emit imgFiltSelected(FILT1);
 }
 
 
 void ImgFiltWindow::on_pb_img_filt_2_clicked()
 {
-
+    emit imgFiltSelected(FILT2);
 }
 
 
 void ImgFiltWindow::on_pb_img_filt_3_clicked()
 {
-
+    // DUMMY: for navigation only
+    ui->stackedWidget->setCurrentIndex(UIPages::PAGE2);
 }
 
 
