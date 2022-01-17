@@ -7447,7 +7447,7 @@ Two methods can be used [1/2]:
 * CMake
 - [[https://gitlab.kitware.com/cmake/community/-/wikis/doc/cmake/CrossCompiling][Cross compilation]]
 * OpenCV
-*Examples* [5/5]:
+  *Examples* [5/6]:
 1) [X] [[file:code/computer-vision/test-opencv/display_img.cpp][display_img.cpp]] (src):
    1) About: displays an image on screen
    2) Status: compiled but did not run, cuz its required to
@@ -7461,8 +7461,11 @@ Two methods can be used [1/2]:
 4) [X] [[file:code/computer-vision/test-opencv/cmake-example/example.cpp][example.cpp]] ([[https://github.com/opencv/opencv/tree/master/samples/cpp/example_cmake][src]]):
    1) About: Grabs frames from the camera and adds text to it
    2) Status: compiled and runned successfully
-5) [X] [[file:code/computer-vision/qt-test/videoprocessor][videoprocessor]] ([[https://amin-ahmadi.com/2018/03/29/how-to-read-process-and-display-videos-using-qt-and-opencv/][src]]):
+5) [ ] [[file:code/computer-vision/qt-test/videoprocessor][videoprocessor]] ([[https://amin-ahmadi.com/2018/03/29/how-to-read-process-and-display-videos-using-qt-and-opencv/][src]]):
    1) About: it grabs frames from camera using opencv and displays it on Qt
+   2) Status: compiled and runned successfully
+6) [X] [[file:code/computer-vision/filters/filter/main.cpp][filter]] (src)
+   1) About: it overlays a transparent png image file over a live video feed
    2) Status: compiled and runned successfully
 
 ** Build and integrate with Qt5
@@ -7786,7 +7789,6 @@ while (video.isOpened())
 	    3) =KeepAspectRatioByExpanding=
 9) Example using =copyMakeBorder= process ([[https://amin-ahmadi.com/2018/03/29/how-to-read-process-and-display-videos-using-qt-and-opencv/][src]]):
    1) it mirrors multiple images to fill the view
-
 * Mine                                                             :noexport:
 ** Implementation
 *** Project: LS App
@@ -7957,7 +7959,7 @@ while (video.isOpened())
 	 #+BEGIN_SRC bash
 	 QObject::startTimer: Timers cannot be started from another thread 
 	 #+END_SRC
-*** ☛ TODO PRIORITIES [1/6]
+*** ☛ TODO PRIORITIES [2/6]
     :LOGBOOK:
     - State "☛ TODO"     from              [2022-01-06 qui 01:35]
     :END:
@@ -7965,7 +7967,7 @@ while (video.isOpened())
    1) [X] Data models are in /models
    2) [X] Add it to mainWindow
 2) [ ] Implement gesture recognition algorithm
-3) [ ] Implement image filter overlay
+3) [X] Implement image filter overlay
    1) Image overlay algorithm ([[http://opencv-tutorials-hub.blogspot.com/2016/04/how-to-overlay-smaller-image-over-bigger-image-in-opencv.html][src]])
       1) Read the bigger image (frame)
       2) Read the smaller image (filter)
@@ -8284,13 +8286,20 @@ OpenCV provides an API for linear blending of two images. The calculation formul
             roi = frame(Rect(x, y + 0.6 * h, overlay.cols, overlay.rows));
             addWeighted(roi, alpha, overlay, beta, 0, roi);
 	    #+END_SRC
-
+   4) *Image overlay with alpha blending*: steps
+      1) Preparing background
+	 1) Capture frame
+	 2) Detect faces (ROIs)
+      2) Preparing overlay
+	 1) Instantiate a filter struct
+	 2) Open the png file: =cv::Mat filter = imread(filt.name, -1) //
+            4-channel BGRA=
+      3) For every face (ROI)
+	 1) Get its coordinates and dimensions
+	 2) Resize filter to match ROI
+	 3) Extract overlap ROI to perform blending
+	 4) Apply overlay over overlapping ROI and then copy it to original
+            frame
 4) [ ] Wrap it in the gesture recognition engine
 5) [ ] Implement Twitter sharing
 6) [ ] Implement client-server architecture
-
-My gf is a big fan of this channel. Unfortunately, she got diagnosed with cancer
-and she shut me off. 
-I've traveled from Portugal to UK to find her. 
-Sofia, if you're reading this, I'm in Bolton looking for you. 
-Please say something... Love you so much

@@ -15,7 +15,9 @@ using namespace cv;
 #define KEY_QUIT ESC
 
 #define FACE_CASCADE_FNAME "../models/haarcascade_frontalface_alt.xml"
-#define FILTER_FNAME "../filters/mustache.png"
+#define FILTER_MUSTACHE_FNAME "../filters/mustache.png"
+#define FILTER_GLASSES_FNAME "../filters/glasses.png"
+#define FILTER_PIG_FNAME "../filters/pig.png"
 
 cv::CascadeClassifier _face_cascade; /**< Haar cascade to detect faces */
 
@@ -112,6 +114,7 @@ void applyFilter(cv::Mat *frame, cv::Mat *filter, std::vector<Rect> *faces){
 
 
 void transparentOv(cv::Mat *src, cv::Mat *dst, cv::Mat *overlay){
+    // src: https://stackoverflow.com/a/20958245/17836786
   for (int y = 0; y < src->rows; y++) {
     const cv::Vec3b *src_pixel = src->ptr<cv::Vec3b>(y);
     const cv::Vec4b *ovl_pixel = overlay->ptr<cv::Vec4b>(y);
@@ -128,12 +131,74 @@ void transparentOv(cv::Mat *src, cv::Mat *dst, cv::Mat *overlay){
 
 struct img_filter{
     std::string name;
-    float ymin_coef;
-    float ymax_coef;
-    float ypos_coef;
+    float width_offset_coef;
+    float height_offset_coef;
+    float scale_width;
+    float scale_height;
 };
 typedef struct img_filter img_filter_t;
 
+void applyFilterOverlay(cv::Mat &frame, cv::Mat &filter, img_filter_t *filt){
+
+    using namespace cv;
+    #define FACE_MIN_SIZE 100 /**< face min size (in pixels) */
+    #define FACE_MIN_NEIGHBORS 3
+    #define FACE_SCALE_FACTOR 1.1
+    #define FACE_FLAGS 0
+    
+    Mat frame_gray, roi;
+    Mat overlay = filter.clone();
+    std::vector<Rect> faces;
+    
+    /**< Detect faces and draw them */
+    cvtColor( frame, frame_gray, COLOR_BGR2GRAY );
+    equalizeHist( frame_gray, frame_gray );
+    _face_cascade.detectMultiScale( frame_gray, faces, FACE_SCALE_FACTOR,
+                                    FACE_MIN_NEIGHBORS, FACE_FLAGS,
+                                    Size(FACE_MIN_SIZE, FACE_MIN_SIZE) );
+
+    for (size_t i = 0; i < faces.size(); i++) {
+      // rectangle( frame, faces.at(i), (255, 0, 255), 2);
+
+      int x = faces.at(i).x;
+      int y = faces.at(i).y;
+      int h = faces.at(i).height;
+      int w = faces.at(i).width;
+      //int ymin = (int)(y + filt->ymin_coef * h);
+      //int ymax = (int)(y + filt->ymax_coef * h);
+      ////int xmin = (int)(x + filt->xmin_coef * w);
+      ////int xmax = (int)(x + filt->xmax_coef * w);
+
+      //int xrange = (int)(x + (filt->xmax_coef - filt->xmin_coef) * w);
+      //int yrange = (int)(y + (filt->ymax_coef - filt->ymin_coef) * h);
+
+      //   /**< Scale filter to match ROI */
+      //   cv::resize(*filter, overlay, cv::Size(w, ymax - ymin),
+      //              0, 0, cv::INTER_CUBIC);
+      // /**< Scale filter to match ROI */
+      //cv::resize(filter, overlay,
+      //           cv::Size(filt->resize_width * xrange,
+      //                    filt->resize_height * yrange),
+      //           0, 0, cv::INTER_CUBIC);
+
+      cv::resize(filter, overlay,
+                 cv::Size( ((int)(filt->scale_width * w)),
+                           ((int)(filt->scale_height * h)) ),
+                 0, 0, cv::INTER_CUBIC);
+
+
+      /**< Extract ROI from frame */
+      Rect roiRect = Rect(x + filt->width_offset_coef * w,
+                          y + filt->height_offset_coef * h,
+                          overlay.cols, overlay.rows);
+      roi = frame(roiRect);
+
+      /**< Apply overlay over ROI and then over frame */
+      transparentOv(&roi, &roi, &overlay);
+      // src: https://stackoverflow.com/a/10482252/17836786
+      roi.copyTo(frame(roiRect));
+    }
+}
 
 int main(){
 
@@ -152,56 +217,63 @@ int main(){
         return -1;
     }
 
+    //struct img_filter {
+    //  std::string name;
+    //  float xmin_coef;
+    //  float xmax_coef;
+    //  float xpos_coef;
+    //  float resize_width;
+    //  float ymin_coef;
+    //  float ymax_coef;
+    //  float ypos_coef;
+    //  float resize_height;
+    //};
 
-    img_filter_t filt = {
-        FILTER_FNAME, 0.3, 0.5, 0.6
+//    struct img_filter {
+//      std::string name;
+//      float width_offset_coef;
+//      float height_offset_coef;
+//      float scale_width;
+//      float scale_height;
+//    };
+
+    img_filter_t filt_mustache = {
+        // below nose
+        FILTER_MUSTACHE_FNAME, 0.0, 0.62, 1.0, 0.2
     };
 
+    img_filter_t filt_glasses = {
+        // eyes
+        FILTER_GLASSES_FNAME, 0.0, 0.3, 1.0, 0.2
+    };
+
+    img_filter_t filt_pig = {
+        // nose
+        FILTER_PIG_FNAME, 0.4, 0.5, 0.25, 0.25
+    };
+
+    std::vector<img_filter_t> filters;
+    filters.push_back(filt_mustache);
+    filters.push_back(filt_glasses);
+    filters.push_back(filt_pig);
+
+    int filter_idx = 2;
+
     /**< Get filter */
-    Mat filter = imread(filt.name, -1); // 4-channel BGRA
+    Mat filter = imread(filters.at(filter_idx).name, -1); // 4-channel BGRA
     //Mat filter = imread(FILTER_FNAME); // 3-channel BGR
     if( filter.empty() ){
         cerr << "Error opening the filter!" << endl;
         return -1;
     }
-    
+
     //cv::resize(image,image, Size(WIDTH, HEIGHT) );
 
     Mat frame, frame_gray, roi;
-    Mat overlay = filter.clone();
-    std::vector<Rect> faces;
     for(;;){
         cap >> frame;
-        /**< Detect faces and draw them */
-        cvtColor( frame, frame_gray, COLOR_BGR2GRAY );
-        equalizeHist( frame_gray, frame_gray );
-        _face_cascade.detectMultiScale( frame_gray, faces, 1.1, 3, 0,
-                                    Size(100,100) );
-        
-        for ( size_t i = 0; i < faces.size(); i++ )
-        {
-            //rectangle( frame, faces.at(i), (255, 0, 255), 2);
 
-            int x = faces.at(i).x;
-            int y = faces.at(i).y;
-            int h = faces.at(i).height;
-            int w = faces.at(i).width;
-            int ymin = (int)(y + filt.ymin_coef * h);
-            int ymax = (int)(y + filt.ymax_coef * h);
-
-            /**< Scale filter to match ROI */
-            cv::resize(filter, overlay, cv::Size(w, ymax - ymin),
-                   0, 0, cv::INTER_CUBIC);
-
-            /**< Extract ROI from frame */
-            Rect roiRect = Rect(x, y + filt.ypos_coef * h, overlay.cols, overlay.rows);
-            roi = frame(roiRect);
-
-            /**< Apply overlay over ROI and then over frame */
-            transparentOv(&roi, &roi, &overlay);
-            roi.copyTo(frame(roiRect));
-
-        }
+        applyFilterOverlay(frame, filter, &filters.at(filter_idx));
 
         imshow("frame", frame);
 
@@ -214,6 +286,7 @@ int main(){
 
     return 0;
 }
+
 
 //void transparentOv(){
 //    using namespace cv;
