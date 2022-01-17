@@ -39,32 +39,32 @@ void ImgFiltWindow::on_pb_cancel_share_clicked()
 
 void ImgFiltWindow::on_pb_img_filt_clicked()
 {
-    emit imgFiltSelected(FILT1);
+    emit imgFiltSelected(0);
 }
 
 
 void ImgFiltWindow::on_pb_img_filt_2_clicked()
 {
-    emit imgFiltSelected(FILT2);
+    emit imgFiltSelected(1);
 }
 
 
 void ImgFiltWindow::on_pb_img_filt_3_clicked()
 {
-    // DUMMY: for navigation only
-    ui->stackedWidget->setCurrentIndex(UIPages::PAGE2);
+    emit imgFiltSelected(2);
 }
 
 
 void ImgFiltWindow::on_pb_img_filt_4_clicked()
 {
-
+    emit imgFiltSelected(3);
 }
 
 
 void ImgFiltWindow::on_pb_img_filt_5_clicked()
 {
-
+    // DUMMY: for navigation only
+    ui->stackedWidget->setCurrentIndex(UIPages::PAGE2);
 }
 
 

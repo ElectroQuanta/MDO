@@ -20,6 +20,12 @@
 /**< Pthreads */
 #include <pthread.h>
 
+/**< STL containers */
+#include <vector>
+
+/**< Image filter */
+#include "imgfilter.h"
+
 /**
  * @brief App modes
  *
@@ -54,9 +60,6 @@ private slots:
     void on_pushButton_3_clicked(); /**< Dummy button to go to ImgFilt Mode */
     void on_pushButton_4_clicked(); /**< Dummy button to go to Sharing Mode */
     void onHome_pressed(); /**< slot to handle dummy signal to return to main window */
-    void detectFaces(cv::Mat *frame);
-    
-    void transparentOverlay(cv::Mat *frame, cv::Mat *overlay, cv::Point pos, int scale);
 /* ----- END DUMMY ------------- */
 
     /**< Signals handlers */
@@ -64,11 +67,20 @@ private slots:
     void onShar_mode_pressed();
     void onImgFilt_mode_pressed();
     void onCam_started();
-    void displayImg(cv::Mat frame);
-    void onImgFiltSelected(QString);
+    void onImgFiltSelected(int idx);
 
     bool eventFilter(QObject *, QEvent *);
 
+    /**< Display image */
+    void displayImg(cv::Mat frame);
+
+    /**< ImgFilter */
+    void createFilters();
+    void detectFaces(cv::Mat *frame);
+    void transparentOv(cv::Mat *src, cv::Mat *dst, cv::Mat *overlay);
+    void applyFilterOverlay(cv::Mat &frame, ImgFilter &filt);
+
+    /**< Thread workers */
     static void* frame_grabber_worker_thr(void* arg);
 
 signals:
@@ -107,5 +119,9 @@ private:
 
     /**< Threads */
     pthread_t _frame_grab_thr; /**< Frame Grabber thread */
+
+    /**< Filters */
+    std::vector<ImgFilter> _filters;
+    int _filters_idx;
 };
 #endif // MAINWINDOW_H

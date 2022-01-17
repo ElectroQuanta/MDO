@@ -1,10 +1,13 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
+#include <opencv2/imgproc.hpp>
 #include <opencv2/videoio.hpp>
 #include <qgraphicsitem.h>
 #include <qnamespace.h>
 #include <qwidget.h>
 #include <qdebug.h>
+
+#include "imgfilter_defs.h" /**< For filters definition */
 
 /**< Define relevant paths */
 #define WELCOME_IMG_PATH ":/resources/img/welcome.png"
@@ -101,8 +104,8 @@ MainWindow::MainWindow(QWidget *parent)
             SLOT(setText(QString)), Qt::QueuedConnection);
     connect(this, SIGNAL(imgGrabbed(cv::Mat)), this,
             SLOT(displayImg(cv::Mat)), Qt::QueuedConnection);
-    connect(_imgFiltWind, SIGNAL(imgFiltSelected(QString)),
-            this, SLOT(onImgFiltSelected(QString)) );
+    connect(_imgFiltWind, SIGNAL(imgFiltSelected(int)),
+            this, SLOT(onImgFiltSelected(int)) );
 
     //connect()
 
@@ -137,7 +140,9 @@ MainWindow::MainWindow(QWidget *parent)
     {
       ui->label_status->setText("Status:  ERROR:  Could not load face cascade");
     };
-      
+
+    /**< Create filters */
+    createFilters();
 
     /**< Threads */
     /*--*
@@ -150,7 +155,6 @@ MainWindow::MainWindow(QWidget *parent)
      */
     pthread_create( &_frame_grab_thr, NULL,
                     &MainWindow::frame_grabber_worker_thr, this );
-    
 }
 
 MainWindow::~MainWindow() {
@@ -169,6 +173,36 @@ MainWindow::~MainWindow() {
         _video.release();
 
     delete ui;
+}
+
+void MainWindow::createFilters(){
+
+    /**< Mustache */
+    ImgFilter imgfilt = ImgFilter(
+        FILTER_MUSTACHE_FNAME,
+        FILTER_MUSTACHE_WIDTH_OFFSET, FILTER_MUSTACHE_HEIGHT_OFFSET,
+        FILTER_MUSTACHE_SCALE_WIDTH, FILTER_MUSTACHE_SCALE_HEIGHT
+        );
+    /**< Glasses */
+    ImgFilter imgfilt2 = ImgFilter(
+        FILTER_GLASSES_FNAME,
+        FILTER_GLASSES_WIDTH_OFFSET, FILTER_GLASSES_HEIGHT_OFFSET,
+        FILTER_GLASSES_SCALE_WIDTH, FILTER_GLASSES_SCALE_HEIGHT
+        );
+    /**< Pig */
+    ImgFilter imgfilt3 = ImgFilter(
+        FILTER_PIG_FNAME,
+        FILTER_PIG_WIDTH_OFFSET, FILTER_PIG_HEIGHT_OFFSET,
+        FILTER_PIG_SCALE_WIDTH, FILTER_PIG_SCALE_HEIGHT
+        );
+
+    for(int i = 0; i < 4; i++){
+        _filters.push_back(imgfilt);
+        _filters.push_back(imgfilt2);
+        _filters.push_back(imgfilt3);
+    }
+
+    _filters_idx = 0;
 }
 
 void MainWindow::detectFaces(cv::Mat *frame){
@@ -195,52 +229,76 @@ void MainWindow::detectFaces(cv::Mat *frame){
     }
 }
 
-void MainWindow::applyFilter(){
+void MainWindow::transparentOv(cv::Mat *src, cv::Mat *dst, cv::Mat *overlay) {
+  for (int y = 0; y < src->rows; y++) {
+    /**< Get src, overlay and dst pixels */
+    const cv::Vec3b *src_pixel = src->ptr<cv::Vec3b>(y);
+    const cv::Vec4b *ovl_pixel = overlay->ptr<cv::Vec4b>(y);
+    cv::Vec3b *dst_pixel = dst->ptr<cv::Vec3b>(y);
+
+    for (int x = 0; x < src->cols;
+         x++, ++src_pixel, ++ovl_pixel, ++dst_pixel) {
+        /**< Get transparency val (alpha) from overlay */
+      double alpha = (*ovl_pixel).val[3] / 255.0;
+
+     /**< For every channel */
+      for (int c = 0; c < 3; c++) {
+          /**< Apply blending equation */
+        (*dst_pixel).val[c] = (uchar)((*ovl_pixel).val[c] * alpha +
+                                      (*src_pixel).val[c] * (1.0 - alpha));
+      }
+    }
+  }
+}
+
+void MainWindow::applyFilterOverlay(cv::Mat &frame, ImgFilter &filt) {
+    using namespace cv;
+    #define FACE_MIN_SIZE 100 /**< face min size (in pixels) */
+    #define FACE_MIN_NEIGHBORS 3
+    #define FACE_SCALE_FACTOR 1.1
+    #define FACE_FLAGS 0
     
+    Mat frame_gray, roi;
+    Mat overlay = filt.Mat().clone();
+    std::vector<Rect> faces;
+    
+    /**< Detect faces and draw them */
+    cvtColor( frame, frame_gray, COLOR_BGR2GRAY );
+    equalizeHist( frame_gray, frame_gray );
+    this->_face_cascade.detectMultiScale( frame_gray, faces,
+                                          FACE_SCALE_FACTOR,
+                                    FACE_MIN_NEIGHBORS, FACE_FLAGS,
+                                    Size(FACE_MIN_SIZE, FACE_MIN_SIZE) );
+
+    for (size_t i = 0; i < faces.size(); i++) {
+      // rectangle( frame, faces.at(i), (255, 0, 255), 2);
+
+      int x = faces.at(i).x;
+      int y = faces.at(i).y;
+      int h = faces.at(i).height;
+      int w = faces.at(i).width;
+
+      /**< Resize filter to match a scale of ROI (face) */
+      cv::resize(filt.Mat(), overlay,
+                 cv::Size( ((int)(filt.scale_width() * w)),
+                           ((int)(filt.scale_height() * h)) ),
+                 0, 0, cv::INTER_CUBIC);
+
+      /**< Extract ROI from frame */
+      Rect roiRect = Rect(x + filt.width_offset_coef() * w,
+                          y + filt.height_offset_coef() * h,
+                          overlay.cols, overlay.rows);
+      roi = frame(roiRect);
+
+      /**< Apply overlay over ROI and then over frame */
+      transparentOv(&roi, &roi, &overlay);
+      // src: https://stackoverflow.com/a/10482252/17836786
+      roi.copyTo(frame(roiRect));
+    }
 }
 
-void MainWindow::transparentOverlay(cv::Mat *frame, cv::Mat *overlay, cv::Point pos = {0,0}, int scale = 1.0){
-    using namespace cv;
-    cv::Mat ov;
-
-    /**< resize foreground (overlay) according to scale */
-    cv::resize(*overlay, ov, cv::Size(), scale, scale, INTER_LINEAR);
-
-    /**< Get size of foreground and background images */
-    int h = ov.rows;
-    int w = ov.cols;
-    int rows = frame->rows;
-    int cols = frame->cols;
-
-    /**< Position of foreground/overlay image */
-    int x = pos.x;
-    int y = pos.y;
-
-    /**< Loop over all pixels and apply the blending equation */
-
-    for(int i = 0; i < h; i++){
-        for(int j = 0; j < w; j++){
-            if( (x + i >= rows) || (y + j >= cols) )
-                continue;
-            //Vec3b pix = ov.at<Vec3b>(y,x);
-            float alpha = ov.at<Vec3b>(y,x)[3] / 255.0f;
-            frame->at<cv::Vec3b>(j, i) =
-                (alpha) * ov.at<cv::Vec3b>(j, i) +
-                (1.0f - alpha)* frame->at<cv::Vec3b>(j, i);
-        }
-    }
-
-}
-
-void MainWindow::onImgFiltSelected(QString filt){
-    _filtName = "" + QString(FILTERS_PATH_PREFIX) + filt;
-    //qDebug() << _filtName;
-    using namespace cv;
-    _filter = imread(_filtName.toStdString(), -1);
-    if(_filter.empty()){
-        ui->label_status->setText("Status: ERROR - could not load filter!");
-        return;
-    }
+void MainWindow::onImgFiltSelected(int idx){
+    _filters_idx = idx;
 }
 
 void MainWindow::onCam_started(){
@@ -364,7 +422,8 @@ void* MainWindow::frame_grabber_worker_thr(void *arg){
 void MainWindow::displayImg(cv::Mat frame){
 
     if(_appmode == AppMode::IMGFILT)
-        this->detectFaces(&frame);
+        this->applyFilterOverlay(frame, _filters[_filters_idx]);
+            //this->detectFaces(&frame);
 
     QImage qimg(frame.data, frame.cols, frame.rows, frame.step,
                             QImage::Format_RGB888);

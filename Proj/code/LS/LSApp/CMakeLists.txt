@@ -33,23 +33,32 @@ find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets VirtualKeyboard REQUIRED)
 #find_package(pthread REQUIRED)
 
 set(PROJECT_SOURCES
-    main.cpp
-    mainwindow.cpp
-    mainwindow.h
-    mainwindow.ui
-    resources.qrc
-    normalwindow.h
-    normalwindow.cpp
-    normalwindow.ui
-    interwindow.h
-    interwindow.cpp
-    interwindow.ui
-    imgfiltwindow.h
-    imgfiltwindow.cpp
-    imgfiltwindow.ui
-    sharwindow.h
-    sharwindow.cpp
-    sharwindow.ui
+  main.cpp
+  # main window
+  mainwindow.cpp
+  mainwindow.h
+  mainwindow.ui
+  resources.qrc
+  # normal window
+  normalwindow.h
+  normalwindow.cpp
+  normalwindow.ui
+  # interaction window
+  interwindow.h
+  interwindow.cpp
+  interwindow.ui
+  # imgfilter window
+  imgfiltwindow.h
+  imgfiltwindow.cpp
+  imgfiltwindow.ui
+  # shar window
+  sharwindow.h
+  sharwindow.cpp
+  sharwindow.ui
+  # imgfilter
+  imgfilter_defs.h
+  imgfilter.h
+  imgfilter.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
