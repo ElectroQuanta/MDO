@@ -7789,6 +7789,82 @@ while (video.isOpened())
 	    3) =KeepAspectRatioByExpanding=
 9) Example using =copyMakeBorder= process ([[https://amin-ahmadi.com/2018/03/29/how-to-read-process-and-display-videos-using-qt-and-opencv/][src]]):
    1) it mirrors multiple images to fill the view
+* Twitter sharing
+** Account
+   :PROPERTIES:
+   :ATTACH_DIR: /home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/sec/img/
+   :END:
+ 1) [X] Create account:
+    1) username: @MDO_ESRG
+    2) pass: MDO-Ze-Hugo@2021
+    3) email: id6892@alunos.uminho.pt
+    4) *Developer keys*:
+       1) *API key*: =kmCBLr8hgj5I5KYqAQt2CDSRS=
+	  1) Think of the API key as the user name that represents your App when
+             making API requests. It helps us verify who you are.
+       2) *API key secret*: =1f0Bs8RqV8TvtecYU4sD6Jpzz0pnYtdCW1k8gMKDxmbhczWSw1=
+	  1) Your API Key Secret is like a password and helps verify your API
+             Key. This will be one of the last times you'll see it displayed, so
+             remember to save it in a safe place.
+       3) *Bearer token*:
+	  =AAAAAAAAAAAAAAAAAAAAAKj8YAEAAAAAeVpmEQUg1VD2W%2BTAH%2BVGpMX2vFg%3DyUEBsVOBN9tn1XzHf9a2uhU1pjgEXEH6IGfBbKhBlJaEYjU38q=
+	  1) An Access Token used in authentication that allows you to pull
+             specific data.
+[[file:sec/img/twitter-keys.png]]
+
+#+BEGIN_EXAMPLE
+API key:
+kmCBLr8hgj5I5KYqAQt2CDSRS
+
+API key secret:
+1f0Bs8RqV8TvtecYU4sD6Jpzz0pnYtdCW1k8gMKDxmbhczWSw1
+
+Bearer token:
+AAAAAAAAAAAAAAAAAAAAAKj8YAEAAAAAeVpmEQUg1VD2W%2BTAH%2BVGpMX2vFg%3DyUEBsVOBN9tn1XzHf9a2uhU1pjgEXEH6IGfBbKhBlJaEYjU38q
+#+END_EXAMPLE
+
+Other app: v1.1
+#+BEGIN_EXAMPLE
+API key:
+rVgHlnUTgSQlaIOq5O1Es63QG
+
+API key secret:
+0jchuatg6RYldjsdQ8jrzmigiZbmsBhTSJkG8huMuQm352NnWO
+
+Bearer token:
+AAAAAAAAAAAAAAAAAAAAAFIAYQEAAAAAseeLeNxMedbnoWhp0D9QmAr8iE0%3D4XygdbEdebzhIsuiPThOIqU3IJIiQqzocR75vHaMTmw1HMmJt0
+
+Access Token:
+1483403576558895106-QP9zQETPfPsHteQrAfJ0MgF6vygsq
+
+Access Token secret
+qBRdswUIHup9uhyJZDrvDHnRwpeIRdqdNRqzVTwO6BkJ4
+
+#+END_EXAMPLE
+** Access to Twitter API
+ 1) [-] Access to Twitter API: [[https://developer.twitter.com/en/docs/twitter-api/getting-started/getting-access-to-the-twitter-api][src]]
+    1) [X] Sign up for a developer account
+    2) [X] Save the application's keys and tokens and keep them secure
+       1) API Key and secret
+       2) A set of user Access tokens
+       3) Bearer token
+    3) [ ] Make the first request: test an endpoint
+       1) Select a sample tweet: ([[https://developer.twitter.com/en/portal/register/playground][src]]) 
+       2) I've created the following shell variables:
+	  #+BEGIN_SRC bash
+export TWIT_BEARER_TOKEN="AAAAAAAAAAAAAAAAAAAAAKj8YAEAAAAAeVpmEQUg1VD2W%2BTAH%2BVGpMX2vFg%3DyUEBsVOBN9tn1XzHf9a2uhU1pjgEXEH6IGfBbKhBlJaEYjU38q"
+export TWIT_API_KEY="1f0Bs8RqV8TvtecYU4sD6Jpzz0pnYtdCW1k8gMKDxmbhczWSw1"
+export TWIT_API_KEY_SECRET="kmCBLr8hgj5I5KYqAQt2CDSRS"
+	  #+END_SRC
+       3) Run the command:
+	  #+BEGIN_SRC bash
+	  curl -X GET -H "Authorization: Bearer $TWIT_BEARER TOKEN" "https://api.twitter.com/2/tweets/20"
+	  #+END_SRC
+       4) Received the following response:
+	  #+BEGIN_SRC bash
+	  {"data":{"id":"20","text":"just setting up my twttr"}}
+	  #+END_SRC
+    4) [ ] Apply for additional access (optional)
 * Mine                                                             :noexport:
 ** Implementation
 *** Project: LS App
@@ -7966,8 +8042,7 @@ while (video.isOpened())
 1) [X] Implement face detection algorithm (see [[file:code/computer-vision/face-detection/c++/main.cpp][here]])
    1) [X] Data models are in /models
    2) [X] Add it to mainWindow
-2) [ ] Implement gesture recognition algorithm
-3) [X] Implement image filter overlay
+2) [X] Implement image filter overlay
    1) Image overlay algorithm ([[http://opencv-tutorials-hub.blogspot.com/2016/04/how-to-overlay-smaller-image-over-bigger-image-in-opencv.html][src]])
       1) Read the bigger image (frame)
       2) Read the smaller image (filter)
@@ -8300,6 +8375,8 @@ OpenCV provides an API for linear blending of two images. The calculation formul
 	 3) Extract overlap ROI to perform blending
 	 4) Apply overlay over overlapping ROI and then copy it to original
             frame
+3) [ ] Implement gesture recognition algorithm
 4) [ ] Wrap it in the gesture recognition engine
 5) [ ] Implement Twitter sharing
 6) [ ] Implement client-server architecture
+
