@@ -1,54 +1,58 @@
-- [Preamble](#orgd606ce1)
-- [Versions <code>[4/4]</code>](#orgd015793)
-- [Notes](#orgd63ea60)
-  - [Requirements](#orgae80c42)
-  - [Problem statement](#orgd1f5dea)
-  - [Research](#org747a801)
-    - [Topics <code>[0/3]</code>](#org9476edc)
-    - [Selection](#org8063d08)
-  - [Report](#orgd175120)
-    - [Outline <code>[2/8]</code>](#orgef4f436)
-  - [Marketing Digital Outdoor](#orgeb56a3f)
-    - [Topics](#org4c72e6a)
-    - [Technologies <code>[0/11]</code>](#orgdfd0619)
-    - [Problem statement](#org8498007)
-    - [Market research <code>[3/3]</code>](#org28a09c6)
-    - [Project planning](#orgecca33f)
-    - [Analysis](#orgfd738d2)
-    - [Theoretical foundations <code>[17/17]</code>](#orge940db6)
-    - [Design](#orge2ab0a3)
-    - [Implementation <code>[0/3]</code>](#org571697b)
-- [Diagrams](#org6d7f93a)
-  - [PlantUML](#org0540b98)
-    - [Setup <code>[0/6]</code>](#org6a15290)
-    - [Workflow <code>[0/4]</code>](#orgb9a214b)
-    - [Sequence diagrams](#org3b42cad)
-    - [Component diagrams](#org527077d)
-    - [Deployment diagrams](#org9dbb708)
-    - [Class diagrams](#orge2ef6d5)
-    - [Entity-Relationship diagram](#orga1bce8a)
-    - [Flowcharts (activity diagram)](#org4ecbb8a)
-    - [Data formats](#orga4caf4e)
-- [RDBMS](#org385fdf0)
-  - [SQLite vs MySQL](#org4977e45)
-  - [mySQL](#org350b277)
-    - [Installation <code>[1/1]</code>](#org228cf81)
-    - [Server](#orgf2541aa)
-    - [Shell](#orgc6643af)
-    - [C++ connector](#org667d971)
-- [GIF generation](#orgcd96466)
-  - [C++ libraries and APIs <code>[0/1]</code>](#org900cd0e)
-- [CMake](#org10f467c)
-- [OpenCV](#org6793d38)
-  - [Build and integrate with Qt5](#orga6c64dc)
-    - [Build opencv <code>[7/7]</code>](#org9c208c1)
-    - [Compile a simple standlone project](#org505d2c6)
-    - [Integrate with Qt <code>[2/2]</code>](#orgfde27fd)
-    - [Read, display and process videos with Qt and OpenCV](#org1bb1125)
+- [Preamble](#org46d99ca)
+- [Versions <code>[4/4]</code>](#org95dbcdd)
+- [Notes](#org47407e5)
+  - [Requirements](#org94b9eed)
+  - [Problem statement](#org0aa374d)
+  - [Research](#orgc76445e)
+    - [Topics <code>[0/3]</code>](#org83d0041)
+    - [Selection](#org05fb3df)
+  - [Report](#orgd1574d9)
+    - [Outline <code>[2/8]</code>](#orgdfb150c)
+  - [Marketing Digital Outdoor](#org95408f6)
+    - [Topics](#org408a762)
+    - [Technologies <code>[0/11]</code>](#org7d22f9d)
+    - [Problem statement](#org6017478)
+    - [Market research <code>[3/3]</code>](#org2c2daa1)
+    - [Project planning](#orgacc1afd)
+    - [Analysis](#org8fa47b0)
+    - [Theoretical foundations <code>[17/17]</code>](#org12569ed)
+    - [Design](#org5b72c1e)
+    - [Implementation <code>[0/3]</code>](#orgf5bacb0)
+- [Diagrams](#orgd707018)
+  - [PlantUML](#org7a0e981)
+    - [Setup <code>[0/6]</code>](#orge7076e7)
+    - [Workflow <code>[0/4]</code>](#orgca0f764)
+    - [Sequence diagrams](#org5116acd)
+    - [Component diagrams](#org9d0b870)
+    - [Deployment diagrams](#org7639b94)
+    - [Class diagrams](#org57b2260)
+    - [Entity-Relationship diagram](#orgf063022)
+    - [Flowcharts (activity diagram)](#orgba24751)
+    - [Data formats](#org81dc48c)
+- [RDBMS](#org8f3054b)
+  - [SQLite vs MySQL](#org15f8bee)
+  - [mySQL](#org057edb9)
+    - [Installation <code>[1/1]</code>](#orgecf5869)
+    - [Server](#org22bbff6)
+    - [Shell](#org0820361)
+    - [C++ connector](#orgb03b9b9)
+- [GIF generation](#orgf11625f)
+  - [C++ libraries and APIs <code>[0/1]</code>](#org7c18a9b)
+- [CMake](#orgb1fb75f)
+- [OpenCV](#org29dbd2d)
+  - [Build and integrate with Qt5](#org49e2dec)
+    - [Build opencv <code>[7/7]</code>](#orgcaca277)
+    - [Compile a simple standlone project](#org5f7090e)
+    - [Integrate with Qt <code>[2/2]</code>](#org29c1846)
+    - [Read, display and process videos with Qt and OpenCV](#orgee7da8c)
+- [Twitter sharing](#orgeffb95a)
+  - [Account](#org56d0c47)
+  - [Access to Twitter API](#orgc3d152f)
+  - [Example program](#orge99e1db)
 
 
 
-<a id="orgd606ce1"></a>
+<a id="org46d99ca"></a>
 
 # Preamble
 
@@ -56,7 +60,7 @@
 -   It is written incrementally, i.e., as the several project phases take place, the document versions pertaining to each phase are stored in the folder **submission**.
 
 
-<a id="orgd015793"></a>
+<a id="org95dbcdd"></a>
 
 # Versions <code>[4/4]</code>
 
@@ -66,12 +70,12 @@
 4.  [X] Design phase: <span class="timestamp-wrapper"><span class="timestamp">&lt;2021-12-15 qua 23:00&gt;</span></span>
 
 
-<a id="orgd63ea60"></a>
+<a id="org47407e5"></a>
 
 # Notes     :Important:
 
 
-<a id="orgae80c42"></a>
+<a id="org94b9eed"></a>
 
 ## Requirements
 
@@ -83,19 +87,19 @@
 -   Makefiles
 
 
-<a id="orgd1f5dea"></a>
+<a id="org0aa374d"></a>
 
 ## Problem statement
 
 Think about the project and deliver a document about it.
 
 
-<a id="org747a801"></a>
+<a id="orgc76445e"></a>
 
 ## Research
 
 
-<a id="org9476edc"></a>
+<a id="org83d0041"></a>
 
 ### Topics <code>[0/3]</code>
 
@@ -104,19 +108,19 @@ Think about the project and deliver a document about it.
 -   [ ] Situate the project requirements, the project constraints
 
 
-<a id="org8063d08"></a>
+<a id="org05fb3df"></a>
 
 ### Selection
 
 -   [Marketing digital Outdoor](readme.md)
 
 
-<a id="orgd175120"></a>
+<a id="orgd1574d9"></a>
 
 ## Report
 
 
-<a id="orgef4f436"></a>
+<a id="orgdfb150c"></a>
 
 ### Outline <code>[2/8]</code>
 
@@ -167,12 +171,12 @@ Think about the project and deliver a document about it.
 8.  [ ] Conclusions
 
 
-<a id="orgeb56a3f"></a>
+<a id="org95408f6"></a>
 
 ## Marketing Digital Outdoor     :Important:
 
 
-<a id="org4c72e6a"></a>
+<a id="org408a762"></a>
 
 ### Topics
 
@@ -213,7 +217,7 @@ Think about the project and deliver a document about it.
             -   Additionally, brands can also monitor this by checking their social media accounts.
 
 
-<a id="orgdfd0619"></a>
+<a id="org7d22f9d"></a>
 
 ### Technologies <code>[0/11]</code>
 
@@ -230,12 +234,12 @@ Think about the project and deliver a document about it.
 11. [ ] Social media and e-mail sharing APIs
 
 
-<a id="org8498007"></a>
+<a id="org6017478"></a>
 
 ### ✔ DONE Problem statement
 
 
-<a id="org28a09c6"></a>
+<a id="org2c2daa1"></a>
 
 ### ✔ DONE Market research <code>[3/3]</code>
 
@@ -244,7 +248,7 @@ Think about the project and deliver a document about it.
 3.  [X] Combined marketing: are they digital outdoor + scenting?
 
 
-<a id="orgecca33f"></a>
+<a id="orgacc1afd"></a>
 
 ### Project planning
 
@@ -319,7 +323,7 @@ Think about the project and deliver a document about it.
     -   [X] Camera: 14 EUR - <https://shorturl.at/gnpCU>
 
 
-<a id="orgfd738d2"></a>
+<a id="org8fa47b0"></a>
 
 ### ✔ DONE Analysis
 
@@ -332,7 +336,7 @@ Think about the project and deliver a document about it.
     > COMPANY -> MDO-L Staff member login RC -> RS: q mdo systems RS -> DB: query mdo-systems DB -> RS: std::<vector> mdo<sub>systems</sub> for(i = 0; i < mdo<sub>systems.size</sub>(); i++ ) RS -> RC: mdo<sub>systems</sub>[i] RC -> RC: Select MDO-L machine Send command RC -> RS: mdo <nr> <command> (mdo 1 get mode) RS -> RS: parse command RS -> RS: get mdo<sub>nr</sub> IP (query mdo-systems 1 IP) RS -> MDO-L: connect IP:port MDO-L -> RS: connected RS -> MDO-L: get mode MDO-L -> RS: normal mode (example) RS -> RC: normal
 
 
-<a id="orge940db6"></a>
+<a id="org12569ed"></a>
 
 ### ✔ DONE Theoretical foundations <code>[17/17]</code>
 
@@ -364,7 +368,7 @@ Legend:
 -   *Hugo*
 
 
-<a id="orge2ab0a3"></a>
+<a id="org5b72c1e"></a>
 
 ### ▭▭ IN-PROGRESS Design
 
@@ -421,7 +425,7 @@ Design Phase must include (some specifications may vary according to your projec
 It is compulsory to show/identify which/where all class topics are going to be implemented and used by you! Also third-party Libraries/apps must be identified so you can use other's software and materials with our consent.
 
 
-<a id="org571697b"></a>
+<a id="orgf5bacb0"></a>
 
 ### Implementation <code>[0/3]</code>
 
@@ -666,7 +670,7 @@ It is compulsory to show/identify which/where all class topics are going to be i
                 ```
 
 
-<a id="org6d7f93a"></a>
+<a id="orgd707018"></a>
 
 # Diagrams
 
@@ -675,7 +679,7 @@ Diagrams can be drawn using <code>[2/2]</code>:
 -   [X] draw.io
     -   User mockups
     -   State-machine
--   [X] [PlantUML](#org0540b98) (stored in Proj/diags/plantuml)
+-   [X] [PlantUML](#org7a0e981) (stored in Proj/diags/plantuml)
     -   Sequence diagram
     -   Class diagram
     -   Component diagram
@@ -683,14 +687,14 @@ Diagrams can be drawn using <code>[2/2]</code>:
     -   Entity-Relationship diagram
 
 
-<a id="org0540b98"></a>
+<a id="org7a0e981"></a>
 
 ## PlantUML
 
 [PlantUML](https://plantuml.com/) is a tool for quickly drawing diagrams from text based descriptions. It is specially adequate for sequence diagrams, as draw.io is not very fluid.
 
 
-<a id="org6a15290"></a>
+<a id="orge7076e7"></a>
 
 ### Setup <code>[0/6]</code>
 
@@ -706,7 +710,7 @@ Diagrams can be drawn using <code>[2/2]</code>:
 6.  [ ] Check the generate png file: `output/test.png`
 
 
-<a id="orgb9a214b"></a>
+<a id="orgca0f764"></a>
 
 ### Workflow <code>[0/4]</code>
 
@@ -720,7 +724,7 @@ Diagrams can be drawn using <code>[2/2]</code>:
 4.  [ ] Check the generate png file: `output/test.png`
 
 
-<a id="org3b42cad"></a>
+<a id="org5116acd"></a>
 
 ### ✔ DONE Sequence diagrams
 
@@ -1237,7 +1241,7 @@ Diagrams can be drawn using <code>[2/2]</code>:
     ![img](diags/plantuml/seq-diag/examples/all-together.png)
 
 
-<a id="org527077d"></a>
+<a id="org9d0b870"></a>
 
 ### ✔ DONE Component diagrams
 
@@ -1314,7 +1318,7 @@ You can use component diagrams to model the software architecture of a system. C
         ![img](diags/plantuml/component-diag/output/component-diag-local-threads.png)
 
 
-<a id="org9dbb708"></a>
+<a id="org7639b94"></a>
 
 ### ✔ DONE Deployment diagrams
 
@@ -1363,7 +1367,7 @@ Deployment diagrams, which you typically prepare during the implementation phase
     ![img](diags/plantuml/deploy-diag/output/deploy-diag.png)
 
 
-<a id="orge2ef6d5"></a>
+<a id="org57b2260"></a>
 
 ### ▭▭ IN-PROGRESS Class diagrams
 
@@ -1431,7 +1435,7 @@ Deployment diagrams, which you typically prepare during the implementation phase
     -   class for all classes,
     -   interface for all interfaces,
     -   enum for all enums,
-    -   <a id="orgff95f1a"></a> for classes which are stereotyped with foo1,
+    -   <a id="org201981b"></a> for classes which are stereotyped with foo1,
     -   an existing class name.
     
     You can use several show/hide commands to define rules and exceptions.
@@ -1512,7 +1516,7 @@ Deployment diagrams, which you typically prepare during the implementation phase
         ![img](diags/plantuml/class-diag/output/class-diag-local.png)
 
 
-<a id="orga1bce8a"></a>
+<a id="orgf063022"></a>
 
 ### ✔ DONE Entity-Relationship diagram
 
@@ -1563,7 +1567,7 @@ Otherwise, the syntax for drawing diagrams is the same as for class diagrams. Al
 3.  [DB design and implementation using SQL](db.md)     :Important:
 
 
-<a id="org4ecbb8a"></a>
+<a id="orgba24751"></a>
 
 ### ▭▭ IN-PROGRESS Flowcharts (activity diagram)
 
@@ -1648,37 +1652,37 @@ Otherwise, the syntax for drawing diagrams is the same as for class diagrams. Al
         ![img](diags/plantuml/flowchart/output/local-gif-gen.png)
 
 
-<a id="orga4caf4e"></a>
+<a id="org81dc48c"></a>
 
 ### ✔ DONE Data formats
 
 ![img](diags/plantuml/misc/output/data-formats.png)
 
 
-<a id="org385fdf0"></a>
+<a id="org8f3054b"></a>
 
 # RDBMS
 
 
-<a id="org4977e45"></a>
+<a id="org15f8bee"></a>
 
 ## SQLite vs MySQL
 
 1.  <https://www.hostinger.com/tutorials/sqlite-vs-mysql-whats-the-difference/>
 
 
-<a id="org350b277"></a>
+<a id="org057edb9"></a>
 
 ## mySQL
 
 
-<a id="org228cf81"></a>
+<a id="orgecf5869"></a>
 
 ### Installation <code>[1/1]</code>
 
-1.  [X] Add APT repository (see [here](#org069324b))
-2.  [ ] Install server (see [here](#org4157eb8))
-3.  [X] Install client (see [here](#org13411db))
+1.  [X] Add APT repository (see [here](#orga36e13e))
+2.  [ ] Install server (see [here](#org06d0463))
+3.  [X] Install client (see [here](#orgbca9d7b))
 
 1.  ✔ DONE Add APT repository <code>[4/4]</code>
 
@@ -1700,7 +1704,7 @@ Otherwise, the syntax for drawing diagrams is the same as for class diagrams. Al
         ```
 
 
-<a id="orgf2541aa"></a>
+<a id="org22bbff6"></a>
 
 ### Server
 
@@ -1764,7 +1768,7 @@ Otherwise, the syntax for drawing diagrams is the same as for class diagrams. Al
             1.  A rule should be active (mySQL), and available at port `3306` (the default for mySQL)
 
 
-<a id="orgc6643af"></a>
+<a id="org0820361"></a>
 
 ### Shell
 
@@ -1781,7 +1785,7 @@ Multiple-line code can be written using a command, enabling MySQL Shell to cache
         ```
 
 
-<a id="org667d971"></a>
+<a id="orgb03b9b9"></a>
 
 ### C++ connector
 
@@ -1794,12 +1798,12 @@ Multiple-line code can be written using a command, enabling MySQL Shell to cache
     src
 
 
-<a id="orgcd96466"></a>
+<a id="orgf11625f"></a>
 
 # GIF generation
 
 
-<a id="org900cd0e"></a>
+<a id="org7c18a9b"></a>
 
 ## C++ libraries and APIs <code>[0/1]</code>
 
@@ -1809,18 +1813,18 @@ Multiple-line code can be written using a command, enabling MySQL Shell to cache
     -   [research](https://www.one-tab.com/page/fuqT5AkaRZGbzBcehZlXVQ)
 
 
-<a id="org10f467c"></a>
+<a id="orgb1fb75f"></a>
 
 # CMake
 
 -   [Cross compilation](https://gitlab.kitware.com/cmake/community/-/wikis/doc/cmake/CrossCompiling)
 
 
-<a id="org6793d38"></a>
+<a id="org29dbd2d"></a>
 
 # OpenCV
 
-**Examples** <code>[5/5]</code>:
+**Examples** <code>[5/6]</code>:
 
 1.  [X] [display<sub>img.cpp</sub>](code/computer-vision/test-opencv/display_img.cpp) (src):
     1.  About: displays an image on screen
@@ -1834,19 +1838,22 @@ Multiple-line code can be written using a command, enabling MySQL Shell to cache
 4.  [X] [example.cpp](code/computer-vision/test-opencv/cmake-example/example.cpp) ([src](https://github.com/opencv/opencv/tree/master/samples/cpp/example_cmake)):
     1.  About: Grabs frames from the camera and adds text to it
     2.  Status: compiled and runned successfully
-5.  [X] [videoprocessor](code/computer-vision/qt-test/videoprocessor) ([src](https://amin-ahmadi.com/2018/03/29/how-to-read-process-and-display-videos-using-qt-and-opencv/)):
+5.  [ ] [videoprocessor](code/computer-vision/qt-test/videoprocessor) ([src](https://amin-ahmadi.com/2018/03/29/how-to-read-process-and-display-videos-using-qt-and-opencv/)):
     1.  About: it grabs frames from camera using opencv and displays it on Qt
+    2.  Status: compiled and runned successfully
+6.  [X] [filter](code/computer-vision/filters/filter/main.cpp) (src)
+    1.  About: it overlays a transparent png image file over a live video feed
     2.  Status: compiled and runned successfully
 
 
-<a id="orga6c64dc"></a>
+<a id="org49e2dec"></a>
 
 ## Build and integrate with Qt5
 
 [src](https://lordsoftech.com/open-source/adding-opencv-libraries-to-a-qt5-project-in-ubuntu-20-04/)
 
 
-<a id="org9c208c1"></a>
+<a id="orgcaca277"></a>
 
 ### ✔ DONE Build opencv <code>[7/7]</code>
 
@@ -1904,7 +1911,7 @@ Multiple-line code can be written using a command, enabling MySQL Shell to cache
         ```
 
 
-<a id="org505d2c6"></a>
+<a id="org5f7090e"></a>
 
 ### ✔ DONE Compile a simple standlone project
 
@@ -1947,7 +1954,7 @@ Multiple-line code can be written using a command, enabling MySQL Shell to cache
     5.  [X] Run executable \#+END<sub>SRC</sub>
 
 
-<a id="orgfde27fd"></a>
+<a id="org29c1846"></a>
 
 ### ✔ DONE Integrate with Qt <code>[2/2]</code>
 
@@ -1981,7 +1988,7 @@ Multiple-line code can be written using a command, enabling MySQL Shell to cache
         find_package(OpenCV REQUIRED)
         include_directories(${OpenCV_INCLUDE_DIRS})
         
-        target_link_libraries(testCmake PRIVATE Qt5::Widgets ${OpenCV_LIBS})
+        target_link_libraries(${PROJECT_NAME} PRIVATE Qt5::Widgets ${OpenCV_LIBS})
         ```
     3.  [X] Use the build system to externally to obtain a makefile with LSP integration [see Qt workflow](readme.md)
         
@@ -2003,13 +2010,14 @@ Multiple-line code can be written using a command, enabling MySQL Shell to cache
         1.  A GTK window should be generated when the push button is pressed
 
 
-<a id="org1bb1125"></a>
+<a id="orgee7da8c"></a>
 
 ### Read, display and process videos with Qt and OpenCV
 
 [src](https://amin-ahmadi.com/2018/03/29/how-to-read-process-and-display-videos-using-qt-and-opencv/)
 
 -   [Repo](https://bitbucket.org/amahta/videoprocessor/src/master/)
+-   [Local repo](code/computer-vision/qt-test/videoprocessor)
 
 **Steps** <code>[0/8]</code>
 
@@ -2157,3 +2165,203 @@ Multiple-line code can be written using a command, enabling MySQL Shell to cache
                 3.  `KeepAspectRatioByExpanding`
 9.  Example using `copyMakeBorder` process ([src](https://amin-ahmadi.com/2018/03/29/how-to-read-process-and-display-videos-using-qt-and-opencv/)):
     1.  it mirrors multiple images to fill the view
+
+
+<a id="orgeffb95a"></a>
+
+# Twitter sharing
+
+
+<a id="org56d0c47"></a>
+
+## Account
+
+1.  [X] Create account:
+    1.  username: @MDO<sub>ESRG</sub>
+    2.  pass: MDO-Ze-Hugo@2021
+    3.  email: id6892@alunos.uminho.pt
+    4.  **Developer keys**:
+        1.  **API key**: `kmCBLr8hgj5I5KYqAQt2CDSRS`
+            1.  Think of the API key as the user name that represents your App when making API requests. It helps us verify who you are.
+        2.  **API key secret**: `1f0Bs8RqV8TvtecYU4sD6Jpzz0pnYtdCW1k8gMKDxmbhczWSw1`
+            1.  Your API Key Secret is like a password and helps verify your API Key. This will be one of the last times you'll see it displayed, so remember to save it in a safe place.
+        3.  **Bearer token**: `AAAAAAAAAAAAAAAAAAAAAKj8YAEAAAAAeVpmEQUg1VD2W%2BTAH%2BVGpMX2vFg%3DyUEBsVOBN9tn1XzHf9a2uhU1pjgEXEH6IGfBbKhBlJaEYjU38q`
+            1.  An Access Token used in authentication that allows you to pull specific data.
+
+![img](sec/img/twitter-keys.png)
+
+    API key:
+    kmCBLr8hgj5I5KYqAQt2CDSRS
+    
+    API key secret:
+    1f0Bs8RqV8TvtecYU4sD6Jpzz0pnYtdCW1k8gMKDxmbhczWSw1
+    
+    Bearer token:
+    AAAAAAAAAAAAAAAAAAAAAKj8YAEAAAAAeVpmEQUg1VD2W%2BTAH%2BVGpMX2vFg%3DyUEBsVOBN9tn1XzHf9a2uhU1pjgEXEH6IGfBbKhBlJaEYjU38q
+
+Other app: v1.1
+
+    API key:
+    rVgHlnUTgSQlaIOq5O1Es63QG
+    
+    API key secret:
+    0jchuatg6RYldjsdQ8jrzmigiZbmsBhTSJkG8huMuQm352NnWO
+    
+    Bearer token:
+    AAAAAAAAAAAAAAAAAAAAAFIAYQEAAAAAseeLeNxMedbnoWhp0D9QmAr8iE0%3D4XygdbEdebzhIsuiPThOIqU3IJIiQqzocR75vHaMTmw1HMmJt0
+    
+    Access Token:
+    1483403576558895106-YOcwI1mbBMBqVZoiGMtB6taancaAKO
+    
+    Access Token secret
+    oEwtGWK0DxwD8puE7PI2fhcelcGUa0sFWJB2W2Nj6Xlu3
+
+
+<a id="orgc3d152f"></a>
+
+## Access to Twitter API
+
+1.  [-] Access to Twitter API: [src](https://developer.twitter.com/en/docs/twitter-api/getting-started/getting-access-to-the-twitter-api)
+    1.  [X] Sign up for a developer account
+    2.  [X] Save the application's keys and tokens and keep them secure
+        1.  API Key and secret
+        2.  A set of user Access tokens
+        3.  Bearer token
+    3.  [ ] Make the first request: test an endpoint
+        1.  Select a sample tweet: ([src](https://developer.twitter.com/en/portal/register/playground))
+        2.  I've created the following shell variables:
+            
+            ```bash
+            export TWIT_BEARER_TOKEN="AAAAAAAAAAAAAAAAAAAAAKj8YAEAAAAAeVpmEQUg1VD2W%2BTAH%2BVGpMX2vFg%3DyUEBsVOBN9tn1XzHf9a2uhU1pjgEXEH6IGfBbKhBlJaEYjU38q"
+            export TWIT_API_KEY="1f0Bs8RqV8TvtecYU4sD6Jpzz0pnYtdCW1k8gMKDxmbhczWSw1"
+            export TWIT_API_KEY_SECRET="kmCBLr8hgj5I5KYqAQt2CDSRS"
+            ```
+        3.  Run the command:
+            
+            ```bash
+            curl -X GET -H "Authorization: Bearer $TWIT_BEARER TOKEN" "https://api.twitter.com/2/tweets/20"
+            ```
+        4.  Received the following response:
+            
+            ```bash
+            {"data":{"id":"20","text":"just setting up my twttr"}}
+            ```
+    4.  [ ] Apply for additional access (optional)
+
+
+<a id="orge99e1db"></a>
+
+## Example program
+
+[src](code/twitter/twitcurl/twitterClient) TwitterClient is a client for twitter using the `twitcurl` library (C++).
+
+**Setup**: <code>[7/8]</code>
+
+1.  [X] Create an App in the Twitter developer portal
+    1.  The app must be standlone to use the v1.1. API
+2.  [X] Give the app the correct permissions
+    1.  In the twitter developer portal, select the App
+    2.  Select Settings
+    3.  Select User Authentication Settings
+    4.  Enable OAuth 1.0a
+    5.  In the oauth 1.0a settings, select the permissions:
+        1.  Read and write and direct messages
+    6.  Fill the General Authentication Settings:
+        1.  Callback URI / Redirect URL: `https://mydomain.pt/logout`
+        2.  Website URL: `https://mydomain.pt`
+    7.  Save it
+3.  [ ] Generate the tokens
+    1.  Select the App
+    2.  Select `Keys and Tokens`
+    3.  Select `Generate Access Token and Secret` and copy them
+    4.  The consumer keys should already been generated too (they are used to authenticate the user/developer) and copied
+4.  [X] Copy the `Access token and secret` to:
+    1.  [X] `twitterClient_token_key.txt`: Access token
+    2.  [X] `twitterClient_token_secret.txt`: Access token secret
+5.  [X] Copy the `Consumer key and Secret` to `main.cpp` as follows:
+    
+    ```c++
+    #define API_KEY "rVgHlnUTgSQlaIOq5O1Es63QG"
+    #define API_KEY_SECRET "0jchuatg6RYldjsdQ8jrzmigiZbmsBhTSJkG8huMuQm352NnWO"
+    ```
+6.  [X] Install `libcurldev`: `sudo apt-get install libcurl4-gnutls-dev`
+7.  [X] Run `sudo make`
+8.  [X] Run the program: `./twitterClient -u @MDO_ESRG -p MDO-Ze-Hugo@2021`
+    1.  [X] It will prompt for proxy server: say no `0`
+    2.  [X] Answer the prompts interactively to post on twitter and get answers
+
+**Output**:
+
+    twitterClient:: twitCurl::accountVerifyCredGet web response:
+    {"id":1483403576558895106,"id_str":"1483403576558895106","name":"MDO","screen_name":"MDO_ESRG2
+    021","location":"","description":"Marketing Digital Outdoor: ESRG 2021\/22","url":null,"entiti
+    es":{"description":{"urls":[]}},"protected":false,"followers_count":0,"friends_count":0,"liste
+    d_count":0,"created_at":"Tue Jan 18 11:39:27 +0000 2022","favourites_count":0,"utc_offset":nul
+    l,"time_zone":null,"geo_enabled":false,"verified":false,"statuses_count":0,"lang":null,"contri
+    butors_enabled":false,"is_translator":false,"is_translation_enabled":false,"profile_background
+    _color":"F5F8FA","profile_background_image_url":null,"profile_background_image_url_https":null
+    ,"profile_background_tile":false,"profile_image_url":"http:\/\/pbs.twimg.com\/profile_images\/
+    1483405696058200065\/i1bfwFgo_normal.jpg","profile_image_url_https":"https:\/\/pbs.twimg.com\/
+    profile_images\/1483405696058200065\/i1bfwFgo_normal.jpg","profile_banner_url":"https:\/\/pbs.
+    twimg.com\/profile_banners\/1483403576558895106\/1642506478","profile_link_color":"1DA1F2","pr
+    ofile_sidebar_border_color":"C0DEED","profile_sidebar_fill_color":"DDEEF6","profile_text_color
+    ":"333333","profile_use_background_image":true,"has_extended_profile":true,"default_profile":t
+    rue,"default_profile_image":false,"following":false,"follow_request_sent":false,"notifications
+    ":false,"translator_type":"none","withheld_in_countries":[],"suspended":false,"needs_phone_ver
+    ification":false}  
+    
+    
+    Enter a new status message: Hello
+    
+    twitterClient:: twitCurl::statusUpdate web response:
+    {"created_at":"Wed Jan 19 00:34:43 +0000 2022","id":1483598763251929093,"id_str":"148359876325
+    1929093","text":"Hello","truncated":false,"entities":{"hashtags":[],"symbols":[],"user_mention
+    s":[],"urls":[]},"source":"\u003ca href=\"https:\/\/mydomain.pt\" rel=\"nofollow\"\u003eLSAppE
+    SRG2021\u003c\/a\u003e","in_reply_to_status_id":null,"in_reply_to_status_id_str":null,"in_repl
+    y_to_user_id":null,"in_reply_to_user_id_str":null,"in_reply_to_screen_name":null,"user":{"id":
+    1483403576558895106,"id_str":"1483403576558895106","name":"MDO","screen_name":"MDO_ESRG2021","
+    location":"","description":"Marketing Digital Outdoor: ESRG 2021\/22","url":null,"entities":{"
+    description":{"urls":[]}},"protected":false,"followers_count":0,"friends_count":0,"listed_coun
+    t":0,"created_at":"Tue Jan 18 11:39:27 +0000 2022","favourites_count":0,"utc_offset":null,"tim
+    e_zone":null,"geo_enabled":false,"verified":false,"statuses_count":1,"lang":null,"contributors
+    _enabled":false,"is_translator":false,"is_translation_enabled":false,"profile_background_color
+    ":"F5F8FA","profile_background_image_url":null,"profile_background_image_url_https":null,"prof
+    ile_background_tile":false,"profile_image_url":"http:\/\/pbs.twimg.com\/profile_images\/148340
+    5696058200065\/i1bfwFgo_normal.jpg","profile_image_url_https":"https:\/\/pbs.twimg.com\/profil
+    e_images\/1483405696058200065\/i1bfwFgo_normal.jpg","profile_banner_url":"https:\/\/pbs.twimg.
+    com\/profile_banners\/1483403576558895106\/1642506478","profile_link_color":"1DA1F2","profile_
+    sidebar_border_color":"C0DEED","profile_sidebar_fill_color":"DDEEF6","profile_text_color":"333
+    333","profile_use_background_image":true,"has_extended_profile":true,"default_profile":true,"d
+    efault_profile_image":false,"following":false,"follow_request_sent":false,"notifications":fals
+    e,"translator_type":"none","withheld_in_countries":[]},"geo":null,"coordinates":null,"place":n
+    ull,"contributors":null,"is_quote_status":false,"retweet_count":0,"favorite_count":0,"favorite
+    d":false,"retweeted":false,"lang":"en"}                                                      
+    
+    Enter message id to reply to : 1483598763251929093
+    
+    Enter a reply message: Hello Twitcurl
+    
+    twitterClient:: twitCurl::statusUpdate web response:
+    {"created_at":"Wed Jan 19 00:35:44 +0000 2022","id":1483599016738885632,"id_str":"148359901673
+    8885632","text":"Hello Twitcurl","truncated":false,"entities":{"hashtags":[],"symbols":[],"use
+    r_mentions":[],"urls":[]},"source":"\u003ca href=\"https:\/\/mydomain.pt\" rel=\"nofollow\"\u0
+    03eLSAppESRG2021\u003c\/a\u003e","in_reply_to_status_id":1483598763251929093,"in_reply_to_stat
+    us_id_str":"1483598763251929093","in_reply_to_user_id":1483403576558895106,"in_reply_to_user_i
+    d_str":"1483403576558895106","in_reply_to_screen_name":"MDO_ESRG2021","user":{"id":14834035765
+    58895106,"id_str":"1483403576558895106","name":"MDO","screen_name":"MDO_ESRG2021","location":"
+    ","description":"Marketing Digital Outdoor: ESRG 2021\/22","url":null,"entities":{"description
+    ":{"urls":[]}},"protected":false,"followers_count":0,"friends_count":0,"listed_count":0,"creat
+    ed_at":"Tue Jan 18 11:39:27 +0000 2022","favourites_count":0,"utc_offset":null,"time_zone":nul
+    l,"geo_enabled":false,"verified":false,"statuses_count":2,"lang":null,"contributors_enabled":f
+    alse,"is_translator":false,"is_translation_enabled":false,"profile_background_color":"F5F8FA",
+    "profile_background_image_url":null,"profile_background_image_url_https":null,"profile_backgro
+    und_tile":false,"profile_image_url":"http:\/\/pbs.twimg.com\/profile_images\/14834056960582000
+    65\/i1bfwFgo_normal.jpg","profile_image_url_https":"https:\/\/pbs.twimg.com\/profile_images\/1
+    483405696058200065\/i1bfwFgo_normal.jpg","profile_banner_url":"https:\/\/pbs.twimg.com\/profil
+    e_banners\/1483403576558895106\/1642506478","profile_link_color":"1DA1F2","profile_sidebar_bor
+    der_color":"C0DEED","profile_sidebar_fill_color":"DDEEF6","profile_text_color":"333333","profi
+    le_use_background_image":true,"has_extended_profile":true,"default_profile":true,"default_prof
+    ile_image":false,"following":false,"follow_request_sent":false,"notifications":false,"translat
+    or_type":"none","withheld_in_countries":[]},"geo":null,"coordinates":null,"place":null,"contri
+    butors":null,"is_quote_status":false,"retweet_count":0,"favorite_count":0,"favorited":false,"r
+    etweeted":false,"lang":"en"}

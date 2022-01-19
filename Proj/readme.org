@@ -7835,10 +7835,10 @@ Bearer token:
 AAAAAAAAAAAAAAAAAAAAAFIAYQEAAAAAseeLeNxMedbnoWhp0D9QmAr8iE0%3D4XygdbEdebzhIsuiPThOIqU3IJIiQqzocR75vHaMTmw1HMmJt0
 
 Access Token:
-1483403576558895106-QP9zQETPfPsHteQrAfJ0MgF6vygsq
+1483403576558895106-YOcwI1mbBMBqVZoiGMtB6taancaAKO
 
 Access Token secret
-qBRdswUIHup9uhyJZDrvDHnRwpeIRdqdNRqzVTwO6BkJ4
+oEwtGWK0DxwD8puE7PI2fhcelcGUa0sFWJB2W2Nj6Xlu3
 
 #+END_EXAMPLE
 ** Access to Twitter API
@@ -7865,6 +7865,120 @@ export TWIT_API_KEY_SECRET="kmCBLr8hgj5I5KYqAQt2CDSRS"
 	  {"data":{"id":"20","text":"just setting up my twttr"}}
 	  #+END_SRC
     4) [ ] Apply for additional access (optional)
+** Example program
+[[file:code/twitter/twitcurl/twitterClient][src]]
+TwitterClient is a client for twitter using the =twitcurl= library (C++).
+
+*Setup*: [7/8]
+1) [X] Create an App in the Twitter developer portal
+   1) The app must be standlone to use the v1.1. API
+2) [X] Give the app the correct permissions
+   1) In the twitter developer portal, select the App
+   2) Select Settings
+   3) Select User Authentication Settings
+   4) Enable OAuth 1.0a
+   5) In the oauth 1.0a settings, select the permissions:
+      1) Read and write and direct messages
+   6) Fill the General Authentication Settings:
+      1) Callback URI / Redirect URL: =https://mydomain.pt/logout=
+      2) Website URL: =https://mydomain.pt=
+   7) Save it
+3) [ ] Generate the tokens
+   1) Select the App
+   2) Select =Keys and Tokens=
+   3) Select =Generate Access Token and Secret= and copy them
+   4) The consumer keys should already been generated too (they are used to
+      authenticate the user/developer) and copied
+4) [X] Copy the =Access token and secret= to:
+   1) [X] =twitterClient_token_key.txt=: Access token
+   2) [X] =twitterClient_token_secret.txt=: Access token secret
+5) [X] Copy the =Consumer key and Secret= to =main.cpp= as follows:
+   #+BEGIN_SRC c++
+#define API_KEY "rVgHlnUTgSQlaIOq5O1Es63QG"
+#define API_KEY_SECRET "0jchuatg6RYldjsdQ8jrzmigiZbmsBhTSJkG8huMuQm352NnWO"
+   #+END_SRC
+6) [X] Install =libcurldev=: =sudo apt-get install libcurl4-gnutls-dev=
+7) [X] Run =sudo make=
+8) [X] Run the program: =./twitterClient -u @MDO_ESRG -p MDO-Ze-Hugo@2021=
+   1) [X] It will prompt for proxy server: say no =0=
+   2) [X] Answer the prompts interactively to post on twitter and get answers
+
+*Output*:
+#+BEGIN_EXAMPLE
+twitterClient:: twitCurl::accountVerifyCredGet web response:
+{"id":1483403576558895106,"id_str":"1483403576558895106","name":"MDO","screen_name":"MDO_ESRG2
+021","location":"","description":"Marketing Digital Outdoor: ESRG 2021\/22","url":null,"entiti
+es":{"description":{"urls":[]}},"protected":false,"followers_count":0,"friends_count":0,"liste
+d_count":0,"created_at":"Tue Jan 18 11:39:27 +0000 2022","favourites_count":0,"utc_offset":nul
+l,"time_zone":null,"geo_enabled":false,"verified":false,"statuses_count":0,"lang":null,"contri
+butors_enabled":false,"is_translator":false,"is_translation_enabled":false,"profile_background
+_color":"F5F8FA","profile_background_image_url":null,"profile_background_image_url_https":null
+,"profile_background_tile":false,"profile_image_url":"http:\/\/pbs.twimg.com\/profile_images\/
+1483405696058200065\/i1bfwFgo_normal.jpg","profile_image_url_https":"https:\/\/pbs.twimg.com\/
+profile_images\/1483405696058200065\/i1bfwFgo_normal.jpg","profile_banner_url":"https:\/\/pbs.
+twimg.com\/profile_banners\/1483403576558895106\/1642506478","profile_link_color":"1DA1F2","pr
+ofile_sidebar_border_color":"C0DEED","profile_sidebar_fill_color":"DDEEF6","profile_text_color
+":"333333","profile_use_background_image":true,"has_extended_profile":true,"default_profile":t
+rue,"default_profile_image":false,"following":false,"follow_request_sent":false,"notifications
+":false,"translator_type":"none","withheld_in_countries":[],"suspended":false,"needs_phone_ver
+ification":false}  
+
+
+Enter a new status message: Hello
+
+twitterClient:: twitCurl::statusUpdate web response:
+{"created_at":"Wed Jan 19 00:34:43 +0000 2022","id":1483598763251929093,"id_str":"148359876325
+1929093","text":"Hello","truncated":false,"entities":{"hashtags":[],"symbols":[],"user_mention
+s":[],"urls":[]},"source":"\u003ca href=\"https:\/\/mydomain.pt\" rel=\"nofollow\"\u003eLSAppE
+SRG2021\u003c\/a\u003e","in_reply_to_status_id":null,"in_reply_to_status_id_str":null,"in_repl
+y_to_user_id":null,"in_reply_to_user_id_str":null,"in_reply_to_screen_name":null,"user":{"id":
+1483403576558895106,"id_str":"1483403576558895106","name":"MDO","screen_name":"MDO_ESRG2021","
+location":"","description":"Marketing Digital Outdoor: ESRG 2021\/22","url":null,"entities":{"
+description":{"urls":[]}},"protected":false,"followers_count":0,"friends_count":0,"listed_coun
+t":0,"created_at":"Tue Jan 18 11:39:27 +0000 2022","favourites_count":0,"utc_offset":null,"tim
+e_zone":null,"geo_enabled":false,"verified":false,"statuses_count":1,"lang":null,"contributors
+_enabled":false,"is_translator":false,"is_translation_enabled":false,"profile_background_color
+":"F5F8FA","profile_background_image_url":null,"profile_background_image_url_https":null,"prof
+ile_background_tile":false,"profile_image_url":"http:\/\/pbs.twimg.com\/profile_images\/148340
+5696058200065\/i1bfwFgo_normal.jpg","profile_image_url_https":"https:\/\/pbs.twimg.com\/profil
+e_images\/1483405696058200065\/i1bfwFgo_normal.jpg","profile_banner_url":"https:\/\/pbs.twimg.
+com\/profile_banners\/1483403576558895106\/1642506478","profile_link_color":"1DA1F2","profile_
+sidebar_border_color":"C0DEED","profile_sidebar_fill_color":"DDEEF6","profile_text_color":"333
+333","profile_use_background_image":true,"has_extended_profile":true,"default_profile":true,"d
+efault_profile_image":false,"following":false,"follow_request_sent":false,"notifications":fals
+e,"translator_type":"none","withheld_in_countries":[]},"geo":null,"coordinates":null,"place":n
+ull,"contributors":null,"is_quote_status":false,"retweet_count":0,"favorite_count":0,"favorite
+d":false,"retweeted":false,"lang":"en"}                                                      
+
+Enter message id to reply to : 1483598763251929093
+
+Enter a reply message: Hello Twitcurl
+
+twitterClient:: twitCurl::statusUpdate web response:
+{"created_at":"Wed Jan 19 00:35:44 +0000 2022","id":1483599016738885632,"id_str":"148359901673
+8885632","text":"Hello Twitcurl","truncated":false,"entities":{"hashtags":[],"symbols":[],"use
+r_mentions":[],"urls":[]},"source":"\u003ca href=\"https:\/\/mydomain.pt\" rel=\"nofollow\"\u0
+03eLSAppESRG2021\u003c\/a\u003e","in_reply_to_status_id":1483598763251929093,"in_reply_to_stat
+us_id_str":"1483598763251929093","in_reply_to_user_id":1483403576558895106,"in_reply_to_user_i
+d_str":"1483403576558895106","in_reply_to_screen_name":"MDO_ESRG2021","user":{"id":14834035765
+58895106,"id_str":"1483403576558895106","name":"MDO","screen_name":"MDO_ESRG2021","location":"
+","description":"Marketing Digital Outdoor: ESRG 2021\/22","url":null,"entities":{"description
+":{"urls":[]}},"protected":false,"followers_count":0,"friends_count":0,"listed_count":0,"creat
+ed_at":"Tue Jan 18 11:39:27 +0000 2022","favourites_count":0,"utc_offset":null,"time_zone":nul
+l,"geo_enabled":false,"verified":false,"statuses_count":2,"lang":null,"contributors_enabled":f
+alse,"is_translator":false,"is_translation_enabled":false,"profile_background_color":"F5F8FA",
+"profile_background_image_url":null,"profile_background_image_url_https":null,"profile_backgro
+und_tile":false,"profile_image_url":"http:\/\/pbs.twimg.com\/profile_images\/14834056960582000
+65\/i1bfwFgo_normal.jpg","profile_image_url_https":"https:\/\/pbs.twimg.com\/profile_images\/1
+483405696058200065\/i1bfwFgo_normal.jpg","profile_banner_url":"https:\/\/pbs.twimg.com\/profil
+e_banners\/1483403576558895106\/1642506478","profile_link_color":"1DA1F2","profile_sidebar_bor
+der_color":"C0DEED","profile_sidebar_fill_color":"DDEEF6","profile_text_color":"333333","profi
+le_use_background_image":true,"has_extended_profile":true,"default_profile":true,"default_prof
+ile_image":false,"following":false,"follow_request_sent":false,"notifications":false,"translat
+or_type":"none","withheld_in_countries":[]},"geo":null,"coordinates":null,"place":null,"contri
+butors":null,"is_quote_status":false,"retweet_count":0,"favorite_count":0,"favorited":false,"r
+etweeted":false,"lang":"en"}
+#+END_EXAMPLE
 * Mine                                                             :noexport:
 ** Implementation
 *** Project: LS App

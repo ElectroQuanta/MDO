@@ -5,6 +5,9 @@ void printUsage()
     printf( "\nUsage:\ntwitterClient -u username -p password\n" );
 }
 
+#define API_KEY "rVgHlnUTgSQlaIOq5O1Es63QG"
+#define API_KEY_SECRET "0jchuatg6RYldjsdQ8jrzmigiZbmsBhTSJkG8huMuQm352NnWO"
+
 int main( int argc, char* argv[] )
 {
     /* Get username and password from command line args */
@@ -78,8 +81,10 @@ int main( int argc, char* argv[] )
 
     /* OAuth flow begins */
     /* Step 0: Set OAuth related params. These are got by registering your app at twitter.com */
-    twitterObj.getOAuth().setConsumerKey( std::string( "2Kdg60HDmZEu2NXIp7MRMBQIm" ) );
-    twitterObj.getOAuth().setConsumerSecret( std::string( "IQcdiWnJd1bsWHytbLmSZa4aNxlPJ5Jr9ZjwOPjiDp31Tyactn" ) );
+    //twitterObj.getOAuth().setConsumerKey( std::string( "2Kdg60HDmZEu2NXIp7MRMBQIm" ) );
+    //twitterObj.getOAuth().setConsumerSecret( std::string( "IQcdiWnJd1bsWHytbLmSZa4aNxlPJ5Jr9ZjwOPjiDp31Tyactn" ) );
+    twitterObj.getOAuth().setConsumerKey( std::string( API_KEY ) );
+    twitterObj.getOAuth().setConsumerSecret( std::string( API_KEY_SECRET ) );
 
     /* Step 1: Check if we alredy have OAuth access token from a previous run */
     std::string myOAuthAccessTokenKey("");
