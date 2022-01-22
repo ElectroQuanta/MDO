@@ -37,6 +37,16 @@ namespace twitCurlDefaults
     const std::string TWITCURL_INCLUDE_ENTITIES = "include_entities=";
     const std::string TWITCURL_STRINGIFY_IDS = "stringify_ids=";
     const std::string TWITCURL_INREPLYTOSTATUSID = "in_reply_to_status_id=";
+    /**< Update */
+    const std::string TWITCURL_MEDIA_IDS = "media_ids="; /**< POST status */
+    const std::string TWITCURL_MEDIA_ID = "media_id="; /**< POST UPDATE */
+    const std::string TWITCURL_SEGMENT_INDEX = "segment_index="; /**< POST UPDATE */
+    const std::string TWITCURL_MEDIA_DATA = "media_data="; /**< POST UPDATE */
+    const std::string TWITCURL_MEDIA_TOTAL_BYTES = "total_bytes="; /**< POST UPDATE */
+    const std::string TWITCURL_MEDIA_TYPE = "media_type="; /**< POST UPDATE */
+    const std::string TWITCURL_MEDIA_TYPE_PNG = "image/png"; /**< POST UPDATE */
+    const std::string TWITCURL_MEDIA_TYPE_JPEG = "image/jpeg"; /**< POST UPDATE */
+    const std::string TWITCURL_MEDIA_TYPE_GIF = "image/gif"; /**< POST UPDATE */
 
     /* URL separators */
     const std::string TWITCURL_URL_SEP_AMP = "&";
@@ -58,6 +68,13 @@ namespace twitterDefaults
     const std::string TWITCURL_STATUDESTROY_URL = TWITCURL_BASE_URL + "statuses/destroy/";
     const std::string TWITCURL_RETWEET_URL = TWITCURL_BASE_URL + "statuses/retweet/";
 
+    /**< UPLOAD */
+    // const std::string TWITCURL_UPLOAD_BASE_URL = "https://upload.twitter.com/1.1/media/upload.json?command=";
+    const std::string TWITCURL_UPLOAD_BASE_URL = "upload.twitter.com/1.1/media/upload";
+    //const std::string TWITCURL_UPLOAD_BASE_URL = "upload.twitter.com/1.1/media/upload.json?command=";
+    const std::string TWITCURL_UPLOAD_INIT_URL = twitCurlDefaults::TWITCURL_URL_SEP_QUES + "command=INIT";
+    const std::string TWITCURL_UPLOAD_APPEND_URL = twitCurlDefaults::TWITCURL_URL_SEP_QUES + "command=APPEND";
+    const std::string TWITCURL_UPLOAD_FINALIZE_URL = twitCurlDefaults::TWITCURL_URL_SEP_QUES + "command=FINALIZE";
     /* Timeline URLs */
     const std::string TWITCURL_HOME_TIMELINE_URL = TWITCURL_BASE_URL + "statuses/home_timeline";
     const std::string TWITCURL_PUBLIC_TIMELINE_URL = TWITCURL_BASE_URL + "statuses/public_timeline";

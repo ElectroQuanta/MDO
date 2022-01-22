@@ -32,6 +32,8 @@ find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets VirtualKeyboard REQUIRED)
 
 #find_package(pthread REQUIRED)
 
+set(TWITCURL_LIB twitcurl)
+
 set(PROJECT_SOURCES
   main.cpp
   # main window
@@ -86,7 +88,7 @@ endif()
 
 # CMAKE IS CASE SENSITIVE
 # src: https://stackoverflow.com/a/60693001/17836786
-target_link_libraries(${PROJECT_NAME} PRIVATE ${OpenCV_LIBS} Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::VirtualKeyboard pthread)
+target_link_libraries(${PROJECT_NAME} PRIVATE ${OpenCV_LIBS} Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::VirtualKeyboard pthread ${TWITCURL_LIB})
 
 # my_tgt can be an executable, library, or module.
 #target_link_options(${PROJECT_NAME} PRIVATE "LINKER:-lopencv_core -lopencv_video -lopencv_videoio")

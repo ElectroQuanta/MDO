@@ -24,6 +24,12 @@ namespace twitCurlTypes
         eTwitCurlProtocolHttp,
         eTwitCurlProtocolMax
     } eTwitCurlProtocolType;
+
+    typedef enum _mediaTypes{
+        PNG = 0,
+        JPEG,
+        GIF
+    } MediaType;
 };
 
 /* twitCurl class */
@@ -49,7 +55,11 @@ public:
     bool search( const std::string& searchQuery /* in */, const std::string resultCount = "" /* in */ );
 
     /* Twitter status APIs */
-    bool statusUpdate( const std::string& newStatus /* in */, const std::string inReplyToStatusId = "" /* in */ );
+    bool statusUpdate( const std::string& newStatus /* in */, const std::string inReplyToStatusId = "" /* in */,
+                       const std::string mediaIds = "");
+//bool statusUpdate( const std::string& newStatus,
+//                   const std::string inReplyToStatusId,
+//                   const std::string mediaIds);
     bool statusShowById( const std::string& statusId /* in */ );
     bool statusDestroyById( const std::string& statusId /* in */ );
     bool retweetById( const std::string& statusId /* in */ );
@@ -65,6 +75,10 @@ public:
                           const bool isUserId = false /* in */ );
     bool featuredUsersGet();
     bool mentionsGet( const std::string sinceId = "" /* in */ );
+
+    /**< Upload media APIs */
+    int Upload(const std::string &media_id, const std::string fname,
+               twitCurlTypes::MediaType mediaType);
 
     /* Twitter user APIs */
     bool userLookup( const std::vector<std::string> &userInfo /* in */,  const bool isUserId = false /* in */ );
@@ -189,6 +203,8 @@ private:
                              const std::string& oAuthHttpHeader );
     bool performDelete( const std::string& deleteUrl );
     bool performPost( const std::string& postUrl, std::string dataStr = "" );
+    bool performUpload( const std::string& postUrl, std::string dataStr,
+                        const std::string fname);
 
     /* Internal cURL related methods */
     static int curlCallback( char* data, size_t size, size_t nmemb, twitCurl* pTwitCurlObj );

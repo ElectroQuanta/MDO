@@ -10,14 +10,14 @@ all : twitterClient
 libcurl : 
 		cd ../libtwitcurl && make install 
 		cd ../twitterClient
-	
 
-twitterClient : libcurl twitterClient.cpp
+twitterClient : twitterClient.cpp
 	$(CC) twitterClient.cpp -I./include/ -L /usr/local/lib/ -ltwitcurl -o twitterClient
 
+clean:
+		rm twitterClient
 
-
-clean : 
+clean-all : 
 		rm twitterClient
 		cd ../libtwitcurl && sudo make clean
 		cd ../twitterClient

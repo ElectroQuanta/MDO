@@ -26,6 +26,9 @@
 /**< Image filter */
 #include "imgfilter.h"
 
+#include "include/twitcurl.h"
+
+
 /**
  * @brief App modes
  *
@@ -68,6 +71,7 @@ private slots:
     void onImgFilt_mode_pressed();
     void onCam_started();
     void onImgFiltSelected(int idx);
+    void onTwitterShare(const QString &);
 
     bool eventFilter(QObject *, QEvent *);
 
@@ -82,6 +86,9 @@ private slots:
 
     /**< Thread workers */
     static void* frame_grabber_worker_thr(void* arg);
+
+    /**< Twitter sharing */
+    bool TwitterAuthenticate();
 
 signals:
     void interWindUpdateStatus(const QString str);
@@ -123,5 +130,9 @@ private:
     /**< Filters */
     std::vector<ImgFilter> _filters;
     int _filters_idx;
+
+    /**< Twitter obj */
+    twitCurl _twitterObj;
+    bool _twitterAuthenticated;
 };
 #endif // MAINWINDOW_H

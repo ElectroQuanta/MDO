@@ -15,6 +15,9 @@ public:
     explicit SharWindow(QWidget *parent = nullptr);
     ~SharWindow();
 
+signals:
+    void twitterShare(const QString &);
+
 private slots:
     void on_pb_cancel_share_clicked();
 

@@ -9,6 +9,9 @@
 
 #include "imgfilter_defs.h" /**< For filters definition */
 
+#include "include/twitcurl.h" /**< Twitter sharing */
+
+
 /**< Define relevant paths */
 #define WELCOME_IMG_PATH ":/resources/img/welcome.png"
 #define FACE_CASCADE_FNAME "../models/haarcascade_frontalface_alt.xml"
@@ -96,6 +99,8 @@ MainWindow::MainWindow(QWidget *parent)
             this, SLOT( onInter_mode_pressed() ));
     connect(_sharWind, SIGNAL( inter_mode_pressed() ),
             this, SLOT( onInter_mode_pressed() ));
+    connect(_sharWind, SIGNAL( twitterShare(const QString &) ),
+            this, SLOT( onTwitterShare(const QString &) ));
     /* Others */
     // connect(_interWind, SIGNAL(cam_start() ),
     //         this, SLOT( onCam_started() ) );
@@ -141,8 +146,11 @@ MainWindow::MainWindow(QWidget *parent)
       ui->label_status->setText("Status:  ERROR:  Could not load face cascade");
     };
 
+    _twitterAuthenticated = TwitterAuthenticate();
+
     /**< Create filters */
     createFilters();
+
 
     /**< Threads */
     /*--*
@@ -438,7 +446,64 @@ void MainWindow::displayImg(cv::Mat frame){
     /* KeepAspectRatio is what works best */
     this->ui->graphicsView->fitInView(&this->_pixmap,
                                               Qt::KeepAspectRatio);
+}
+
+bool MainWindow::TwitterAuthenticate(){
     
+#define TWITTER_API_FILE "../twitter/api.txt"
+
+    std::string username("");
+    std::string password("");
+    std::string consumerKey("");
+    std::string consumerSecret("");
+    std::string myOAuthAccessTokenKey("");
+    std::string myOAuthAccessTokenSecret("");
+
+    std::ifstream apiFile (TWITTER_API_FILE);
+    if( apiFile.is_open() ){
+        apiFile >> username;
+        apiFile >> password;
+        apiFile >> consumerKey;
+        apiFile >> consumerSecret;
+        apiFile >> myOAuthAccessTokenKey;
+        apiFile >> myOAuthAccessTokenSecret;
+    }
+    else
+        return false;
+
+    _twitterObj.setTwitterUsername( username );
+    _twitterObj.setTwitterPassword( password );
+
+    /* Step 0: Set OAuth related params. These are got by registering your app at twitter.com */
+    _twitterObj.getOAuth().setConsumerKey( consumerKey );
+    _twitterObj.getOAuth().setConsumerSecret( consumerSecret );
+
+
+    _twitterObj.getOAuth().setOAuthTokenKey( myOAuthAccessTokenKey );
+    _twitterObj.getOAuth().setOAuthTokenSecret( myOAuthAccessTokenSecret );
+
+    /* Account credentials verification */
+    return _twitterObj.accountVerifyCredGet();
+}
+
+void MainWindow::onTwitterShare(const QString &msg) {
+
+
+    /* Authenticate to Twitter */
+    if( ! _twitterAuthenticated ){
+        if( ! TwitterAuthenticate() )
+          ui->label_status->setText(
+              "Status:  ERROR:  Could not authenticate to Twitter");
+        return;
+    }
+    
+  std::string tmpStr = msg.toStdString();
+
+  if (_twitterObj.statusUpdate(tmpStr)) {
+      ui->label_status->setText("STATUS: post shared!");
+  } else {
+      ui->label_status->setText("STATUS: ERROR: post not shared! Please try again...");
+  }
 }
 
 /* ------------- START DUMMY --------------------

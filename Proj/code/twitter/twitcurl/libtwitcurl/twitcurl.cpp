@@ -1,8 +1,12 @@
+#include <string>
 #define NOMINMAX
 #include <memory.h>
 #include "twitcurlurls.h"
 #include "twitcurl.h"
 #include "urlencode.h"
+#include <iostream>
+#include <fstream>
+#include "base64.h"
 
 /*++
 * @method: twitCurl::twitCurl
@@ -413,7 +417,9 @@ bool twitCurl::search( const std::string& searchQuery, const std::string resultC
 *          response by twitter. Use getLastWebResponse() for that.
 *
 *--*/
-bool twitCurl::statusUpdate( const std::string& newStatus, const std::string inReplyToStatusId )
+bool twitCurl::statusUpdate( const std::string& newStatus,
+                             const std::string inReplyToStatusId,
+                             const std::string mediaIds)
 {
     if( newStatus.empty() )
     {
@@ -431,11 +437,176 @@ bool twitCurl::statusUpdate( const std::string& newStatus, const std::string inR
                         urlencode( inReplyToStatusId );
     }
 
+    /**< Add media ids */
+    //if( mediaIds.size() ){
+    //    /* TODO: add media IDs */
+    //}
+
     /* Perform POST */
     return  performPost( twitCurlDefaults::TWITCURL_PROTOCOLS[m_eProtocolType] +
                          twitterDefaults::TWITCURL_STATUSUPDATE_URL +
                          twitCurlDefaults::TWITCURL_EXTENSIONFORMATS[m_eApiFormatType],
                          newStatusMsg );
+}
+
+//bool twitCurl::statusUpdate( const std::string& newStatus,
+//                             const std::string inReplyToStatusId,
+//                             const std::string mediaIds)
+//{
+//    if( newStatus.empty() )
+//    {
+//        return false;
+//    }
+//
+//    /* Prepare new status message */
+//    std::string newStatusMsg = twitCurlDefaults::TWITCURL_STATUSSTRING + urlencode( newStatus );
+//
+//    /* Append status id to which we're replying to */
+//    if( inReplyToStatusId.size() )
+//    {
+//        newStatusMsg += twitCurlDefaults::TWITCURL_URL_SEP_AMP +
+//                        twitCurlDefaults::TWITCURL_INREPLYTOSTATUSID +
+//                        urlencode( inReplyToStatusId );
+//    }
+//
+//    /**< Append media id to post */
+//    if( mediaIds.size() ){
+//        newStatusMsg += ""; 
+//    }
+//
+//    /* Perform POST */
+//    return  performPost( twitCurlDefaults::TWITCURL_PROTOCOLS[m_eProtocolType] +
+//                         twitterDefaults::TWITCURL_STATUSUPDATE_URL +
+//                         twitCurlDefaults::TWITCURL_EXTENSIONFORMATS[m_eApiFormatType],
+//                         newStatusMsg );
+//}
+
+/**
+ * @brief Uploads a media file to Twitter
+ * @param media_id: media ID returned by Twitter after upload. this media ID
+must be added to the post when sharing
+*  @param fname: filename of the media file to share 
+ * @return bool: indicates the status of the upload
+ *
+ * detailed
+ */
+int twitCurl::Upload(const std::string &media_id, const std::string fname, twitCurlTypes::MediaType mediaType){
+    #define UPLOAD_SUCCESS 0
+    #define UPLOAD_FILE_NOT_OPENED -1
+    #define UPLOAD_ARGS_EMPTY -2
+    #define UPLOAD_INIT_FAIL -3
+
+    std::string dataStr = "";
+    std::string medType = "";
+    std::string replyMsg = "";
+
+    const std::string header = twitCurlDefaults::TWITCURL_PROTOCOLS[m_eProtocolType] +
+                         twitterDefaults::TWITCURL_UPLOAD_BASE_URL +
+        twitCurlDefaults::TWITCURL_EXTENSIONFORMATS[m_eApiFormatType];
+
+    if( fname.empty() )
+        return UPLOAD_ARGS_EMPTY;
+
+    switch(mediaType){
+    case twitCurlTypes::MediaType::PNG :
+        medType = twitCurlDefaults::TWITCURL_MEDIA_TYPE_PNG;
+        break;
+    case twitCurlTypes::MediaType::JPEG :
+        medType = twitCurlDefaults::TWITCURL_MEDIA_TYPE_JPEG;
+        break;
+    case twitCurlTypes::MediaType::GIF :
+        medType = twitCurlDefaults::TWITCURL_MEDIA_TYPE_GIF;
+        break;
+    }
+    
+//    std::streampos size;
+//    char * memblock;
+//
+//    /**< Open the file: read mode, binary with get position at the EOF */
+//    std::ifstream file ( fname,
+//                         std::ios::in | std::ios::binary | std::ios::ate );
+//    if (file.is_open())
+//    {
+//        size = file.tellg(); /**< Obtain the filesize directly from the get file pointer; this is used to initialize */
+//        
+//    }
+//    else
+//        return UPLOAD_FILE_NOT_OPENED;
+//
+//    std::string sizeStr = std::to_string(size);
+    
+    /**< 1. Initialize */
+    //dataStr =
+    //    twitterDefaults::TWITCURL_UPLOAD_INIT_URL +
+    //    twitCurlDefaults::TWITCURL_URL_SEP_AMP +
+    //    twitCurlDefaults::TWITCURL_MEDIA_TYPE + medType +
+    //    twitCurlDefaults::TWITCURL_URL_SEP_AMP +
+    //    twitCurlDefaults::TWITCURL_MEDIA_TOTAL_BYTES + urlencode(sizeStr);
+
+    dataStr = 
+        twitterDefaults::TWITCURL_UPLOAD_BASE_URL +
+        twitCurlDefaults::TWITCURL_URL_SEP_AMP + "media_category=tweet_image"
+        //+ twitCurlDefaults::TWITCURL_URL_SEP_AMP + "media="
+        ;
+
+
+    //   std::string memblockStr;
+    //   memblockStr.resize(size);
+
+    //   memblock = new char [size];
+    //   file.seekg (0, std::ios::beg);
+    //   file.read (memblock, size);
+
+    //   file.seekg (0, std::ios::beg);
+    //   file.read(&memblockStr[0], memblockStr.length());
+
+    //   file.close();
+    //   std::cout << "Memblock: " << memblockStr << std::endl;
+
+    //   std::string dataTest;
+    //   dataTest.reserve(size);
+    //   dataTest    = base64_encode((const unsigned char *)memblock, size);
+    //   
+    //   //dataStr += std::string(memblock);
+    //   dataStr += dataTest;
+
+    //   delete[] memblock;
+
+    //       
+    //       // POST https://upload.twitter.com/1.1/media/upload.json?media_category=tweet_image
+    //   //urlencode(medType);
+    //   //dataStr = urlencode(dataStr);
+
+    //   std::cout << " ------ INIT -------- " << std::endl;
+    //   std::cout << "Header: " << header << std::endl;
+//    std::cout << "DataStr: " << dataStr << std::endl;
+//   std::cout << "Total: " << header + dataStr << std::endl;
+
+//bool twitCurl::performPost( const std::string& postUrl, std::string dataStr )
+    if( this->performUpload(header, dataStr, fname) ){
+        this->getLastWebResponse( replyMsg );
+        /**< TODO: parse response to get media ID */
+        std::cout << "UPLOAD INIT response: " << std::endl;
+        std::cout << replyMsg << std::endl;
+    }else {
+        this->getLastCurlError( replyMsg );
+        /**< TODO: parse response to get media ID */
+        std::cout << "UPLOAD INIT error: " << std::endl;
+        std::cout << replyMsg << std::endl;
+        return UPLOAD_INIT_FAIL;
+    }
+
+    /**< 2. Append */
+    /* Read file */
+    //memblock = new char [size];
+    //file.seekg (0, std::ios::beg);
+    //file.read (memblock, size);
+    //file.close();
+    //delete[] memblock;
+
+
+    /**< 3. Finalize */
+    return UPLOAD_SUCCESS;
 }
 
 /*++
@@ -2027,6 +2198,10 @@ bool twitCurl::performPost( const std::string& postUrl, std::string dataStr )
         }
     }
 
+    //std::cout << "postUrl: " << postUrl << std::endl;
+    //std::cout << "dataStr: " << dataStr << std::endl;
+    //std::cout << "AuthHeader: " << oAuthHttpHeader << std::endl;
+
     /* Set http request, url and data */
     curl_easy_setopt( m_curlHandle, CURLOPT_POST, 1 );
     curl_easy_setopt( m_curlHandle, CURLOPT_URL, postUrl.c_str() );
@@ -2050,6 +2225,104 @@ bool twitCurl::performPost( const std::string& postUrl, std::string dataStr )
     }
     return false;
 }
+
+
+bool twitCurl::performUpload( const std::string& postUrl, std::string dataStr, const std::string fname)
+{
+    /* Return if cURL is not initialized */
+    if( !isCurlInit() )
+    {
+        return false;
+    }
+
+//    const char* url = "https://upload.twitter.com/1.1/media/upload.json?media_category=tweet_image";
+
+    std::streampos size;
+    //char * memblock;
+
+    /**< Open the file: read mode, binary with get position at the EOF */
+    std::ifstream file ( fname,
+                         std::ios::in | std::ios::binary | std::ios::ate );
+    if (file.is_open())
+    {
+        size = file.tellg(); /**< Obtain the filesize directly from the get file pointer; this is used to initialize */
+        file.close();
+        
+    }
+    else
+        return false;
+
+    FILE *fd = fopen(fname.c_str(), "rb");
+    if( fd == NULL )
+        return false;
+
+    std::string oAuthHttpHeader;
+    struct curl_slist* pOAuthHeaderList = NULL;
+
+    /* Prepare standard params */
+    prepareStandardParams();
+
+    /* Set OAuth header */
+    m_oAuth.getOAuthHeader( eOAuthHttpPost, postUrl, dataStr, oAuthHttpHeader );
+    if( oAuthHttpHeader.length() )
+    {
+        pOAuthHeaderList = curl_slist_append( pOAuthHeaderList, oAuthHttpHeader.c_str() );
+        if( pOAuthHeaderList )
+        {
+            curl_easy_setopt( m_curlHandle, CURLOPT_HTTPHEADER, pOAuthHeaderList );
+        }
+    }
+
+    std::cout << "postUrl: " << postUrl << std::endl;
+    std::cout << "dataStr: " << dataStr << std::endl;
+    std::cout << "AuthHeader: " << oAuthHttpHeader << std::endl;
+    std::cout << "Size: " << ((curl_off_t) size) << std::endl;
+
+    /* Set http request, url and data */
+    curl_easy_setopt( m_curlHandle, CURLOPT_POST, 1 );
+    curl_easy_setopt( m_curlHandle, CURLOPT_URL, postUrl.c_str() );
+    curl_easy_setopt( m_curlHandle, CURLOPT_UPLOAD, 1L);
+    curl_easy_setopt( m_curlHandle, CURLOPT_READDATA, fd);
+    curl_easy_setopt( m_curlHandle, CURLOPT_INFILESIZE_LARGE, (curl_off_t)size);
+    curl_easy_setopt( m_curlHandle, CURLOPT_VERBOSE, 1L);
+    // curl_easy_setopt( m_curlHandle, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+
+    if( dataStr.length() )
+    {
+        curl_easy_setopt( m_curlHandle, CURLOPT_COPYPOSTFIELDS, dataStr.c_str() );
+    }
+
+    /* Send http request */
+    if( CURLE_OK == curl_easy_perform( m_curlHandle ) )
+    {
+        if( pOAuthHeaderList )
+        {
+            curl_slist_free_all( pOAuthHeaderList );
+        }
+
+        curl_off_t speed_upload, total_time;
+
+        curl_easy_getinfo(m_curlHandle, CURLINFO_SPEED_UPLOAD, &speed_upload);
+        curl_easy_getinfo(m_curlHandle, CURLINFO_TOTAL_TIME, &total_time);
+ 
+      fprintf(stderr, "Speed: %lu bytes/sec during %lu.%06lu seconds\n",
+              (unsigned long)speed_upload,
+              (unsigned long)(total_time / 1000000),
+              (unsigned long)(total_time % 1000000));
+        
+        fclose(fd);
+        return true;
+    }
+    if( pOAuthHeaderList )
+    {
+        curl_slist_free_all( pOAuthHeaderList );
+    }
+
+    fclose(fd);
+    
+    return false;
+}
+
 
 /*++
 * @method: utilMakeCurlParams
