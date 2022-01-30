@@ -9000,6 +9000,62 @@ OpenCV provides an API for linear blending of two images. The calculation formul
 	 4) Apply overlay over overlapping ROI and then copy it to original
             frame
 3) [ ] Implement gesture recognition algorithm
+   1) To recognize a gesture, several approaches may be used, namely: image
+      segmentation with background subtraction and thresholding; deep neural
+      networks; convex hull and defects; machine learning with cascade
+      classifiers (haar classifiers).
+   2) The most reliable strategy is to use a machine learning or deep learning
+      technique. The latter, however, is more computationally expensive.
+   3) Thus, machine learning with haar classifiers was used. For this technique
+      to work it is required to ([[https://www.youtube.com/watch?v=XrCAvs9AePM][src]]):
+      1) *Train a machine learning model* to obtain a suitable cluster of haar
+         classifiers. The training of the model requires:
+	 1) Image samples:
+	    1) Positive: images that contain the pattern to be recognized
+	    2) Negative (aka background images): images that don't contain
+               the pattern to be recognized
+	 2) A method for image gathering: web scraping, live image capture,
+            =opencv_createsamples=, etc.
+	 3) Labeling:
+	    1) Both negative and positive images require annotation: the former
+               just to identify what images are used; the latter containing the
+               filenames, position, size, and number of occurrences within a
+               file.
+	    2) The labeling can be performed with =opencv_annotation= tool: only
+               present in OpenCV 3.4.
+	 4) Training: one can use =opencv_traincascade= (only available in
+            OpenCV 3.4)., providing:
+	    1) The path where to store the output model
+	    2) The positive and negative samples path
+	    3) Minimum size of the samples to look for (width and height)
+	    4) Number of positive and negative samples (the ratio is important)
+	    5) The number of stages of the machine learning model (something
+               between 9-12 stages is recommended).
+	 5) The training will produce an output model containing the cascade of
+            haar classifiers to use, e.g., =palm.xml=.
+      2) *Use the machine learning model*: For that OpenCV provides the
+         following functions:
+	 1) =CascadeClassifier::load(std::string pathToModel)=: loads the
+            cascade classifiers model.
+	 2) =CascadeClassifier::detectMultiScale()=: Detects objects of
+            different sizes in the input image. The detected objects are
+            returned as a list of rectangles.
+   4) The machine learning model training must be performed for each gesture to
+      be recognized.
+      1) This is time expensive: a model can take many hours or several days to
+         train depending on the complexity and data samples size.
+      2) Requires tweaking: for accurate results of prediction, the machine
+         learning model training requires the programmer to tweak the training
+         parameters.
+      3) May not produce the intended results: the accuracy may not be the
+         expected, due to data samples selection or the parameters used.
+   5) First, one tried to train a machine learning model for a pointing finger.
+      1) However, the results were not as expected.
+   6) As such, one changed the approach:
+      1) Identify a reliable machine learning model for a hand gesture
+      2) Adapt the UI to be triggered by that particular gesture instead of
+         multiple hand gestures.
+
 4) [ ] Wrap it in the gesture recognition engine
 5) [ ] Implement Twitter sharing
 6) [ ] Implement client-server architecture

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1.1 (1:1.1+202109281949+c3084ef5ed)"
+   sodipodi:docname="mdo-side.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="0.69664703"
+     inkscape:cx="396.90114"
+     inkscape:cy="561.25984"
+     inkscape:window-width="1920"
+     inkscape:window-height="1043"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g273" />
+  <defs
+     id="defs2">
+    <marker
+       id="DistanceX"
+       orient="auto"
+       refX="0.0"
+       refY="0.0"
+       style="overflow:visible">
+      <path
+         d="M 3,-3 L -3,3 M 0,-5 L  0,5"
+         style="stroke:#000000; stroke-width:0.5"
+         id="path27" />
+    </marker>
+    <pattern
+       id="Hatch"
+       patternUnits="userSpaceOnUse"
+       width="8"
+       height="8"
+       x="0"
+       y="0">
+      <path
+         d="M8 4 l-4,4"
+         stroke="#000000"
+         stroke-width="0.25"
+         linecap="square"
+         id="path30" />
+      <path
+         d="M6 2 l-4,4"
+         stroke="#000000"
+         stroke-width="0.25"
+         linecap="square"
+         id="path32" />
+      <path
+         d="M4 0 l-4,4"
+         stroke="#000000"
+         stroke-width="0.25"
+         linecap="square"
+         id="path34" />
+    </pattern>
+    <symbol
+       id="*MODEL_SPACE" />
+    <symbol
+       id="*PAPER_SPACE" />
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <g
+       id="g404"
+       transform="matrix(0.26458333,0,0,0.26458333,-191.98665,61.499974)">
+      <g
+         inkscape:label="0"
+         id="g41" />
+      <g
+         inkscape:label="View"
+         id="g273">
+        <path
+           style="color:#000000;fill:none;-inkscape-stroke:none;stroke:#000000"
+           d="M 1077.6699,745.06641 H 1088 v 74.58984 h -10.3301 z"
+           id="path471" />
+        <path
+           style="color:#000000;fill:none;-inkscape-stroke:none;stroke:#000000"
+           d="m 1145.1973,661.87305 c 20.6206,0 37.3191,16.71922 37.2949,37.33984 0.024,20.62062 -16.6743,37.33984 -37.2949,37.33984 -20.6207,0 -37.3191,-16.71922 -37.295,-37.33984 -0.024,-20.62062 16.6743,-37.33984 37.295,-37.33984 z"
+           id="path467" />
+        <path
+           style="color:#000000;fill:none;-inkscape-stroke:none;stroke:#000000"
+           d="M 1077.6699,593.88672 H 1088 v 74.58984 h -10.3301 z"
+           id="path463" />
+        <path
+           style="color:#000000;fill:none;-inkscape-stroke:none;stroke:#000000"
+           d="M 1077.6699,442.70508 H 1088 v 74.58984 h -10.3301 z"
+           id="path459" />
+        <path
+           style="color:#000000;fill:none;-inkscape-stroke:none;stroke:#000000"
+           d="m 1145.1973,359.51172 c 20.6206,0 37.3191,16.71727 37.2949,37.33789 v 0.002 c 0.024,20.62062 -16.6743,37.33789 -37.2949,37.33789 -20.6207,0 -37.3191,-16.71727 -37.295,-37.33789 v -0.002 c -0.024,-20.62062 16.6743,-37.33789 37.295,-37.33789 z"
+           id="path455" />
+        <path
+           style="color:#000000;fill:none;-inkscape-stroke:none;stroke:#000000"
+           d="M 1077.6699,291.52344 H 1088 v 74.58984 h -10.3301 z"
+           id="path451" />
+        <path
+           style="color:#000000;fill:none;-inkscape-stroke:none;stroke:#000000"
+           d="M 1077.6699,140.34375 H 1088 v 74.58984 h -10.3301 z"
+           id="path447" />
+        <path
+           style="color:#000000;fill:none;-inkscape-stroke:none;stroke:#000000"
+           d="m 1145.1973,57.148437 c 20.6206,0 37.3191,16.719223 37.2949,37.339844 0.024,20.620619 -16.6743,37.339839 -37.2949,37.339839 -20.6207,0 -37.3191,-16.71922 -37.295,-37.339839 -0.024,-20.620621 16.6743,-37.339844 37.295,-37.339844 z"
+           id="path443" />
+        <path
+           style="color:#000000;fill:none;-inkscape-stroke:none;stroke:#000000"
+           d="M 1077.6699,-10.837891 H 1088 v 74.589844 h -10.3301 z"
+           id="path439" />
+        <path
+           style="color:#000000;fill:none;-inkscape-stroke:none;stroke:#000000"
+           d="M 1077.6699,-162.01953 H 1088 v 74.589843 h -10.3301 z"
+           id="path435" />
+        <path
+           style="color:#000000;fill:none;-inkscape-stroke:none;stroke:#000000"
+           d="m 1047.4297,-237.60937 h 29.2402 v 10.83789 h 0.5 v 0.5 h 30.2305 v -0.5 h 0.5 v -10.83789 h 29.2402 v 10.83789 h 0.5 v 0.5 h 30.2285 v -0.5 h 0.5 v -10.83789 h 29.2403 v 10.83789 h 0.5 v 0.5 h 18.4004 v 63.25195 h -10.8399 v 0.5 h -0.5 v 75.589843 h 0.5 v 0.5 h 10.8399 v 74.591796 h -10.8399 v 0.5 h -0.5 v 75.589844 h 0.5 v 0.5 h 10.8399 v 74.591797 h -10.8399 v 0.5 h -0.5 v 75.58984 h 0.5 v 0.5 h 10.8399 v 74.58985 h -10.8399 v 0.5 h -0.5 v 75.58984 h 0.5 v 0.5 h 10.8399 v 74.5918 h -10.8399 v 0.5 h -0.5 v 75.58984 h 0.5 v 0.5 h 10.8399 v 74.5918 h -10.8399 v 0.5 h -0.5 v 75.58984 h 0.5 v 0.5 h 10.8399 v 74.58985 h -10.8399 v 0.5 h -0.5 v 75.58984 h 0.5 v 0.5 h 10.8399 v 63.25195 h -18.4004 v 0.5 h -0.5 v 10.83985 h -29.2403 V 884.4082 h -0.5 v -0.5 h -30.2285 v 0.5 h -0.5 v 10.83985 h -29.2402 V 884.4082 h -0.5 v -0.5 h -30.2305 v 0.5 h -0.5 v 10.83985 h -29.2402 V 884.4082 h -0.5 v -0.5 h -18.4004 v -63.25195 h 10.8398 v -0.5 h 0.5 v -75.58984 h -0.5 v -0.5 h -10.8398 v -74.58985 h 10.8398 v -0.5 h 0.5 v -75.58984 h -0.5 v -0.5 h -10.8398 v -74.5918 h 10.8398 v -0.5 h 0.5 v -75.58984 h -0.5 v -0.5 h -10.8398 v -74.5918 h 10.8398 v -0.5 h 0.5 v -75.58984 h -0.5 v -0.5 h -10.8398 v -74.58985 h 10.8398 v -0.5 h 0.5 v -75.58984 h -0.5 v -0.5 h -10.8398 V 64.751953 h 10.8398 v -0.5 h 0.5 v -75.589844 h -0.5 v -0.5 h -10.8398 v -74.591796 h 10.8398 v -0.5 h 0.5 v -75.589843 h -0.5 v -0.5 h -10.8398 v -63.25195 h 18.4004 v -0.5 h 0.5 z"
+           id="path431" />
+      </g>
+    </g>
+  </g>
+</svg>
