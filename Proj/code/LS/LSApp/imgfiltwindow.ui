@@ -26,7 +26,7 @@
     <string notr="true">background-color: rgb(0, 0, 0);</string>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="main">
     <widget class="QWidget" name="horizontalLayoutWidget_2">
@@ -249,57 +249,6 @@ Filter
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="pb_img_filt_4">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="MinimumExpanding">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <pointsize>14</pointsize>
-          <bold>true</bold>
-         </font>
-        </property>
-        <property name="toolTip">
-         <string/>
-        </property>
-        <property name="layoutDirection">
-         <enum>Qt::LeftToRight</enum>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">color: rgb(0, 0, 0);
-background-color: rgb(136, 138, 133);
-text-align: center center
-/*border: 1px solid rgb(193, 125, 17) */
-/*border-color: rgb(193, 125, 17);
-border-radius: 5px
-*/</string>
-        </property>
-        <property name="text">
-         <string>Image
-Filter
-4</string>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>40</width>
-          <height>40</height>
-         </size>
-        </property>
-        <property name="default">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
        <widget class="QPushButton" name="pb_img_filt_5">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="MinimumExpanding">
@@ -335,9 +284,8 @@ border-radius: 5px
 */</string>
         </property>
         <property name="text">
-         <string>Image
-Filter
-5</string>
+         <string>Next
+Page</string>
         </property>
         <property name="iconSize">
          <size>
@@ -390,8 +338,7 @@ Filter
          <bool>false</bool>
         </property>
         <property name="styleSheet">
-         <string notr="true">image: url(:/resources/icons/finger_pointing_inverted.png);
-/*
+         <string notr="true">image: url(:/resources/icons/fist_inverted.png);/*
 background-color: rgb(186, 189, 182);
 background-repeat: no-repeat; 
 */</string>
@@ -431,84 +378,7 @@ background-repeat: no-repeat;
        <height>51</height>
       </rect>
      </property>
-     <layout class="QHBoxLayout" name="horizontalLayout_4">
-      <item>
-       <widget class="QLabel" name="label_2">
-        <property name="font">
-         <font>
-          <pointsize>14</pointsize>
-          <bold>true</bold>
-         </font>
-        </property>
-        <property name="text">
-         <string>Navigate:</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeType">
-         <enum>QSizePolicy::Fixed</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>200</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <widget class="QLabel" name="label_4">
-        <property name="font">
-         <font>
-          <pointsize>14</pointsize>
-          <bold>true</bold>
-         </font>
-        </property>
-        <property name="autoFillBackground">
-         <bool>false</bool>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">image: url(:/resources/icons/swipe_left_inverted.png);
-
-/*image: url(:/resources/icons/finger_pointing_inverted.png); */
-/*
-background-color: rgb(186, 189, 182);
-background-repeat: no-repeat; 
-*/</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLabel" name="label_7">
-        <property name="font">
-         <font>
-          <pointsize>14</pointsize>
-          <bold>true</bold>
-         </font>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">image: url(:/resources/icons/swipe_right_inverted.png);</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-      </item>
-     </layout>
-     <zorder>label_4</zorder>
-     <zorder>label_7</zorder>
-     <zorder>label_2</zorder>
+     <layout class="QHBoxLayout" name="horizontalLayout_4"/>
     </widget>
    </widget>
    <widget class="QWidget" name="page2">
@@ -547,8 +417,7 @@ background-repeat: no-repeat;
          <bool>false</bool>
         </property>
         <property name="styleSheet">
-         <string notr="true">image: url(:/resources/icons/finger_pointing_inverted.png);
-/*
+         <string notr="true">image: url(:/resources/icons/fist_inverted.png);/*
 background-color: rgb(186, 189, 182);
 background-repeat: no-repeat; 
 */</string>
@@ -588,84 +457,7 @@ background-repeat: no-repeat;
        <height>51</height>
       </rect>
      </property>
-     <layout class="QHBoxLayout" name="horizontalLayout_6">
-      <item>
-       <widget class="QLabel" name="label_5">
-        <property name="font">
-         <font>
-          <pointsize>14</pointsize>
-          <bold>true</bold>
-         </font>
-        </property>
-        <property name="text">
-         <string>Navigate:</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <spacer name="horizontalSpacer_2">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeType">
-         <enum>QSizePolicy::Fixed</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>200</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <widget class="QLabel" name="label_8">
-        <property name="font">
-         <font>
-          <pointsize>14</pointsize>
-          <bold>true</bold>
-         </font>
-        </property>
-        <property name="autoFillBackground">
-         <bool>false</bool>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">image: url(:/resources/icons/swipe_left_inverted.png);
-
-/*image: url(:/resources/icons/finger_pointing_inverted.png); */
-/*
-background-color: rgb(186, 189, 182);
-background-repeat: no-repeat; 
-*/</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLabel" name="label_9">
-        <property name="font">
-         <font>
-          <pointsize>14</pointsize>
-          <bold>true</bold>
-         </font>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">image: url(:/resources/icons/swipe_right_inverted.png);</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-      </item>
-     </layout>
-     <zorder>label_8</zorder>
-     <zorder>label_9</zorder>
-     <zorder>label_5</zorder>
+     <layout class="QHBoxLayout" name="horizontalLayout_6"/>
     </widget>
     <widget class="QWidget" name="horizontalLayoutWidget_7">
      <property name="geometry">
@@ -771,7 +563,7 @@ border-radius: 5px
         <property name="text">
          <string>Image
 Filter
-6</string>
+5</string>
         </property>
         <property name="iconSize">
          <size>
@@ -822,7 +614,7 @@ border-radius: 5px
         <property name="text">
          <string>Image
 Filter
-7</string>
+6</string>
         </property>
         <property name="iconSize">
          <size>
@@ -873,7 +665,7 @@ border-radius: 5px
         <property name="text">
          <string>Image
 Filter
-8</string>
+7</string>
         </property>
         <property name="iconSize">
          <size>
@@ -924,58 +716,7 @@ border-radius: 5px
         <property name="text">
          <string>Image
 Filter
-9</string>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>40</width>
-          <height>40</height>
-         </size>
-        </property>
-        <property name="default">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="pb_img_filt_10">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="MinimumExpanding">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <pointsize>14</pointsize>
-          <bold>true</bold>
-         </font>
-        </property>
-        <property name="toolTip">
-         <string/>
-        </property>
-        <property name="layoutDirection">
-         <enum>Qt::LeftToRight</enum>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">color: rgb(0, 0, 0);
-background-color: rgb(136, 138, 133);
-text-align: center center
-/*border: 1px solid rgb(193, 125, 17) */
-/*border-color: rgb(193, 125, 17);
-border-radius: 5px
-*/</string>
-        </property>
-        <property name="text">
-         <string>Image
-Filter
-10</string>
+8</string>
         </property>
         <property name="iconSize">
          <size>

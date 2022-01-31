@@ -55,10 +55,10 @@ void ImgFiltWindow::on_pb_img_filt_3_clicked()
 }
 
 
-void ImgFiltWindow::on_pb_img_filt_4_clicked()
-{
-    emit imgFiltSelected(3);
-}
+//void ImgFiltWindow::on_pb_img_filt_4_clicked()
+//{
+//    emit imgFiltSelected(3);
+//}
 
 
 void ImgFiltWindow::on_pb_img_filt_5_clicked()
@@ -76,30 +76,31 @@ void ImgFiltWindow::on_pb_cancel_share_2_clicked()
 
 void ImgFiltWindow::on_pb_img_filt_6_clicked()
 {
+    emit imgFiltSelected(0);
 }
 
 
 void ImgFiltWindow::on_pb_img_filt_7_clicked()
 {
-
+    emit imgFiltSelected(1);
 }
 
 
 void ImgFiltWindow::on_pb_img_filt_8_clicked()
 {
-
+    emit imgFiltSelected(2);
 }
 
 
 void ImgFiltWindow::on_pb_img_filt_9_clicked()
 {
-
+    emit imgFiltSelected(0);
 }
 
-void ImgFiltWindow::on_pb_img_filt_10_clicked()
-{
-
-}
+//void ImgFiltWindow::on_pb_img_filt_10_clicked()
+//{
+//    emit imgFiltSelected(0);
+//}
 
 /**< Dummy */
 //void ImgFiltWindow::on_pushButton_clicked()

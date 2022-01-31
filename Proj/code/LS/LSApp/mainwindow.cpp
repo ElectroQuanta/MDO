@@ -6,6 +6,7 @@
 #include <qnamespace.h>
 #include <qwidget.h>
 #include <qdebug.h>
+#include <QMouseEvent>
 
 #include "imgfilter_defs.h" /**< For filters definition */
 
@@ -14,9 +15,12 @@
 
 /**< Define relevant paths */
 #define WELCOME_IMG_PATH ":/resources/img/welcome.png"
-#define FACE_CASCADE_FNAME "../models/haarcascade_frontalface_alt.xml"
+#define FACE_CASCADE_FNAME "../models/haarcascade/frontalface_alt.xml"
+#define GESTURE_CASCADE_FNAME "../models/haarcascade/closed_frontal_palm.xml"
 #define FILTERS_PATH_PREFIX "../filters/"
 
+/**< Define Architecture */
+#define ARCH 1 /**< DESKTOP */
 
 /**
  * @brief Screen resolution for embedded display
@@ -25,9 +29,11 @@
  * - This is done directly in the Qt Designer form
  * @todo: make it dynamic for several resolutions modes and orientations 
  */
-#define SCREEN_RES_W 1024 /**< Width in pixels */
-#define SCREEN_RES_H 600 /**< Height in pixels */
-#define SCENE_RES_W 800 /**< Height in pixels */
+#define SCREEN_RES_W 600 /**< Width in pixels */
+#define SCREEN_RES_H 1024 /**< Height in pixels */
+#define SCENE_RES_W 800  /**< Height in pixels */
+#define CAMERA_RES_W 640
+#define CAMERA_RES_H 480
 
 // /**
 // * @brief Enumeration of the UI Views the MainWindow controls
@@ -146,6 +152,11 @@ MainWindow::MainWindow(QWidget *parent)
       ui->label_status->setText("Status:  ERROR:  Could not load face cascade");
     };
 
+    if( !_gesture_cascade.load( GESTURE_CASCADE_FNAME ) )
+    {
+      ui->label_status->setText("Status:  ERROR:  Could not load gesture cascade");
+    };
+
     _twitterAuthenticated = TwitterAuthenticate();
 
     /**< Create filters */
@@ -163,6 +174,8 @@ MainWindow::MainWindow(QWidget *parent)
      */
     pthread_create( &_frame_grab_thr, NULL,
                     &MainWindow::frame_grabber_worker_thr, this );
+//    pthread_create( &_gesture_recog_thr, NULL,
+//                    &MainWindow::gesture_recog_worker_thr, this );
 }
 
 MainWindow::~MainWindow() {
@@ -306,7 +319,7 @@ void MainWindow::applyFilterOverlay(cv::Mat &frame, ImgFilter &filt) {
 }
 
 void MainWindow::onImgFiltSelected(int idx){
-    _filters_idx = idx;
+    _filters_idx = (idx % _filters.size());
 }
 
 void MainWindow::onCam_started(){
@@ -380,9 +393,7 @@ void* MainWindow::frame_grabber_worker_thr(void *arg){
     AppMode_t _mode = AppMode::INTER;
     Mat frame;
     QString label_text;
-    #define COLS 1280
-    #define ROWS 720
-    #define STEP 3840
+    //#define STEP 3840
 
     while(1){
 
@@ -413,6 +424,8 @@ void* MainWindow::frame_grabber_worker_thr(void *arg){
                   label_text = "Status:  ERROR: could not open camera...";
               } else {
                   //mw->ui->label_status->setText("Status:  Camera OK!");
+                  mw->_video.set(cv::CAP_PROP_FRAME_WIDTH, CAMERA_RES_W);
+                  mw->_video.set(cv::CAP_PROP_FRAME_HEIGHT, CAMERA_RES_H);
                   label_text = "Status:  Camera OK!";
               }
               emit(mw->textChanged(label_text));
@@ -426,11 +439,84 @@ void* MainWindow::frame_grabber_worker_thr(void *arg){
 
     return NULL;
 }
- 
+
+/**
+ * @brief Gesture recognition thread function
+ * @param arg: ptr to a UI::MainWindow
+ *
+ * detailed
+ */
+void* MainWindow::gesture_recog_worker_thr(void *arg){
+
+    using namespace cv;
+    MainWindow *mw = (MainWindow *)arg;
+
+    AppMode_t _mode = AppMode::INTER;
+    Mat frame;
+    QString label_text;
+
+    while(1){
+
+        /**< Getting the mode to decide flow */;
+        pthread_mutex_lock( &mw->_m_mode);;
+        _mode = mw->_appmode;
+        pthread_mutex_unlock( &mw->_m_mode);
+
+        /**< If App was quitted, terminate thread */
+        if(_mode == AppMode::QUIT) 
+            return NULL;
+
+        /**< Check for interaction or img filter modes */
+        if(_mode == AppMode::INTER || _mode == AppMode::IMGFILT){
+
+          if (mw->_video.isOpened()) {
+            /**< Acquiring frame */
+            mw->_video >> frame;
+            if (!frame.empty()) {
+                emit mw->imgGrabbed(frame);
+            }
+          }
+          else{
+              /**< Open camera to capture video */
+              // Adding the CAP_V4L2 solved the GStreamer issue
+              // src: https://stackoverflow.com/a/65033057/17836786
+              if (!mw->_video.open(CAM_IDX, CAP_V4L2)) {
+                  label_text = "Status:  ERROR: could not open camera...";
+              } else {
+                  //mw->ui->label_status->setText("Status:  Camera OK!");
+                  mw->_video.set(cv::CAP_PROP_FRAME_WIDTH, CAMERA_RES_W);
+                  mw->_video.set(cv::CAP_PROP_FRAME_HEIGHT, CAMERA_RES_H);
+                  label_text = "Status:  Camera OK!";
+              }
+              emit(mw->textChanged(label_text));
+          }
+        } else {
+          /**< If video was opened but we changed mode, close video feed */
+          if (mw->_video.isOpened())
+              mw->_video.release();
+        }
+    }
+
+    return NULL;
+}
+
 void MainWindow::displayImg(cv::Mat frame){
 
-    if(_appmode == AppMode::IMGFILT)
+    switch(_appmode){
+    case AppMode::INTER:
+    case AppMode::SHAR:
+        this->recognizeGesture(frame);
+        break;
+    case AppMode::IMGFILT:
+        this->recognizeGesture(frame);
         this->applyFilterOverlay(frame, _filters[_filters_idx]);
+        break;
+    default:
+        break;
+    }
+    
+    //if(_appmode == AppMode::IMGFILT)
+    //    this->applyFilterOverlay(frame, _filters[_filters_idx]);
             //this->detectFaces(&frame);
 
     QImage qimg(frame.data, frame.cols, frame.rows, frame.step,
@@ -446,6 +532,143 @@ void MainWindow::displayImg(cv::Mat frame){
     /* KeepAspectRatio is what works best */
     this->ui->graphicsView->fitInView(&this->_pixmap,
                                               Qt::KeepAspectRatio);
+}
+
+void MainWindow::recognizeGesture(cv::Mat &frame){
+    using namespace cv;
+  std::vector<Rect> fists;
+    //int i = 0;
+  //const static Scalar colors[] = {CV_RGB(0, 0, 255),   CV_RGB(0, 128, 255),
+  //                                CV_RGB(0, 255, 255), CV_RGB(0, 255, 0),
+  //                                CV_RGB(255, 128, 0), CV_RGB(255, 255, 0),
+  //                                CV_RGB(255, 0, 0),   CV_RGB(255, 0, 255)};
+  //#define COLORS_SZ 8
+  Mat gray;
+  Mat smallImg(frame.rows, frame.cols, CV_8UC1);
+
+  cvtColor(frame, gray, COLOR_BGR2GRAY);
+  cv::resize(gray, smallImg, smallImg.size(), 0, 0, INTER_LINEAR);
+  equalizeHist(smallImg, smallImg);
+
+//  t = (double)getTickCount();
+
+#define FIST_MIN_SIZE 100 /**< face min size (in pixels) */
+#define FIST_MIN_NEIGHBORS 3
+#define FIST_SCALE_FACTOR 1.1
+#define FIST_FLAGS 0
+
+  static int cnt = 0;
+  static int iter = 0;
+  //static double t = 0;
+
+  _gesture_cascade.detectMultiScale(smallImg, fists,
+                           FIST_SCALE_FACTOR, FIST_MIN_NEIGHBORS,
+                           FIST_FLAGS
+                           |
+                               CASCADE_FIND_BIGGEST_OBJECT
+                               //|CV_HAAR_DO_ROUGH_SEARCH
+                               | CASCADE_SCALE_IMAGE,
+                           Size(FIST_MIN_SIZE, FIST_MIN_SIZE));
+
+  iter++;
+  #define MAX_ITER 80 /**< 3 seconds: Desktop */
+
+  static cv::Rect gesture(0,0,0,0);
+
+  cv::Point p;
+
+  if( ! fists.empty() )
+  {
+      cnt++;
+      sort(fists.begin(), fists.end(), compareRects);
+
+      gesture = fists.at(0);
+      
+      #define LINE_THICKNESS 2
+      #define LINE_TYPE 8
+      #define LINE_SHIFT 0
+      //rectangle(frame, gesture, colors[0], LINE_THICKNESS, LINE_TYPE,
+      //          LINE_SHIFT);
+      
+  }
+  //t = (double)getTickCount() - t;
+  if(iter > MAX_ITER ){
+      //cout << "detection time =" << t*1000/getTickFrequency()
+      //     << "ms" << endl;
+      //cout << "Nr_iter: " << iter << endl;
+      //cout << "Cnt: " << cnt << endl;
+
+
+      if(cnt > iter/3){
+          /**< Detected hand gesture */
+          //cout << "Hand gesture detected!" << endl;
+          //cout << "detection time ="
+          //     << ((double)getTickCount()) * 1/getTickFrequency()
+          //     << "s" << endl;
+
+          /**< Get middle point */
+//#if ARCH == 0
+//#define CMDS_BAR_Y (SCREEN_RES_H - 70)
+//#elif ARCH == 1
+//#define CMDS_BAR_Y (2500 - 70)
+//#endif
+#define CMDS_BAR_Y (SCREEN_RES_H - 70)
+          p.x = gesture.x + gesture.width/2;
+          p.y = CMDS_BAR_Y;
+
+          //QString auxStr, auxStr2;
+
+          std::string statusStr = "Status: Gest detected: (x,y): " +
+              std::to_string(p.x) + "," + std::to_string(p.y);
+          
+          ui->label_status->setText(QString::fromStdString(statusStr));
+
+          /**< Emulate mouse press */
+          QPoint screenPos = QPoint(p.x, p.y);
+          QWidget *targetWidget = QApplication::widgetAt(screenPos);
+
+          if( targetWidget == nullptr){
+              //QPoint cursorP = QCursor::pos();
+              //std::cout << "Hand: (x,y) = "
+              //          << p.x << "," << p.y << std::endl;
+              //std::cout << "Cursor: (x,y) = "
+              //          << cursorP.x() << "," << cursorP.y() << std::endl;
+              //std::cout << "targetWidget not found" << std::endl;
+              return;
+          }
+
+          QPoint localPos = targetWidget->mapFromGlobal(screenPos);
+
+          QMouseEvent *eventPress =
+              new QMouseEvent(QEvent::MouseButtonPress, localPos, screenPos,
+                              Qt::LeftButton, Qt::LeftButton,
+                              Qt::NoModifier);
+          QApplication::postEvent(targetWidget, eventPress);
+
+          QMouseEvent *eventRelease =
+              new QMouseEvent(QEvent::MouseButtonRelease, localPos,
+                              screenPos,
+                              Qt::LeftButton, Qt::LeftButton,
+                              Qt::NoModifier);
+          QApplication::postEvent(targetWidget, eventRelease);
+
+          // cout << "Rect: (x, y, w, h) = ("
+          //      << gesture.x << ", "
+          //      << gesture.y << ", "
+          //      << gesture.width << ", "
+          //      << gesture.height << ")"
+          //      << endl;
+
+          // cout << "Middle point: (x, y) = ("
+          //      << p.x << ", "
+          //      << p.y << ")"
+          //      << endl;
+      }
+
+      //t = 0;
+      cnt = 0; iter = 0;
+  }
+  
 }
 
 bool MainWindow::TwitterAuthenticate(){

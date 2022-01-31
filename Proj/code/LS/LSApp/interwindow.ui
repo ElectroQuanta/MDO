@@ -26,7 +26,7 @@
     <string notr="true">background-color: rgb(0, 0, 0);</string>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="main">
     <widget class="QWidget" name="horizontalLayoutWidget_2">
@@ -241,7 +241,7 @@ GIF</string>
          <bool>false</bool>
         </property>
         <property name="styleSheet">
-         <string notr="true">image: url(:/resources/icons/finger_pointing_inverted.png);
+         <string notr="true">image: url(:/resources/icons/fist_inverted.png);
 /*
 background-color: rgb(186, 189, 182);
 background-repeat: no-repeat; 
@@ -391,8 +391,7 @@ background-repeat: no-repeat;
          <bool>false</bool>
         </property>
         <property name="styleSheet">
-         <string notr="true">image: url(:/resources/icons/finger_pointing_inverted.png);
-/*
+         <string notr="true">image: url(:/resources/icons/fist_inverted.png);/*
 background-color: rgb(186, 189, 182);
 background-repeat: no-repeat; 
 */</string>
@@ -825,8 +824,7 @@ enabled:{
 image: url(:/resources/icons/finger_pointing_inverted.png);
 }
 */
-image: url(:/resources/icons/finger_pointing_inverted.png);
-/*
+image: url(:/resources/icons/fist_inverted.png);/*
 background-color: rgb(186, 189, 182);
 background-repeat: no-repeat; 
 */</string>

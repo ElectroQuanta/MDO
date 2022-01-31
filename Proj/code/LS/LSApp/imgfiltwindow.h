@@ -24,13 +24,13 @@ private slots:
 
     void on_pb_img_filt_3_clicked();
 
-    void on_pb_img_filt_4_clicked();
+//    void on_pb_img_filt_4_clicked();
 
     void on_pb_img_filt_5_clicked();
 
     void on_pb_cancel_share_2_clicked();
 
-    void on_pb_img_filt_10_clicked();
+    //   void on_pb_img_filt_10_clicked();
 
     void on_pb_img_filt_6_clicked();
 

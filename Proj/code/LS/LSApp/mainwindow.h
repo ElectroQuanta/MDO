@@ -86,9 +86,26 @@ private slots:
 
     /**< Thread workers */
     static void* frame_grabber_worker_thr(void* arg);
+    static void* gesture_recog_worker_thr(void* arg);
 
     /**< Twitter sharing */
     bool TwitterAuthenticate();
+
+    /**< recognize gestures */
+    void recognizeGesture(cv::Mat &frame);
+
+
+/**
+ * @brief Compare rectangles by area (descending)
+ * @param a: first rectangle to compare
+ * @param b: second rectangle to compare
+ * @return comparison result: true if first rectangle area is bigger than second one, otherwise false;
+ *
+ * detailed
+ */
+inline static bool compareRects(const cv::Rect &a, const cv::Rect &b){
+    return a.area() - b.area();
+}
 
 signals:
     void interWindUpdateStatus(const QString str);
@@ -107,6 +124,7 @@ private:
 
     cv::VideoCapture _video; /**< CV video object to handle video */
     cv::CascadeClassifier _face_cascade; /**< Haar cascade to detect faces */
+    cv::CascadeClassifier _gesture_cascade; /**< Haar cascade to detect faces */
 
     AppMode_t _appmode; /**< Stores app mode */
 
@@ -126,6 +144,8 @@ private:
 
     /**< Threads */
     pthread_t _frame_grab_thr; /**< Frame Grabber thread */
+    pthread_t _gesture_recog_thr; /**< Frame Grabber thread */
+
 
     /**< Filters */
     std::vector<ImgFilter> _filters;
