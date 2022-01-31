@@ -61,6 +61,9 @@ set(PROJECT_SOURCES
   imgfilter_defs.h
   imgfilter.h
   imgfilter.cpp
+  # post
+  post.h
+  post.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

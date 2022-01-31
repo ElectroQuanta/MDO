@@ -26,7 +26,11 @@
 /**< Image filter */
 #include "imgfilter.h"
 
+/**< Twitter */
 #include "include/twitcurl.h"
+
+/**< Post */
+#include "post.h"
 
 
 /**
@@ -72,6 +76,7 @@ private slots:
     void onCam_started();
     void onImgFiltSelected(int idx);
     void onTwitterShare(const QString &);
+    void onTakePic_complete();
 
     bool eventFilter(QObject *, QEvent *);
 
@@ -128,14 +133,12 @@ private:
 
     AppMode_t _appmode; /**< Stores app mode */
 
-    QString _filtName; /**< Filter name */
-    cv::Mat _filter;
-
     /**< Mutexes */
     /* Normal */
     pthread_mutex_t 	_m_status_bar; /**< Protects access to UI status bar */
     pthread_mutex_t 	_m_canvas; /**< Protects access to Graphics view */
     pthread_mutex_t 	_m_mode; /**< Protects access to mode state variable */
+    pthread_mutex_t 	_m_curFrame; /**< Protects access to current frame */
     /* For condition variables */
     pthread_mutex_t _m_cond_cam_started;
 
@@ -148,11 +151,20 @@ private:
 
 
     /**< Filters */
+    QString _filtName; /**< Filter name */
+    cv::Mat _filter;
     std::vector<ImgFilter> _filters;
     int _filters_idx;
+
+    /**< Image Acquisition */
+    cv::Mat _curFrame;
+    bool _updateCanvas;
 
     /**< Twitter obj */
     twitCurl _twitterObj;
     bool _twitterAuthenticated;
+
+    /**< Post */
+    Post _post;
 };
 #endif // MAINWINDOW_H

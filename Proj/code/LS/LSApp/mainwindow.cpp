@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
+#include <opencv2/imgcodecs.hpp>
 #include <opencv2/imgproc.hpp>
 #include <opencv2/videoio.hpp>
 #include <qgraphicsitem.h>
@@ -117,6 +118,8 @@ MainWindow::MainWindow(QWidget *parent)
             SLOT(displayImg(cv::Mat)), Qt::QueuedConnection);
     connect(_imgFiltWind, SIGNAL(imgFiltSelected(int)),
             this, SLOT(onImgFiltSelected(int)) );
+    connect(_interWind, SIGNAL( takePic_complete() ),
+            this, SLOT( onTakePic_complete() ));
 
     //connect()
 
@@ -128,6 +131,7 @@ MainWindow::MainWindow(QWidget *parent)
     pthread_mutex_init(&_m_canvas, NULL);
     pthread_mutex_init(&_m_mode, NULL);
     pthread_mutex_init(&_m_cond_cam_started, NULL);
+    pthread_mutex_init(&_m_curFrame, NULL);
 
     /**< Condition variables initialization */
     pthread_cond_init( &_cond_cam_started, 0);
@@ -145,6 +149,7 @@ MainWindow::MainWindow(QWidget *parent)
       // ui->graphicsView->scene()->removeItem(_welcome_img);
       ui->graphicsView->scene()->addItem(&_pixmap);
       //ui->graphicsView->installEventFilter(eventFilter);
+      _updateCanvas = true;
 
      /**< Initialize CV cascades */
     if( !_face_cascade.load( FACE_CASCADE_FNAME ) )
@@ -157,7 +162,11 @@ MainWindow::MainWindow(QWidget *parent)
       ui->label_status->setText("Status:  ERROR:  Could not load gesture cascade");
     };
 
+    /**< Twitter */
     _twitterAuthenticated = TwitterAuthenticate();
+
+    /**< Post */
+//    _post = new Post();
 
     /**< Create filters */
     createFilters();
@@ -177,6 +186,7 @@ MainWindow::MainWindow(QWidget *parent)
 //    pthread_create( &_gesture_recog_thr, NULL,
 //                    &MainWindow::gesture_recog_worker_thr, this );
 }
+
 
 MainWindow::~MainWindow() {
 
@@ -379,6 +389,36 @@ void MainWindow::onCam_started(){
     }
 }
 
+void MainWindow::onTakePic_complete(){
+    cv::Mat frame;
+    std::string path;
+
+    /**< Stop canvas update */
+    // pthread_mutex_lock(&_m_canvas);
+    // _updateCanvas = false;
+    // pthread_mutex_unlock(&_m_canvas);
+
+    /**< Set media Type and get path */
+    _post.setMediaType(MediaType::PNG);
+    _post.MediaPath(path);
+
+    //std::cout << "Path: " << path << std::endl;
+
+    /**< Get current frame */
+    pthread_mutex_lock(&_m_curFrame);
+    frame = _curFrame;
+    pthread_mutex_unlock(&_m_curFrame);
+
+    /**< Write it to a file */
+    cv::imwrite(path, frame);
+
+    /**< Update status bar */
+    ui->label_status->setText("Status: Picture taken!");
+
+    /**< Update Label of interaction window */
+    _interWind->updatePicLabel(QString::fromStdString(path));
+}
+
 /**
  * @brief Frame grabber thread function
  * @param arg: ptr to a UI::MainWindow
@@ -398,7 +438,7 @@ void* MainWindow::frame_grabber_worker_thr(void *arg){
     while(1){
 
         /**< Getting the mode to decide flow */;
-        pthread_mutex_lock( &mw->_m_mode);;
+        pthread_mutex_lock( &mw->_m_mode);
         _mode = mw->_appmode;
         pthread_mutex_unlock( &mw->_m_mode);
 
@@ -505,33 +545,49 @@ void MainWindow::displayImg(cv::Mat frame){
     switch(_appmode){
     case AppMode::INTER:
     case AppMode::SHAR:
+        /**< Store current frame */
+        pthread_mutex_lock( &_m_curFrame);
+        _curFrame = frame;
+        pthread_mutex_unlock( &_m_curFrame);
+
+        /**< Recognize gesture */
         this->recognizeGesture(frame);
         break;
     case AppMode::IMGFILT:
+        /**< Recognize gesture */
         this->recognizeGesture(frame);
+
+        /**< Apply filter */
         this->applyFilterOverlay(frame, _filters[_filters_idx]);
+
+        /**< Store current frame */
+        pthread_mutex_lock( &_m_curFrame);
+        _curFrame = frame;
+        pthread_mutex_unlock( &_m_curFrame);
         break;
     default:
         break;
     }
-    
-    //if(_appmode == AppMode::IMGFILT)
-    //    this->applyFilterOverlay(frame, _filters[_filters_idx]);
-            //this->detectFaces(&frame);
 
-    QImage qimg(frame.data, frame.cols, frame.rows, frame.step,
+//    static bool updateCanvas = false;
+//    /**< Store current frame */
+//    pthread_mutex_lock( &_m_canvas);
+//    updateCanvas = _updateCanvas;
+//    pthread_mutex_unlock( &_m_canvas);
+//
+//    if(updateCanvas){
+
+        QImage qimg(frame.data, frame.cols, frame.rows, frame.step,
                             QImage::Format_RGB888);
-                //img.fromData(frame.data, COLS*ROWS*3);
-              //qDebug() << frame.cols << ',' // 1280
-              //         << frame.rows << ',' // 720
-              //         << frame.step ; // 3840
 
-    this->_pixmap.setPixmap(QPixmap::fromImage(qimg.rgbSwapped()));
+        this->_pixmap.setPixmap(QPixmap::fromImage(qimg.rgbSwapped()));
 
-    /**< Aspect ratio */
-    /* KeepAspectRatio is what works best */
-    this->ui->graphicsView->fitInView(&this->_pixmap,
+        /**< Aspect ratio */
+        /* KeepAspectRatio is what works best */
+        this->ui->graphicsView->fitInView(&this->_pixmap,
                                               Qt::KeepAspectRatio);
+        //   }
+
 }
 
 void MainWindow::recognizeGesture(cv::Mat &frame){

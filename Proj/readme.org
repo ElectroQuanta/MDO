@@ -8659,7 +8659,7 @@ https://upload.twitter.com/1.1/media/upload.json?command=APPEND&media_id=123&seg
 	 #+BEGIN_SRC bash
 	 QObject::startTimer: Timers cannot be started from another thread 
 	 #+END_SRC
-*** ☛ TODO PRIORITIES [2/6]
+*** ☛ TODO PRIORITIES [6/10]
     :LOGBOOK:
     - State "☛ TODO"     from              [2022-01-06 qui 01:35]
     :END:
@@ -8999,7 +8999,7 @@ OpenCV provides an API for linear blending of two images. The calculation formul
 	 3) Extract overlap ROI to perform blending
 	 4) Apply overlay over overlapping ROI and then copy it to original
             frame
-3) [ ] Implement gesture recognition algorithm
+3) [X] Implement gesture recognition algorithm
    1) To recognize a gesture, several approaches may be used, namely: image
       segmentation with background subtraction and thresholding; deep neural
       networks; convex hull and defects; machine learning with cascade
@@ -9055,8 +9055,31 @@ OpenCV provides an API for linear blending of two images. The calculation formul
       1) Identify a reliable machine learning model for a hand gesture
       2) Adapt the UI to be triggered by that particular gesture instead of
          multiple hand gestures.
-
-4) [ ] Wrap it in the gesture recognition engine
-5) [ ] Implement Twitter sharing
-6) [ ] Implement client-server architecture
+4) [X] Wrap it in the gesture recognition engine
+5) [X] Stimulate UI event loop with recognized gesture
+   1) Simulate =MousePress= and =MouseRelease= events with the gesture
+      coordinates mapped to the screen
+6) [ ] Implement Twitter sharing
+   1) [ ] Set focus to message when transitioning to Edit Post
+   2) [ ] Define a default message in case the user does not enter any message
+   3) [ ] Get coordinates of VirtualKeyboard to map gesture to it
+7) [X] Take pic: Interaction mode
+   1) =remaining_time = 3=
+   2) [X] Setup a timer of 1 second
+      1) When the timer elapses:
+	 1) =remaining_time--=
+	 2) update the Label with =remaining_time=
+	 3) if =remaining_time == 0=
+	    1) Store current camera frame:
+	       1) Save it to file
+	       2) Store filename: post->media_fname = pic.png
+	    2) Keep frame grabbing working for gesture recognition
+	    3) Don't update the image canvas
+	       1) It doesnt work because then the user can't track its gesture
+	    4) Instead of 3:
+	       1) update status bar with "Picture stored!"
+	       2) Set QLabel with current frame
+8) [ ] Create GIF: Interaction mode
+9) [ ] Reproduce video with audio
+10) [ ] Implement client-server architecture
 
