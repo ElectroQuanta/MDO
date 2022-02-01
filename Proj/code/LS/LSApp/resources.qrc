@@ -19,5 +19,7 @@
         <file>resources/style/stylesheet.qss</file>
         <file>resources/icons/fist.png</file>
         <file>resources/icons/fist_inverted.png</file>
+        <file>resources/icons/next.png</file>
+        <file>resources/icons/back.png</file>
     </qresource>
 </RCC>

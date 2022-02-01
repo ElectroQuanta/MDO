@@ -120,6 +120,8 @@ MainWindow::MainWindow(QWidget *parent)
             this, SLOT(onImgFiltSelected(int)) );
     connect(_interWind, SIGNAL( takePic_complete() ),
             this, SLOT( onTakePic_complete() ));
+    connect(_imgFiltWind, SIGNAL(imgFiltGlobal(bool)),
+            this, SLOT(onImgFiltGlobal(bool)) );
 
     //connect()
 
@@ -132,6 +134,7 @@ MainWindow::MainWindow(QWidget *parent)
     pthread_mutex_init(&_m_mode, NULL);
     pthread_mutex_init(&_m_cond_cam_started, NULL);
     pthread_mutex_init(&_m_curFrame, NULL);
+    pthread_mutex_init(&_m_imgFilter, NULL);
 
     /**< Condition variables initialization */
     pthread_cond_init( &_cond_cam_started, 0);
@@ -170,6 +173,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     /**< Create filters */
     createFilters();
+    _filter_on = false;
 
 
     /**< Threads */
@@ -187,6 +191,13 @@ MainWindow::MainWindow(QWidget *parent)
 //                    &MainWindow::gesture_recog_worker_thr, this );
 }
 
+void MainWindow::onImgFiltGlobal(bool enable){
+    //std::cout << "ImgFiltGlobal" << std::endl;
+    /**< Enabling filter globally */;
+    pthread_mutex_lock( &this->_m_imgFilter);
+    this->_filter_on = enable;
+    pthread_mutex_unlock( &this->_m_imgFilter);
+}
 
 MainWindow::~MainWindow() {
 
@@ -542,32 +553,44 @@ void* MainWindow::gesture_recog_worker_thr(void *arg){
 
 void MainWindow::displayImg(cv::Mat frame){
 
-    switch(_appmode){
-    case AppMode::INTER:
-    case AppMode::SHAR:
-        /**< Store current frame */
-        pthread_mutex_lock( &_m_curFrame);
-        _curFrame = frame;
-        pthread_mutex_unlock( &_m_curFrame);
+    //switch(_appmode){
+    //case AppMode::INTER:
+    //case AppMode::SHAR:
+    //    /**< Store current frame */
+    //    pthread_mutex_lock( &_m_curFrame);
+    //    _curFrame = frame;
+    //    pthread_mutex_unlock( &_m_curFrame);
 
-        /**< Recognize gesture */
-        this->recognizeGesture(frame);
-        break;
-    case AppMode::IMGFILT:
-        /**< Recognize gesture */
-        this->recognizeGesture(frame);
+    //    /**< Recognize gesture */
+    //    this->recognizeGesture(frame);
+    //    break;
+    //case AppMode::IMGFILT:
+    //    /**< Recognize gesture */
+    //    this->recognizeGesture(frame);
 
-        /**< Apply filter */
+    //    /**< Apply filter */
+    //    this->applyFilterOverlay(frame, _filters[_filters_idx]);
+
+    //    /**< Store current frame */
+    //    pthread_mutex_lock( &_m_curFrame);
+    //    _curFrame = frame;
+    //    pthread_mutex_unlock( &_m_curFrame);
+    //    break;
+    //default:
+    //    break;
+    //}
+
+    /**< Store current frame */
+    pthread_mutex_lock( &_m_curFrame);
+    _curFrame = frame;
+    pthread_mutex_unlock( &_m_curFrame);
+
+    /**< Recognize gesture */
+    this->recognizeGesture(frame);
+
+    /**< Apply filter */
+    if(_filter_on)
         this->applyFilterOverlay(frame, _filters[_filters_idx]);
-
-        /**< Store current frame */
-        pthread_mutex_lock( &_m_curFrame);
-        _curFrame = frame;
-        pthread_mutex_unlock( &_m_curFrame);
-        break;
-    default:
-        break;
-    }
 
 //    static bool updateCanvas = false;
 //    /**< Store current frame */
@@ -577,17 +600,15 @@ void MainWindow::displayImg(cv::Mat frame){
 //
 //    if(updateCanvas){
 
-        QImage qimg(frame.data, frame.cols, frame.rows, frame.step,
-                            QImage::Format_RGB888);
+    QImage qimg(frame.data, frame.cols, frame.rows, frame.step,
+                QImage::Format_RGB888);
 
-        this->_pixmap.setPixmap(QPixmap::fromImage(qimg.rgbSwapped()));
+    this->_pixmap.setPixmap(QPixmap::fromImage(qimg.rgbSwapped()));
 
-        /**< Aspect ratio */
-        /* KeepAspectRatio is what works best */
-        this->ui->graphicsView->fitInView(&this->_pixmap,
-                                              Qt::KeepAspectRatio);
-        //   }
-
+    /**< Aspect ratio */
+    /* KeepAspectRatio is what works best */
+    this->ui->graphicsView->fitInView(&this->_pixmap, Qt::KeepAspectRatio);
+    //   }
 }
 
 void MainWindow::recognizeGesture(cv::Mat &frame){
@@ -876,12 +897,16 @@ void MainWindow::onInter_mode_pressed(){
 
 void MainWindow::onImgFilt_mode_pressed(){
 
+    /**< Enabling filter globally */;
+    pthread_mutex_lock( &this->_m_imgFilter);
+    this->_filter_on = true;
+    pthread_mutex_unlock( &this->_m_imgFilter);
+
     /**< Change mode before jumping */
     pthread_mutex_lock( &_m_mode);
     _appmode = AppMode::IMGFILT;
     ui->stackedWidget->setCurrentIndex(_appmode);
     pthread_mutex_unlock( &_m_mode);
-    
 }
 
 void MainWindow::onShar_mode_pressed(){

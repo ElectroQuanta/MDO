@@ -77,6 +77,7 @@ private slots:
     void onImgFiltSelected(int idx);
     void onTwitterShare(const QString &);
     void onTakePic_complete();
+    void onImgFiltGlobal(bool enable);
 
     bool eventFilter(QObject *, QEvent *);
 
@@ -139,6 +140,7 @@ private:
     pthread_mutex_t 	_m_canvas; /**< Protects access to Graphics view */
     pthread_mutex_t 	_m_mode; /**< Protects access to mode state variable */
     pthread_mutex_t 	_m_curFrame; /**< Protects access to current frame */
+    pthread_mutex_t 	_m_imgFilter; /**< Protects access to img filter */
     /* For condition variables */
     pthread_mutex_t _m_cond_cam_started;
 
@@ -155,6 +157,7 @@ private:
     cv::Mat _filter;
     std::vector<ImgFilter> _filters;
     int _filters_idx;
+    bool _filter_on;
 
     /**< Image Acquisition */
     cv::Mat _curFrame;

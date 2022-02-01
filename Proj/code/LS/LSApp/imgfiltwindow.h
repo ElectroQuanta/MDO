@@ -16,29 +16,19 @@ public:
     ~ImgFiltWindow();
 
 private slots:
-    void on_pb_cancel_share_clicked();
-
+    /**< Page 1 */
+    void on_pb_cancel_clicked();
     void on_pb_img_filt_clicked();
-
     void on_pb_img_filt_2_clicked();
-
     void on_pb_img_filt_3_clicked();
+    void on_pb_p1_next_clicked();
 
-//    void on_pb_img_filt_4_clicked();
-
+    /**< Page 2 */
+    void on_pb_p2_back_clicked();
+    void on_pb_img_filt_4_clicked();
     void on_pb_img_filt_5_clicked();
-
-    void on_pb_cancel_share_2_clicked();
-
-    //   void on_pb_img_filt_10_clicked();
-
     void on_pb_img_filt_6_clicked();
-
-    void on_pb_img_filt_7_clicked();
-
-    void on_pb_img_filt_8_clicked();
-
-    void on_pb_img_filt_9_clicked();
+    void on_pb_img_filt_ok_clicked();
 
     /**< dummy */
     //void on_pushButton_clicked();
@@ -46,6 +36,7 @@ private slots:
 signals:
     void inter_mode_pressed();
     void imgFiltSelected(int);
+    void imgFiltGlobal(bool enable);
 
 private:
     Ui::ImgFiltWindow *ui;

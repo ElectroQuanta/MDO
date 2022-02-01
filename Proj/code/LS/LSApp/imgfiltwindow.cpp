@@ -28,73 +28,67 @@ ImgFiltWindow::~ImgFiltWindow()
     delete ui;
 }
 
-void ImgFiltWindow::on_pb_cancel_share_clicked()
+void ImgFiltWindow::on_pb_cancel_clicked()
 {
+    /**< Make filtering permanent */
+    emit imgFiltGlobal(false);
+    
     /**< Go to INTERACTION mode */
     // Reset view to main before emiting signal
     ui->stackedWidget->setCurrentIndex(UIPages::MAIN);
     emit inter_mode_pressed();
 }
 
-
 void ImgFiltWindow::on_pb_img_filt_clicked()
 {
     emit imgFiltSelected(0);
 }
-
 
 void ImgFiltWindow::on_pb_img_filt_2_clicked()
 {
     emit imgFiltSelected(1);
 }
 
-
 void ImgFiltWindow::on_pb_img_filt_3_clicked()
 {
     emit imgFiltSelected(2);
 }
 
-
-//void ImgFiltWindow::on_pb_img_filt_4_clicked()
-//{
-//    emit imgFiltSelected(3);
-//}
-
-
-void ImgFiltWindow::on_pb_img_filt_5_clicked()
+void ImgFiltWindow::on_pb_p1_next_clicked()
 {
     // DUMMY: for navigation only
     ui->stackedWidget->setCurrentIndex(UIPages::PAGE2);
 }
 
-
-void ImgFiltWindow::on_pb_cancel_share_2_clicked()
+void ImgFiltWindow::on_pb_p2_back_clicked()
 {
     ui->stackedWidget->setCurrentIndex(UIPages::MAIN);
 }
 
-
-void ImgFiltWindow::on_pb_img_filt_6_clicked()
+void ImgFiltWindow::on_pb_img_filt_4_clicked()
 {
     emit imgFiltSelected(0);
 }
 
-
-void ImgFiltWindow::on_pb_img_filt_7_clicked()
+void ImgFiltWindow::on_pb_img_filt_5_clicked()
 {
     emit imgFiltSelected(1);
 }
 
-
-void ImgFiltWindow::on_pb_img_filt_8_clicked()
+void ImgFiltWindow::on_pb_img_filt_6_clicked()
 {
     emit imgFiltSelected(2);
 }
 
-
-void ImgFiltWindow::on_pb_img_filt_9_clicked()
+void ImgFiltWindow::on_pb_img_filt_ok_clicked()
 {
-    emit imgFiltSelected(0);
+    /**< Make filtering permanent */
+    emit imgFiltGlobal(true);
+
+    /**< Go to INTERACTION mode */
+    // Reset view to main before emiting signal
+    ui->stackedWidget->setCurrentIndex(UIPages::MAIN);
+    emit inter_mode_pressed();
 }
 
 //void ImgFiltWindow::on_pb_img_filt_10_clicked()
