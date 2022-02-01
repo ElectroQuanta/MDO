@@ -8659,7 +8659,7 @@ https://upload.twitter.com/1.1/media/upload.json?command=APPEND&media_id=123&seg
 	 #+BEGIN_SRC bash
 	 QObject::startTimer: Timers cannot be started from another thread 
 	 #+END_SRC
-*** ☛ TODO PRIORITIES [6/10]
+*** ☛ TODO PRIORITIES [7/10]
     :LOGBOOK:
     - State "☛ TODO"     from              [2022-01-06 qui 01:35]
     :END:
@@ -9059,10 +9059,10 @@ OpenCV provides an API for linear blending of two images. The calculation formul
 5) [X] Stimulate UI event loop with recognized gesture
    1) Simulate =MousePress= and =MouseRelease= events with the gesture
       coordinates mapped to the screen
-6) [ ] Implement Twitter sharing
-   1) [ ] Set focus to message when transitioning to Edit Post
-   2) [ ] Define a default message in case the user does not enter any message
-   3) [ ] Get coordinates of VirtualKeyboard to map gesture to it
+6) [X] Implement Twitter sharing
+   1) [X] Set focus to message when transitioning to Edit Post
+   2) [X] Define a default message in case the user does not enter any message
+   3) [X] Get coordinates of VirtualKeyboard to map gesture to it
 7) [X] Take pic: Interaction mode
    1) =remaining_time = 3=
    2) [X] Setup a timer of 1 second

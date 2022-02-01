@@ -8,7 +8,7 @@ typedef enum MediaType MediaType_t;
 
 class Post{
 public:
-    Post(std::string msg = "Hi", MediaType_t medType = MediaType::PNG);
+    Post(std::string msg = "#MDO ", MediaType_t medType = MediaType::PNG);
     void setMsg(std::string msg);
     void setMediaType(MediaType_t medType);
 

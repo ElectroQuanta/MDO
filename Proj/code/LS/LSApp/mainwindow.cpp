@@ -189,6 +189,8 @@ MainWindow::MainWindow(QWidget *parent)
                     &MainWindow::frame_grabber_worker_thr, this );
 //    pthread_create( &_gesture_recog_thr, NULL,
 //                    &MainWindow::gesture_recog_worker_thr, this );
+//    pthread_create( &_twitter_thr, NULL,
+//                    &MainWindow::twitter_worker_thr, this );
 }
 
 void MainWindow::onImgFiltGlobal(bool enable){
@@ -458,7 +460,8 @@ void* MainWindow::frame_grabber_worker_thr(void *arg){
             return NULL;
 
         /**< Check for interaction or img filter modes */
-        if(_mode == AppMode::INTER || _mode == AppMode::IMGFILT){
+        if(_mode == AppMode::INTER || _mode == AppMode::IMGFILT
+           || _mode == AppMode::SHAR){
 
           if (mw->_video.isOpened()) {
             /**< Acquiring frame */
@@ -787,8 +790,6 @@ bool MainWindow::TwitterAuthenticate(){
 }
 
 void MainWindow::onTwitterShare(const QString &msg) {
-
-
     /* Authenticate to Twitter */
     if( ! _twitterAuthenticated ){
         if( ! TwitterAuthenticate() )
@@ -796,8 +797,11 @@ void MainWindow::onTwitterShare(const QString &msg) {
               "Status:  ERROR:  Could not authenticate to Twitter");
         return;
     }
-    
-  std::string tmpStr = msg.toStdString();
+
+    std::string tmpStr;
+
+    _post.Msg(tmpStr);
+    tmpStr += msg.toStdString();
 
   if (_twitterObj.statusUpdate(tmpStr)) {
       ui->label_status->setText("STATUS: post shared!");

@@ -1,5 +1,13 @@
 #include "sharwindow.h"
 #include "ui_sharwindow.h"
+#include <qnamespace.h>
+
+#define TWITTER_SHARE_FOCUS 1
+
+#if TWITTER_SHARE_FOCUS == 1
+#include <QMouseEvent>
+//#include <iostream>
+#endif
 
 /**
  * @brief Enum describing UI pages for this Window
@@ -37,8 +45,45 @@ void SharWindow::on_pb_twitter_share_clicked()
     /**< Go to EDIT */
     ui->stackedWidget->setCurrentIndex(UIPages::EDIT);
 
-}
+    ui->lineEdit_msg->setText("");
+    //ui->lineEdit_msg->setFocusPolicy(Qt::ClickFocus);
+    ui->lineEdit_msg->setFocus();
 
+#if TWITTER_SHARE_FOCUS == 1
+
+    #define P_X 200
+    #define P_Y 850
+    
+    /**< Emulate mouse press */
+    QPoint screenPos = QPoint(P_X, P_Y);
+    QWidget *targetWidget = QApplication::widgetAt(screenPos);
+
+
+    //while(1){
+    //    QPoint cursorP = QCursor::pos();
+    //    std::cout << "Cursor: (x,y) = "
+    //              << cursorP.x() << "," << cursorP.y() << std::endl;
+        //}
+
+    if(targetWidget == nullptr){
+        //std::cout << "targetWidget not found" << std::endl;
+        return;
+    }
+
+    QPoint localPos = targetWidget->mapFromGlobal(screenPos);
+
+    QMouseEvent *eventPress =
+        new QMouseEvent(QEvent::MouseButtonPress, localPos, screenPos,
+                        Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+    QApplication::postEvent(targetWidget, eventPress);
+
+    QMouseEvent *eventRelease =
+        new QMouseEvent(QEvent::MouseButtonRelease, localPos, screenPos,
+                        Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+    QApplication::postEvent(targetWidget, eventRelease);
+#endif
+
+}
 
 void SharWindow::on_pb_edit_cancel_clicked()
 {

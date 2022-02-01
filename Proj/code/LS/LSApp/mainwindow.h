@@ -93,6 +93,7 @@ private slots:
     /**< Thread workers */
     static void* frame_grabber_worker_thr(void* arg);
     static void* gesture_recog_worker_thr(void* arg);
+    //static void* twitter_worker_thr(void* arg);
 
     /**< Twitter sharing */
     bool TwitterAuthenticate();
@@ -149,7 +150,8 @@ private:
 
     /**< Threads */
     pthread_t _frame_grab_thr; /**< Frame Grabber thread */
-    pthread_t _gesture_recog_thr; /**< Frame Grabber thread */
+    pthread_t _gesture_recog_thr; /**< Gesture recognition thread */
+    pthread_t _twitter_thr; /**< Twitter sharing thread */
 
 
     /**< Filters */
