@@ -78,6 +78,7 @@ private slots:
     void onTwitterShare(const QString &);
     void onTakePic_complete();
     void onImgFiltGlobal(bool enable);
+    void onGifEnabled(bool enable);
 
     bool eventFilter(QObject *, QEvent *);
 
@@ -94,6 +95,7 @@ private slots:
     static void* frame_grabber_worker_thr(void* arg);
     static void* gesture_recog_worker_thr(void* arg);
     //static void* twitter_worker_thr(void* arg);
+    static void* gif_save_worker_thr(void* arg);
 
     /**< Twitter sharing */
     bool TwitterAuthenticate();
@@ -142,16 +144,20 @@ private:
     pthread_mutex_t 	_m_mode; /**< Protects access to mode state variable */
     pthread_mutex_t 	_m_curFrame; /**< Protects access to current frame */
     pthread_mutex_t 	_m_imgFilter; /**< Protects access to img filter */
+    pthread_mutex_t 	_m_gif; /**< Protects access to GIF resources */
     /* For condition variables */
     pthread_mutex_t _m_cond_cam_started;
+    pthread_mutex_t _m_cond_gif_save;
 
     /**< Condition variables */
     pthread_cond_t _cond_cam_started;
+    pthread_cond_t _cond_gif_save;
 
     /**< Threads */
     pthread_t _frame_grab_thr; /**< Frame Grabber thread */
     pthread_t _gesture_recog_thr; /**< Gesture recognition thread */
     pthread_t _twitter_thr; /**< Twitter sharing thread */
+    pthread_t _gif_save_thr; /**< Twitter sharing thread */
 
 
     /**< Filters */
@@ -164,6 +170,11 @@ private:
     /**< Image Acquisition */
     cv::Mat _curFrame;
     bool _updateCanvas;
+
+    /**< GIF */
+    bool _gif_on;
+    bool _gif_complete;
+    std::vector<cv::Mat> frames;
 
     /**< Twitter obj */
     twitCurl _twitterObj;

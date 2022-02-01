@@ -8489,6 +8489,56 @@ https://upload.twitter.com/1.1/media/upload.json?command=APPEND&media_id=123&seg
   }
   }
   #+END_SRC
+
+* ImageMagick: Magick++
+** ✔ DONE Installation
+   :LOGBOOK:
+   - State "✔ DONE"     from              [2022-02-01 ter 18:14]
+   :END:
+[[https://imagemagick.org/script/install-source.php][src]]
+
+#+BEGIN_EXAMPLE
+Options used to compile and link:
+  PREFIX          = /usr/local
+  EXEC-PREFIX     = /usr/local
+  VERSION         = 7.1.0-23
+  CC              = gcc
+  CFLAGS          = -I/usr/include/libpng16  -I/usr/include/pango-1.0 -I/usr/include/fribidi -I/usr/include/harfbuzz -I/usr/include/cairo -I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include -I/usr/include/pixman-1 -I/usr/include/uuid -I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/OpenEXR  -I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/uuid -I/usr/include/freetype2 -I/usr/include/libpng16  -fopenmp -Wall -g -O2 -mtune=amdfam10 -fexceptions -pthread -DMAGICKCORE_HDRI_ENABLE=1 -DMAGICKCORE_QUANTUM_DEPTH=16
+  CPPFLAGS        =  -DMAGICKCORE_HDRI_ENABLE=1 -DMAGICKCORE_QUANTUM_DEPTH=16 
+  PCFLAGS         = 
+  DEFS            = -DHAVE_CONFIG_H
+  LDFLAGS         =  
+  LIBS            =  -ljbig  -ltiff -lfreetype  -ljpeg    -lpng16 -lz      -lfontconfig -lfreetype      -lXext    -lSM -lICE -lX11  -llzma  -lIlmImf -lImath -lHalf -lIex -lIexMath -lIlmThread -lpthread  -lpangocairo-1.0 -lpango-1.0 -lgobject-2.0 -lglib-2.0 -lharfbuzz -lcairo     -lz     -lm    -lpthread 
+  CXX             = g++
+  CXXFLAGS        =  -pthread
+  FEATURES        = DPC HDRI Cipher OpenMP
+  DELEGATES       = fontconfig freetype jbig jng jpeg lzma openexr pango png ps tiff x zlib
+==============================================================================
+#+END_EXAMPLE
+** ✔ DONE Testing
+   :LOGBOOK:
+   - State "✔ DONE"     from              [2022-02-01 ter 18:15]
+   :END:
+#+BEGIN_SRC bash
+/usr/local/bin/convert logo: logo.gif
+#+END_SRC
+
+The =logo.gif= file should be created in the current directory.
+- To open it use =GIMP= or the web browser.
+** GIFs
+*** ✔ DONE Download
+    :LOGBOOK:
+    - State "✔ DONE"     from              [2022-02-01 ter 18:19]
+    :END:
+1) Go to https://giphy.com/categories/memes
+2) Select a GIF
+3) Right-Click over it and select =Open Image in New Tab=
+4) Go to the new tab
+5) Right-Click over the image and select =Save Image as=
+6) Save the file with the =.gif= extension
+*** Open
+1) Just drag and drop the =.gif= file into a Firefox browser tab.
+
 * Mine                                                             :noexport:
 ** Implementation
 *** Project: LS App
@@ -9080,6 +9130,23 @@ OpenCV provides an API for linear blending of two images. The calculation formul
 	       1) update status bar with "Picture stored!"
 	       2) Set QLabel with current frame
 8) [ ] Create GIF: Interaction mode
+   1) Setup a timer for the GIF and an associated counter
+   2) Start the timer
+   3) Issue signal =gif_started()=
+   4) Create a callback for timer elapsed:
+      1) Decrement counter
+      2) If counter == 0:
+	 1) stop timer
+	 2) Issue =gif_done()= signal
+      3) Else, update progress bar
+   5) Create slots to handle the signals:
+      1) =onGIFStarted()=: set the flag =gif_on= to true
+      2) =onGIFDone()=: reset the flag =gif_on= to false and sets the flag
+         =gif_complete= to true
+   6) If =gif_on=, =DisplayImg()= pushes frames to an vector
+   7) If =gif_complete=:
+      1) =gif_complete = false=
+      1) write GIF to file, using the =_post= information
 9) [ ] Reproduce video with audio
 10) [ ] Implement client-server architecture
 

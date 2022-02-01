@@ -7,7 +7,8 @@
  */
 enum UIPages { MAIN = 0, PIC, GIF };
 
-#define PIC_TIME_REMAINING 3
+#define PIC_TIMEOUT 3
+#define GIF_TIMEOUT 5
 
 InterWindow::InterWindow(QWidget *parent) :
     QWidget(parent),
@@ -20,12 +21,17 @@ InterWindow::InterWindow(QWidget *parent) :
 
     /**< Initialize Picture timer */
     _pic_timer = new QTimer(this);
-    _pic_time_remaining = PIC_TIME_REMAINING;
+    _pic_time_remaining = PIC_TIMEOUT;
+
+    /**< Initialize GIF timer */
+    _gif_timer = new QTimer(this);
+    _gif_time_remaining = GIF_TIMEOUT;
 
     /**< Connect signals to slots */
     //connect(this, SIGNAL(interWindUpdateStatus(const QString str)),
     //        this, SLOT(oninterWindUpdateStatus(const QString str)) );
     connect(_pic_timer, SIGNAL(timeout()), this, SLOT(onPicTimerElapsed()) );
+    connect(_gif_timer, SIGNAL(timeout()), this, SLOT(onGifTimerElapsed()) );
 }
 
 void InterWindow::onPicTimerElapsed(){
@@ -54,6 +60,44 @@ void InterWindow::onPicTimerElapsed(){
     ui->timer_setup->setText( str.setNum(_pic_time_remaining) );
 }
 
+void InterWindow::onGifTimerElapsed(){
+    /* Decrement counter */
+    _gif_time_remaining--;
+
+    /**< Update Progress Bar */
+    ui->progressBar->setValue(
+        (float)(GIF_TIMEOUT - _gif_time_remaining)
+        / GIF_TIMEOUT * 100);
+
+    /* Check counter reset */
+    if( !_gif_time_remaining ){
+        /**< Stop timer */
+        _gif_timer->stop();
+        
+        /**< Re-enable pushbuttons */
+        enablePushbuttons(true);
+
+        /**< Signal event */
+        gif_enabled(false);
+    }
+}
+
+void InterWindow::resetUI(){
+
+    /**< Clear pixmap */
+    ui->timer_setup->setPixmap(QPixmap());
+
+    /**< Clear bars */
+    ui->timer_setup->setText("");
+    ui->progressBar->setValue(0);
+
+    /**< Enable pusbbuttons */
+    ui->pb_pic_cancel->setEnabled(true);
+    ui->pb_pic_share->setEnabled(true);
+    ui->pb_gif_cancel->setEnabled(true);
+    ui->pb_gif_share->setEnabled(true);
+}
+
 InterWindow::~InterWindow() { delete ui; }
 
 //void InterWindow::oninterWindUpdateStatus(const QString str){
@@ -78,7 +122,7 @@ void InterWindow::on_pb_take_pic_clicked()
   enablePushbuttons(false);
 
   /**< Setup timer */
-  _pic_time_remaining = PIC_TIME_REMAINING;
+  _pic_time_remaining = PIC_TIMEOUT;
 
   /**< Update label */
   QString timeRemainingStr;
@@ -106,13 +150,30 @@ void InterWindow::enablePushbuttons(bool enable) {
 
 void InterWindow::on_pb_create_gif_clicked()
 {
+  #define TIMEOUT_MS 1000
+
   ui->stackedWidget->setCurrentIndex(UIPages::GIF);
+
+  /**< Disable other pushbuttons */
+  enablePushbuttons(false);
+
+  /**< Setup timer */
+  _gif_time_remaining = GIF_TIMEOUT;
+
+  /**< Update progress bar */
+  ui->progressBar->setValue(0);
+
+  /**< Start timer */
+  _gif_timer->start(TIMEOUT_MS);
+
+  /**< Signal event GIF acquisition started  */
+  emit gif_enabled(true);
 }
 
 void InterWindow::on_pb_pic_cancel_clicked()
 {
-    /**< Clear pixmap */
-  ui->timer_setup->setPixmap(QPixmap());
+    /**< Reset UI */
+    resetUI();
 
   /**< Change view */
   ui->stackedWidget->setCurrentIndex(UIPages::MAIN);
@@ -120,8 +181,8 @@ void InterWindow::on_pb_pic_cancel_clicked()
 
 void InterWindow::on_pb_pic_share_clicked()
 {
-    /**< Clear pixmap */
-    ui->timer_setup->setPixmap(QPixmap());
+    /**< Reset UI */
+    resetUI();
 
     /**< Go to SHARING mode */
     // Reset view to main before emiting signal
@@ -131,11 +192,17 @@ void InterWindow::on_pb_pic_share_clicked()
 
 void InterWindow::on_pb_gif_cancel_clicked()
 {
+    /**< Reset UI */
+    resetUI();
+
   ui->stackedWidget->setCurrentIndex(UIPages::MAIN);
 }
 
 void InterWindow::on_pb_gif_share_clicked()
 {
+    /**< Reset UI */
+    resetUI();
+
     /**< Go to SHARING mode */
     // Reset view to main before emiting signal
     ui->stackedWidget->setCurrentIndex(UIPages::MAIN);

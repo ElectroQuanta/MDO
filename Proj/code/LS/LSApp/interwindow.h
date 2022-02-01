@@ -34,12 +34,14 @@ private slots:
     /**< Signal handlers */
     //void oninterWindUpdateStatus(const QString str);
     void onPicTimerElapsed();
+    void onGifTimerElapsed();
 
     /**< Dummy */
     void on_pushButton_clicked();
 
     /**< Helpers */
     void enablePushbuttons(bool enable);
+    void resetUI();
 
 signals:
     void shar_mode_pressed();
@@ -47,12 +49,18 @@ signals:
     void home_pressed();
     void cam_start();
     void takePic_complete();
+    void gif_enabled(bool enable);
 
 private:
     Ui::InterWindow *ui;
 
+    /**< Take pic timer */
     QTimer *_pic_timer;
     int _pic_time_remaining;
+
+    /**< create GIF timer */
+    QTimer *_gif_timer;
+    int _gif_time_remaining;
 };
 
 #endif // INTERWINDOW_H

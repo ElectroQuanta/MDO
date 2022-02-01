@@ -13,6 +13,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(OpenCV_DIR "/usr/local/lib/cmake/opencv4")
 find_package(OpenCV REQUIRED)
+
+find_package(Magick++ REQUIRED)
 #find_package(OpenCV REQUIRED PATHS "/usr/local/lib/")
 #include_directories(${OpenCV_INCLUDE_DIRS})
 

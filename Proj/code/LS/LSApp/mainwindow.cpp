@@ -11,7 +11,8 @@
 
 #include "imgfilter_defs.h" /**< For filters definition */
 
-#include "include/twitcurl.h" /**< Twitter sharing */
+#include <signal.h>
+//#include <Magick++.h>
 
 
 /**< Define relevant paths */
@@ -122,8 +123,8 @@ MainWindow::MainWindow(QWidget *parent)
             this, SLOT( onTakePic_complete() ));
     connect(_imgFiltWind, SIGNAL(imgFiltGlobal(bool)),
             this, SLOT(onImgFiltGlobal(bool)) );
-
-    //connect()
+    connect(_interWind, SIGNAL( gif_enabled(bool) ),
+            this, SLOT( onGifEnabled(bool) ));
 
     /**< Initializing mode */
     _appmode = AppMode::WELCOME;
@@ -135,9 +136,12 @@ MainWindow::MainWindow(QWidget *parent)
     pthread_mutex_init(&_m_cond_cam_started, NULL);
     pthread_mutex_init(&_m_curFrame, NULL);
     pthread_mutex_init(&_m_imgFilter, NULL);
+    pthread_mutex_init(&_m_gif, NULL);
+    pthread_mutex_init(&_m_cond_gif_save, NULL);
 
     /**< Condition variables initialization */
     pthread_cond_init( &_cond_cam_started, 0);
+    pthread_cond_init( &_cond_gif_save, 0);
     //_cond_cam_started = PTHREAD_COND_INITIALIZER;
 
 
@@ -168,6 +172,10 @@ MainWindow::MainWindow(QWidget *parent)
     /**< Twitter */
     _twitterAuthenticated = TwitterAuthenticate();
 
+    /**< GIF */
+    _gif_on = false;
+    _gif_complete = false;
+
     /**< Post */
 //    _post = new Post();
 
@@ -191,6 +199,8 @@ MainWindow::MainWindow(QWidget *parent)
 //                    &MainWindow::gesture_recog_worker_thr, this );
 //    pthread_create( &_twitter_thr, NULL,
 //                    &MainWindow::twitter_worker_thr, this );
+    pthread_create( &_gif_save_thr, NULL,
+                    &MainWindow::gif_save_worker_thr, this );
 }
 
 void MainWindow::onImgFiltGlobal(bool enable){
@@ -210,8 +220,20 @@ MainWindow::~MainWindow() {
 
     /**< Waiting for threads to finish along with the UI */
     pthread_join( _frame_grab_thr, NULL);
+    //pthread_join( _gif_save_thr, NULL);
 
-    //qDebug() << "Destructor called" << endl;
+    /**< Forcing thread to terminate */
+    /* This is required because the thread is thread is instantiated at
+     * startup and is waiting for a signal to execute, staying blocked there
+     *  - The other approach would be to spawn the thread and execute in
+     *    one-shot, dismissing the usage of the condition variable, but
+     *    requiring more resources to startup, negatively affecting system's
+     *    predictibility and execution time
+     *  - NOTE: pthread_kill can be used safely if the appropriate cleanup
+     *    handlers are installed using pthread_cleanup_push and
+     *    pthread_cleanup_pop to deallocate resources.
+     */ 
+    pthread_kill( _gif_save_thr, SIGKILL);
 
     if( _video.isOpened() )
         _video.release();
@@ -432,6 +454,29 @@ void MainWindow::onTakePic_complete(){
     _interWind->updatePicLabel(QString::fromStdString(path));
 }
 
+void MainWindow::onGifEnabled(bool enable){
+
+    /**< Setting logical variables */;
+    pthread_mutex_lock( &_m_gif);
+    _gif_on = enable;
+    _gif_complete = !enable;
+
+//    std::cout << "GIF: On: "
+//              << _gif_on
+//              << ", Complete: "
+//              << _gif_complete
+//              << std::endl;
+
+    pthread_mutex_unlock( &_m_gif);
+    
+    //if(enable){
+    //    _gif_on = true;
+    //}else {
+    //    _gif_on = false;
+    //    _gif_complete = true;
+    //}
+}
+
 /**
  * @brief Frame grabber thread function
  * @param arg: ptr to a UI::MainWindow
@@ -554,6 +599,43 @@ void* MainWindow::gesture_recog_worker_thr(void *arg){
     return NULL;
 }
 
+/**
+ * @brief GIF save thread function
+ * @param arg: ptr to a UI::MainWindow
+ *
+ * detailed
+ */
+void* MainWindow::gif_save_worker_thr(void *arg){
+
+    using namespace cv;
+    MainWindow *mw = (MainWindow *)arg;
+
+    //Mat frame;
+    //QString label_text;
+
+    while(1){
+
+        /**< Waiting for a UI signal */;
+        pthread_mutex_lock( &mw->_m_cond_gif_save);
+        pthread_cond_wait( &mw->_cond_gif_save, &mw->_m_cond_gif_save );
+        pthread_mutex_unlock( &mw->_m_cond_gif_save);
+
+        std::string path;
+
+        /**< Save file to disk */
+        /*< Set media Type and get path */
+        mw->_post.setMediaType(MediaType::GIF);
+        mw->_post.MediaPath(path);
+
+        std::cout << "GIF saved to " << path << std::endl;
+
+        /**< Reset gif vector */
+
+    }
+
+    return NULL;
+}
+
 void MainWindow::displayImg(cv::Mat frame){
 
     //switch(_appmode){
@@ -583,10 +665,20 @@ void MainWindow::displayImg(cv::Mat frame){
     //    break;
     //}
 
+    static bool gif_on = false;
+    static bool gif_complete = false;
+    static int i = 0;
+
     /**< Store current frame */
     pthread_mutex_lock( &_m_curFrame);
     _curFrame = frame;
     pthread_mutex_unlock( &_m_curFrame);
+
+    /**< Store GIF status */
+    pthread_mutex_lock( &_m_gif);
+    gif_on = _gif_on;
+    gif_complete = _gif_complete;
+    pthread_mutex_unlock( &_m_gif);
 
     /**< Recognize gesture */
     this->recognizeGesture(frame);
@@ -594,6 +686,31 @@ void MainWindow::displayImg(cv::Mat frame){
     /**< Apply filter */
     if(_filter_on)
         this->applyFilterOverlay(frame, _filters[_filters_idx]);
+
+    /* GIF management */
+    if(gif_on)
+    {
+        /**< Push frames to vector */
+        std::cout << "Pushing frame " << ++i << std::endl;
+        frames.push_back(_curFrame);
+    }
+
+    if(gif_complete){
+
+        i = 0;
+
+        /**< Reset flag */
+        pthread_mutex_lock( &this->_m_gif);
+        this->_gif_complete = false;
+        pthread_mutex_unlock( &this->_m_gif);
+
+
+        /**< Signal event to waiting thread */
+        pthread_mutex_lock( &this->_m_cond_gif_save);
+        pthread_cond_signal( &this->_cond_gif_save );
+        pthread_mutex_unlock( &this->_m_cond_gif_save);
+
+    }
 
 //    static bool updateCanvas = false;
 //    /**< Store current frame */
