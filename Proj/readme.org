@@ -8623,7 +8623,10 @@ https://upload.twitter.com/1.1/media/upload.json?command=APPEND&media_id=123&seg
   }
   #+END_SRC
 
-* Video Reproduction with Audio in Qt
+* ✔ DONE Video Reproduction with Audio in Qt
+  :LOGBOOK:
+  - State "✔ DONE"     from              [2022-02-02 qua 18:06]
+  :END:
 ** Examples
 *** VideoGraphicsItem
     :PROPERTIES:
@@ -8695,9 +8698,52 @@ https://upload.twitter.com/1.1/media/upload.json?command=APPEND&media_id=123&seg
    m_mediaPlayer->pause();
    m_mediaPlayer->play();
    #+END_SRC
+* Synchronization Class
+[[https://stackoverflow.com/a/33116597/17836786][src]]
+#+BEGIN_SRC c++
+class SyncObjectPosix
+{
+private:
 
+    bool signalled;
+    pthread_mutex_t mutex;
+    pthread_cond_t cond;
 
+public:
 
+    SyncObjectPosix()
+    {
+        signalled = false;
+        pthread_mutex_init(&mutex, NULL);
+        pthread_cond_init(&cond, NULL);
+    }
+
+    ~SyncObjectPosix()
+    {
+        pthread_mutex_destroy(&mutex);
+        pthread_cond_destroy(&cond);
+    }
+
+    void WaitForSignal()
+    {
+        pthread_mutex_lock(&mutex);
+        while (!signalled)
+        {
+            pthread_cond_wait(&cond, &mutex);
+        }
+        signalled = false;
+        pthread_mutex_unlock(&mutex);
+    }
+
+    void Signal()
+    {
+        pthread_mutex_lock(&mutex);
+        signalled = true;
+        pthread_mutex_unlock(&mutex);
+        pthread_cond_signal(&cond);
+    }
+};
+#+END_SRC
 * Mine                                                             :noexport:
 ** Implementation
 *** Project: LS App
@@ -8759,7 +8805,7 @@ https://upload.twitter.com/1.1/media/upload.json?command=APPEND&media_id=123&seg
  - *Top priority*
  - /Medium priority/
  - ~Low priority~
-*** Qt [1/5]
+*** Qt [2/5]
     :PROPERTIES:
     :ID:       7e7c3a09-af4f-4395-a7f8-681dab1b95c1
     :END:
@@ -8781,7 +8827,7 @@ https://upload.twitter.com/1.1/media/upload.json?command=APPEND&media_id=123&seg
       1) compile_commands.json will be written to your build directory.
       2) You should symlink it (or simply copy it) to the root of your
 	source tree, if they are different.
-3) [-] Design the UI
+3) [X] Design the UI
    1) [X] Draw the several UI views following [[id:9fbc087a-a9db-49d1-83ff-f16804ee72dc][method 2]]
       1) [X] Welcome view: =MainWindow=
 	 - displayed when no Ad is supposed to be running
@@ -8802,7 +8848,7 @@ https://upload.twitter.com/1.1/media/upload.json?command=APPEND&media_id=123&seg
 	    2) =Editing=: presents a virtual keyboard (page 1)
 	    3) =Status=: presents a status message box to the user (page 2)
    2) [X] Use dummy pushbuttons to navigate through the several UI views
-   3) [ ] =GestureRecognitionEngine= belongs to =MainWindow=.
+   3) [X] =GestureRecognitionEngine= belongs to =MainWindow=.
       1) It must detect a predefined user gesture
       2) When matched, it emits a signal =gestureDetected()= for the
          =MainWindow= to handle through a =on_gestureDetected()= slot
@@ -8868,7 +8914,7 @@ https://upload.twitter.com/1.1/media/upload.json?command=APPEND&media_id=123&seg
 	 #+BEGIN_SRC bash
 	 QObject::startTimer: Timers cannot be started from another thread 
 	 #+END_SRC
-*** ☛ TODO PRIORITIES [8/10]
+*** ☛ TODO PRIORITIES [8/12]
     :LOGBOOK:
     - State "☛ TODO"     from              [2022-01-06 qui 01:35]
     :END:
@@ -9313,5 +9359,7 @@ OpenCV provides an API for linear blending of two images. The calculation formul
 9) [ ] Reproduce video with audio
    1) See [[id:5f018c90-4ae0-46ec-bb23-1c9829d0d068][setup]] to know how to instantiate a mediaPlayer object
    2) Open URL from folder
-10) [ ] Implement client-server architecture
-
+10) [ ] Create thread to check if normalMode must run
+11) [ ] Create thread for normalModeManager
+    1) Get 
+12) [ ] Implement client-server architecture

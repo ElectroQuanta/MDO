@@ -83,6 +83,9 @@ set(PROJECT_SOURCES
   # post
   post.h
   post.cpp
+  #syncObject
+  syncObject.h
+  syncObject.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

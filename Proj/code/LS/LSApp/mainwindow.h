@@ -20,6 +20,7 @@
 
 /**< Pthreads */
 #include <pthread.h>
+#include "syncObject.h"
 
 /**< STL containers */
 #include <vector>
@@ -168,6 +169,7 @@ private:
     /**< Condition variables */
     pthread_cond_t _cond_cam_started;
     pthread_cond_t _cond_gif_save;
+    SyncObject _gif_save_Obj;
 
     /**< Threads */
     pthread_t _frame_grab_thr; /**< Frame Grabber thread */

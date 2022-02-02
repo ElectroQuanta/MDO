@@ -143,11 +143,11 @@ MainWindow::MainWindow(QWidget *parent)
     pthread_mutex_init(&_m_curFrame, NULL);
     pthread_mutex_init(&_m_imgFilter, NULL);
     pthread_mutex_init(&_m_gif, NULL);
-    pthread_mutex_init(&_m_cond_gif_save, NULL);
+    //pthread_mutex_init(&_m_cond_gif_save, NULL);
 
     /**< Condition variables initialization */
     pthread_cond_init( &_cond_cam_started, 0);
-    pthread_cond_init( &_cond_gif_save, 0);
+    //pthread_cond_init( &_cond_gif_save, 0);
     //_cond_cam_started = PTHREAD_COND_INITIALIZER;
 
 
@@ -646,9 +646,10 @@ void* MainWindow::gif_save_worker_thr(void *arg){
     while(1){
 
         /**< Waiting for a UI signal */;
-        pthread_mutex_lock( &mw->_m_cond_gif_save);
-        pthread_cond_wait( &mw->_cond_gif_save, &mw->_m_cond_gif_save );
-        pthread_mutex_unlock( &mw->_m_cond_gif_save);
+        mw->_gif_save_Obj.WaitForSignal();
+        //pthread_mutex_lock( &mw->_m_cond_gif_save);
+        //pthread_cond_wait( &mw->_cond_gif_save, &mw->_m_cond_gif_save );
+        //pthread_mutex_unlock( &mw->_m_cond_gif_save);
 
         std::string path;
 
@@ -749,9 +750,10 @@ void MainWindow::displayImg(cv::Mat frame){
 
 
         /**< Signal event to waiting thread */
-        pthread_mutex_lock( &this->_m_cond_gif_save);
-        pthread_cond_signal( &this->_cond_gif_save );
-        pthread_mutex_unlock( &this->_m_cond_gif_save);
+        _gif_save_Obj.Signal();
+        //pthread_mutex_lock( &this->_m_cond_gif_save);
+        //pthread_cond_signal( &this->_cond_gif_save );
+        //pthread_mutex_unlock( &this->_m_cond_gif_save);
 
     }
 
