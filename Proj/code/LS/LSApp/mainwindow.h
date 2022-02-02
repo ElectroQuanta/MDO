@@ -118,7 +118,7 @@ private slots:
     void updateScene(AppMode_t mode);
 
     /**< VideoPlayer */
-    void openVideo(const QString fname, QUrl &url);
+    bool openVideo(const QString fname);
 
 /**
  * @brief Compare rectangles by area (descending)

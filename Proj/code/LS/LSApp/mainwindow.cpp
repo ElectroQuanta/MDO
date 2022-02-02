@@ -1048,27 +1048,38 @@ void MainWindow::on_pushButton_clicked(){
     ui->stackedWidget->setCurrentIndex(_appmode);
     pthread_mutex_unlock( &_m_mode);
 
-    QUrl url;
+    //QUrl url;
     #define VIDEO_PATH "../ads/media/video.mp4"
-    openVideo( QString(VIDEO_PATH), url );
-    _mediaPlayer->setMedia( url );
+    if ( openVideo( QString(VIDEO_PATH) ) )
+        _mediaPlayer->play(); /**< Play video */
+    else
+        ui->label_status->setText("Status: [ERROR] Could not open media");
 
-    /**< Play video */
-    _mediaPlayer->play();
 }
 
-void MainWindow::openVideo(const QString fname, QUrl &url){
+bool MainWindow::openVideo(const QString fname){
 
-    /**< Open Video File */
-    QFileDialog fileDialog(this);
-    fileDialog.setAcceptMode(QFileDialog::AcceptOpen);
-    fileDialog.setWindowTitle(tr("Open Movie"));
-    const QStringList supportedMimeTypes = _mediaPlayer->supportedMimeTypes();
-    if (!supportedMimeTypes.isEmpty())
-        fileDialog.setMimeTypeFilters(supportedMimeTypes);
-    fileDialog.setDirectory(QStandardPaths::standardLocations(QStandardPaths::MoviesLocation).value(0, QDir::homePath()));
-    if (fileDialog.exec() == QDialog::Accepted)
-        url = fileDialog.selectedUrls().constFirst();
+//    /**< Open Video File */
+//    QFileDialog fileDialog(this);
+//    fileDialog.setAcceptMode(QFileDialog::AcceptOpen);
+//    fileDialog.setWindowTitle(tr("Open Movie"));
+//    const QStringList supportedMimeTypes = _mediaPlayer->supportedMimeTypes();
+//    if (!supportedMimeTypes.isEmpty())
+//        fileDialog.setMimeTypeFilters(supportedMimeTypes);
+//    fileDialog.setDirectory(QStandardPaths::standardLocations(QStandardPaths::MoviesLocation).value(0, QDir::homePath()));
+//    if (fileDialog.exec() == QDialog::Accepted)
+//        url = fileDialog.selectedUrls().constFirst();
+
+    /**< Get the file info */
+    QFileInfo fileInfo(fname);
+    if( ! fileInfo.exists() )
+        return false;
+
+    _mediaPlayer->setMedia(
+        QUrl::fromLocalFile(fileInfo.absoluteFilePath())
+        );
+
+    return true;
 }
 
 void MainWindow::on_pushButton_2_clicked(){
