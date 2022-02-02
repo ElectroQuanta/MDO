@@ -12,6 +12,11 @@
 #include "imgfilter_defs.h" /**< For filters definition */
 
 #include <signal.h>
+#include <QGraphicsVideoItem>
+#include <QDir>
+#include <QDialog>
+#include <QFileDialog>
+#include <QStandardPaths>
 
 
 /**< Define relevant paths */
@@ -32,7 +37,7 @@
  */
 #define SCREEN_RES_W 600 /**< Width in pixels */
 #define SCREEN_RES_H 1024 /**< Height in pixels */
-#define SCENE_RES_W 800  /**< Height in pixels */
+#define SCENE_RES_H 800  /**< Height in pixels */
 #define CAMERA_RES_W 640
 #define CAMERA_RES_H 480
 
@@ -149,11 +154,11 @@ MainWindow::MainWindow(QWidget *parent)
     QImage img = QImage(WELCOME_IMG_PATH);
     _welcome_img = new QGraphicsPixmapItem( QPixmap::fromImage(img) );
     ui->graphicsView->setScene(new QGraphicsScene(this));
-    ui->graphicsView->scene()->addItem(_welcome_img);
-    ui->graphicsView->fitInView(_welcome_img, Qt::KeepAspectRatio);
+    //ui->graphicsView->scene()->addItem(_welcome_img);
+    //ui->graphicsView->fitInView(_welcome_img, Qt::KeepAspectRatio);
       /**< Adding the img container to the scene */
       // ui->graphicsView->scene()->removeItem(_welcome_img);
-      ui->graphicsView->scene()->addItem(&_pixmap);
+      //ui->graphicsView->scene()->addItem(&_pixmap);
       //ui->graphicsView->installEventFilter(eventFilter);
       _updateCanvas = true;
 
@@ -177,6 +182,13 @@ MainWindow::MainWindow(QWidget *parent)
 
     /**< Post */
 //    _post = new Post();
+
+    /**< VideoPlayer */
+    _mediaPlayer = new QMediaPlayer(this, QMediaPlayer::VideoSurface);
+    _videoItem = new QGraphicsVideoItem;
+    _videoItem->setSize( QSizeF(SCREEN_RES_W-60, SCENE_RES_H-60) );
+    ui->graphicsView->scene()->addItem(_videoItem);
+    _mediaPlayer->setVideoOutput(_videoItem);
 
     /**< Create filters */
     createFilters();
@@ -973,7 +985,7 @@ void MainWindow::Mat2Magick(cv::Mat& src, Magick::Image &mgk){
  * DUMMY buttons to navigate to other windows */
 void MainWindow::on_pushButton_clicked(){
     /**< Remove background image from Welcome screen */
-    ui->graphicsView->scene()->removeItem(_welcome_img);
+//    ui->graphicsView->scene()->removeItem(_welcome_img);
 
     /**< Change mode before jumping */
     pthread_mutex_lock( &_m_mode);
@@ -981,13 +993,24 @@ void MainWindow::on_pushButton_clicked(){
     ui->stackedWidget->setCurrentIndex(_appmode);
     pthread_mutex_unlock( &_m_mode);
 
-    
-    ui->stackedWidget->setCurrentIndex(AppMode::NORMAL);
+    /**< Open Video File */
+    QFileDialog fileDialog(this);
+    fileDialog.setAcceptMode(QFileDialog::AcceptOpen);
+    fileDialog.setWindowTitle(tr("Open Movie"));
+    const QStringList supportedMimeTypes = _mediaPlayer->supportedMimeTypes();
+    if (!supportedMimeTypes.isEmpty())
+        fileDialog.setMimeTypeFilters(supportedMimeTypes);
+    fileDialog.setDirectory(QStandardPaths::standardLocations(QStandardPaths::MoviesLocation).value(0, QDir::homePath()));
+    if (fileDialog.exec() == QDialog::Accepted)
+        _mediaPlayer->setMedia( fileDialog.selectedUrls().constFirst() );
+
+    /**< Play video */
+    _mediaPlayer->play();
 }
 
 void MainWindow::on_pushButton_2_clicked(){
     /**< Remove background image from Welcome screen */
-    ui->graphicsView->scene()->removeItem(_welcome_img);
+//    ui->graphicsView->scene()->removeItem(_welcome_img);
 
 
     /**< Change mode before jumping */
@@ -1008,7 +1031,7 @@ void MainWindow::on_pushButton_2_clicked(){
 
 void MainWindow::on_pushButton_3_clicked(){
     /**< Remove background image from Welcome screen */
-    ui->graphicsView->scene()->removeItem(_welcome_img);
+//    ui->graphicsView->scene()->removeItem(_welcome_img);
 
 
     /**< Change mode before jumping */
@@ -1021,7 +1044,7 @@ void MainWindow::on_pushButton_3_clicked(){
 
 void MainWindow::on_pushButton_4_clicked() {
     /**< Remove background image from Welcome screen */
-    ui->graphicsView->scene()->removeItem(_welcome_img);
+//    ui->graphicsView->scene()->removeItem(_welcome_img);
 
     /**< Change mode before jumping */
     pthread_mutex_lock( &_m_mode);

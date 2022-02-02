@@ -45,8 +45,8 @@ include_directories(${ImageMagick_INCLUDE_DIRS})
 # ============================ Qt
 set(CMAKE_PREFIX_PATH "/home/zmpl/Qt/5.13.2/gcc_64/lib/cmake")
 
-find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets VirtualKeyboard REQUIRED)
-find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets VirtualKeyboard REQUIRED)
+find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets VirtualKeyboard Multimedia MultimediaWidgets REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets VirtualKeyboard Multimedia MultimediaWidgets REQUIRED)
 
 #find_package(pthread REQUIRED)
 
@@ -110,7 +110,7 @@ endif()
 
 # CMAKE IS CASE SENSITIVE
 # src: https://stackoverflow.com/a/60693001/17836786
-target_link_libraries(${PROJECT_NAME} PRIVATE ${OpenCV_LIBS} Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::VirtualKeyboard pthread ${TWITCURL_LIB} ${MAGICK_LD_FLAGS} ${ImageMagick_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} PRIVATE ${OpenCV_LIBS} Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::VirtualKeyboard Qt${QT_VERSION_MAJOR}::Multimedia Qt${QT_VERSION_MAJOR}::MultimediaWidgets pthread ${TWITCURL_LIB} ${MAGICK_LD_FLAGS} ${ImageMagick_LIBRARIES})
 
 # my_tgt can be an executable, library, or module.
 #target_link_options(${PROJECT_NAME} PRIVATE "LINKER:-lopencv_core -lopencv_video -lopencv_videoio")

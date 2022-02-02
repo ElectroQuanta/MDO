@@ -4,6 +4,10 @@
 #include <qnamespace.h>
 //#include <QFile>
 
+#define APP_NAME "LSApp"
+#define ORG_NAME "MDO"
+#define VERSION_STR "1.0"
+
 int main(int argc, char *argv[])
 {
     /**< Enable virtual keyboard */
@@ -11,6 +15,10 @@ int main(int argc, char *argv[])
 
     /**< Instantiating app */
     QApplication a(argc, argv);
+
+    QCoreApplication::setApplicationName(APP_NAME);
+    QCoreApplication::setOrganizationName(ORG_NAME);
+    QCoreApplication::setApplicationVersion(VERSION_STR);
 
     /**< Setting global style */
     /* Reading from file

@@ -36,6 +36,8 @@
 /**< Imagemagick (for GIF generation) */
 #include <Magick++.h>
 
+/**< VideoPlayer */
+#include <QMediaPlayer>
 
 /**
  * @brief App modes
@@ -190,5 +192,9 @@ private:
 
     /**< Post */
     Post _post;
+
+    /**< VideoPlayer */
+    QMediaPlayer *_mediaPlayer = nullptr;
+    QGraphicsVideoItem *_videoItem = nullptr;
 };
 #endif // MAINWINDOW_H
