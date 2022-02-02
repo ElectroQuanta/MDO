@@ -22,6 +22,7 @@
 
 /**< STL containers */
 #include <vector>
+#include <list>
 
 /**< Image filter */
 #include "imgfilter.h"
@@ -31,6 +32,9 @@
 
 /**< Post */
 #include "post.h"
+
+/**< Imagemagick (for GIF generation) */
+#include <Magick++.h>
 
 
 /**
@@ -102,6 +106,9 @@ private slots:
 
     /**< recognize gestures */
     void recognizeGesture(cv::Mat &frame);
+
+    /**< GIF */
+    void Mat2Magick(cv::Mat& src, Magick::Image &mgk);
 
 
 /**
@@ -175,6 +182,7 @@ private:
     bool _gif_on;
     bool _gif_complete;
     std::vector<cv::Mat> frames;
+    std::list<Magick::Image> images; 
 
     /**< Twitter obj */
     twitCurl _twitterObj;

@@ -8525,20 +8525,97 @@ Options used to compile and link:
 
 The =logo.gif= file should be created in the current directory.
 - To open it use =GIMP= or the web browser.
+** Compilation
+   #+BEGIN_SRC bash
+c++ -O2 -o example example.cpp `Magick++-config --cppflags --cxxflags --ldflags --libs` 
+   #+END_SRC
+
+#+BEGIN_SRC bash
+LDFlags: -L/usr/local/lib -lMagick++-7.Q16HDRI -lMagickWand-7.Q16HDRI -lMagickCore-7.Q16HDRI
+#+END_SRC
+
+** ✔ DONE CMake
+   :LOGBOOK:
+   - State "✔ DONE"     from              [2022-02-01 ter 18:58]
+   :END:
+[[https://stackoverflow.com/a/37776099/17836786][src]]
+
+#+BEGIN_SRC cmake
+cmake_minimum_required(VERSION 3.5)
+project(Blah)
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+
+set(SOURCE_FILES main.cpp)
+
+add_executable(Blah ${SOURCE_FILES})
+add_definitions( -DMAGICKCORE_QUANTUM_DEPTH=16 )
+add_definitions( -DMAGICKCORE_HDRI_ENABLE=0 )
+find_package(ImageMagick COMPONENTS Magick++)
+include_directories(${ImageMagick_INCLUDE_DIRS})
+target_link_libraries(Blah ${ImageMagick_LIBRARIES})
+#+END_SRC
+
+*Adapted*:
+#+BEGIN_SRC cmake
+cmake_minimum_required(VERSION 3.5)
+
+project(test)
+
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+
+# get LDFLAGS
+find_program(MAGICK_CONFIG "Magick++-config")
+execute_process(COMMAND "${MAGICK_CONFIG}" "--libs" OUTPUT_VARIABLE MAGICK_LD_FLAGS)
+# Remove trailing whitespace (CMAKE warns about this)
+string(STRIP "${MAGICK_LD_FLAGS}" MAGICK_LD_FLAGS)
+message("LDFlags: ${MAGICK_LD_FLAGS}")
+
+set(SOURCE_FILES readImages.cpp)
+
+# ImageMagick++
+add_executable(${PROJECT_NAME} ${SOURCE_FILES})
+add_definitions( -DMAGICKCORE_QUANTUM_DEPTH=16 )
+add_definitions( -DMAGICKCORE_HDRI_ENABLE=0 )
+find_package(ImageMagick COMPONENTS Magick++)
+include_directories(${ImageMagick_INCLUDE_DIRS})
+target_link_libraries(${PROJECT_NAME} ${MAGICK_LD_FLAGS} ${ImageMagick_LIBRARIES})
+
+#+END_SRC
+
 ** GIFs
 *** ✔ DONE Download
     :LOGBOOK:
     - State "✔ DONE"     from              [2022-02-01 ter 18:19]
     :END:
+**** ✘ CANCELED Giphy
+     :LOGBOOK:
+     - State "✘ CANCELED" from              [2022-02-01 ter 19:56] \\
+       It corrupted the file.
+     :END:
 1) Go to https://giphy.com/categories/memes
 2) Select a GIF
 3) Right-Click over it and select =Open Image in New Tab=
 4) Go to the new tab
 5) Right-Click over the image and select =Save Image as=
 6) Save the file with the =.gif= extension
+**** ✔ DONE Gifer
+     :LOGBOOK:
+     - State "✔ DONE"     from              [2022-02-01 ter 19:57]
+     :END:
+1. Go to https://gifer.com
+2. Select a gif
+3. Press the download button
 *** Open
 1) Just drag and drop the =.gif= file into a Firefox browser tab.
-
+** Usage
+[[http://www.imagemagick.org/Magick++/tutorial/Magick++_tutorial.pdf][src]]
+*** Example program
+[[file:code/imagemagick++][src]]
+*** Reproduce GIF
+https://evileg.com/en/post/266/
 * Mine                                                             :noexport:
 ** Implementation
 *** Project: LS App
@@ -9146,7 +9223,11 @@ OpenCV provides an API for linear blending of two images. The calculation formul
    6) If =gif_on=, =DisplayImg()= pushes frames to an vector
    7) If =gif_complete=:
       1) =gif_complete = false=
-      1) write GIF to file, using the =_post= information
+      2) write GIF to file, using the =_post= information
+	 1) Convert cv::Mat to MagickImage
+	 2) Append Images to ImageAppended
+	 3) Animate images
+	 4) Write images to file
 9) [ ] Reproduce video with audio
 10) [ ] Implement client-server architecture
 

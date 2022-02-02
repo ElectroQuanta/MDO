@@ -12,7 +12,6 @@
 #include "imgfilter_defs.h" /**< For filters definition */
 
 #include <signal.h>
-//#include <Magick++.h>
 
 
 /**< Define relevant paths */
@@ -626,11 +625,16 @@ void* MainWindow::gif_save_worker_thr(void *arg){
         /*< Set media Type and get path */
         mw->_post.setMediaType(MediaType::GIF);
         mw->_post.MediaPath(path);
+        
+        writeImages( mw->images.begin(), mw->images.end(), path );
 
-        std::cout << "GIF saved to " << path << std::endl;
+        /**< Update Status */
+        pthread_mutex_lock( &mw->_m_status_bar);
+        mw->ui->label_status->setText("Status: GIF saved");
+        pthread_mutex_unlock( &mw->_m_status_bar);
 
         /**< Reset gif vector */
-
+        mw->images.clear();
     }
 
     return NULL;
@@ -667,7 +671,7 @@ void MainWindow::displayImg(cv::Mat frame){
 
     static bool gif_on = false;
     static bool gif_complete = false;
-    static int i = 0;
+    //static int i = 0;
 
     /**< Store current frame */
     pthread_mutex_lock( &_m_curFrame);
@@ -690,14 +694,19 @@ void MainWindow::displayImg(cv::Mat frame){
     /* GIF management */
     if(gif_on)
     {
+        Magick::Image img;
+
         /**< Push frames to vector */
-        std::cout << "Pushing frame " << ++i << std::endl;
-        frames.push_back(_curFrame);
+        //std::cout << "Pushing frame " << ++i << std::endl;
+
+        /**< Converting frame to Image and storing it */
+        Mat2Magick(_curFrame, img);
+        images.push_back(img);
     }
 
     if(gif_complete){
 
-        i = 0;
+        //i = 0;
 
         /**< Reset flag */
         pthread_mutex_lock( &this->_m_gif);
@@ -925,6 +934,36 @@ void MainWindow::onTwitterShare(const QString &msg) {
   } else {
       ui->label_status->setText("STATUS: ERROR: post not shared! Please try again...");
   }
+}
+
+/**
+ * @brief Converts OpenCV Mat into Imagemagick Image for GIF generation
+ * @param src: cv::Mat frame
+ * @param mgk: Magick::Image
+ * @return ret
+ *
+ * detailed
+ */
+void MainWindow::Mat2Magick(cv::Mat& src, Magick::Image &mgk){
+    switch(src.channels() ){
+    case 1:
+        cv::cvtColor(src,src, cv::COLOR_GRAY2BGR);
+        cv::cvtColor(src,src, cv::COLOR_BGR2BGRA);
+        mgk = Magick::Image(src.cols, src.rows, "BGRA",
+                            Magick::CharPixel, (char *)src.data);
+        break;
+    case 3:
+        cv::cvtColor(src,src, cv::COLOR_BGR2BGRA);
+        mgk = Magick::Image(src.cols, src.rows, "BGRA",
+                            Magick::CharPixel, (char *)src.data);
+        break;
+    case 4:
+        mgk = Magick::Image(src.cols, src.rows, "BGRA",
+                            Magick::CharPixel, (char *)src.data);
+        break;
+    default:
+        break;
+    }
 }
 
 /* ------------- START DUMMY --------------------
