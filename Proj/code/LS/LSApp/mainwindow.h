@@ -12,6 +12,7 @@
 #include <QImage>
 #include <opencv2/objdetect.hpp>
 #include <qgraphicsitem.h>
+#include <qgraphicsscene.h>
 #include <qwidget.h>
 
 /**< OpenCV */
@@ -38,6 +39,7 @@
 
 /**< VideoPlayer */
 #include <QMediaPlayer>
+#include <QUrl>
 
 /**
  * @brief App modes
@@ -112,6 +114,11 @@ private slots:
     /**< GIF */
     void Mat2Magick(cv::Mat& src, Magick::Image &mgk);
 
+    /**< Scene */
+    void updateScene(AppMode_t mode);
+
+    /**< VideoPlayer */
+    void openVideo(const QString fname, QUrl &url);
 
 /**
  * @brief Compare rectangles by area (descending)
@@ -137,7 +144,7 @@ private:
     ImgFiltWindow *_imgFiltWind; /**< Normal Window ptr */
     SharWindow *_sharWind; /**< Normal Window ptr */
 
-    QGraphicsPixmapItem _pixmap; /**< Holds the grabbed frames */
+    QGraphicsPixmapItem *_pixmap; /**< Holds the grabbed frames */
     QGraphicsPixmapItem *_welcome_img; /**< Welcome img for the UI */
 
     cv::VideoCapture _video; /**< CV video object to handle video */
@@ -175,6 +182,12 @@ private:
     std::vector<ImgFilter> _filters;
     int _filters_idx;
     bool _filter_on;
+
+    /**< Scenes */
+    QGraphicsScene *_welcome_scene;
+    QGraphicsScene *_video_scene;
+    QGraphicsScene *_inter_scene;
+    
 
     /**< Image Acquisition */
     cv::Mat _curFrame;

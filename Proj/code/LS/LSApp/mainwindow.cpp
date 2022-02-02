@@ -4,6 +4,7 @@
 #include <opencv2/imgproc.hpp>
 #include <opencv2/videoio.hpp>
 #include <qgraphicsitem.h>
+#include <qgraphicsscene.h>
 #include <qnamespace.h>
 #include <qwidget.h>
 #include <qdebug.h>
@@ -17,6 +18,7 @@
 #include <QDialog>
 #include <QFileDialog>
 #include <QStandardPaths>
+#include <type_traits>
 
 
 /**< Define relevant paths */
@@ -149,17 +151,38 @@ MainWindow::MainWindow(QWidget *parent)
     //_cond_cam_started = PTHREAD_COND_INITIALIZER;
 
 
+    /**< VideoPlayer */
+    _mediaPlayer = new QMediaPlayer(this, QMediaPlayer::VideoSurface);
+    _videoItem = new QGraphicsVideoItem;
+    _videoItem->setSize( QSizeF(SCREEN_RES_W-60, SCENE_RES_H-60) );
+    //ui->graphicsView->scene()->addItem(_videoItem);
+    _mediaPlayer->setVideoOutput(_videoItem);
+
+
     /**< Initialize graphics view */
     /* Load resource images */
     QImage img = QImage(WELCOME_IMG_PATH);
+
+    /* Scenes */
+    _welcome_scene = new QGraphicsScene(this);
+    _video_scene = new QGraphicsScene(this);
+    _inter_scene = new QGraphicsScene(this);
+
+    /* Welcome scene */
     _welcome_img = new QGraphicsPixmapItem( QPixmap::fromImage(img) );
-    ui->graphicsView->setScene(new QGraphicsScene(this));
-    //ui->graphicsView->scene()->addItem(_welcome_img);
-    //ui->graphicsView->fitInView(_welcome_img, Qt::KeepAspectRatio);
-      /**< Adding the img container to the scene */
-      // ui->graphicsView->scene()->removeItem(_welcome_img);
-      //ui->graphicsView->scene()->addItem(&_pixmap);
-      //ui->graphicsView->installEventFilter(eventFilter);
+    _welcome_scene->addItem(_welcome_img);
+
+    /* Interaction scene */
+    _pixmap = new QGraphicsPixmapItem();
+    _inter_scene->addItem(_pixmap);
+
+    /* Video scene */
+    _video_scene->addItem(_videoItem);
+
+
+    /**< Setting the scene */
+    updateScene(_appmode);
+
       _updateCanvas = true;
 
      /**< Initialize CV cascades */
@@ -183,12 +206,6 @@ MainWindow::MainWindow(QWidget *parent)
     /**< Post */
 //    _post = new Post();
 
-    /**< VideoPlayer */
-    _mediaPlayer = new QMediaPlayer(this, QMediaPlayer::VideoSurface);
-    _videoItem = new QGraphicsVideoItem;
-    _videoItem->setSize( QSizeF(SCREEN_RES_W-60, SCENE_RES_H-60) );
-    ui->graphicsView->scene()->addItem(_videoItem);
-    _mediaPlayer->setVideoOutput(_videoItem);
 
     /**< Create filters */
     createFilters();
@@ -400,7 +417,9 @@ void MainWindow::onCam_started(){
 
     /**< Adding the img container to the scene */
     //ui->graphicsView->scene()->removeItem(_welcome_img);
-    ui->graphicsView->scene()->addItem(&_pixmap);
+    //ui->graphicsView->scene()->addItem(_pixmap);
+
+    ui->graphicsView->setScene(_inter_scene);
 
 
     Mat frame;
@@ -421,11 +440,11 @@ void MainWindow::onCam_started(){
                         frame.rows,
                         frame.step,
                         QImage::Format_RGB888);
-            _pixmap.setPixmap( QPixmap::fromImage(qimg.rgbSwapped()) );
+            _pixmap->setPixmap( QPixmap::fromImage(qimg.rgbSwapped()) );
 
             /**< Aspect ratio */
             /* KeepAspectRatio is what works best */
-            ui->graphicsView->fitInView( &_pixmap , Qt::KeepAspectRatio);
+            ui->graphicsView->fitInView( _pixmap , Qt::KeepAspectRatio);
             //ui->graphicsView->fitInView( &_pixmap ,
             //                             Qt::KeepAspectRatioByExpanding);
             // ui->graphicsView->fitInView( &_pixmap ,
@@ -747,11 +766,11 @@ void MainWindow::displayImg(cv::Mat frame){
     QImage qimg(frame.data, frame.cols, frame.rows, frame.step,
                 QImage::Format_RGB888);
 
-    this->_pixmap.setPixmap(QPixmap::fromImage(qimg.rgbSwapped()));
+    this->_pixmap->setPixmap(QPixmap::fromImage(qimg.rgbSwapped()));
 
     /**< Aspect ratio */
     /* KeepAspectRatio is what works best */
-    this->ui->graphicsView->fitInView(&this->_pixmap, Qt::KeepAspectRatio);
+    this->ui->graphicsView->fitInView(this->_pixmap, Qt::KeepAspectRatio);
     //   }
 }
 
@@ -981,17 +1000,64 @@ void MainWindow::Mat2Magick(cv::Mat& src, Magick::Image &mgk){
     }
 }
 
+void MainWindow::updateScene(AppMode_t mode){
+
+    /**< Default state: Welcome */
+    QGraphicsScene *scene = _welcome_scene;
+    Qt::AspectRatioMode aspectRatioMode = Qt::IgnoreAspectRatio;
+
+    switch (mode){
+        //case AppMode::WELCOME :
+        //    scene = _welcome_scene;
+        //    aspectRatioMode = Qt::IgnoreAspectRatio;
+        //    break;
+       case AppMode::NORMAL :
+           scene = _video_scene;
+           aspectRatioMode = Qt::KeepAspectRatio;
+           break;
+       case AppMode::INTER :
+       case AppMode::IMGFILT :
+       case AppMode::SHAR :
+           scene = _inter_scene;
+           aspectRatioMode = Qt::KeepAspectRatio;
+           break;
+    default:
+        break;
+    }
+
+    ui->graphicsView->setScene(scene);
+    ui->graphicsView->fitInView(scene->items().at(0), aspectRatioMode);
+}
+
 /* ------------- START DUMMY --------------------
  * DUMMY buttons to navigate to other windows */
+
+/**
+ * @brief Navigates to Normal mode (bypassing app logic)
+ *
+ * Dummy function to help navigate the app
+ */
 void MainWindow::on_pushButton_clicked(){
-    /**< Remove background image from Welcome screen */
+//    /**< Remove background image from Welcome screen */
 //    ui->graphicsView->scene()->removeItem(_welcome_img);
 
     /**< Change mode before jumping */
     pthread_mutex_lock( &_m_mode);
     _appmode = AppMode::NORMAL;
+    updateScene(_appmode);
     ui->stackedWidget->setCurrentIndex(_appmode);
     pthread_mutex_unlock( &_m_mode);
+
+    QUrl url;
+    #define VIDEO_PATH "../ads/media/video.mp4"
+    openVideo( QString(VIDEO_PATH), url );
+    _mediaPlayer->setMedia( url );
+
+    /**< Play video */
+    _mediaPlayer->play();
+}
+
+void MainWindow::openVideo(const QString fname, QUrl &url){
 
     /**< Open Video File */
     QFileDialog fileDialog(this);
@@ -1002,31 +1068,32 @@ void MainWindow::on_pushButton_clicked(){
         fileDialog.setMimeTypeFilters(supportedMimeTypes);
     fileDialog.setDirectory(QStandardPaths::standardLocations(QStandardPaths::MoviesLocation).value(0, QDir::homePath()));
     if (fileDialog.exec() == QDialog::Accepted)
-        _mediaPlayer->setMedia( fileDialog.selectedUrls().constFirst() );
-
-    /**< Play video */
-    _mediaPlayer->play();
+        url = fileDialog.selectedUrls().constFirst();
 }
 
 void MainWindow::on_pushButton_2_clicked(){
-    /**< Remove background image from Welcome screen */
-//    ui->graphicsView->scene()->removeItem(_welcome_img);
+    //ui->graphicsView->scene()->removeItem(_videoItem);
+
+    ///**< Remove background image from Welcome screen */
+    //ui->graphicsView->scene()->removeItem(_welcome_img);
 
 
-    /**< Change mode before jumping */
-    pthread_mutex_lock( &_m_mode);
-    _appmode = AppMode::INTER;
-    ui->stackedWidget->setCurrentIndex(_appmode);
-    pthread_mutex_unlock( &_m_mode);
+    ///**< Change mode before jumping */
+    //pthread_mutex_lock( &_m_mode);
+    //_appmode = AppMode::INTER;
+    //ui->stackedWidget->setCurrentIndex(_appmode);
+    //pthread_mutex_unlock( &_m_mode);
 
-    /**< Signaling start condition for worker thread */
-    pthread_mutex_lock( &this->_m_cond_cam_started );
-     //while( count >= COUNT_HALT1 && count <= COUNT_HALT2 )
-     //{
-    pthread_cond_signal( &this->_cond_cam_started );
-        //}
-    pthread_mutex_unlock( &this->_m_cond_cam_started );
+    ///**< Signaling start condition for worker thread */
+    //pthread_mutex_lock( &this->_m_cond_cam_started );
+    // //while( count >= COUNT_HALT1 && count <= COUNT_HALT2 )
+    // //{
+    //pthread_cond_signal( &this->_cond_cam_started );
+    //    //}
+    //pthread_mutex_unlock( &this->_m_cond_cam_started );
     //onCam_started();
+
+    onInter_mode_pressed();
 }
 
 void MainWindow::on_pushButton_3_clicked(){
@@ -1038,6 +1105,7 @@ void MainWindow::on_pushButton_3_clicked(){
     pthread_mutex_lock( &_m_mode);
     _appmode = AppMode::IMGFILT;
     ui->stackedWidget->setCurrentIndex(_appmode);
+    updateScene(_appmode);
     pthread_mutex_unlock( &_m_mode);
 
 }
@@ -1049,17 +1117,15 @@ void MainWindow::on_pushButton_4_clicked() {
     /**< Change mode before jumping */
     pthread_mutex_lock( &_m_mode);
     _appmode = AppMode::SHAR;
+    updateScene(_appmode);
     ui->stackedWidget->setCurrentIndex(_appmode);
     pthread_mutex_unlock( &_m_mode);
 
 }
 
 void MainWindow::onHome_pressed(){
-    //ui->graphicsView->hide();
-//    ui->graphicsView->fitInView( ui->graphicsView->scene()->sceneRect(), Qt::KeepAspectRatio );
-    ui->graphicsView->scene()->addItem(_welcome_img);
-    ui->graphicsView->fitInView(_welcome_img, Qt::IgnoreAspectRatio);
-    //ui->graphicsView->show();
+    /**< Stop video */
+    _mediaPlayer->stop();
 
     /**< Clear status bar */
     emit(textChanged(""));
@@ -1067,6 +1133,7 @@ void MainWindow::onHome_pressed(){
     /**< Change mode before jumping */
     pthread_mutex_lock( &_m_mode);
     _appmode = AppMode::WELCOME;
+    updateScene(_appmode);
     ui->stackedWidget->setCurrentIndex(_appmode);
     pthread_mutex_unlock( &_m_mode);
 
@@ -1074,9 +1141,13 @@ void MainWindow::onHome_pressed(){
 
 void MainWindow::onInter_mode_pressed(){
 
+    /**< Stop video */
+    _mediaPlayer->stop();
+
     /**< Change mode before jumping */
     pthread_mutex_lock( &_m_mode);
     _appmode = AppMode::INTER;
+    updateScene(_appmode);
     ui->stackedWidget->setCurrentIndex(_appmode);
     pthread_mutex_unlock( &_m_mode);
 }
@@ -1091,6 +1162,7 @@ void MainWindow::onImgFilt_mode_pressed(){
     /**< Change mode before jumping */
     pthread_mutex_lock( &_m_mode);
     _appmode = AppMode::IMGFILT;
+    updateScene(_appmode);
     ui->stackedWidget->setCurrentIndex(_appmode);
     pthread_mutex_unlock( &_m_mode);
 }
@@ -1100,6 +1172,7 @@ void MainWindow::onShar_mode_pressed(){
     /**< Change mode before jumping */
     pthread_mutex_lock( &_m_mode);
     _appmode = AppMode::SHAR;
+    updateScene(_appmode);
     ui->stackedWidget->setCurrentIndex(_appmode);
     pthread_mutex_unlock( &_m_mode);
 }

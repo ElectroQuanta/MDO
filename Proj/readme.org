@@ -8626,6 +8626,9 @@ https://upload.twitter.com/1.1/media/upload.json?command=APPEND&media_id=123&seg
 * Video Reproduction with Audio in Qt
 ** Examples
 *** VideoGraphicsItem
+    :PROPERTIES:
+    :ID:       5f018c90-4ae0-46ec-bb23-1c9829d0d068
+    :END:
 [[file:code/video/videographicsitem][src]]
 
 *Steps*:
@@ -8643,7 +8646,6 @@ https://upload.twitter.com/1.1/media/upload.json?command=APPEND&media_id=123&seg
       QMediaPlayer *m_mediaPlayer = nullptr;
       QGraphicsVideoItem *m_videoItem = nullptr;
       #+END_SRC
-
    2) [[file:code/video/videographicsitem/CMakeLists.txt][CMakeLists.txt]]
       #+BEGIN_SRC cmake
       find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets VirtualKeyboard Multimedia MultimediaWidgets REQUIRED)
@@ -9309,6 +9311,7 @@ OpenCV provides an API for linear blending of two images. The calculation formul
 	 3) Animate images
 	 4) Write images to file
 9) [ ] Reproduce video with audio
-   1) 
+   1) See [[id:5f018c90-4ae0-46ec-bb23-1c9829d0d068][setup]] to know how to instantiate a mediaPlayer object
+   2) Open URL from folder
 10) [ ] Implement client-server architecture
 
