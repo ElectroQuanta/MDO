@@ -32,6 +32,7 @@ InterWindow::InterWindow(QWidget *parent) :
     //        this, SLOT(oninterWindUpdateStatus(const QString str)) );
     connect(_pic_timer, SIGNAL(timeout()), this, SLOT(onPicTimerElapsed()) );
     connect(_gif_timer, SIGNAL(timeout()), this, SLOT(onGifTimerElapsed()) );
+    connect(this, SIGNAL(gif_saved()), this, SLOT(onGifSaved()) );
 }
 
 void InterWindow::onPicTimerElapsed(){
@@ -74,9 +75,6 @@ void InterWindow::onGifTimerElapsed(){
         /**< Stop timer */
         _gif_timer->stop();
         
-        /**< Re-enable pushbuttons */
-        enablePushbuttons(true);
-
         /**< Signal event */
         gif_enabled(false);
     }
@@ -230,4 +228,11 @@ void InterWindow::updatePicLabel(QString fname){
     pixmap = pixmap.scaled(ui->timer_setup->size(),Qt::KeepAspectRatio);
     ui->timer_setup->setPixmap(pixmap);
     }
+}
+
+void InterWindow::updateGIFStatus() { emit gif_saved(); }
+
+void InterWindow::onGifSaved(){
+    /**< Re-enable pushbuttons */
+    enablePushbuttons(true);
 }

@@ -20,6 +20,8 @@ public:
 
     //void updatePicLabel(QPixmap pixmap);
     void updatePicLabel(QString fname);
+    void updateGIFStatus();
+
 
 private slots:
     /**< UI */
@@ -35,6 +37,7 @@ private slots:
     //void oninterWindUpdateStatus(const QString str);
     void onPicTimerElapsed();
     void onGifTimerElapsed();
+    void onGifSaved();
 
     /**< Dummy */
     void on_pushButton_clicked();
@@ -50,6 +53,7 @@ signals:
     void cam_start();
     void takePic_complete();
     void gif_enabled(bool enable);
+    void gif_saved();
 
 private:
     Ui::InterWindow *ui;

@@ -8490,7 +8490,10 @@ https://upload.twitter.com/1.1/media/upload.json?command=APPEND&media_id=123&seg
   }
   #+END_SRC
 
-* ImageMagick: Magick++
+* ✔ DONE ImageMagick: Magick++
+  :LOGBOOK:
+  - State "✔ DONE"     from              [2022-02-02 qua 02:01]
+  :END:
 ** ✔ DONE Installation
    :LOGBOOK:
    - State "✔ DONE"     from              [2022-02-01 ter 18:14]
@@ -8786,7 +8789,7 @@ https://evileg.com/en/post/266/
 	 #+BEGIN_SRC bash
 	 QObject::startTimer: Timers cannot be started from another thread 
 	 #+END_SRC
-*** ☛ TODO PRIORITIES [7/10]
+*** ☛ TODO PRIORITIES [8/10]
     :LOGBOOK:
     - State "☛ TODO"     from              [2022-01-06 qui 01:35]
     :END:
@@ -9206,7 +9209,7 @@ OpenCV provides an API for linear blending of two images. The calculation formul
 	    4) Instead of 3:
 	       1) update status bar with "Picture stored!"
 	       2) Set QLabel with current frame
-8) [ ] Create GIF: Interaction mode
+8) [X] Create GIF: Interaction mode
    1) Setup a timer for the GIF and an associated counter
    2) Start the timer
    3) Issue signal =gif_started()=

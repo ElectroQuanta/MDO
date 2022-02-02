@@ -635,6 +635,9 @@ void* MainWindow::gif_save_worker_thr(void *arg){
 
         /**< Reset gif vector */
         mw->images.clear();
+
+        /**< Enable UI pushbuttons again */
+        mw->_interWind->updateGIFStatus();
     }
 
     return NULL;
