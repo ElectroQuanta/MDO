@@ -1,9 +1,9 @@
 /**
- * @file syncObject.h
+ * @file pEvent.h
  * @author Jose Pires
  * @date 2022-02-02
  *
- * @brief Provides an abstraction over the pthread condition variables synchronization mechanism
+ * @brief Pthread event: Provides an abstraction over the pthread condition variables synchronization mechanism
  *
  * 
  */
@@ -13,7 +13,7 @@
 
 #include <pthread.h>
 
-class SyncObject
+class pEvent
 {
 private:
 
@@ -23,8 +23,8 @@ private:
 
 public:
 
-    SyncObject();
-    ~SyncObject();
+    pEvent();
+    ~pEvent();
     void WaitForSignal();
     void Signal();
 };

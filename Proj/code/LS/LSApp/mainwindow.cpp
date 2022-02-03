@@ -143,19 +143,15 @@ MainWindow::MainWindow(QWidget *parent)
     pthread_mutex_init(&_m_curFrame, NULL);
     pthread_mutex_init(&_m_imgFilter, NULL);
     pthread_mutex_init(&_m_gif, NULL);
-    //pthread_mutex_init(&_m_cond_gif_save, NULL);
 
     /**< Condition variables initialization */
     pthread_cond_init( &_cond_cam_started, 0);
-    //pthread_cond_init( &_cond_gif_save, 0);
-    //_cond_cam_started = PTHREAD_COND_INITIALIZER;
 
 
     /**< VideoPlayer */
     _mediaPlayer = new QMediaPlayer(this, QMediaPlayer::VideoSurface);
     _videoItem = new QGraphicsVideoItem;
     _videoItem->setSize( QSizeF(SCREEN_RES_W-60, SCENE_RES_H-60) );
-    //ui->graphicsView->scene()->addItem(_videoItem);
     _mediaPlayer->setVideoOutput(_videoItem);
 
 
@@ -179,7 +175,6 @@ MainWindow::MainWindow(QWidget *parent)
     /* Video scene */
     _video_scene->addItem(_videoItem);
 
-
     /**< Setting the scene */
     updateScene(_appmode);
 
@@ -187,14 +182,10 @@ MainWindow::MainWindow(QWidget *parent)
 
      /**< Initialize CV cascades */
     if( !_face_cascade.load( FACE_CASCADE_FNAME ) )
-    {
-      ui->label_status->setText("Status:  ERROR:  Could not load face cascade");
-    };
+      updateStatusBar("ERROR: Could not load face cascade");
 
     if( !_gesture_cascade.load( GESTURE_CASCADE_FNAME ) )
-    {
-      ui->label_status->setText("Status:  ERROR:  Could not load gesture cascade");
-    };
+      updateStatusBar("ERROR: Could not load gesture cascade");
 
     /**< Twitter */
     _twitterAuthenticated = TwitterAuthenticate();
@@ -206,6 +197,8 @@ MainWindow::MainWindow(QWidget *parent)
     /**< Post */
 //    _post = new Post();
 
+    /**< Ad */
+    _curAd = new Ad();
 
     /**< Create filters */
     createFilters();
@@ -229,15 +222,10 @@ MainWindow::MainWindow(QWidget *parent)
 //                    &MainWindow::twitter_worker_thr, this );
     pthread_create( &_gif_save_thr, NULL,
                     &MainWindow::gif_save_worker_thr, this );
+    pthread_create( &_video_manager_thr, NULL,
+                    &MainWindow::video_manager_worker_thr, this );
 }
 
-void MainWindow::onImgFiltGlobal(bool enable){
-    //std::cout << "ImgFiltGlobal" << std::endl;
-    /**< Enabling filter globally */;
-    pthread_mutex_lock( &this->_m_imgFilter);
-    this->_filter_on = enable;
-    pthread_mutex_unlock( &this->_m_imgFilter);
-}
 
 MainWindow::~MainWindow() {
 
@@ -267,6 +255,14 @@ MainWindow::~MainWindow() {
         _video.release();
 
     delete ui;
+}
+
+void MainWindow::onImgFiltGlobal(bool enable){
+    //std::cout << "ImgFiltGlobal" << std::endl;
+    /**< Enabling filter globally */;
+    pthread_mutex_lock( &this->_m_imgFilter);
+    this->_filter_on = enable;
+    pthread_mutex_unlock( &this->_m_imgFilter);
 }
 
 void MainWindow::createFilters(){
@@ -408,11 +404,11 @@ void MainWindow::onCam_started(){
     /**< Open camera to capture video */
     //if(! _video.open( CAM_IDX , cv::CAP_FFMPEG)){
     if(! _video.open( CAM_IDX , cv::CAP_V4L2)){
-        ui->label_status->setText("Status:  ERROR: could not open camera...");
+        updateStatusBar("ERROR: Could not open camera...");
         return;
     }
     else{
-        ui->label_status->setText("Status:  Camera OK!");
+        updateStatusBar("Camera OK!");
     }
 
     /**< Adding the img container to the scene */
@@ -478,7 +474,7 @@ void MainWindow::onTakePic_complete(){
     cv::imwrite(path, frame);
 
     /**< Update status bar */
-    ui->label_status->setText("Status: Picture taken!");
+    updateStatusBar("Picture taken");
 
     /**< Update Label of interaction window */
     _interWind->updatePicLabel(QString::fromStdString(path));
@@ -646,7 +642,7 @@ void* MainWindow::gif_save_worker_thr(void *arg){
     while(1){
 
         /**< Waiting for a UI signal */;
-        mw->_gif_save_Obj.WaitForSignal();
+        mw->_ev_gif_save.WaitForSignal();
         //pthread_mutex_lock( &mw->_m_cond_gif_save);
         //pthread_cond_wait( &mw->_cond_gif_save, &mw->_m_cond_gif_save );
         //pthread_mutex_unlock( &mw->_m_cond_gif_save);
@@ -661,9 +657,51 @@ void* MainWindow::gif_save_worker_thr(void *arg){
         writeImages( mw->images.begin(), mw->images.end(), path );
 
         /**< Update Status */
-        pthread_mutex_lock( &mw->_m_status_bar);
-        mw->ui->label_status->setText("Status: GIF saved");
-        pthread_mutex_unlock( &mw->_m_status_bar);
+        mw->updateStatusBar("GIF saved!");
+
+        /**< Reset gif vector */
+        mw->images.clear();
+
+        /**< Enable UI pushbuttons again */
+        mw->_interWind->updateGIFStatus();
+    }
+
+    return NULL;
+}
+
+
+/**
+ * @brief Video manager thread function
+ * @param arg: ptr to a UI::MainWindow
+ *
+ * detailed
+ */
+void* MainWindow::video_manager_worker_thr(void *arg){
+
+    using namespace cv;
+    MainWindow *mw = (MainWindow *)arg;
+
+    //Mat frame;
+    //QString label_text;
+
+    while(1){
+
+        /**< Waiting for a UI signal */;
+        mw->_ev_gif_save.WaitForSignal();
+
+        std::string path;
+
+        /**< Save file to disk */
+        /*< Set media Type and get path */
+        mw->_post.setMediaType(MediaType::GIF);
+        mw->_post.MediaPath(path);
+        
+        writeImages( mw->images.begin(), mw->images.end(), path );
+
+        /**< Update Status */
+        //pthread_mutex_lock( &mw->_m_status_bar);
+        //mw->ui->label_status->setText("Status: GIF saved");
+        //pthread_mutex_unlock( &mw->_m_status_bar);
 
         /**< Reset gif vector */
         mw->images.clear();
@@ -750,7 +788,7 @@ void MainWindow::displayImg(cv::Mat frame){
 
 
         /**< Signal event to waiting thread */
-        _gif_save_Obj.Signal();
+        _ev_gif_save.Signal();
         //pthread_mutex_lock( &this->_m_cond_gif_save);
         //pthread_cond_signal( &this->_cond_gif_save );
         //pthread_mutex_unlock( &this->_m_cond_gif_save);
@@ -862,8 +900,9 @@ void MainWindow::recognizeGesture(cv::Mat &frame){
 
           std::string statusStr = "Status: Gest detected: (x,y): " +
               std::to_string(p.x) + "," + std::to_string(p.y);
-          
-          ui->label_status->setText(QString::fromStdString(statusStr));
+
+        updateStatusBar(QString::fromStdString(statusStr)  );
+
 
           /**< Emulate mouse press */
           QPoint screenPos = QPoint(p.x, p.y);
@@ -955,8 +994,7 @@ void MainWindow::onTwitterShare(const QString &msg) {
     /* Authenticate to Twitter */
     if( ! _twitterAuthenticated ){
         if( ! TwitterAuthenticate() )
-          ui->label_status->setText(
-              "Status:  ERROR:  Could not authenticate to Twitter");
+            updateStatusBar("ERROR: could not authenticate to Twitter!");
         return;
     }
 
@@ -966,9 +1004,9 @@ void MainWindow::onTwitterShare(const QString &msg) {
     tmpStr += msg.toStdString();
 
   if (_twitterObj.statusUpdate(tmpStr)) {
-      ui->label_status->setText("STATUS: post shared!");
+      updateStatusBar("Post shared!");
   } else {
-      ui->label_status->setText("STATUS: ERROR: post not shared! Please try again...");
+      updateStatusBar("ERROR: post not shared! Please try again...");
   }
 }
 
@@ -1055,7 +1093,7 @@ void MainWindow::on_pushButton_clicked(){
     if ( openVideo( QString(VIDEO_PATH) ) )
         _mediaPlayer->play(); /**< Play video */
     else
-        ui->label_status->setText("Status: [ERROR] Could not open media");
+        updateStatusBar("ERROR: could not open media!");
 
 }
 
@@ -1206,4 +1244,10 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event)
             return true;
         }
         return false;
+}
+
+void MainWindow::updateStatusBar(const QString str){
+    QString statusStr = "STATUS: " + str;
+    /**< Update Status */
+    emit textChanged(statusStr);
 }

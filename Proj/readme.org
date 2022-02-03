@@ -8698,7 +8698,7 @@ https://upload.twitter.com/1.1/media/upload.json?command=APPEND&media_id=123&seg
    m_mediaPlayer->pause();
    m_mediaPlayer->play();
    #+END_SRC
-* Synchronization Class
+* Synchronization Class                                            :noexport:
 [[https://stackoverflow.com/a/33116597/17836786][src]]
 #+BEGIN_SRC c++
 class SyncObjectPosix
@@ -8744,6 +8744,10 @@ public:
     }
 };
 #+END_SRC
+* Uncompress files
+[[https://www.youtube.com/watch?v=41L6kslUmhU][src]]
+
+*TODO*: Add support for zip files in the next release
 * Mine                                                             :noexport:
 ** Implementation
 *** Project: LS App
@@ -8914,7 +8918,7 @@ public:
 	 #+BEGIN_SRC bash
 	 QObject::startTimer: Timers cannot be started from another thread 
 	 #+END_SRC
-*** ☛ TODO PRIORITIES [8/12]
+*** ☛ TODO PRIORITIES [9/14]
     :LOGBOOK:
     - State "☛ TODO"     from              [2022-01-06 qui 01:35]
     :END:
@@ -9356,10 +9360,29 @@ OpenCV provides an API for linear blending of two images. The calculation formul
 	 2) Append Images to ImageAppended
 	 3) Animate images
 	 4) Write images to file
-9) [ ] Reproduce video with audio
+9) [X] Reproduce video with audio
    1) See [[id:5f018c90-4ae0-46ec-bb23-1c9829d0d068][setup]] to know how to instantiate a mediaPlayer object
    2) Open URL from folder
 10) [ ] Create thread to check if normalMode must run
-11) [ ] Create thread for normalModeManager
-    1) Get 
-12) [ ] Implement client-server architecture
+    1) Create a timer to trigger periodically (every hour)
+    2) Create a callback
+       1) Get current time
+       2) Convert it to time from beginning of week: =cur_timeslot=
+       3) Get Ad stored timeslot (in ads)
+       4) If =cur_timeslot == ad_timeslot=
+	  1) =cur_ad = ad=
+	  2) =cur_ad.enable()=
+11) [ ] Create thread for videoManager
+    1) while(1)
+       1) =if cur_ad.enabled()=
+	  1) get =media_files= urls
+	  2) For each =media_file_url=
+	     1) Set =media_file_url=
+	     2) Play video
+	     3) =while (_mediaPlayer.State() !=QMediaPlayer::StoppedState)=
+		1) if !cur_ad_enabled() || appmode
+	     4) Go to 2)
+       2) else, do nothing
+12) [ ] Create thread for fragranceDiffuser
+13) [ ] Create thread to download files
+14) [ ] Implement client-server architecture

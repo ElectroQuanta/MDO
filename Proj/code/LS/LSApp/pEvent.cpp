@@ -1,25 +1,25 @@
 /**
- * @file syncObject.cpp
+ * @file pEvent.cpp
  * @author Jose Pires
  * @date 2022-02-02
  *
- * @brief Implementation file for SyncObject class
+ * @brief Implementation file for pEvent class
  *
  */
-#include "syncObject.h"
+#include "pEvent.h"
 
-SyncObject::SyncObject() {
+pEvent::pEvent() {
   signalled = false;
   pthread_mutex_init(&mutex, NULL);
   pthread_cond_init(&cond, NULL);
 }
 
-SyncObject::~SyncObject() {
+pEvent::~pEvent() {
   pthread_mutex_destroy(&mutex);
   pthread_cond_destroy(&cond);
 }
 
-void SyncObject::WaitForSignal() {
+void pEvent::WaitForSignal() {
   pthread_mutex_lock(&mutex);
   while (!signalled) {
     pthread_cond_wait(&cond, &mutex);
@@ -28,7 +28,7 @@ void SyncObject::WaitForSignal() {
   pthread_mutex_unlock(&mutex);
 }
 
-void SyncObject::Signal() {
+void pEvent::Signal() {
   pthread_mutex_lock(&mutex);
   signalled = true;
   pthread_mutex_unlock(&mutex);

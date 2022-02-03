@@ -20,7 +20,7 @@
 
 /**< Pthreads */
 #include <pthread.h>
-#include "syncObject.h"
+#include "pEvent.h"
 
 /**< STL containers */
 #include <vector>
@@ -40,7 +40,10 @@
 
 /**< VideoPlayer */
 #include <QMediaPlayer>
-#include <QUrl>
+//#include <QUrl>
+
+/**< Ad */
+#include "ad.h"
 
 /**
  * @brief App modes
@@ -105,6 +108,7 @@ private slots:
     static void* gesture_recog_worker_thr(void* arg);
     //static void* twitter_worker_thr(void* arg);
     static void* gif_save_worker_thr(void* arg);
+    static void* video_manager_worker_thr(void* arg);
 
     /**< Twitter sharing */
     bool TwitterAuthenticate();
@@ -120,6 +124,9 @@ private slots:
 
     /**< VideoPlayer */
     bool openVideo(const QString fname);
+
+    /**< Helpers */
+    void updateStatusBar(const QString str);
 
 /**
  * @brief Compare rectangles by area (descending)
@@ -139,14 +146,14 @@ signals:
     void imgGrabbed(cv::Mat frame);
 
 private:
-    Ui::MainWindow *ui; /**< UI main view */
-    NormalWindow *_normalWind; /**< Normal Window ptr */
-    InterWindow *_interWind; /**< Normal Window ptr */
-    ImgFiltWindow *_imgFiltWind; /**< Normal Window ptr */
-    SharWindow *_sharWind; /**< Normal Window ptr */
+    Ui::MainWindow *ui = nullptr; /**< UI main view */
+    NormalWindow *_normalWind = nullptr; /**< Normal Window ptr */
+    InterWindow *_interWind = nullptr; /**< Normal Window ptr */
+    ImgFiltWindow *_imgFiltWind = nullptr; /**< Normal Window ptr */
+    SharWindow *_sharWind = nullptr; /**< Normal Window ptr */
 
-    QGraphicsPixmapItem *_pixmap; /**< Holds the grabbed frames */
-    QGraphicsPixmapItem *_welcome_img; /**< Welcome img for the UI */
+    QGraphicsPixmapItem *_pixmap = nullptr; /**< Holds the grabbed frames */
+    QGraphicsPixmapItem *_welcome_img = nullptr; /**< Welcome img for the UI */
 
     cv::VideoCapture _video; /**< CV video object to handle video */
     cv::CascadeClassifier _face_cascade; /**< Haar cascade to detect faces */
@@ -164,18 +171,19 @@ private:
     pthread_mutex_t 	_m_gif; /**< Protects access to GIF resources */
     /* For condition variables */
     pthread_mutex_t _m_cond_cam_started;
-    pthread_mutex_t _m_cond_gif_save;
+    //pthread_mutex_t _m_cond_gif_save;
 
-    /**< Condition variables */
+    /**< Pthread events: Condition variables */
     pthread_cond_t _cond_cam_started;
-    pthread_cond_t _cond_gif_save;
-    SyncObject _gif_save_Obj;
+    //pthread_cond_t _cond_gif_save;
+    pEvent _ev_gif_save;
 
     /**< Threads */
     pthread_t _frame_grab_thr; /**< Frame Grabber thread */
     pthread_t _gesture_recog_thr; /**< Gesture recognition thread */
     pthread_t _twitter_thr; /**< Twitter sharing thread */
     pthread_t _gif_save_thr; /**< Twitter sharing thread */
+    pthread_t _video_manager_thr; /**< Video manager thread */
 
 
     /**< Filters */
@@ -186,9 +194,9 @@ private:
     bool _filter_on;
 
     /**< Scenes */
-    QGraphicsScene *_welcome_scene;
-    QGraphicsScene *_video_scene;
-    QGraphicsScene *_inter_scene;
+    QGraphicsScene *_welcome_scene = nullptr;
+    QGraphicsScene *_video_scene = nullptr;
+    QGraphicsScene *_inter_scene = nullptr;
     
 
     /**< Image Acquisition */
@@ -211,5 +219,8 @@ private:
     /**< VideoPlayer */
     QMediaPlayer *_mediaPlayer = nullptr;
     QGraphicsVideoItem *_videoItem = nullptr;
+
+    /**< Ad */
+    Ad *_curAd;
 };
 #endif // MAINWINDOW_H
