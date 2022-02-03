@@ -40,6 +40,7 @@
 
 /**< VideoPlayer */
 #include <QMediaPlayer>
+#include <QMediaPlaylist>
 //#include <QUrl>
 
 /**< Ad */
@@ -91,6 +92,8 @@ private slots:
     void onTakePic_complete();
     void onImgFiltGlobal(bool enable);
     void onGifEnabled(bool enable);
+    void onMediaPlayerStateChanged(QMediaPlayer::State state);
+    void OnMediaStatusChanged(QMediaPlayer::MediaStatus status);
 
     bool eventFilter(QObject *, QEvent *);
 
@@ -127,6 +130,10 @@ private slots:
 
     /**< Helpers */
     void updateStatusBar(const QString str);
+    AppMode_t appMode();
+    void setAppMode(AppMode_t mode);
+    void filterEnable(bool enable);
+    bool filterEnabled();
 
 /**
  * @brief Compare rectangles by area (descending)
@@ -177,6 +184,8 @@ private:
     pthread_cond_t _cond_cam_started;
     //pthread_cond_t _cond_gif_save;
     pEvent _ev_gif_save;
+    pEvent _ev_normal_mode;
+    pEvent _ev_frame_grab;
 
     /**< Threads */
     pthread_t _frame_grab_thr; /**< Frame Grabber thread */
@@ -218,9 +227,10 @@ private:
 
     /**< VideoPlayer */
     QMediaPlayer *_mediaPlayer = nullptr;
+    QMediaPlaylist *_mediaPlaylist = nullptr;
     QGraphicsVideoItem *_videoItem = nullptr;
 
     /**< Ad */
-    Ad *_curAd;
+    Ad _curAd;
 };
 #endif // MAINWINDOW_H

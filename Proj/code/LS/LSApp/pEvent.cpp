@@ -31,6 +31,6 @@ void pEvent::WaitForSignal() {
 void pEvent::Signal() {
   pthread_mutex_lock(&mutex);
   signalled = true;
-  pthread_mutex_unlock(&mutex);
   pthread_cond_signal(&cond);
+  pthread_mutex_unlock(&mutex);
 }

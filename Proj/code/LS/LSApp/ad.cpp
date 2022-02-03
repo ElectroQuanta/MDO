@@ -10,12 +10,16 @@
 #include "ad.h"
 #include <fstream>
 
+const std::string Ad::ads_path_prefix = "../ads/";
+const std::string Ad::media_path_prefix = "media/";
+
 Ad::Ad(std::string fname, std::string link, int fragID, int filterID,
        int timeslot) {
     pthread_mutex_init(&_mutex, NULL);
 
     setFname(fname);
     setLink(link);
+    setMediaPath(fname);
     setFragID(fragID);
     setFilterID(filterID);
     setTimeslot(timeslot);
@@ -32,6 +36,9 @@ void Ad::fname(std::string &fname){
 }
 void Ad::link(std::string &link){
     link = _link; 
+}
+void Ad::mediaPath(std::string &mediaPath){
+    mediaPath = _mediaPath; 
 }
 int Ad::fragID() const{
     return _fragranceID;
@@ -58,6 +65,9 @@ void Ad::setFname(std::string fname){
 void Ad::setLink(std::string link){
     _link = link;
 }
+void Ad::setMediaPath(std::string mediaPath){
+    _mediaPath = ads_path_prefix + media_path_prefix + mediaPath;
+}
 void Ad::setFragID(int id){
     _fragranceID = id;
 }
@@ -75,7 +85,7 @@ void Ad::enable(bool enabled){
 
 bool Ad::save(){
 
-    std::string path = "../ads/" + _fname + ".txt";
+    std::string path = ads_path_prefix + _fname + ".txt";
     std::ofstream file (path);
 
     /**< Try to open file */
@@ -93,7 +103,7 @@ bool Ad::save(){
 }
 
 bool Ad::load(std::string fname){
-    std::string path = "../ads/" + fname + ".txt";
+    std::string path = ads_path_prefix + _fname + ".txt";
     std::ifstream file (path);
 
     /**< Try to open file */

@@ -5,6 +5,7 @@
 #include <opencv2/videoio.hpp>
 #include <qgraphicsitem.h>
 #include <qgraphicsscene.h>
+#include <qmediaplayer.h>
 #include <qnamespace.h>
 #include <qwidget.h>
 #include <qdebug.h>
@@ -99,6 +100,17 @@ MainWindow::MainWindow(QWidget *parent)
     ui->stackedWidget->insertWidget(AppMode::IMGFILT, _imgFiltWind);
     ui->stackedWidget->insertWidget(AppMode::SHAR, _sharWind);
 
+    /**< VideoPlayer */
+    _mediaPlayer = new QMediaPlayer(this, QMediaPlayer::VideoSurface);
+    _videoItem = new QGraphicsVideoItem;
+    _videoItem->setSize( QSizeF(SCREEN_RES_W-60, SCENE_RES_H-60) );
+    _mediaPlayer->setVideoOutput(_videoItem);
+
+    //_mediaPlaylist = new QMediaPlaylist();
+    //_mediaPlaylist->setPlaybackMode(QMediaPlaylist::Loop);
+    //_mediaPlayer->setPlaylist(_mediaPlaylist);
+
+
     /**< Connect signals to slots */
     /* UIs */ 
     connect(_normalWind, SIGNAL( home_pressed() ),
@@ -131,9 +143,15 @@ MainWindow::MainWindow(QWidget *parent)
             this, SLOT(onImgFiltGlobal(bool)) );
     connect(_interWind, SIGNAL( gif_enabled(bool) ),
             this, SLOT( onGifEnabled(bool) ));
+//    connect(_mediaPlayer, SIGNAL(stateChanged(QMediaPlayer::State)),
+//            this, SLOT(onMediaPlayerStateChanged(QMediaPlayer::State)));
+    connect(_mediaPlayer,
+            SIGNAL(mediaStatusChanged(QMediaPlayer::MediaStatus)),
+            this,
+            SLOT(OnMediaStatusChanged(QMediaPlayer::MediaStatus)));
 
     /**< Initializing mode */
-    _appmode = AppMode::WELCOME;
+    setAppMode(AppMode::WELCOME);
 
     /**< Mutexes initialization */
     pthread_mutex_init(&_m_status_bar, NULL);
@@ -146,13 +164,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     /**< Condition variables initialization */
     pthread_cond_init( &_cond_cam_started, 0);
-
-
-    /**< VideoPlayer */
-    _mediaPlayer = new QMediaPlayer(this, QMediaPlayer::VideoSurface);
-    _videoItem = new QGraphicsVideoItem;
-    _videoItem->setSize( QSizeF(SCREEN_RES_W-60, SCENE_RES_H-60) );
-    _mediaPlayer->setVideoOutput(_videoItem);
 
 
     /**< Initialize graphics view */
@@ -198,12 +209,12 @@ MainWindow::MainWindow(QWidget *parent)
 //    _post = new Post();
 
     /**< Ad */
-    _curAd = new Ad();
+    //_curAd = new Ad();
 
     /**< Create filters */
     createFilters();
     _filter_on = false;
-
+    //filterEnable(false);
 
     /**< Threads */
     /*--*
@@ -229,13 +240,11 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow() {
 
-    /**< Getting the mode to decide flow */;
-    pthread_mutex_lock( &this->_m_mode);
-    this->_appmode = AppMode::QUIT;
-    pthread_mutex_unlock( &this->_m_mode);
+    /**< Defining the state */;
+    setAppMode(AppMode::QUIT);
 
     /**< Waiting for threads to finish along with the UI */
-    pthread_join( _frame_grab_thr, NULL);
+    //pthread_join( _frame_grab_thr, NULL);
     //pthread_join( _gif_save_thr, NULL);
 
     /**< Forcing thread to terminate */
@@ -249,7 +258,9 @@ MainWindow::~MainWindow() {
      *    handlers are installed using pthread_cleanup_push and
      *    pthread_cleanup_pop to deallocate resources.
      */ 
+    pthread_kill( _frame_grab_thr, SIGKILL);
     pthread_kill( _gif_save_thr, SIGKILL);
+    pthread_kill( _video_manager_thr, SIGKILL);
 
     if( _video.isOpened() )
         _video.release();
@@ -259,10 +270,7 @@ MainWindow::~MainWindow() {
 
 void MainWindow::onImgFiltGlobal(bool enable){
     //std::cout << "ImgFiltGlobal" << std::endl;
-    /**< Enabling filter globally */;
-    pthread_mutex_lock( &this->_m_imgFilter);
-    this->_filter_on = enable;
-    pthread_mutex_unlock( &this->_m_imgFilter);
+    filterEnable(enable);
 }
 
 void MainWindow::createFilters(){
@@ -514,25 +522,25 @@ void* MainWindow::frame_grabber_worker_thr(void *arg){
     using namespace cv;
     MainWindow *mw = (MainWindow *)arg;
 
-    AppMode_t _mode = AppMode::INTER;
+    AppMode_t mode = AppMode::INTER;
     Mat frame;
     QString label_text;
     //#define STEP 3840
 
+    //mw->_ev_frame_grab.WaitForSignal();
+
     while(1){
 
         /**< Getting the mode to decide flow */;
-        pthread_mutex_lock( &mw->_m_mode);
-        _mode = mw->_appmode;
-        pthread_mutex_unlock( &mw->_m_mode);
+        mode = mw->appMode();
 
         /**< If App was quitted, terminate thread */
-        if(_mode == AppMode::QUIT) 
+        if(mode == AppMode::QUIT) 
             return NULL;
 
         /**< Check for interaction or img filter modes */
-        if(_mode == AppMode::INTER || _mode == AppMode::IMGFILT
-           || _mode == AppMode::SHAR){
+        if(mode == AppMode::INTER || mode == AppMode::IMGFILT
+           || mode == AppMode::SHAR){
 
           if (mw->_video.isOpened()) {
             /**< Acquiring frame */
@@ -678,36 +686,42 @@ void* MainWindow::gif_save_worker_thr(void *arg){
  */
 void* MainWindow::video_manager_worker_thr(void *arg){
 
-    using namespace cv;
     MainWindow *mw = (MainWindow *)arg;
 
-    //Mat frame;
-    //QString label_text;
+    /**< Waiting for a UI signal */;
+    //mw->_ev_normal_mode.WaitForSignal();
+
+#define VIDEO_FNAME "video.mp4"
+    mw->_curAd = Ad(VIDEO_FNAME);
+
+    /**< obtain filepath */
+    std::string mediaPath;
+    mw->_curAd.mediaPath(mediaPath);
+
+//    volatile QMediaPlayer::State state;
 
     while(1){
+        if(mw->appMode() != AppMode::NORMAL)
+            mw->_mediaPlayer->stop(); /**< Play video */
+        else{
+          if ( ! mw->_curAd.enabled() ) {
+             mw->OnMediaStatusChanged(
+                 QMediaPlayer::MediaStatus::EndOfMedia);
+              
+            // /**< Try to open the file */
+            //if (!mw->openVideo(QString::fromStdString(mediaPath))) {
+            //  mw->_curAd.enable(false);
+            //  // mw->updateStatusBar("ERROR: could not open media");
+            //  std::cout << "Could not open media " << mediaPath <<
+            //      std::endl;
+            //} else {
+            //  mw->_curAd.enable(true);
+            //  mw->_mediaPlayer->play(); /**< Play video */
+            //  std::cout << "Enabled: " << mediaPath << std::endl;
+            //}
+          }
+        }
 
-        /**< Waiting for a UI signal */;
-        mw->_ev_gif_save.WaitForSignal();
-
-        std::string path;
-
-        /**< Save file to disk */
-        /*< Set media Type and get path */
-        mw->_post.setMediaType(MediaType::GIF);
-        mw->_post.MediaPath(path);
-        
-        writeImages( mw->images.begin(), mw->images.end(), path );
-
-        /**< Update Status */
-        //pthread_mutex_lock( &mw->_m_status_bar);
-        //mw->ui->label_status->setText("Status: GIF saved");
-        //pthread_mutex_unlock( &mw->_m_status_bar);
-
-        /**< Reset gif vector */
-        mw->images.clear();
-
-        /**< Enable UI pushbuttons again */
-        mw->_interWind->updateGIFStatus();
     }
 
     return NULL;
@@ -761,7 +775,7 @@ void MainWindow::displayImg(cv::Mat frame){
     this->recognizeGesture(frame);
 
     /**< Apply filter */
-    if(_filter_on)
+    if( _filter_on )
         this->applyFilterOverlay(frame, _filters[_filters_idx]);
 
     /* GIF management */
@@ -1082,19 +1096,13 @@ void MainWindow::on_pushButton_clicked(){
 //    ui->graphicsView->scene()->removeItem(_welcome_img);
 
     /**< Change mode before jumping */
-    pthread_mutex_lock( &_m_mode);
-    _appmode = AppMode::NORMAL;
-    updateScene(_appmode);
-    ui->stackedWidget->setCurrentIndex(_appmode);
-    pthread_mutex_unlock( &_m_mode);
+    AppMode_t mode = AppMode::NORMAL;
+    updateScene(mode);
+    ui->stackedWidget->setCurrentIndex(mode);
+    setAppMode(mode);
 
-    //QUrl url;
-    #define VIDEO_PATH "../ads/media/video.mp4"
-    if ( openVideo( QString(VIDEO_PATH) ) )
-        _mediaPlayer->play(); /**< Play video */
-    else
-        updateStatusBar("ERROR: could not open media!");
-
+    /**< Waiting for a UI signal */;
+    //this->_ev_normal_mode.Signal();
 }
 
 bool MainWindow::openVideo(const QString fname){
@@ -1114,6 +1122,10 @@ bool MainWindow::openVideo(const QString fname){
     QFileInfo fileInfo(fname);
     if( ! fileInfo.exists() )
         return false;
+
+    //this->_mediaPlaylist->addMedia(
+    //    QUrl::fromLocalFile(fileInfo.absoluteFilePath())
+    //    );
 
     _mediaPlayer->setMedia(
         QUrl::fromLocalFile(fileInfo.absoluteFilePath())
@@ -1148,84 +1160,70 @@ void MainWindow::on_pushButton_2_clicked(){
 }
 
 void MainWindow::on_pushButton_3_clicked(){
-    /**< Remove background image from Welcome screen */
-//    ui->graphicsView->scene()->removeItem(_welcome_img);
-
-
-    /**< Change mode before jumping */
-    pthread_mutex_lock( &_m_mode);
-    _appmode = AppMode::IMGFILT;
-    ui->stackedWidget->setCurrentIndex(_appmode);
-    updateScene(_appmode);
-    pthread_mutex_unlock( &_m_mode);
-
+    onImgFilt_mode_pressed();
 }
 
 void MainWindow::on_pushButton_4_clicked() {
-    /**< Remove background image from Welcome screen */
-//    ui->graphicsView->scene()->removeItem(_welcome_img);
-
-    /**< Change mode before jumping */
-    pthread_mutex_lock( &_m_mode);
-    _appmode = AppMode::SHAR;
-    updateScene(_appmode);
-    ui->stackedWidget->setCurrentIndex(_appmode);
-    pthread_mutex_unlock( &_m_mode);
-
+    onShar_mode_pressed();
 }
 
 void MainWindow::onHome_pressed(){
     /**< Stop video */
-    _mediaPlayer->stop();
+    //_mediaPlayer->stop();
 
     /**< Clear status bar */
     emit(textChanged(""));
 
     /**< Change mode before jumping */
-    pthread_mutex_lock( &_m_mode);
-    _appmode = AppMode::WELCOME;
-    updateScene(_appmode);
-    ui->stackedWidget->setCurrentIndex(_appmode);
-    pthread_mutex_unlock( &_m_mode);
+    AppMode_t mode = AppMode::WELCOME;
+    updateScene(mode);
+    ui->stackedWidget->setCurrentIndex(mode);
+    setAppMode(mode);
 
+    this->_curAd.enable(false);
 }
 
 void MainWindow::onInter_mode_pressed(){
 
     /**< Stop video */
-    _mediaPlayer->stop();
+    //_mediaPlayer->stop();
 
     /**< Change mode before jumping */
-    pthread_mutex_lock( &_m_mode);
-    _appmode = AppMode::INTER;
-    updateScene(_appmode);
-    ui->stackedWidget->setCurrentIndex(_appmode);
-    pthread_mutex_unlock( &_m_mode);
+    AppMode_t mode = AppMode::INTER;
+    updateScene(mode);
+    ui->stackedWidget->setCurrentIndex(mode);
+    setAppMode(mode);
+
+    /**< Signal event */
+    //this->_ev_frame_grab.Signal();
+
 }
 
 void MainWindow::onImgFilt_mode_pressed(){
 
     /**< Enabling filter globally */;
-    pthread_mutex_lock( &this->_m_imgFilter);
-    this->_filter_on = true;
-    pthread_mutex_unlock( &this->_m_imgFilter);
+    onImgFiltGlobal(true);
 
     /**< Change mode before jumping */
-    pthread_mutex_lock( &_m_mode);
-    _appmode = AppMode::IMGFILT;
-    updateScene(_appmode);
-    ui->stackedWidget->setCurrentIndex(_appmode);
-    pthread_mutex_unlock( &_m_mode);
+    AppMode_t mode = AppMode::IMGFILT;
+    updateScene(mode);
+    ui->stackedWidget->setCurrentIndex(mode);
+    setAppMode(mode);
+
+    // /**< Signal event */
+    // this->_ev_frame_grab.Signal();
 }
 
 void MainWindow::onShar_mode_pressed(){
 
     /**< Change mode before jumping */
-    pthread_mutex_lock( &_m_mode);
-    _appmode = AppMode::SHAR;
-    updateScene(_appmode);
-    ui->stackedWidget->setCurrentIndex(_appmode);
-    pthread_mutex_unlock( &_m_mode);
+    AppMode_t mode = AppMode::SHAR;
+    updateScene(mode);
+    ui->stackedWidget->setCurrentIndex(mode);
+    setAppMode(mode);
+
+    // /**< Signal event */
+    //this->_ev_frame_grab.Signal();
 }
 
 /* ----------------- END DUMMY --------------------- */
@@ -1250,4 +1248,69 @@ void MainWindow::updateStatusBar(const QString str){
     QString statusStr = "STATUS: " + str;
     /**< Update Status */
     emit textChanged(statusStr);
+}
+
+AppMode_t MainWindow::appMode(){
+    AppMode_t appmode;
+    pthread_mutex_lock( &this->_m_mode);
+    appmode = this->_appmode;
+    pthread_mutex_unlock( &this->_m_mode);
+
+    return appmode;
+}
+
+void MainWindow::setAppMode(AppMode_t mode){
+    pthread_mutex_lock( &this->_m_mode);
+    this->_appmode = mode;
+    pthread_mutex_unlock( &this->_m_mode);
+}
+
+bool MainWindow::filterEnabled() {
+    bool enabled = false;
+    pthread_mutex_lock( &this->_m_imgFilter);
+    enabled = this->_filter_on;
+    pthread_mutex_unlock( &this->_m_imgFilter);
+
+    return enabled;
+}
+
+void MainWindow::filterEnable(bool enable){
+    /**< Enabling filter globally */;
+    pthread_mutex_lock( &this->_m_imgFilter);
+    this->_filter_on = enable;
+    pthread_mutex_unlock( &this->_m_imgFilter);
+}
+
+
+void MainWindow::onMediaPlayerStateChanged(QMediaPlayer::State state){
+
+    if(appMode() == AppMode::NORMAL ){
+      switch (state) {
+      case QMediaPlayer::StoppedState:
+          this->_curAd.enable(true);
+          //this->_mediaPlayer->play();
+      default:
+        break;
+      }
+    }
+    else{
+        this->_mediaPlayer->stop();
+    }
+}
+
+void MainWindow::OnMediaStatusChanged(QMediaPlayer::MediaStatus status){
+    std::string mediaPath;
+
+      switch (status) {
+      case QMediaPlayer::MediaStatus::EndOfMedia :
+          //std::cout << "End of media" << std::endl;
+          _curAd.mediaPath(mediaPath);
+
+          if ( openVideo(QString::fromStdString(mediaPath)) ) {
+              this->_mediaPlayer->play();
+              this->_curAd.enable(true);
+          }
+      default :
+          break;
+      }
 }

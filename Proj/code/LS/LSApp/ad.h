@@ -17,11 +17,15 @@ class Ad{
 private:
     std::string _fname; /**< filename */
     std::string _link; /**< download link from Proxy server */
+    std::string _mediaPath; /**< download link from Proxy server */
     int _fragranceID; /**< fragrance ID */
     int _filterID; /**< Filter ID */
     int _timeslot; /**< integer defining the timeslot from the beginning of the week */
     bool _enabled; /**< asserts if the ad is currently enabled */
     pthread_mutex_t _mutex; /**< protect access to the enabled state */
+
+    static const std::string ads_path_prefix;
+    static const std::string media_path_prefix;
 
 public:
     /**< Constructors/Destructors */
@@ -31,6 +35,7 @@ public:
     /**< Getters */
     void fname(std::string &fname);
     void link(std::string &link);
+    void mediaPath(std::string &link);
     int fragID() const;
     int filterID() const;
     int timeslot() const;
@@ -38,6 +43,7 @@ public:
     /**< Setters / Mutators */
     void setFname(std::string fname);
     void setLink(std::string link);
+    void setMediaPath(std::string mediaPath);
     void setFragID(int id);
     void setFilterID(int id);
     void setTimeslot(int tslot);
