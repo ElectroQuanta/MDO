@@ -89,6 +89,13 @@ set(PROJECT_SOURCES
   #Ad
   ad.h
   ad.cpp
+  # Fragrance
+  frag.h
+  frag.cpp
+  fragManager.h
+  fragManager.cpp
+  fragDiffuser.h
+  fragDiffuser.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

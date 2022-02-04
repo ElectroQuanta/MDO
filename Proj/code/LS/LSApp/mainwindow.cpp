@@ -1,8 +1,10 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
+#include <cstdlib>
 #include <opencv2/imgcodecs.hpp>
 #include <opencv2/imgproc.hpp>
 #include <opencv2/videoio.hpp>
+#include <pthread.h>
 #include <qgraphicsitem.h>
 #include <qgraphicsscene.h>
 #include <qmediaplayer.h>
@@ -161,6 +163,7 @@ MainWindow::MainWindow(QWidget *parent)
     pthread_mutex_init(&_m_curFrame, NULL);
     pthread_mutex_init(&_m_imgFilter, NULL);
     pthread_mutex_init(&_m_gif, NULL);
+    pthread_mutex_init(&_m_cur_ad, NULL);
 
     /**< Condition variables initialization */
     pthread_cond_init( &_cond_cam_started, 0);
@@ -216,6 +219,30 @@ MainWindow::MainWindow(QWidget *parent)
     _filter_on = false;
     //filterEnable(false);
 
+    /**< Fragrance */
+    /* Manager */
+    _fragMan = new Frag::Manager();
+    if ( ! _fragMan->load() )
+        _fragMan->populate();
+
+    /* Diffuser */
+    #define FRAG_DIFF_PIN 26
+    Frag::Fragrance f(0);
+    _fragDiff = new Frag::Diffuser(f, FRAG_DIFF_PIN);
+
+
+    /**< Testing fragrance */
+    //Frag::Fragrance f(0);
+    //int idx = _fragMan->find(f);
+    //std::string s;
+    //if(idx == - 1)
+    //    std::cout << "Frag not found" << std::endl;
+    //else{
+    //    f.serialize(s);
+    //    std::cout << "Frag: " << s << std::endl;
+    //}
+    //std::cout << "Diffuser: pin " << _fragDiff->pin() << std::endl;
+
     /**< Threads */
     /*--*
      *-- @brief create thread
@@ -235,6 +262,8 @@ MainWindow::MainWindow(QWidget *parent)
                     &MainWindow::gif_save_worker_thr, this );
     pthread_create( &_video_manager_thr, NULL,
                     &MainWindow::video_manager_worker_thr, this );
+    pthread_create( &_frag_diff_thr, NULL,
+                    &MainWindow::frag_diff_worker_thr, this );
 }
 
 
@@ -677,7 +706,6 @@ void* MainWindow::gif_save_worker_thr(void *arg){
     return NULL;
 }
 
-
 /**
  * @brief Video manager thread function
  * @param arg: ptr to a UI::MainWindow
@@ -719,6 +747,40 @@ void* MainWindow::video_manager_worker_thr(void *arg){
             //  mw->_mediaPlayer->play(); /**< Play video */
             //  std::cout << "Enabled: " << mediaPath << std::endl;
             //}
+          }
+        }
+
+    }
+
+    return NULL;
+}
+
+
+/**
+ * @brief Fragrance diffuser thread function
+ * @param arg: ptr to a UI::MainWindow
+ *
+ * detailed
+ */
+void* MainWindow::frag_diff_worker_thr(void *arg){
+
+    MainWindow *mw = (MainWindow *)arg;
+
+    Ad ad;
+
+    while(1){
+        /**< Waiting for a UI signal */;
+        mw->_ev_diff.WaitForSignal();
+
+        /**< Get current Ad */
+        mw->curAd(ad);
+
+        
+        if(mw->appMode() != AppMode::NORMAL)
+            mw->_fragDiff->enable(false); /**< Disable the actuation */
+        else{
+          if ( mw->_curAd.enabled() ) {
+              
           }
         }
 
@@ -1092,17 +1154,7 @@ void MainWindow::updateScene(AppMode_t mode){
  * Dummy function to help navigate the app
  */
 void MainWindow::on_pushButton_clicked(){
-//    /**< Remove background image from Welcome screen */
-//    ui->graphicsView->scene()->removeItem(_welcome_img);
-
-    /**< Change mode before jumping */
-    AppMode_t mode = AppMode::NORMAL;
-    updateScene(mode);
-    ui->stackedWidget->setCurrentIndex(mode);
-    setAppMode(mode);
-
-    /**< Waiting for a UI signal */;
-    //this->_ev_normal_mode.Signal();
+    onNormalMode_pressed();
 }
 
 bool MainWindow::openVideo(const QString fname){
@@ -1181,6 +1233,19 @@ void MainWindow::onHome_pressed(){
     setAppMode(mode);
 
     this->_curAd.enable(false);
+}
+
+void MainWindow::onNormalMode_pressed(){
+
+    /**< Change mode before jumping */
+    AppMode_t mode = AppMode::NORMAL;
+    updateScene(mode);
+    ui->stackedWidget->setCurrentIndex(mode);
+    setAppMode(mode);
+
+    /**< Emitting a UI signal */;
+    //this->_ev_normal_mode.Signal();
+    this->_ev_diff.Signal();
 }
 
 void MainWindow::onInter_mode_pressed(){
@@ -1313,4 +1378,16 @@ void MainWindow::OnMediaStatusChanged(QMediaPlayer::MediaStatus status){
       default :
           break;
       }
+}
+
+void MainWindow::curAd(Ad &ad){
+    pthread_mutex_lock(&_m_cur_ad);
+    ad = _curAd;
+    pthread_mutex_unlock(&_m_cur_ad);
+}
+
+void MainWindow::setCurAd(const Ad &ad){
+    pthread_mutex_lock(&_m_cur_ad);
+    _curAd = ad;
+    pthread_mutex_unlock(&_m_cur_ad);
 }

@@ -46,6 +46,12 @@
 /**< Ad */
 #include "ad.h"
 
+/**< Fragrance */
+#include "frag.h"
+#include "fragManager.h"
+#include "fragDiffuser.h"
+
+
 /**
  * @brief App modes
  *
@@ -83,6 +89,7 @@ private slots:
 /* ----- END DUMMY ------------- */
 
     /**< Signals handlers */
+    void onNormalMode_pressed();
     void onInter_mode_pressed();
     void onShar_mode_pressed();
     void onImgFilt_mode_pressed();
@@ -112,6 +119,7 @@ private slots:
     //static void* twitter_worker_thr(void* arg);
     static void* gif_save_worker_thr(void* arg);
     static void* video_manager_worker_thr(void* arg);
+    static void* frag_diff_worker_thr(void* arg);
 
     /**< Twitter sharing */
     bool TwitterAuthenticate();
@@ -134,6 +142,8 @@ private slots:
     void setAppMode(AppMode_t mode);
     void filterEnable(bool enable);
     bool filterEnabled();
+    void curAd(Ad &ad);
+    void setCurAd(const Ad &ad);
 
 /**
  * @brief Compare rectangles by area (descending)
@@ -176,6 +186,7 @@ private:
     pthread_mutex_t 	_m_curFrame; /**< Protects access to current frame */
     pthread_mutex_t 	_m_imgFilter; /**< Protects access to img filter */
     pthread_mutex_t 	_m_gif; /**< Protects access to GIF resources */
+    pthread_mutex_t 	_m_cur_ad; /**< Protects access to current Ad */
     /* For condition variables */
     pthread_mutex_t _m_cond_cam_started;
     //pthread_mutex_t _m_cond_gif_save;
@@ -186,13 +197,15 @@ private:
     pEvent _ev_gif_save;
     pEvent _ev_normal_mode;
     pEvent _ev_frame_grab;
+    pEvent _ev_diff;
 
     /**< Threads */
     pthread_t _frame_grab_thr; /**< Frame Grabber thread */
     pthread_t _gesture_recog_thr; /**< Gesture recognition thread */
     pthread_t _twitter_thr; /**< Twitter sharing thread */
-    pthread_t _gif_save_thr; /**< Twitter sharing thread */
+    pthread_t _gif_save_thr; /**< GIF save thread */
     pthread_t _video_manager_thr; /**< Video manager thread */
+    pthread_t _frag_diff_thr; /**< Fragrance diffusion thread */
 
 
     /**< Filters */
@@ -232,5 +245,10 @@ private:
 
     /**< Ad */
     Ad _curAd;
+    Frag::Fragrance _curFrag;
+
+    /**< Fragrance */
+    Frag::Manager *_fragMan;
+    Frag::Diffuser *_fragDiff;
 };
 #endif // MAINWINDOW_H

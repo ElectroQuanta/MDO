@@ -40,14 +40,29 @@ void Ad::link(std::string &link){
 void Ad::mediaPath(std::string &mediaPath){
     mediaPath = _mediaPath; 
 }
-int Ad::fragID() const{
-    return _fragranceID;
+int Ad::fragID() {
+    int fragID;
+    pthread_mutex_lock(&_mutex);
+    fragID = _fragranceID;
+    pthread_mutex_unlock(&_mutex);
+
+    return fragID;
 }
-int Ad::filterID() const{
-    return _filterID;
+int Ad::filterID(){
+    int filterID;
+    pthread_mutex_lock(&_mutex);
+    filterID = _filterID;
+    pthread_mutex_unlock(&_mutex);
+
+    return filterID;
 }
-int Ad::timeslot() const{
-    return _timeslot;
+int Ad::timeslot(){
+    int timeslot;
+    pthread_mutex_lock(&_mutex);
+    timeslot = _timeslot;
+    pthread_mutex_unlock(&_mutex);
+
+    return timeslot;
 }
 bool Ad::enabled() {
     bool enabled = false;
@@ -59,32 +74,37 @@ bool Ad::enabled() {
 }
 
     /**< Setters / Mutators */
-void Ad::setFname(std::string fname){
+void Ad::setFname(const std::string fname){
     _fname = fname;
 }
-void Ad::setLink(std::string link){
+void Ad::setLink(const std::string link){
     _link = link;
 }
-void Ad::setMediaPath(std::string mediaPath){
+void Ad::setMediaPath(const std::string mediaPath){
     _mediaPath = ads_path_prefix + media_path_prefix + mediaPath;
 }
-void Ad::setFragID(int id){
+void Ad::setFragID(const int id){
+    pthread_mutex_lock(&_mutex);
     _fragranceID = id;
+    pthread_mutex_unlock(&_mutex);
 }
-void Ad::setFilterID(int id){
+void Ad::setFilterID(const int id){
+    pthread_mutex_lock(&_mutex);
     _filterID = id;
+    pthread_mutex_unlock(&_mutex);
 }
-void Ad::setTimeslot(int tslot){
+void Ad::setTimeslot(const int tslot){
+    pthread_mutex_lock(&_mutex);
     _timeslot = tslot;
+    pthread_mutex_unlock(&_mutex);
 }
-void Ad::enable(bool enabled){
+void Ad::enable(const bool enabled){
     pthread_mutex_lock(&_mutex);
     _enabled = enabled;
     pthread_mutex_unlock(&_mutex);
 }
 
 bool Ad::save(){
-
     std::string path = ads_path_prefix + _fname + ".txt";
     std::ofstream file (path);
 

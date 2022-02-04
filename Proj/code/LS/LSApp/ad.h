@@ -36,22 +36,22 @@ public:
     void fname(std::string &fname);
     void link(std::string &link);
     void mediaPath(std::string &link);
-    int fragID() const;
-    int filterID() const;
-    int timeslot() const;
+    int fragID();
+    int filterID();
+    int timeslot();
     bool enabled();
-    /**< Setters / Mutators */
-    void setFname(std::string fname);
-    void setLink(std::string link);
-    void setMediaPath(std::string mediaPath);
-    void setFragID(int id);
-    void setFilterID(int id);
-    void setTimeslot(int tslot);
-    void enable(bool enabled);
-    bool save();
-    bool load(std::string fname);
     inline bool operator==(const Ad& rhs)
         { return (this->_timeslot == rhs._timeslot); }
+    /**< Setters / Mutators */
+    void setFname(const std::string fname);
+    void setLink(const std::string link);
+    void setMediaPath(const std::string mediaPath);
+    void setFragID(const int id);
+    void setFilterID(const int id);
+    void setTimeslot(const int tslot);
+    void enable(const bool enabled);
+    bool save();
+    bool load(std::string fname);
 };
 
 
