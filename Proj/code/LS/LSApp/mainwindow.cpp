@@ -146,9 +146,10 @@ MainWindow::MainWindow(QWidget *parent)
     _ev_diff = new pEvent();
     _ev_rx = new pEvent();
     _ev_download = new pEvent();
-    _ev_normal_mode_check = new pEvent();
+    _ev_mode_check = new pEvent();
+    //_ev_normal_mode_check = new pEvent();
     _ev_normal_mode_on = new pEvent();
-    _ev_interaction_mode = new pEvent();
+    //_ev_interaction_mode = new pEvent();
     _ev_user_detected = new pEvent();
 
 
@@ -215,20 +216,12 @@ MainWindow::MainWindow(QWidget *parent)
 
     _event_diff = false;
     _curFrag = f;
+
+    /**< Timers */
     _fragTimer = new QTimer(this);
+    _checkModeTimer = new QTimer(this);
 
 
-    /**< Testing fragrance */
-    //Frag::Fragrance f(0);
-    //int idx = _fragMan->find(f);
-    //std::string s;
-    //if(idx == - 1)
-    //    std::cout << "Frag not found" << std::endl;
-    //else{
-    //    f.serialize(s);
-    //    std::cout << "Frag: " << s << std::endl;
-    //}
-    //std::cout << "Diffuser: pin " << _fragDiff->pin() << std::endl;
 
     /**< Connect signals to slots */
     /* UIs */ 
@@ -273,6 +266,12 @@ MainWindow::MainWindow(QWidget *parent)
             SLOT(onFragTimerElapsed()), Qt::QueuedConnection );
     connect(this, SIGNAL(fragTimerStart(int)), this,
             SLOT(onFragTimerStart(int)), Qt::QueuedConnection );
+    connect(_checkModeTimer, SIGNAL(timeout()), this,
+            SLOT(onCheckModeTimerElapsed()), Qt::QueuedConnection );
+
+    /**< Starting timers */
+    #define MODE_PERIOD_MS 5000
+    _checkModeTimer->start(MODE_PERIOD_MS);
 
 
     /**< Threads */
@@ -296,6 +295,8 @@ MainWindow::MainWindow(QWidget *parent)
                     &MainWindow::video_manager_worker_thr, this );
     pthread_create( &_frag_diff_thr, NULL,
                     &MainWindow::frag_diff_worker_thr, this );
+    //pthread_create( &_check_mode_thr, NULL,
+    //                &MainWindow::check_mode_worker_thr, this );
 
     //_threads.push_back(&_frame_grab_thr);
     //_threads.push_back(&_gif_save_thr);
@@ -303,29 +304,45 @@ MainWindow::MainWindow(QWidget *parent)
     //_threads.push_back(&_frag_diff_thr);
 }
 
-void MainWindow::onFragTimerStart(int timeout){
-    _fragDiff->enable(true);
-    _fragTimer->start(timeout);
+void MainWindow::onCheckModeTimerElapsed(){
+#define CNT_RELOAD ((int)(3600/5))
+
+    static int cnt = CNT_RELOAD; /**< define ratio between normal and interaction mode checks: interaction mode is checked cnt times more than normal */
+
+    AppMode_t mode;
+    cnt--;
+    if(! cnt ){
+        /**< Update reload */
+        cnt = CNT_RELOAD;
+        
+        /**< Check Normal Mode */
+        /* If current Ad timeslot == time timeslot */
+            /* Update current ad */
+            /* Get fragrance from current ad */
+            /* Checks its settings from FragManager */
+            /* Update current fragrance */
+            /* Update current state to AppMode::NORMAL */
+
+
+    }else {
+        /**< Check Interaction mode */
+        //mode = AppMode();
+        mode = _appmode;
+        //std::cout << "appMode " << mode << std::endl; 
+        if( detectUser() &&
+            ( (mode == AppMode::WELCOME) || (mode == AppMode::NORMAL) ))
+            onInter_mode_pressed();
+    }
 }
 
-void MainWindow::onFragTimerElapsed(){
-    int timeout;
-    bool curState = _fragDiff->enabled();
+bool MainWindow::detectUser(){
+   /**< Read Message Queue from daemon */
 
-    if( curState ){ /**< If previously on, get time Off */
-        timeout = _curFrag.durationOff();
-    }else{
-        timeout = _curFrag.durationOn();
-    }
+    static bool detected = false;
 
-    std::cout << "Enable: " << !curState <<
-        ", timeout: " << timeout << std::endl;
-
-    /**< Toggle the Diffuser and start the timer with appropriate timeout */
-    _fragDiff->enable( !curState );
-    _fragTimer->start( timeout );
-
-        
+    detected = !detected;
+    
+    return detected;
 }
 
 MainWindow::~MainWindow() {
@@ -834,11 +851,40 @@ void* MainWindow::frag_diff_worker_thr(void *arg){
 
     MainWindow *mw = (MainWindow *)arg;
 
-    //static Ad ad;
+    static Frag::Fragrance frag;
+    //static int durOn, durOff;
+
+    while(1){
+        /**< Waiting for a UI signal */;
+        /* Normal mode was enabled, thus, ad is enabled */
+        mw->_ev_diff->WaitForSignal();
+        //      std::cout << "Fragrance thread triggered" << std::endl;
+
+        /**< Get current Ad */
+        mw->curFrag(frag);
+        //frag = Frag::Fragrance(ad.fragID());
+        //       std::cout << "cur frag ID: " << ad.fragID() << std::endl;
+
+        /**< Setup timer */
+        emit  mw->fragTimerStart(frag.durationOn());
+    }
+
+    return NULL;
+}
+
+
+/**
+ * @brief Check mode (normal or interaction)
+ * @param arg: ptr to a UI::MainWindow
+ *
+ * detailed
+ */
+void* MainWindow::check_mode_worker_thr(void *arg){
+
+    MainWindow *mw = (MainWindow *)arg;
+
     static Frag::Fragrance frag;
     static int durOn, durOff;
-
-//    std::cout << "Ad: Frag id" << ad.fragID() << std::endl;
 
     while(1){
         /**< Waiting for a UI signal */;
@@ -1506,4 +1552,29 @@ void MainWindow::setCurFrag(Frag::Fragrance &f){
     pthread_mutex_lock(&_m_cur_frag);
     _curFrag = f;
     pthread_mutex_unlock(&_m_cur_frag);
+}
+
+void MainWindow::onFragTimerStart(int timeout){
+    _fragDiff->enable(true);
+    _fragTimer->start(timeout);
+}
+
+void MainWindow::onFragTimerElapsed(){
+    int timeout;
+    bool curState = _fragDiff->enabled();
+
+    if( curState ){ /**< If previously on, get time Off */
+        timeout = _curFrag.durationOff();
+    }else{
+        timeout = _curFrag.durationOn();
+    }
+
+    std::cout << "Enable: " << !curState <<
+        ", timeout: " << timeout << std::endl;
+
+    /**< Toggle the Diffuser and start the timer with appropriate timeout */
+    _fragDiff->enable( !curState );
+    _fragTimer->start( timeout );
+
+        
 }

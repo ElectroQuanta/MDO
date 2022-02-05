@@ -103,6 +103,7 @@ private slots:
     void OnMediaStatusChanged(QMediaPlayer::MediaStatus status);
     void onFragTimerStart(int);
     void onFragTimerElapsed();
+    void onCheckModeTimerElapsed();
 
     bool eventFilter(QObject *, QEvent *);
 
@@ -122,6 +123,7 @@ private slots:
     static void* gif_save_worker_thr(void* arg);
     static void* video_manager_worker_thr(void* arg);
     static void* frag_diff_worker_thr(void* arg);
+    static void* check_mode_worker_thr(void *arg);
 
     /**< Twitter sharing */
     bool TwitterAuthenticate();
@@ -150,6 +152,7 @@ private slots:
     void setCurFrag(Frag::Fragrance &f);
     bool eventDiff();
     void enableEventDiff(bool);
+    bool detectUser();
 
 /**
  * @brief Compare rectangles by area (descending)
@@ -196,8 +199,9 @@ private:
     pthread_t _rx_thr; /**< Receive from Remote System thread */
     pthread_t _process_rx_thr; /**< Process rx thread */
     pthread_t _download_ad_thr; /**< Download Ad thread */
-    pthread_t _check_normal_mode_thr; /**< Check normal mode thread */
-    pthread_t _check_interaction_mode_thr; /**< Check interaction thread */
+    pthread_t _check_mode_thr; /**< Check normal mode thread */
+    //pthread_t _check_normal_mode_thr; /**< Check normal mode thread */
+    //pthread_t _check_interaction_mode_thr; /**< Check interaction thread */
     std::vector<pthread_t *> _threads;
 
     /**< Mutexes */
@@ -224,9 +228,9 @@ private:
     pEvent *_ev_diff; /**< Event Fragrance diffuser */
     pEvent *_ev_rx; /**< Event Rx: data received from remote system */
     pEvent *_ev_download; /**< Event Download: download a new Ad */
-    pEvent *_ev_normal_mode_check; /**< Event Normal mode: checks periodically if normal mode is required */
+    pEvent *_ev_mode_check; /**< Event Check mode: checks periodically if normal mode or interaction mode must be set */
     pEvent *_ev_normal_mode_on;
-    pEvent *_ev_interaction_mode; /**< Event Interaction mode: check periodically if a user was detected */
+//    pEvent *_ev_interaction_mode; /**< Event Interaction mode: check periodically if a user was detected */
     pEvent *_ev_user_detected; /**< Event User detected: signals a user was detected */
 
 
@@ -275,7 +279,7 @@ private:
     bool _event_diff = false;
 
     /**< Normal mode */
-    QTimer *_normalMode; /**< Check periodically if normal mode needs to run */
+    QTimer *_checkModeTimer; /**< Check periodically if normal mode needs to run */
 
     /**<  */
 };
