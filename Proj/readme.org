@@ -8698,7 +8698,11 @@ https://upload.twitter.com/1.1/media/upload.json?command=APPEND&media_id=123&seg
    m_mediaPlayer->pause();
    m_mediaPlayer->play();
    #+END_SRC
-* Synchronization Class                                            :noexport:
+* ✔ DONE Synchronization Class                                     :noexport:
+  :LOGBOOK:
+  - State "✔ DONE"     from              [2022-02-04 sex 15:50]
+  - Validated: see [[file:code/pthreads/condVar/main.cpp][here]] 
+  :END:
 [[https://stackoverflow.com/a/33116597/17836786][src]]
 #+BEGIN_SRC c++
 class SyncObjectPosix
@@ -8739,8 +8743,8 @@ public:
     {
         pthread_mutex_lock(&mutex);
         signalled = true;
-        pthread_mutex_unlock(&mutex);
         pthread_cond_signal(&cond);
+        pthread_mutex_unlock(&mutex);
     }
 };
 #+END_SRC
@@ -8918,7 +8922,7 @@ public:
 	 #+BEGIN_SRC bash
 	 QObject::startTimer: Timers cannot be started from another thread 
 	 #+END_SRC
-*** ☛ TODO PRIORITIES [10/14]
+*** ☛ TODO PRIORITIES [11/14]
     :LOGBOOK:
     - State "☛ TODO"     from              [2022-01-06 qui 01:35]
     :END:
@@ -9383,17 +9387,17 @@ OpenCV provides an API for linear blending of two images. The calculation formul
 		1) if !cur_ad_enabled() || appmode
 	     4) Go to 2)
        2) else, do nothing
-12) [-] Create thread for fragranceDiffuser
+12) [X] Create thread for fragranceDiffuser
     1) [X] Create Fragrance class
     2) [X] Create Fragrance Manager class
     3) [X] Create Fragrance Diffuser class
-    4) [ ] if =cur_ad.enabled()=
-       1) [ ] Get fragrance from it
-       2) [ ] Look in FragranceManager for its settings
-       3) [ ] Assign fragrance to the FragranceDiffuser
-       4) [ ] Get On and Off times from fragrances
-       5) [ ] Load timer
-       6) [ ] When timer expires, reload with the other value
+    4) [X] if =cur_ad.enabled()=
+       1) [X] Get fragrance from it
+       2) [X] Look in FragranceManager for its settings
+       3) [X] Assign fragrance to the FragranceDiffuser
+       4) [X] Get On and Off times from fragrances
+       5) [X] Load timer
+       6) [X] When timer expires, reload with the other value
 13) [ ] Create thread to download files
 14) [ ] Implement client-server architecture
     1) [ ] Create thread to receive frames

@@ -50,8 +50,18 @@ find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets VirtualKeyboard Multimedia
 
 #find_package(pthread REQUIRED)
 
+#set(SRC_FILES )
+
 # ================ TWITCURL
 set(TWITCURL_LIB twitcurl)
+
+file(GLOB RESOURCE_FILES *.qrc)
+file(GLOB SRC_FILES *.cpp)
+file(GLOB HEADER_FILES *.h)
+
+#message(RESOURCE_FILES: ${RESOURCE_FILES})
+#message(SRC_FILES: ${SRC_FILES})
+#message(HEADER_FILES: ${HEADER_FILES})
 
 set(PROJECT_SOURCES
   main.cpp
@@ -96,6 +106,12 @@ set(PROJECT_SOURCES
   fragManager.cpp
   fragDiffuser.h
   fragDiffuser.cpp
+  # Device Drivers
+  ddDigitalOut.h
+  ddDigitalOut.cpp
+#${HEADER_FILES}
+#${SRC_FILES}
+#${RESOURCES_FILES}
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

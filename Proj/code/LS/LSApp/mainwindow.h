@@ -101,6 +101,8 @@ private slots:
     void onGifEnabled(bool enable);
     void onMediaPlayerStateChanged(QMediaPlayer::State state);
     void OnMediaStatusChanged(QMediaPlayer::MediaStatus status);
+    void onFragTimerStart(int);
+    void onFragTimerElapsed();
 
     bool eventFilter(QObject *, QEvent *);
 
@@ -143,7 +145,11 @@ private slots:
     void filterEnable(bool enable);
     bool filterEnabled();
     void curAd(Ad &ad);
-    void setCurAd(const Ad &ad);
+    void setCurAd(Ad &ad);
+    void curFrag(Frag::Fragrance &f);
+    void setCurFrag(Frag::Fragrance &f);
+    bool eventDiff();
+    void enableEventDiff(bool);
 
 /**
  * @brief Compare rectangles by area (descending)
@@ -161,6 +167,7 @@ signals:
     void interWindUpdateStatus(const QString str);
     void textChanged(QString);
     void imgGrabbed(cv::Mat frame);
+    void fragTimerStart(int);
 
 private:
     Ui::MainWindow *ui = nullptr; /**< UI main view */
@@ -178,26 +185,6 @@ private:
 
     AppMode_t _appmode; /**< Stores app mode */
 
-    /**< Mutexes */
-    /* Normal */
-    pthread_mutex_t 	_m_status_bar; /**< Protects access to UI status bar */
-    pthread_mutex_t 	_m_canvas; /**< Protects access to Graphics view */
-    pthread_mutex_t 	_m_mode; /**< Protects access to mode state variable */
-    pthread_mutex_t 	_m_curFrame; /**< Protects access to current frame */
-    pthread_mutex_t 	_m_imgFilter; /**< Protects access to img filter */
-    pthread_mutex_t 	_m_gif; /**< Protects access to GIF resources */
-    pthread_mutex_t 	_m_cur_ad; /**< Protects access to current Ad */
-    /* For condition variables */
-    pthread_mutex_t _m_cond_cam_started;
-    //pthread_mutex_t _m_cond_gif_save;
-
-    /**< Pthread events: Condition variables */
-    pthread_cond_t _cond_cam_started;
-    //pthread_cond_t _cond_gif_save;
-    pEvent _ev_gif_save;
-    pEvent _ev_normal_mode;
-    pEvent _ev_frame_grab;
-    pEvent _ev_diff;
 
     /**< Threads */
     pthread_t _frame_grab_thr; /**< Frame Grabber thread */
@@ -206,6 +193,41 @@ private:
     pthread_t _gif_save_thr; /**< GIF save thread */
     pthread_t _video_manager_thr; /**< Video manager thread */
     pthread_t _frag_diff_thr; /**< Fragrance diffusion thread */
+    pthread_t _rx_thr; /**< Receive from Remote System thread */
+    pthread_t _process_rx_thr; /**< Process rx thread */
+    pthread_t _download_ad_thr; /**< Download Ad thread */
+    pthread_t _check_normal_mode_thr; /**< Check normal mode thread */
+    pthread_t _check_interaction_mode_thr; /**< Check interaction thread */
+    std::vector<pthread_t *> _threads;
+
+    /**< Mutexes */
+    /* Normal */
+    pthread_mutex_t _m_status_bar; /**< Protects access to UI status bar */
+    pthread_mutex_t _m_canvas; /**< Protects access to Graphics view */
+    pthread_mutex_t _m_mode; /**< Protects access to mode state variable */
+    pthread_mutex_t _m_curFrame; /**< Protects access to current frame */
+    pthread_mutex_t _m_imgFilter; /**< Protects access to img filter */
+    pthread_mutex_t _m_gif; /**< Protects access to GIF resources */
+    pthread_mutex_t _m_cur_ad; /**< Protects access to current Ad */
+    pthread_mutex_t _m_cur_frag; /**< Protects access to current Frag */
+    pthread_mutex_t _m_event_diff; /**< Protects access to current Ad */
+    std::vector<pthread_mutex_t *> _mutexes;
+    /* For condition variables */
+    //pthread_mutex_t _m_cond_cam_started;
+    //pthread_mutex_t _m_cond_gif_save;
+
+    /**< Pthread events: Condition variables */
+    //pthread_cond_t _cond_cam_started;
+    //pthread_cond_t _cond_gif_save;
+    pEvent *_ev_gif_save; /**< Event GIF save */
+    pEvent *_ev_frame_grab; /**< Event Frame Grabber */
+    pEvent *_ev_diff; /**< Event Fragrance diffuser */
+    pEvent *_ev_rx; /**< Event Rx: data received from remote system */
+    pEvent *_ev_download; /**< Event Download: download a new Ad */
+    pEvent *_ev_normal_mode_check; /**< Event Normal mode: checks periodically if normal mode is required */
+    pEvent *_ev_normal_mode_on;
+    pEvent *_ev_interaction_mode; /**< Event Interaction mode: check periodically if a user was detected */
+    pEvent *_ev_user_detected; /**< Event User detected: signals a user was detected */
 
 
     /**< Filters */
@@ -219,7 +241,6 @@ private:
     QGraphicsScene *_welcome_scene = nullptr;
     QGraphicsScene *_video_scene = nullptr;
     QGraphicsScene *_inter_scene = nullptr;
-    
 
     /**< Image Acquisition */
     cv::Mat _curFrame;
@@ -248,7 +269,14 @@ private:
     Frag::Fragrance _curFrag;
 
     /**< Fragrance */
-    Frag::Manager *_fragMan;
-    Frag::Diffuser *_fragDiff;
+    Frag::Manager *_fragMan = nullptr;
+    Frag::Diffuser *_fragDiff = nullptr;
+    QTimer *_fragTimer = nullptr;
+    bool _event_diff = false;
+
+    /**< Normal mode */
+    QTimer *_normalMode; /**< Check periodically if normal mode needs to run */
+
+    /**<  */
 };
 #endif // MAINWINDOW_H

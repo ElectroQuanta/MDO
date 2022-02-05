@@ -32,13 +32,19 @@ Ad::~Ad(){
 
 /**< Getters */
 void Ad::fname(std::string &fname){
+    pthread_mutex_lock(&_mutex);
     fname = _fname;
+    pthread_mutex_unlock(&_mutex);
 }
 void Ad::link(std::string &link){
+    pthread_mutex_lock(&_mutex);
     link = _link; 
+    pthread_mutex_unlock(&_mutex);
 }
 void Ad::mediaPath(std::string &mediaPath){
+    pthread_mutex_lock(&_mutex);
     mediaPath = _mediaPath; 
+    pthread_mutex_unlock(&_mutex);
 }
 int Ad::fragID() {
     int fragID;
@@ -75,13 +81,19 @@ bool Ad::enabled() {
 
     /**< Setters / Mutators */
 void Ad::setFname(const std::string fname){
+    pthread_mutex_lock(&_mutex);
     _fname = fname;
+    pthread_mutex_unlock(&_mutex);
 }
 void Ad::setLink(const std::string link){
+    pthread_mutex_lock(&_mutex);
     _link = link;
+    pthread_mutex_unlock(&_mutex);
 }
 void Ad::setMediaPath(const std::string mediaPath){
+    pthread_mutex_lock(&_mutex);
     _mediaPath = ads_path_prefix + media_path_prefix + mediaPath;
+    pthread_mutex_unlock(&_mutex);
 }
 void Ad::setFragID(const int id){
     pthread_mutex_lock(&_mutex);
@@ -113,11 +125,13 @@ bool Ad::save(){
         return false;
 
     /**< Write to file */
+    pthread_mutex_lock(&_mutex);
     file << _fname << std::endl;
     file << _link << std::endl;
     file << _fragranceID << std::endl;
     file << _filterID << std::endl;
     file << _timeslot;
+    pthread_mutex_unlock(&_mutex);
 
     return true;
 }
@@ -131,11 +145,13 @@ bool Ad::load(std::string fname){
         return false;
 
     /**< Read from file */
+    pthread_mutex_lock(&_mutex);
     file >> _fname;
     file >> _link;
     file >> _fragranceID;
     file >> _filterID;
     file >> _timeslot;
+    pthread_mutex_unlock(&_mutex);
 
     return true;
 }

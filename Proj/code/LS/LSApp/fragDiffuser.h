@@ -12,6 +12,7 @@
 
 #include <pthread.h>
 #include "frag.h"
+#include "ddDigitalOut.h"
 
 namespace Frag{
     
@@ -19,13 +20,17 @@ namespace Frag{
 class Diffuser{
 
 private:
+    static int Instances;
+
     bool _enabled; /**< asserts if the ad is currently enabled */
     pthread_mutex_t _mutex; /**< protect access to the enabled state */
-    int _pin; /**< HW pin connected */
+    int _id; /**< device driver ID associated */
     Fragrance _frag; /**< fragrance associated with the diffuser */
+    DeviceDriver::DigitalOutput *_dd;
+    bool _ddWorking;
 public:
     /**< Constructors/Destructors */
-    Diffuser(Fragrance &f, int pin);
+    Diffuser(Fragrance &f);
     ~Diffuser();
     /**< Getters */
     /**
@@ -38,11 +43,6 @@ public:
      * @param f: fragrance to be filled (output)
      */
     void fragrance(Fragrance &f);
-    /**
-     * @brief Retrieves the HW pin associated with the diffuser
-     * @return HW pin
-     */
-    int pin();
     /**< Setters / Mutators */
     /**
      * @brief Enables/disables the diffuser
@@ -54,11 +54,6 @@ public:
      * @param f: fragrance
      */
     void setFragrance(const Fragrance &f);
-    /**
-     * @brief Sets the HW pin of the diffuser
-     * @param pin: HW pin
-     */
-    void setPin(const int pin);
 };
 
 };

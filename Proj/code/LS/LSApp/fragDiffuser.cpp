@@ -8,8 +8,8 @@
  * It interfaces with the Fragrance diffuser device through device drivers
  * and a daemon
  */
-
 #include "fragDiffuser.h"
+#include <type_traits>
 
 #define DIFF_DEBUG 1
 #if DIFF_DEBUG == 1
@@ -18,18 +18,30 @@
 
 namespace Frag {
 
-    #define HW_PIN_DEFAULT 26
-    #define FRAG_DEFAULT 0
-
-    Diffuser::Diffuser(Fragrance &f, int pin = HW_PIN_DEFAULT) {
+    int Diffuser::Instances = 0;
+    
+    Diffuser::Diffuser(Fragrance &f) {
         pthread_mutex_init(&_mutex, NULL);
-        _pin = pin;
         _frag = f;
+        _id = Instances;
+
+        /**< Instanciate the device driver */
+        _dd = new DeviceDriver::DigitalOutput("frag", Instances);
+
+        /**< Open it */
+        _ddWorking = _dd->Open();
+
+        /**< Increment nr of instances */
+        Instances++;
+
         _enabled = false;
     }
 
     Diffuser::~Diffuser(){
         pthread_mutex_destroy(&_mutex);
+
+        /**< Release memory */
+        delete _dd;
     }
 
     bool Diffuser::enabled(){
@@ -54,8 +66,10 @@ namespace Frag {
         
         /**< TODO: Actuate */
 #if DIFF_DEBUG == 1
-        std::cout << "Diffuser Enabled" << std::endl;
+        std::cout << "Diffuser Enabled: " << enable << std::endl;
 #endif
+        if(_ddWorking)
+            _dd->Write(enable);
 
     }
 
@@ -65,24 +79,10 @@ namespace Frag {
       pthread_mutex_unlock(&_mutex);
     }
 
-    int Diffuser::pin(){
-      int pin = -1;
-      pthread_mutex_lock(&_mutex);
-      pin = _pin;
-      pthread_mutex_unlock(&_mutex);
-      return pin;
-    }
-
     void Diffuser::setFragrance(const Fragrance &f){
         /**< Update state */
       pthread_mutex_lock(&_mutex);
       _frag = f;
       pthread_mutex_unlock(&_mutex);
     }
-    void Diffuser::setPin(const int pin){
-      pthread_mutex_lock(&_mutex);
-      _pin = pin;
-      pthread_mutex_unlock(&_mutex);
-        
-    }
-};
+    }; // namespace Frag

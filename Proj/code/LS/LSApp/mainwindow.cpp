@@ -13,6 +13,7 @@
 #include <qdebug.h>
 #include <QMouseEvent>
 
+#include "frag.h"
 #include "imgfilter_defs.h" /**< For filters definition */
 
 #include <signal.h>
@@ -113,44 +114,6 @@ MainWindow::MainWindow(QWidget *parent)
     //_mediaPlayer->setPlaylist(_mediaPlaylist);
 
 
-    /**< Connect signals to slots */
-    /* UIs */ 
-    connect(_normalWind, SIGNAL( home_pressed() ),
-            this, SLOT( onHome_pressed() ));
-    connect(_interWind, SIGNAL( home_pressed() ),
-            this, SLOT( onHome_pressed() ));
-    connect(_interWind, SIGNAL( imgfilt_mode_pressed() ),
-            this, SLOT( onImgFilt_mode_pressed() ));
-    connect(_interWind, SIGNAL( shar_mode_pressed() ),
-            this, SLOT( onShar_mode_pressed() ));
-    connect(_imgFiltWind, SIGNAL( inter_mode_pressed() ),
-            this, SLOT( onInter_mode_pressed() ));
-    connect(_sharWind, SIGNAL( inter_mode_pressed() ),
-            this, SLOT( onInter_mode_pressed() ));
-    connect(_sharWind, SIGNAL( twitterShare(const QString &) ),
-            this, SLOT( onTwitterShare(const QString &) ));
-    /* Others */
-    // connect(_interWind, SIGNAL(cam_start() ),
-    //         this, SLOT( onCam_started() ) );
-    qRegisterMetaType< cv::Mat >("cv::Mat");
-    connect(this, SIGNAL(textChanged(QString)), ui->label_status,
-            SLOT(setText(QString)), Qt::QueuedConnection);
-    connect(this, SIGNAL(imgGrabbed(cv::Mat)), this,
-            SLOT(displayImg(cv::Mat)), Qt::QueuedConnection);
-    connect(_imgFiltWind, SIGNAL(imgFiltSelected(int)),
-            this, SLOT(onImgFiltSelected(int)) );
-    connect(_interWind, SIGNAL( takePic_complete() ),
-            this, SLOT( onTakePic_complete() ));
-    connect(_imgFiltWind, SIGNAL(imgFiltGlobal(bool)),
-            this, SLOT(onImgFiltGlobal(bool)) );
-    connect(_interWind, SIGNAL( gif_enabled(bool) ),
-            this, SLOT( onGifEnabled(bool) ));
-//    connect(_mediaPlayer, SIGNAL(stateChanged(QMediaPlayer::State)),
-//            this, SLOT(onMediaPlayerStateChanged(QMediaPlayer::State)));
-    connect(_mediaPlayer,
-            SIGNAL(mediaStatusChanged(QMediaPlayer::MediaStatus)),
-            this,
-            SLOT(OnMediaStatusChanged(QMediaPlayer::MediaStatus)));
 
     /**< Initializing mode */
     setAppMode(AppMode::WELCOME);
@@ -159,14 +122,34 @@ MainWindow::MainWindow(QWidget *parent)
     pthread_mutex_init(&_m_status_bar, NULL);
     pthread_mutex_init(&_m_canvas, NULL);
     pthread_mutex_init(&_m_mode, NULL);
-    pthread_mutex_init(&_m_cond_cam_started, NULL);
+    //pthread_mutex_init(&_m_cond_cam_started, NULL);
     pthread_mutex_init(&_m_curFrame, NULL);
     pthread_mutex_init(&_m_imgFilter, NULL);
     pthread_mutex_init(&_m_gif, NULL);
     pthread_mutex_init(&_m_cur_ad, NULL);
+    pthread_mutex_init(&_m_event_diff, NULL);
+    pthread_mutex_init(&_m_cur_frag, NULL);
+
+    //_mutexes.push_back(&_m_status_bar);
+    //_mutexes.push_back(&_m_canvas);
+    //_mutexes.push_back(&_m_mode);
+    //_mutexes.push_back(&_m_curFrame);
+    //_mutexes.push_back(&_m_imgFilter);
+    //_mutexes.push_back(&_m_gif);
+    //_mutexes.push_back(&_m_cur_ad);
+    //_mutexes.push_back(&_m_event_diff);
 
     /**< Condition variables initialization */
-    pthread_cond_init( &_cond_cam_started, 0);
+    //pthread_cond_init( &_cond_cam_started, 0);
+    _ev_gif_save = new pEvent();
+    _ev_frame_grab = new pEvent();
+    _ev_diff = new pEvent();
+    _ev_rx = new pEvent();
+    _ev_download = new pEvent();
+    _ev_normal_mode_check = new pEvent();
+    _ev_normal_mode_on = new pEvent();
+    _ev_interaction_mode = new pEvent();
+    _ev_user_detected = new pEvent();
 
 
     /**< Initialize graphics view */
@@ -228,7 +211,11 @@ MainWindow::MainWindow(QWidget *parent)
     /* Diffuser */
     #define FRAG_DIFF_PIN 26
     Frag::Fragrance f(0);
-    _fragDiff = new Frag::Diffuser(f, FRAG_DIFF_PIN);
+    _fragDiff = new Frag::Diffuser(f);
+
+    _event_diff = false;
+    _curFrag = f;
+    _fragTimer = new QTimer(this);
 
 
     /**< Testing fragrance */
@@ -242,6 +229,51 @@ MainWindow::MainWindow(QWidget *parent)
     //    std::cout << "Frag: " << s << std::endl;
     //}
     //std::cout << "Diffuser: pin " << _fragDiff->pin() << std::endl;
+
+    /**< Connect signals to slots */
+    /* UIs */ 
+    connect(_normalWind, SIGNAL( home_pressed() ),
+            this, SLOT( onHome_pressed() ), Qt::QueuedConnection);
+    connect(_interWind, SIGNAL( home_pressed() ),
+            this, SLOT( onHome_pressed() ), Qt::QueuedConnection);
+    connect(_interWind, SIGNAL( imgfilt_mode_pressed() ),
+            this, SLOT( onImgFilt_mode_pressed() ), Qt::QueuedConnection);
+    connect(_interWind, SIGNAL( shar_mode_pressed() ),
+            this, SLOT( onShar_mode_pressed() ), Qt::QueuedConnection);
+    connect(_imgFiltWind, SIGNAL( inter_mode_pressed() ),
+            this, SLOT( onInter_mode_pressed() ), Qt::QueuedConnection);
+    connect(_sharWind, SIGNAL( inter_mode_pressed() ),
+            this, SLOT( onInter_mode_pressed() ), Qt::QueuedConnection);
+    connect(_sharWind, SIGNAL( twitterShare(const QString &) ),
+            this, SLOT( onTwitterShare(const QString &) ), Qt::QueuedConnection);
+    /* Others */
+    // connect(_interWind, SIGNAL(cam_start() ),
+    //         this, SLOT( onCam_started() ) );
+    qRegisterMetaType< cv::Mat >("cv::Mat");
+    connect(this, SIGNAL(textChanged(QString)), ui->label_status,
+            SLOT(setText(QString)), Qt::QueuedConnection);
+    connect(this, SIGNAL(imgGrabbed(cv::Mat)), this,
+            SLOT(displayImg(cv::Mat)), Qt::QueuedConnection);
+    connect(_imgFiltWind, SIGNAL(imgFiltSelected(int)),
+            this, SLOT(onImgFiltSelected(int)), Qt::QueuedConnection );
+    connect(_interWind, SIGNAL( takePic_complete() ),
+            this, SLOT( onTakePic_complete() ), Qt::QueuedConnection);
+    connect(_imgFiltWind, SIGNAL(imgFiltGlobal(bool)),
+            this, SLOT(onImgFiltGlobal(bool)), Qt::QueuedConnection );
+    connect(_interWind, SIGNAL( gif_enabled(bool) ),
+            this, SLOT( onGifEnabled(bool) ), Qt::QueuedConnection);
+//    connect(_mediaPlayer, SIGNAL(stateChanged(QMediaPlayer::State)),
+//            this, SLOT(onMediaPlayerStateChanged(QMediaPlayer::State)));
+    connect(_mediaPlayer,
+            SIGNAL(mediaStatusChanged(QMediaPlayer::MediaStatus)),
+            this,
+            SLOT(OnMediaStatusChanged(QMediaPlayer::MediaStatus)),
+            Qt::QueuedConnection);
+    connect(_fragTimer, SIGNAL(timeout()), this,
+            SLOT(onFragTimerElapsed()), Qt::QueuedConnection );
+    connect(this, SIGNAL(fragTimerStart(int)), this,
+            SLOT(onFragTimerStart(int)), Qt::QueuedConnection );
+
 
     /**< Threads */
     /*--*
@@ -264,8 +296,37 @@ MainWindow::MainWindow(QWidget *parent)
                     &MainWindow::video_manager_worker_thr, this );
     pthread_create( &_frag_diff_thr, NULL,
                     &MainWindow::frag_diff_worker_thr, this );
+
+    //_threads.push_back(&_frame_grab_thr);
+    //_threads.push_back(&_gif_save_thr);
+    //_threads.push_back(&_video_manager_thr);
+    //_threads.push_back(&_frag_diff_thr);
 }
 
+void MainWindow::onFragTimerStart(int timeout){
+    _fragDiff->enable(true);
+    _fragTimer->start(timeout);
+}
+
+void MainWindow::onFragTimerElapsed(){
+    int timeout;
+    bool curState = _fragDiff->enabled();
+
+    if( curState ){ /**< If previously on, get time Off */
+        timeout = _curFrag.durationOff();
+    }else{
+        timeout = _curFrag.durationOn();
+    }
+
+    std::cout << "Enable: " << !curState <<
+        ", timeout: " << timeout << std::endl;
+
+    /**< Toggle the Diffuser and start the timer with appropriate timeout */
+    _fragDiff->enable( !curState );
+    _fragTimer->start( timeout );
+
+        
+}
 
 MainWindow::~MainWindow() {
 
@@ -275,6 +336,11 @@ MainWindow::~MainWindow() {
     /**< Waiting for threads to finish along with the UI */
     //pthread_join( _frame_grab_thr, NULL);
     //pthread_join( _gif_save_thr, NULL);
+
+    /**< Cleaning mutexes */
+    //for (int j = 0; j < _mutexes.size(); j++)
+    //    pthread_mutex_destroy( _mutexes.at(j) );
+
 
     /**< Forcing thread to terminate */
     /* This is required because the thread is thread is instantiated at
@@ -286,10 +352,13 @@ MainWindow::~MainWindow() {
      *  - NOTE: pthread_kill can be used safely if the appropriate cleanup
      *    handlers are installed using pthread_cleanup_push and
      *    pthread_cleanup_pop to deallocate resources.
-     */ 
+     */
+    //for (int j = 0; j < _threads.size(); j++)
+    //    pthread_kill( *_threads.at(j), SIGKILL );
     pthread_kill( _frame_grab_thr, SIGKILL);
     pthread_kill( _gif_save_thr, SIGKILL);
     pthread_kill( _video_manager_thr, SIGKILL);
+    pthread_kill( _frag_diff_thr, SIGKILL);
 
     if( _video.isOpened() )
         _video.release();
@@ -679,7 +748,7 @@ void* MainWindow::gif_save_worker_thr(void *arg){
     while(1){
 
         /**< Waiting for a UI signal */;
-        mw->_ev_gif_save.WaitForSignal();
+        mw->_ev_gif_save->WaitForSignal();
         //pthread_mutex_lock( &mw->_m_cond_gif_save);
         //pthread_cond_wait( &mw->_cond_gif_save, &mw->_m_cond_gif_save );
         //pthread_mutex_unlock( &mw->_m_cond_gif_save);
@@ -755,7 +824,6 @@ void* MainWindow::video_manager_worker_thr(void *arg){
     return NULL;
 }
 
-
 /**
  * @brief Fragrance diffuser thread function
  * @param arg: ptr to a UI::MainWindow
@@ -766,23 +834,37 @@ void* MainWindow::frag_diff_worker_thr(void *arg){
 
     MainWindow *mw = (MainWindow *)arg;
 
-    Ad ad;
+    //static Ad ad;
+    static Frag::Fragrance frag;
+    static int durOn, durOff;
+
+//    std::cout << "Ad: Frag id" << ad.fragID() << std::endl;
 
     while(1){
         /**< Waiting for a UI signal */;
-        mw->_ev_diff.WaitForSignal();
+        /* Normal mode was enabled, thus, ad is enabled */
+        mw->_ev_diff->WaitForSignal();
+
+        //      std::cout << "Fragrance thread triggered" << std::endl;
 
         /**< Get current Ad */
-        mw->curAd(ad);
-
+        mw->curFrag(frag);
         
-        if(mw->appMode() != AppMode::NORMAL)
-            mw->_fragDiff->enable(false); /**< Disable the actuation */
-        else{
-          if ( mw->_curAd.enabled() ) {
-              
-          }
-        }
+        //frag = Frag::Fragrance(ad.fragID());
+        
+        //       std::cout << "cur frag ID: " << ad.fragID() << std::endl;
+
+        /**< Setup timer */
+        emit  mw->fragTimerStart(frag.durationOn());
+        //mw->_fragTimer->start(frag.durationOn());
+        
+        //if(mw->appMode() != AppMode::NORMAL)
+        //    mw->_fragDiff->enable(false); /**< Disable the actuation */
+        //else{
+        //  if ( mw->_curAd.enabled() ) {
+        //      
+        //  }
+        //}
 
     }
 
@@ -864,7 +946,7 @@ void MainWindow::displayImg(cv::Mat frame){
 
 
         /**< Signal event to waiting thread */
-        _ev_gif_save.Signal();
+        _ev_gif_save->Signal();
         //pthread_mutex_lock( &this->_m_cond_gif_save);
         //pthread_cond_signal( &this->_cond_gif_save );
         //pthread_mutex_unlock( &this->_m_cond_gif_save);
@@ -1233,6 +1315,8 @@ void MainWindow::onHome_pressed(){
     setAppMode(mode);
 
     this->_curAd.enable(false);
+    _fragTimer->stop();
+    _fragDiff->enable(false);
 }
 
 void MainWindow::onNormalMode_pressed(){
@@ -1245,7 +1329,8 @@ void MainWindow::onNormalMode_pressed(){
 
     /**< Emitting a UI signal */;
     //this->_ev_normal_mode.Signal();
-    this->_ev_diff.Signal();
+    this->_ev_diff->Signal();
+    //this->enableEventDiff(true);
 }
 
 void MainWindow::onInter_mode_pressed(){
@@ -1262,6 +1347,8 @@ void MainWindow::onInter_mode_pressed(){
     /**< Signal event */
     //this->_ev_frame_grab.Signal();
 
+    _fragTimer->stop();
+    _fragDiff->enable(false);
 }
 
 void MainWindow::onImgFilt_mode_pressed(){
@@ -1277,6 +1364,8 @@ void MainWindow::onImgFilt_mode_pressed(){
 
     // /**< Signal event */
     // this->_ev_frame_grab.Signal();
+    _fragTimer->stop();
+    _fragDiff->enable(false);
 }
 
 void MainWindow::onShar_mode_pressed(){
@@ -1289,6 +1378,8 @@ void MainWindow::onShar_mode_pressed(){
 
     // /**< Signal event */
     //this->_ev_frame_grab.Signal();
+    _fragTimer->stop();
+    _fragDiff->enable(false);
 }
 
 /* ----------------- END DUMMY --------------------- */
@@ -1346,7 +1437,6 @@ void MainWindow::filterEnable(bool enable){
     pthread_mutex_unlock( &this->_m_imgFilter);
 }
 
-
 void MainWindow::onMediaPlayerStateChanged(QMediaPlayer::State state){
 
     if(appMode() == AppMode::NORMAL ){
@@ -1386,8 +1476,34 @@ void MainWindow::curAd(Ad &ad){
     pthread_mutex_unlock(&_m_cur_ad);
 }
 
-void MainWindow::setCurAd(const Ad &ad){
+void MainWindow::setCurAd(Ad &ad){
     pthread_mutex_lock(&_m_cur_ad);
     _curAd = ad;
     pthread_mutex_unlock(&_m_cur_ad);
+}
+
+bool MainWindow::eventDiff(){
+    static bool triggered = false;
+    pthread_mutex_lock(&_m_event_diff);
+    triggered = _event_diff;
+    pthread_mutex_unlock(&_m_event_diff);
+    return triggered;
+}
+
+void MainWindow::enableEventDiff(bool enable){
+    pthread_mutex_lock(&_m_event_diff);
+    _event_diff = enable;
+    pthread_mutex_unlock(&_m_event_diff);
+}
+
+void MainWindow::curFrag(Frag::Fragrance& f){
+    pthread_mutex_lock(&_m_cur_frag);
+    f = _curFrag;
+    pthread_mutex_unlock(&_m_cur_frag);
+}
+
+void MainWindow::setCurFrag(Frag::Fragrance &f){
+    pthread_mutex_lock(&_m_cur_frag);
+    _curFrag = f;
+    pthread_mutex_unlock(&_m_cur_frag);
 }
