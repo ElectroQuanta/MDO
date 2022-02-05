@@ -27,20 +27,20 @@ int main() {
     if(!s2.Open() || !s.Open())
         return -1;
 
-    for(int i = 0; i < 10; i++) {
+    /*for(int i = 0; i < 10; i++) {
         /*for(int j = 0; j < sensors.size(); j++){
             cout << "Sensor " << j+1 << ": " << sensors[j].Read() << " cm |\t";
         }*/
-        cout << "Sensor 1: " << s.Read() << "\t | Sensor 2: " << s2.Read();
+      /*  cout << "Sensor 1: " << s.Read() << "\t | Sensor 2: " << s2.Read();
         cout << endl;
-    }
+    }*/
 
     #define TIMEOUT_S 5
     #define ITER 1
     int _delay = ITER;
     int dist;
     int count = 0;
-    /*while(1) {
+    while(1) {
         
         for(int j = 0; j < ITER*TIMEOUT_S; j++) {
         count += checkDistance(s.Read());
@@ -52,6 +52,6 @@ int main() {
         else
             cout << "NOT" << endl;
         count = 0;
-    }*/
+    }
 
 }

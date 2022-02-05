@@ -1,2 +1,0 @@
-/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/Local-system/sensors/hc-sro4.o
-

@@ -1,1 +1,0 @@
-cmd_/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/Local-system/sensors/modules.order := {   echo /home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/Local-system/sensors/hc-sro4.ko; :; } | awk '!x[$$0]++' - > /home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/Local-system/sensors/modules.order
