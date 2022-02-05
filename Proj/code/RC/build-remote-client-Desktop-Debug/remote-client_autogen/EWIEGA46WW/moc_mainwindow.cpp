@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MainWindow_t {
-    QByteArrayData data[1];
-    char stringdata0[11];
+    QByteArrayData data[16];
+    char stringdata0[272];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -31,10 +31,31 @@ struct qt_meta_stringdata_MainWindow_t {
     )
 static const qt_meta_stringdata_MainWindow_t qt_meta_stringdata_MainWindow = {
     {
-QT_MOC_LITERAL(0, 0, 10) // "MainWindow"
+QT_MOC_LITERAL(0, 0, 10), // "MainWindow"
+QT_MOC_LITERAL(1, 11, 22), // "on_registerBtn_pressed"
+QT_MOC_LITERAL(2, 34, 0), // ""
+QT_MOC_LITERAL(3, 35, 20), // "on_signInBtn_pressed"
+QT_MOC_LITERAL(4, 56, 20), // "on_cancelBtn_pressed"
+QT_MOC_LITERAL(5, 77, 24), // "on_registerBtn_2_pressed"
+QT_MOC_LITERAL(6, 102, 20), // "on_forgotBtn_pressed"
+QT_MOC_LITERAL(7, 123, 15), // "onLogoutPressed"
+QT_MOC_LITERAL(8, 139, 15), // "timeout_handler"
+QT_MOC_LITERAL(9, 155, 23), // "update_local_system_thr"
+QT_MOC_LITERAL(10, 179, 17), // "upload_and_update"
+QT_MOC_LITERAL(11, 197, 10), // "server_thr"
+QT_MOC_LITERAL(12, 208, 19), // "receive_from_ls_thr"
+QT_MOC_LITERAL(13, 228, 14), // "send_to_ls_thr"
+QT_MOC_LITERAL(14, 243, 11), // "isConnected"
+QT_MOC_LITERAL(15, 255, 16) // "connectionEnable"
 
     },
-    "MainWindow"
+    "MainWindow\0on_registerBtn_pressed\0\0"
+    "on_signInBtn_pressed\0on_cancelBtn_pressed\0"
+    "on_registerBtn_2_pressed\0on_forgotBtn_pressed\0"
+    "onLogoutPressed\0timeout_handler\0"
+    "update_local_system_thr\0upload_and_update\0"
+    "server_thr\0receive_from_ls_thr\0"
+    "send_to_ls_thr\0isConnected\0connectionEnable"
 };
 #undef QT_MOC_LITERAL
 
@@ -44,22 +65,76 @@ static const uint qt_meta_data_MainWindow[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-       0,    0, // methods
+      14,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
        0,       // signalCount
 
+ // slots: name, argc, parameters, tag, flags
+       1,    0,   84,    2, 0x08 /* Private */,
+       3,    0,   85,    2, 0x08 /* Private */,
+       4,    0,   86,    2, 0x08 /* Private */,
+       5,    0,   87,    2, 0x08 /* Private */,
+       6,    0,   88,    2, 0x08 /* Private */,
+       7,    0,   89,    2, 0x08 /* Private */,
+       8,    0,   90,    2, 0x08 /* Private */,
+       9,    1,   91,    2, 0x08 /* Private */,
+      10,    1,   94,    2, 0x08 /* Private */,
+      11,    1,   97,    2, 0x08 /* Private */,
+      12,    1,  100,    2, 0x08 /* Private */,
+      13,    1,  103,    2, 0x08 /* Private */,
+      14,    0,  106,    2, 0x08 /* Private */,
+      15,    1,  107,    2, 0x08 /* Private */,
+
+ // slots: parameters
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::VoidStar, QMetaType::VoidStar,    2,
+    QMetaType::Void, QMetaType::VoidStar,    2,
+    QMetaType::VoidStar, QMetaType::VoidStar,    2,
+    QMetaType::VoidStar, QMetaType::VoidStar,    2,
+    QMetaType::VoidStar, QMetaType::VoidStar,    2,
+    QMetaType::Bool,
+    QMetaType::Void, QMetaType::Bool,    2,
+
        0        // eod
 };
 
 void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
-    Q_UNUSED(_o);
-    Q_UNUSED(_id);
-    Q_UNUSED(_c);
-    Q_UNUSED(_a);
+    if (_c == QMetaObject::InvokeMetaMethod) {
+        auto *_t = static_cast<MainWindow *>(_o);
+        Q_UNUSED(_t)
+        switch (_id) {
+        case 0: _t->on_registerBtn_pressed(); break;
+        case 1: _t->on_signInBtn_pressed(); break;
+        case 2: _t->on_cancelBtn_pressed(); break;
+        case 3: _t->on_registerBtn_2_pressed(); break;
+        case 4: _t->on_forgotBtn_pressed(); break;
+        case 5: _t->onLogoutPressed(); break;
+        case 6: _t->timeout_handler(); break;
+        case 7: { void* _r = _t->update_local_system_thr((*reinterpret_cast< void*(*)>(_a[1])));
+            if (_a[0]) *reinterpret_cast< void**>(_a[0]) = std::move(_r); }  break;
+        case 8: _t->upload_and_update((*reinterpret_cast< void*(*)>(_a[1]))); break;
+        case 9: { void* _r = _t->server_thr((*reinterpret_cast< void*(*)>(_a[1])));
+            if (_a[0]) *reinterpret_cast< void**>(_a[0]) = std::move(_r); }  break;
+        case 10: { void* _r = _t->receive_from_ls_thr((*reinterpret_cast< void*(*)>(_a[1])));
+            if (_a[0]) *reinterpret_cast< void**>(_a[0]) = std::move(_r); }  break;
+        case 11: { void* _r = _t->send_to_ls_thr((*reinterpret_cast< void*(*)>(_a[1])));
+            if (_a[0]) *reinterpret_cast< void**>(_a[0]) = std::move(_r); }  break;
+        case 12: { bool _r = _t->isConnected();
+            if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = std::move(_r); }  break;
+        case 13: _t->connectionEnable((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        default: ;
+        }
+    }
 }
 
 QT_INIT_METAOBJECT const QMetaObject MainWindow::staticMetaObject = { {
@@ -88,6 +163,17 @@ void *MainWindow::qt_metacast(const char *_clname)
 int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
     _id = QMainWindow::qt_metacall(_c, _id, _a);
+    if (_id < 0)
+        return _id;
+    if (_c == QMetaObject::InvokeMetaMethod) {
+        if (_id < 14)
+            qt_static_metacall(this, _c, _id, _a);
+        _id -= 14;
+    } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
+        if (_id < 14)
+            *reinterpret_cast<int*>(_a[0]) = -1;
+        _id -= 14;
+    }
     return _id;
 }
 QT_WARNING_POP

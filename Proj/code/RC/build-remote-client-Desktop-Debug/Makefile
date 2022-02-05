@@ -136,6 +136,60 @@ remote-client_autogen/fast:
 	$(MAKE) -f CMakeFiles/remote-client_autogen.dir/build.make CMakeFiles/remote-client_autogen.dir/build
 .PHONY : remote-client_autogen/fast
 
+adminwindow.o: adminwindow.cpp.o
+
+.PHONY : adminwindow.o
+
+# target to build an object file
+adminwindow.cpp.o:
+	$(MAKE) -f CMakeFiles/remote-client.dir/build.make CMakeFiles/remote-client.dir/adminwindow.cpp.o
+.PHONY : adminwindow.cpp.o
+
+adminwindow.i: adminwindow.cpp.i
+
+.PHONY : adminwindow.i
+
+# target to preprocess a source file
+adminwindow.cpp.i:
+	$(MAKE) -f CMakeFiles/remote-client.dir/build.make CMakeFiles/remote-client.dir/adminwindow.cpp.i
+.PHONY : adminwindow.cpp.i
+
+adminwindow.s: adminwindow.cpp.s
+
+.PHONY : adminwindow.s
+
+# target to generate assembly for a file
+adminwindow.cpp.s:
+	$(MAKE) -f CMakeFiles/remote-client.dir/build.make CMakeFiles/remote-client.dir/adminwindow.cpp.s
+.PHONY : adminwindow.cpp.s
+
+brandwindow.o: brandwindow.cpp.o
+
+.PHONY : brandwindow.o
+
+# target to build an object file
+brandwindow.cpp.o:
+	$(MAKE) -f CMakeFiles/remote-client.dir/build.make CMakeFiles/remote-client.dir/brandwindow.cpp.o
+.PHONY : brandwindow.cpp.o
+
+brandwindow.i: brandwindow.cpp.i
+
+.PHONY : brandwindow.i
+
+# target to preprocess a source file
+brandwindow.cpp.i:
+	$(MAKE) -f CMakeFiles/remote-client.dir/build.make CMakeFiles/remote-client.dir/brandwindow.cpp.i
+.PHONY : brandwindow.cpp.i
+
+brandwindow.s: brandwindow.cpp.s
+
+.PHONY : brandwindow.s
+
+# target to generate assembly for a file
+brandwindow.cpp.s:
+	$(MAKE) -f CMakeFiles/remote-client.dir/build.make CMakeFiles/remote-client.dir/brandwindow.cpp.s
+.PHONY : brandwindow.cpp.s
+
 main.o: main.cpp.o
 
 .PHONY : main.o
@@ -227,6 +281,12 @@ help:
 	@echo "... edit_cache"
 	@echo "... remote-client"
 	@echo "... remote-client_autogen"
+	@echo "... adminwindow.o"
+	@echo "... adminwindow.i"
+	@echo "... adminwindow.s"
+	@echo "... brandwindow.o"
+	@echo "... brandwindow.i"
+	@echo "... brandwindow.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

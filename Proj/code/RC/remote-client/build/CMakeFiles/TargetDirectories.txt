@@ -1,0 +1,4 @@
+/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/remote-client/build/CMakeFiles/rebuild_cache.dir
+/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/remote-client/build/CMakeFiles/edit_cache.dir
+/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/remote-client/build/CMakeFiles/remote-client.dir
+/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/remote-client/build/CMakeFiles/remote-client_autogen.dir

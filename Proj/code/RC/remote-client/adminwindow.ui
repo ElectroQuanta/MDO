@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="main">
     <widget class="QWidget" name="verticalLayoutWidget">
@@ -1524,7 +1524,7 @@
          </font>
         </property>
         <property name="text">
-         <string>READY</string>
+         <string>X</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -1548,7 +1548,7 @@
          </font>
         </property>
         <property name="text">
-         <string>yes</string>
+         <string>X</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -1593,7 +1593,7 @@
          </font>
         </property>
         <property name="text">
-         <string>1 | 100%</string>
+         <string>X | X%</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>

@@ -8,6 +8,16 @@
 	"HEADERS" : 
 	[
 		[
+			"/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/remote-client/adminwindow.h",
+			"MU",
+			"EWIEGA46WW/moc_adminwindow.cpp"
+		],
+		[
+			"/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/remote-client/brandwindow.h",
+			"MU",
+			"EWIEGA46WW/moc_brandwindow.cpp"
+		],
+		[
 			"/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/remote-client/mainwindow.h",
 			"MU",
 			"EWIEGA46WW/moc_mainwindow.cpp"
@@ -28,6 +38,7 @@
 	[
 		"/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/build-remote-client-Desktop-Debug",
 		"/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/remote-client",
+		"/usr/include/mysqlcpp/include",
 		"/usr/include/x86_64-linux-gnu/qt5",
 		"/usr/include/x86_64-linux-gnu/qt5/QtWidgets",
 		"/usr/include/x86_64-linux-gnu/qt5/QtGui",
@@ -64,6 +75,14 @@
 	"SETTINGS_FILE" : "/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/build-remote-client-Desktop-Debug/CMakeFiles/remote-client_autogen.dir/AutogenUsed.txt",
 	"SOURCES" : 
 	[
+		[
+			"/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/remote-client/adminwindow.cpp",
+			"MU"
+		],
+		[
+			"/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/remote-client/brandwindow.cpp",
+			"MU"
+		],
 		[
 			"/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/remote-client/main.cpp",
 			"MU"

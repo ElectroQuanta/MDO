@@ -50,6 +50,7 @@
 					<Add directory="/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/build-remote-client-Desktop-Debug"/>
 					<Add directory="/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/remote-client"/>
 					<Add directory="/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/build-remote-client-Desktop-Debug/remote-client_autogen/include"/>
+					<Add directory="/usr/include/mysqlcpp/include"/>
 					<Add directory="/usr/include/x86_64-linux-gnu/qt5"/>
 					<Add directory="/usr/include/x86_64-linux-gnu/qt5/QtWidgets"/>
 					<Add directory="/usr/include/x86_64-linux-gnu/qt5/QtGui"/>
@@ -83,6 +84,7 @@
 					<Add directory="/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/build-remote-client-Desktop-Debug"/>
 					<Add directory="/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/remote-client"/>
 					<Add directory="/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/build-remote-client-Desktop-Debug/remote-client_autogen/include"/>
+					<Add directory="/usr/include/mysqlcpp/include"/>
 					<Add directory="/usr/include/x86_64-linux-gnu/qt5"/>
 					<Add directory="/usr/include/x86_64-linux-gnu/qt5/QtWidgets"/>
 					<Add directory="/usr/include/x86_64-linux-gnu/qt5/QtGui"/>
@@ -117,6 +119,24 @@
 		<Unit filename="/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/build-remote-client-Desktop-Debug/remote-client_autogen/mocs_compilation.cpp">
 			<Option target="remote-client"/>
 		</Unit>
+		<Unit filename="/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/remote-client/adminwindow.cpp">
+			<Option target="remote-client"/>
+		</Unit>
+		<Unit filename="/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/remote-client/adminwindow.h">
+			<Option target="remote-client"/>
+		</Unit>
+		<Unit filename="/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/remote-client/adminwindow.ui">
+			<Option target="remote-client"/>
+		</Unit>
+		<Unit filename="/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/remote-client/brandwindow.cpp">
+			<Option target="remote-client"/>
+		</Unit>
+		<Unit filename="/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/remote-client/brandwindow.h">
+			<Option target="remote-client"/>
+		</Unit>
+		<Unit filename="/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/remote-client/brandwindow.ui">
+			<Option target="remote-client"/>
+		</Unit>
 		<Unit filename="/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/remote-client/main.cpp">
 			<Option target="remote-client"/>
 		</Unit>
@@ -127,12 +147,6 @@
 			<Option target="remote-client"/>
 		</Unit>
 		<Unit filename="/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/remote-client/mainwindow.ui">
-			<Option target="remote-client"/>
-		</Unit>
-		<Unit filename="/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/remote-client/remote-client_en_150.ts">
-			<Option target="remote-client"/>
-		</Unit>
-		<Unit filename="/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/remote-client/remote-client_en_150.ts.rule">
 			<Option target="remote-client"/>
 		</Unit>
 		<Unit filename="/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/remote-client/CMakeLists.txt">

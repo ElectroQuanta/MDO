@@ -895,6 +895,13 @@
         <property name="locale">
          <locale language="English" country="Europe"/>
         </property>
+        <property name="selectedDate">
+         <date>
+          <year>2022</year>
+          <month>1</month>
+          <day>25</day>
+         </date>
+        </property>
         <property name="firstDayOfWeek">
          <enum>Qt::Monday</enum>
         </property>
@@ -905,7 +912,7 @@
          <enum>QCalendarWidget::ShortDayNames</enum>
         </property>
         <property name="verticalHeaderFormat">
-         <enum>QCalendarWidget::NoVerticalHeader</enum>
+         <enum>QCalendarWidget::ISOWeekNumbers</enum>
         </property>
         <property name="navigationBarVisible">
          <bool>true</bool>

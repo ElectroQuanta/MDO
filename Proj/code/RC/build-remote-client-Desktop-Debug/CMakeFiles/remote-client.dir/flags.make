@@ -6,5 +6,5 @@ CXX_FLAGS = -g   -fPIC -std=gnu++11
 
 CXX_DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB
 
-CXX_INCLUDES = -I/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/build-remote-client-Desktop-Debug -I/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/remote-client -I/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/build-remote-client-Desktop-Debug/remote-client_autogen/include -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ 
+CXX_INCLUDES = -I/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/build-remote-client-Desktop-Debug -I/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/remote-client -I/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/build-remote-client-Desktop-Debug/remote-client_autogen/include -I/usr/include/mysqlcpp/include -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ 
 

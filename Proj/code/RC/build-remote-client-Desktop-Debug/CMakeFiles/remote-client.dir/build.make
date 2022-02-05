@@ -57,13 +57,9 @@ include CMakeFiles/remote-client.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/remote-client.dir/flags.make
 
-/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/remote-client/remote-client_en_150.ts: /home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/remote-client
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/build-remote-client-Desktop-Debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating /home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/remote-client/remote-client_en_150.ts"
-	/usr/lib/qt5/bin/lupdate @/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/build-remote-client-Desktop-Debug/CMakeFiles/remote-client_en_150.ts_lst_file -ts /home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/remote-client/remote-client_en_150.ts
-
 CMakeFiles/remote-client.dir/remote-client_autogen/mocs_compilation.cpp.o: CMakeFiles/remote-client.dir/flags.make
 CMakeFiles/remote-client.dir/remote-client_autogen/mocs_compilation.cpp.o: remote-client_autogen/mocs_compilation.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/build-remote-client-Desktop-Debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/remote-client.dir/remote-client_autogen/mocs_compilation.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/build-remote-client-Desktop-Debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/remote-client.dir/remote-client_autogen/mocs_compilation.cpp.o"
 	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/remote-client.dir/remote-client_autogen/mocs_compilation.cpp.o -c /home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/build-remote-client-Desktop-Debug/remote-client_autogen/mocs_compilation.cpp
 
 CMakeFiles/remote-client.dir/remote-client_autogen/mocs_compilation.cpp.i: cmake_force
@@ -76,7 +72,7 @@ CMakeFiles/remote-client.dir/remote-client_autogen/mocs_compilation.cpp.s: cmake
 
 CMakeFiles/remote-client.dir/main.cpp.o: CMakeFiles/remote-client.dir/flags.make
 CMakeFiles/remote-client.dir/main.cpp.o: /home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/remote-client/main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/build-remote-client-Desktop-Debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/remote-client.dir/main.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/build-remote-client-Desktop-Debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/remote-client.dir/main.cpp.o"
 	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/remote-client.dir/main.cpp.o -c /home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/remote-client/main.cpp
 
 CMakeFiles/remote-client.dir/main.cpp.i: cmake_force
@@ -89,7 +85,7 @@ CMakeFiles/remote-client.dir/main.cpp.s: cmake_force
 
 CMakeFiles/remote-client.dir/mainwindow.cpp.o: CMakeFiles/remote-client.dir/flags.make
 CMakeFiles/remote-client.dir/mainwindow.cpp.o: /home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/remote-client/mainwindow.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/build-remote-client-Desktop-Debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/remote-client.dir/mainwindow.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/build-remote-client-Desktop-Debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/remote-client.dir/mainwindow.cpp.o"
 	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/remote-client.dir/mainwindow.cpp.o -c /home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/remote-client/mainwindow.cpp
 
 CMakeFiles/remote-client.dir/mainwindow.cpp.i: cmake_force
@@ -100,11 +96,39 @@ CMakeFiles/remote-client.dir/mainwindow.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/remote-client.dir/mainwindow.cpp.s"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/remote-client/mainwindow.cpp -o CMakeFiles/remote-client.dir/mainwindow.cpp.s
 
+CMakeFiles/remote-client.dir/adminwindow.cpp.o: CMakeFiles/remote-client.dir/flags.make
+CMakeFiles/remote-client.dir/adminwindow.cpp.o: /home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/remote-client/adminwindow.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/build-remote-client-Desktop-Debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/remote-client.dir/adminwindow.cpp.o"
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/remote-client.dir/adminwindow.cpp.o -c /home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/remote-client/adminwindow.cpp
+
+CMakeFiles/remote-client.dir/adminwindow.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/remote-client.dir/adminwindow.cpp.i"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/remote-client/adminwindow.cpp > CMakeFiles/remote-client.dir/adminwindow.cpp.i
+
+CMakeFiles/remote-client.dir/adminwindow.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/remote-client.dir/adminwindow.cpp.s"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/remote-client/adminwindow.cpp -o CMakeFiles/remote-client.dir/adminwindow.cpp.s
+
+CMakeFiles/remote-client.dir/brandwindow.cpp.o: CMakeFiles/remote-client.dir/flags.make
+CMakeFiles/remote-client.dir/brandwindow.cpp.o: /home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/remote-client/brandwindow.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/build-remote-client-Desktop-Debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/remote-client.dir/brandwindow.cpp.o"
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/remote-client.dir/brandwindow.cpp.o -c /home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/remote-client/brandwindow.cpp
+
+CMakeFiles/remote-client.dir/brandwindow.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/remote-client.dir/brandwindow.cpp.i"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/remote-client/brandwindow.cpp > CMakeFiles/remote-client.dir/brandwindow.cpp.i
+
+CMakeFiles/remote-client.dir/brandwindow.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/remote-client.dir/brandwindow.cpp.s"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/remote-client/brandwindow.cpp -o CMakeFiles/remote-client.dir/brandwindow.cpp.s
+
 # Object files for target remote-client
 remote__client_OBJECTS = \
 "CMakeFiles/remote-client.dir/remote-client_autogen/mocs_compilation.cpp.o" \
 "CMakeFiles/remote-client.dir/main.cpp.o" \
-"CMakeFiles/remote-client.dir/mainwindow.cpp.o"
+"CMakeFiles/remote-client.dir/mainwindow.cpp.o" \
+"CMakeFiles/remote-client.dir/adminwindow.cpp.o" \
+"CMakeFiles/remote-client.dir/brandwindow.cpp.o"
 
 # External object files for target remote-client
 remote__client_EXTERNAL_OBJECTS =
@@ -112,12 +136,15 @@ remote__client_EXTERNAL_OBJECTS =
 remote-client: CMakeFiles/remote-client.dir/remote-client_autogen/mocs_compilation.cpp.o
 remote-client: CMakeFiles/remote-client.dir/main.cpp.o
 remote-client: CMakeFiles/remote-client.dir/mainwindow.cpp.o
+remote-client: CMakeFiles/remote-client.dir/adminwindow.cpp.o
+remote-client: CMakeFiles/remote-client.dir/brandwindow.cpp.o
 remote-client: CMakeFiles/remote-client.dir/build.make
 remote-client: /usr/lib/x86_64-linux-gnu/libQt5Widgets.so.5.12.8
+remote-client: /usr/lib/x86_64-linux-gnu/libcurl.so
 remote-client: /usr/lib/x86_64-linux-gnu/libQt5Gui.so.5.12.8
 remote-client: /usr/lib/x86_64-linux-gnu/libQt5Core.so.5.12.8
 remote-client: CMakeFiles/remote-client.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/build-remote-client-Desktop-Debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable remote-client"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/build-remote-client-Desktop-Debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable remote-client"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/remote-client.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -129,7 +156,7 @@ CMakeFiles/remote-client.dir/clean:
 	$(CMAKE_COMMAND) -P CMakeFiles/remote-client.dir/cmake_clean.cmake
 .PHONY : CMakeFiles/remote-client.dir/clean
 
-CMakeFiles/remote-client.dir/depend: /home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/remote-client/remote-client_en_150.ts
+CMakeFiles/remote-client.dir/depend:
 	cd /home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/build-remote-client-Desktop-Debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/remote-client /home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/remote-client /home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/build-remote-client-Desktop-Debug /home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/build-remote-client-Desktop-Debug /home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/build-remote-client-Desktop-Debug/CMakeFiles/remote-client.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/remote-client.dir/depend
 

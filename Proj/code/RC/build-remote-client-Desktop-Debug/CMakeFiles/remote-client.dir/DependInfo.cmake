@@ -4,6 +4,8 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
+  "/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/remote-client/adminwindow.cpp" "/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/build-remote-client-Desktop-Debug/CMakeFiles/remote-client.dir/adminwindow.cpp.o"
+  "/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/remote-client/brandwindow.cpp" "/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/build-remote-client-Desktop-Debug/CMakeFiles/remote-client.dir/brandwindow.cpp.o"
   "/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/remote-client/main.cpp" "/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/build-remote-client-Desktop-Debug/CMakeFiles/remote-client.dir/main.cpp.o"
   "/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/remote-client/mainwindow.cpp" "/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/build-remote-client-Desktop-Debug/CMakeFiles/remote-client.dir/mainwindow.cpp.o"
   "/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/build-remote-client-Desktop-Debug/remote-client_autogen/mocs_compilation.cpp" "/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/build-remote-client-Desktop-Debug/CMakeFiles/remote-client.dir/remote-client_autogen/mocs_compilation.cpp.o"
@@ -22,6 +24,7 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "."
   "/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/remote-client"
   "remote-client_autogen/include"
+  "/usr/include/mysqlcpp/include"
   "/usr/include/x86_64-linux-gnu/qt5"
   "/usr/include/x86_64-linux-gnu/qt5/QtWidgets"
   "/usr/include/x86_64-linux-gnu/qt5/QtGui"
