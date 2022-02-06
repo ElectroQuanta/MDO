@@ -5,10 +5,12 @@
 #include <opencv2/imgproc.hpp>
 #include <opencv2/videoio.hpp>
 #include <pthread.h>
+#include <qabstractsocket.h>
 #include <qgraphicsitem.h>
 #include <qgraphicsscene.h>
 #include <qmediaplayer.h>
 #include <qnamespace.h>
+#include <qtcpserver.h>
 #include <qwidget.h>
 #include <qdebug.h>
 #include <QMouseEvent>
@@ -23,6 +25,12 @@
 #include <QFileDialog>
 #include <QStandardPaths>
 #include <type_traits>
+
+/**< Client-Server */
+//#include <sys/socket.h>	//socket
+//#include <arpa/inet.h>  //inet_addr
+//#include <unistd.h>
+#include <QAbstractSocket>
 
 
 /**< Define relevant paths */
@@ -60,6 +68,9 @@
 
 /**< Camera index */
 #define CAM_IDX 0
+
+/**< Period tasks reload value */
+#define MODE_PERIOD_MS 5000
 
 
 /**
@@ -114,7 +125,6 @@ MainWindow::MainWindow(QWidget *parent)
     //_mediaPlayer->setPlaylist(_mediaPlaylist);
 
 
-
     /**< Initializing mode */
     setAppMode(AppMode::WELCOME);
 
@@ -129,6 +139,7 @@ MainWindow::MainWindow(QWidget *parent)
     pthread_mutex_init(&_m_cur_ad, NULL);
     pthread_mutex_init(&_m_event_diff, NULL);
     pthread_mutex_init(&_m_cur_frag, NULL);
+    pthread_mutex_init(&_m_tcp_buff, NULL);
 
     //_mutexes.push_back(&_m_status_bar);
     //_mutexes.push_back(&_m_canvas);
@@ -146,11 +157,12 @@ MainWindow::MainWindow(QWidget *parent)
     _ev_diff = new pEvent();
     _ev_rx = new pEvent();
     _ev_download = new pEvent();
-    _ev_mode_check = new pEvent();
+    _ev_process = new pEvent();
+//    _ev_mode_check = new pEvent();
     //_ev_normal_mode_check = new pEvent();
-    _ev_normal_mode_on = new pEvent();
+    //_ev_normal_mode_on = new pEvent();
     //_ev_interaction_mode = new pEvent();
-    _ev_user_detected = new pEvent();
+    //_ev_user_detected = new pEvent();
 
 
     /**< Initialize graphics view */
@@ -176,7 +188,7 @@ MainWindow::MainWindow(QWidget *parent)
     /**< Setting the scene */
     updateScene(_appmode);
 
-      _updateCanvas = true;
+    _updateCanvas = true;
 
      /**< Initialize CV cascades */
     if( !_face_cascade.load( FACE_CASCADE_FNAME ) )
@@ -197,6 +209,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     /**< Ad */
     //_curAd = new Ad();
+#define VIDEO_FNAME "video.mp4"
+    _curAd = Ad(VIDEO_FNAME);
 
     /**< Create filters */
     createFilters();
@@ -210,7 +224,6 @@ MainWindow::MainWindow(QWidget *parent)
         _fragMan->populate();
 
     /* Diffuser */
-    #define FRAG_DIFF_PIN 26
     Frag::Fragrance f(0);
     _fragDiff = new Frag::Diffuser(f);
 
@@ -221,6 +234,10 @@ MainWindow::MainWindow(QWidget *parent)
     _fragTimer = new QTimer(this);
     _checkModeTimer = new QTimer(this);
 
+    /**< Client-server */
+    _remoteSock = new QTcpSocket();
+    _remoteConnected = false;
+    _remoteDataBuff = new QStringList();
 
 
     /**< Connect signals to slots */
@@ -264,14 +281,24 @@ MainWindow::MainWindow(QWidget *parent)
             Qt::QueuedConnection);
     connect(_fragTimer, SIGNAL(timeout()), this,
             SLOT(onFragTimerElapsed()), Qt::QueuedConnection );
-    connect(this, SIGNAL(fragTimerStart(int)), this,
-            SLOT(onFragTimerStart(int)), Qt::QueuedConnection );
+    //connect(this, SIGNAL(fragTimerStart(int)), this,
+    //        SLOT(onFragTimerStart(int)), Qt::QueuedConnection );
     connect(_checkModeTimer, SIGNAL(timeout()), this,
             SLOT(onCheckModeTimerElapsed()), Qt::QueuedConnection );
+    qRegisterMetaType< QAbstractSocket::SocketState >("QAbstractSocket::SocketState");
+    connect(_remoteSock, SIGNAL(stateChanged(QAbstractSocket::SocketState)),
+            this, SLOT(onRemoteConnectionStateChanged(QAbstractSocket::SocketState)),
+            Qt::QueuedConnection );
+    connect(_remoteSock, SIGNAL(connected()),
+            this, SLOT(onRemoteConnected()),
+            Qt::QueuedConnection );
+    connect(_remoteSock, SIGNAL(readyRead()),
+            this, SLOT(OnTcpDataAvail()),
+            Qt::QueuedConnection );
+
 
     /**< Starting timers */
-    #define MODE_PERIOD_MS 5000
-    _checkModeTimer->start(MODE_PERIOD_MS);
+    //_checkModeTimer->start(MODE_PERIOD_MS);
 
 
     /**< Threads */
@@ -285,16 +312,16 @@ MainWindow::MainWindow(QWidget *parent)
      */
     pthread_create( &_frame_grab_thr, NULL,
                     &MainWindow::frame_grabber_worker_thr, this );
+    pthread_create( &_gif_save_thr, NULL,
+                    &MainWindow::gif_save_worker_thr, this );
 //    pthread_create( &_gesture_recog_thr, NULL,
 //                    &MainWindow::gesture_recog_worker_thr, this );
 //    pthread_create( &_twitter_thr, NULL,
 //                    &MainWindow::twitter_worker_thr, this );
-    pthread_create( &_gif_save_thr, NULL,
-                    &MainWindow::gif_save_worker_thr, this );
-    pthread_create( &_video_manager_thr, NULL,
-                    &MainWindow::video_manager_worker_thr, this );
-    pthread_create( &_frag_diff_thr, NULL,
-                    &MainWindow::frag_diff_worker_thr, this );
+    //pthread_create( &_video_manager_thr, NULL,
+    //                &MainWindow::video_manager_worker_thr, this );
+//    pthread_create( &_frag_diff_thr, NULL,
+//                    &MainWindow::frag_diff_worker_thr, this );
     //pthread_create( &_check_mode_thr, NULL,
     //                &MainWindow::check_mode_worker_thr, this );
 
@@ -304,45 +331,83 @@ MainWindow::MainWindow(QWidget *parent)
     //_threads.push_back(&_frag_diff_thr);
 }
 
-void MainWindow::onCheckModeTimerElapsed(){
-#define CNT_RELOAD ((int)(3600/5))
-
-    static int cnt = CNT_RELOAD; /**< define ratio between normal and interaction mode checks: interaction mode is checked cnt times more than normal */
-
-    AppMode_t mode;
-    cnt--;
-    if(! cnt ){
-        /**< Update reload */
-        cnt = CNT_RELOAD;
-        
-        /**< Check Normal Mode */
-        /* If current Ad timeslot == time timeslot */
-            /* Update current ad */
-            /* Get fragrance from current ad */
-            /* Checks its settings from FragManager */
-            /* Update current fragrance */
-            /* Update current state to AppMode::NORMAL */
-
-
-    }else {
-        /**< Check Interaction mode */
-        //mode = AppMode();
-        mode = _appmode;
-        //std::cout << "appMode " << mode << std::endl; 
-        if( detectUser() &&
-            ( (mode == AppMode::WELCOME) || (mode == AppMode::NORMAL) ))
-            onInter_mode_pressed();
-    }
+void MainWindow::OnTcpDataAvail(){
+    _ev_rx->Signal(); 
+}
+void MainWindow::pushTcpData(const QString &s){
+    pthread_mutex_lock(&_m_tcp_buff);
+    _remoteDataBuff->push_back(s);    
+    pthread_mutex_unlock(&_m_tcp_buff);
 }
 
-bool MainWindow::detectUser(){
-   /**< Read Message Queue from daemon */
+void MainWindow::popTcpData(QString &s){
+    pthread_mutex_lock(&_m_tcp_buff);
+    if( ! _remoteDataBuff->isEmpty() )
+        s = _remoteDataBuff->takeFirst( );    
+    pthread_mutex_unlock(&_m_tcp_buff);
+}
 
-    static bool detected = false;
+void MainWindow::onRemoteConnected(){
+    _remoteConnected = true;
+    updateStatusBar("Remote connection: OK!" );
+}
 
-    detected = !detected;
-    
-    return detected;
+void MainWindow::connectToRemote(){
+    //int sock;
+    //struct sockaddr_in server;
+    //char message[1000], server_reply[2000];
+
+    //// Create socket
+    //sock = socket(AF_INET, SOCK_STREAM, 0);
+    //if (sock == -1) {
+    //  printf("Could not create socket");
+    //}
+    //puts("Socket created");
+
+    //server.sin_addr.s_addr = inet_addr("127.0.0.1");
+    //server.sin_family = AF_INET;
+    //server.sin_port = htons(8888);
+
+    //// Connect to remote server
+    //if (connect(sock, (struct sockaddr *)&server, sizeof(server)) < 0) {
+    //    perror("connect failed. Error");
+    //  return 1;
+    //}
+
+#define REMOTE_IP "127.0.0.1"
+#define REMOTE_PORT 9000
+
+    /**< Connect to remote host */
+    _remoteSock->connectToHost(REMOTE_IP, REMOTE_PORT);
+
+    /**< Exit: if the connection was the successful the class will issue the Connected() signal */
+}
+
+void MainWindow::onRemoteConnectionStateChanged(
+    QAbstractSocket::SocketState state){
+    //QString str = "Remote connection: ";
+    switch(state){
+        //case QAbstractSocket::UnconnectedState :
+        //str += "Unconnected";
+        //_remoteConnected = false;
+        //break;
+        //case QAbstractSocket::HostLookupState :
+        //str += "HostLookupState";
+        //_remoteConnected = false;
+        //break;
+        case QAbstractSocket::ConnectedState :
+        _remoteConnected = true;
+        break;
+        //case QAbstractSocket::ClosingState :
+        //str += "Closing";
+        //_remoteConnected = false;
+        //break;
+    default:
+        break;
+    }
+    //str += std::to_string(state);
+    std::cout << "Connection: " << state << std::endl;
+    //updateStatusBar(str);
 }
 
 MainWindow::~MainWindow() {
@@ -374,8 +439,8 @@ MainWindow::~MainWindow() {
     //    pthread_kill( *_threads.at(j), SIGKILL );
     pthread_kill( _frame_grab_thr, SIGKILL);
     pthread_kill( _gif_save_thr, SIGKILL);
-    pthread_kill( _video_manager_thr, SIGKILL);
-    pthread_kill( _frag_diff_thr, SIGKILL);
+    //pthread_kill( _video_manager_thr, SIGKILL);
+    //pthread_kill( _frag_diff_thr, SIGKILL);
 
     if( _video.isOpened() )
         _video.release();
@@ -688,65 +753,65 @@ void* MainWindow::frame_grabber_worker_thr(void *arg){
     return NULL;
 }
 
-/**
- * @brief Gesture recognition thread function
- * @param arg: ptr to a UI::MainWindow
- *
- * detailed
- */
-void* MainWindow::gesture_recog_worker_thr(void *arg){
-
-    using namespace cv;
-    MainWindow *mw = (MainWindow *)arg;
-
-    AppMode_t _mode = AppMode::INTER;
-    Mat frame;
-    QString label_text;
-
-    while(1){
-
-        /**< Getting the mode to decide flow */;
-        pthread_mutex_lock( &mw->_m_mode);;
-        _mode = mw->_appmode;
-        pthread_mutex_unlock( &mw->_m_mode);
-
-        /**< If App was quitted, terminate thread */
-        if(_mode == AppMode::QUIT) 
-            return NULL;
-
-        /**< Check for interaction or img filter modes */
-        if(_mode == AppMode::INTER || _mode == AppMode::IMGFILT){
-
-          if (mw->_video.isOpened()) {
-            /**< Acquiring frame */
-            mw->_video >> frame;
-            if (!frame.empty()) {
-                emit mw->imgGrabbed(frame);
-            }
-          }
-          else{
-              /**< Open camera to capture video */
-              // Adding the CAP_V4L2 solved the GStreamer issue
-              // src: https://stackoverflow.com/a/65033057/17836786
-              if (!mw->_video.open(CAM_IDX, CAP_V4L2)) {
-                  label_text = "Status:  ERROR: could not open camera...";
-              } else {
-                  //mw->ui->label_status->setText("Status:  Camera OK!");
-                  mw->_video.set(cv::CAP_PROP_FRAME_WIDTH, CAMERA_RES_W);
-                  mw->_video.set(cv::CAP_PROP_FRAME_HEIGHT, CAMERA_RES_H);
-                  label_text = "Status:  Camera OK!";
-              }
-              emit(mw->textChanged(label_text));
-          }
-        } else {
-          /**< If video was opened but we changed mode, close video feed */
-          if (mw->_video.isOpened())
-              mw->_video.release();
-        }
-    }
-
-    return NULL;
-}
+///**
+// * @brief Gesture recognition thread function
+// * @param arg: ptr to a UI::MainWindow
+// *
+// * detailed
+// */
+//void* MainWindow::gesture_recog_worker_thr(void *arg){
+//
+//    using namespace cv;
+//    MainWindow *mw = (MainWindow *)arg;
+//
+//    AppMode_t _mode = AppMode::INTER;
+//    Mat frame;
+//    QString label_text;
+//
+//    while(1){
+//
+//        /**< Getting the mode to decide flow */;
+//        pthread_mutex_lock( &mw->_m_mode);;
+//        _mode = mw->_appmode;
+//        pthread_mutex_unlock( &mw->_m_mode);
+//
+//        /**< If App was quitted, terminate thread */
+//        if(_mode == AppMode::QUIT) 
+//            return NULL;
+//
+//        /**< Check for interaction or img filter modes */
+//        if(_mode == AppMode::INTER || _mode == AppMode::IMGFILT){
+//
+//          if (mw->_video.isOpened()) {
+//            /**< Acquiring frame */
+//            mw->_video >> frame;
+//            if (!frame.empty()) {
+//                emit mw->imgGrabbed(frame);
+//            }
+//          }
+//          else{
+//              /**< Open camera to capture video */
+//              // Adding the CAP_V4L2 solved the GStreamer issue
+//              // src: https://stackoverflow.com/a/65033057/17836786
+//              if (!mw->_video.open(CAM_IDX, CAP_V4L2)) {
+//                  label_text = "Status:  ERROR: could not open camera...";
+//              } else {
+//                  //mw->ui->label_status->setText("Status:  Camera OK!");
+//                  mw->_video.set(cv::CAP_PROP_FRAME_WIDTH, CAMERA_RES_W);
+//                  mw->_video.set(cv::CAP_PROP_FRAME_HEIGHT, CAMERA_RES_H);
+//                  label_text = "Status:  Camera OK!";
+//              }
+//              emit(mw->textChanged(label_text));
+//          }
+//        } else {
+//          /**< If video was opened but we changed mode, close video feed */
+//          if (mw->_video.isOpened())
+//              mw->_video.release();
+//        }
+//    }
+//
+//    return NULL;
+//}
 
 /**
  * @brief GIF save thread function
@@ -792,81 +857,160 @@ void* MainWindow::gif_save_worker_thr(void *arg){
     return NULL;
 }
 
+///**
+// * @brief Video manager thread function
+// * @param arg: ptr to a UI::MainWindow
+// *
+// * detailed
+// */
+////void* MainWindow::video_manager_worker_thr(void *arg){
+////
+////    MainWindow *mw = (MainWindow *)arg;
+////
+////    /**< Waiting for a UI signal */;
+////    //mw->_ev_normal_mode.WaitForSignal();
+////
+////#define VIDEO_FNAME "video.mp4"
+////    mw->_curAd = Ad(VIDEO_FNAME);
+////
+////    /**< obtain filepath */
+////    std::string mediaPath;
+////    mw->_curAd.mediaPath(mediaPath);
+////
+//////    volatile QMediaPlayer::State state;
+////
+////    while(1){
+////        if(mw->appMode() != AppMode::NORMAL)
+////            mw->_mediaPlayer->stop(); /**< Play video */
+////        else{
+////          if ( ! mw->_curAd.enabled() ) {
+////             mw->OnMediaStatusChanged(
+////                 QMediaPlayer::MediaStatus::EndOfMedia);
+////
+////            // /**< Try to open the file */
+////            //if (!mw->openVideo(QString::fromStdString(mediaPath))) {
+////            //  mw->_curAd.enable(false);
+////            //  // mw->updateStatusBar("ERROR: could not open media");
+////            //  std::cout << "Could not open media " << mediaPath <<
+////            //      std::endl;
+////            //} else {
+////            //  mw->_curAd.enable(true);
+////            //  mw->_mediaPlayer->play(); /**< Play video */
+////            //  std::cout << "Enabled: " << mediaPath << std::endl;
+////            //}
+////          }
+////        }
+////
+////    }
+////
+////    return NULL;
+////}
+////
+/////**
+//// * @brief Fragrance diffuser thread function
+//// * @param arg: ptr to a UI::MainWindow
+//// *
+//// * detailed
+//// */
+////void* MainWindow::frag_diff_worker_thr(void *arg){
+////
+////    MainWindow *mw = (MainWindow *)arg;
+////
+////    static Frag::Fragrance frag;
+////    //static int durOn, durOff;
+////
+////    while(1){
+////        /**< Waiting for a UI signal */;
+////        /* Normal mode was enabled, thus, ad is enabled */
+////        mw->_ev_diff->WaitForSignal();
+////        //      std::cout << "Fragrance thread triggered" << std::endl;
+////
+////        /**< Get current Ad */
+////        mw->curFrag(frag);
+////        //frag = Frag::Fragrance(ad.fragID());
+////        //       std::cout << "cur frag ID: " << ad.fragID() << std::endl;
+////
+////        /**< Setup timer */
+////        emit  mw->fragTimerStart(frag.durationOn());
+////    }
+////
+////    return NULL;
+////}
+//
+///**
+// * @brief Check mode (normal or interaction)
+// * @param arg: ptr to a UI::MainWindow
+// *
+// * detailed
+// */
+// void* MainWindow::check_mode_worker_thr(void *arg){
+//
+//    MainWindow *mw = (MainWindow *)arg;
+//
+//    static Frag::Fragrance frag;
+//    static int durOn, durOff;
+//
+//    while(1){
+//        /**< Waiting for a UI signal */;
+//        /* Normal mode was enabled, thus, ad is enabled */
+//        mw->_ev_diff->WaitForSignal();
+//
+//        //      std::cout << "Fragrance thread triggered" << std::endl;
+//
+//        /**< Get current Ad */
+//        mw->curFrag(frag);
+//
+//        //frag = Frag::Fragrance(ad.fragID());
+//
+//        //       std::cout << "cur frag ID: " << ad.fragID() << std::endl;
+//
+//        /**< Setup timer */
+//        emit  mw->fragTimerStart(frag.durationOn());
+//        //mw->_fragTimer->start(frag.durationOn());
+//
+//        //if(mw->appMode() != AppMode::NORMAL)
+//        //    mw->_fragDiff->enable(false); /**< Disable the actuation */
+//        //else{
+//        //  if ( mw->_curAd.enabled() ) {
+//        //
+//        //  }
+//        //}
+//
+//    }
+//
+//    return NULL;
+//}
+
+
 /**
- * @brief Video manager thread function
+ * @brief Rx worker thread function
  * @param arg: ptr to a UI::MainWindow
  *
- * detailed
+ * Handles Rx connection
  */
-void* MainWindow::video_manager_worker_thr(void *arg){
+void* MainWindow::rx_worker_thr(void *arg){
 
     MainWindow *mw = (MainWindow *)arg;
 
-    /**< Waiting for a UI signal */;
-    //mw->_ev_normal_mode.WaitForSignal();
-
-#define VIDEO_FNAME "video.mp4"
-    mw->_curAd = Ad(VIDEO_FNAME);
-
-    /**< obtain filepath */
-    std::string mediaPath;
-    mw->_curAd.mediaPath(mediaPath);
-
-//    volatile QMediaPlayer::State state;
+    QString data;
 
     while(1){
-        if(mw->appMode() != AppMode::NORMAL)
-            mw->_mediaPlayer->stop(); /**< Play video */
-        else{
-          if ( ! mw->_curAd.enabled() ) {
-             mw->OnMediaStatusChanged(
-                 QMediaPlayer::MediaStatus::EndOfMedia);
-              
-            // /**< Try to open the file */
-            //if (!mw->openVideo(QString::fromStdString(mediaPath))) {
-            //  mw->_curAd.enable(false);
-            //  // mw->updateStatusBar("ERROR: could not open media");
-            //  std::cout << "Could not open media " << mediaPath <<
-            //      std::endl;
-            //} else {
-            //  mw->_curAd.enable(true);
-            //  mw->_mediaPlayer->play(); /**< Play video */
-            //  std::cout << "Enabled: " << mediaPath << std::endl;
-            //}
-          }
+        /**< Wait for RX signal */
+        mw->_ev_rx->WaitForSignal();
+
+        /**< Read TCP data and push it to vector */
+        while( mw->_remoteSock->canReadLine() ){
+
+            
+            data =  QString( mw->_remoteSock->readLine() );
+            std::cout << "Rx Data: " << data.toStdString()
+                      << std::endl;
+            mw->pushTcpData( data );
+            //mw->pushTcpData( QString( mw->_remoteSock->readLine() ));
         }
 
-    }
-
-    return NULL;
-}
-
-/**
- * @brief Fragrance diffuser thread function
- * @param arg: ptr to a UI::MainWindow
- *
- * detailed
- */
-void* MainWindow::frag_diff_worker_thr(void *arg){
-
-    MainWindow *mw = (MainWindow *)arg;
-
-    static Frag::Fragrance frag;
-    //static int durOn, durOff;
-
-    while(1){
-        /**< Waiting for a UI signal */;
-        /* Normal mode was enabled, thus, ad is enabled */
-        mw->_ev_diff->WaitForSignal();
-        //      std::cout << "Fragrance thread triggered" << std::endl;
-
-        /**< Get current Ad */
-        mw->curFrag(frag);
-        //frag = Frag::Fragrance(ad.fragID());
-        //       std::cout << "cur frag ID: " << ad.fragID() << std::endl;
-
-        /**< Setup timer */
-        emit  mw->fragTimerStart(frag.durationOn());
+        /**< Trigger Processing thread */
+        mw->_ev_process->Signal();
     }
 
     return NULL;
@@ -874,48 +1018,35 @@ void* MainWindow::frag_diff_worker_thr(void *arg){
 
 
 /**
- * @brief Check mode (normal or interaction)
+ * @brief Process worker thread function
  * @param arg: ptr to a UI::MainWindow
  *
- * detailed
+ * Processes Rx data
  */
-void* MainWindow::check_mode_worker_thr(void *arg){
+void* MainWindow::process_worker_thr(void *arg){
 
     MainWindow *mw = (MainWindow *)arg;
 
-    static Frag::Fragrance frag;
-    static int durOn, durOff;
+    QString data;
 
     while(1){
-        /**< Waiting for a UI signal */;
-        /* Normal mode was enabled, thus, ad is enabled */
-        mw->_ev_diff->WaitForSignal();
+        /**< Wait for RX signal */
+        mw->_ev_process->WaitForSignal();
 
-        //      std::cout << "Fragrance thread triggered" << std::endl;
+        /**< Read TCP data from buffer */
+        while( !mw->_remoteDataBuff->empty() ){
+            mw->popTcpData( data );
 
-        /**< Get current Ad */
-        mw->curFrag(frag);
-        
-        //frag = Frag::Fragrance(ad.fragID());
-        
-        //       std::cout << "cur frag ID: " << ad.fragID() << std::endl;
-
-        /**< Setup timer */
-        emit  mw->fragTimerStart(frag.durationOn());
-        //mw->_fragTimer->start(frag.durationOn());
-        
-        //if(mw->appMode() != AppMode::NORMAL)
-        //    mw->_fragDiff->enable(false); /**< Disable the actuation */
-        //else{
-        //  if ( mw->_curAd.enabled() ) {
-        //      
-        //  }
-        //}
-
+            /**< TODO: process it */
+            std::cout << "Processing Data: " << data.toStdString()
+                      << std::endl;
+        }
     }
 
     return NULL;
 }
+
+
 
 void MainWindow::displayImg(cv::Mat frame){
 
@@ -1282,6 +1413,7 @@ void MainWindow::updateScene(AppMode_t mode){
  * Dummy function to help navigate the app
  */
 void MainWindow::on_pushButton_clicked(){
+    _curAd.enable(true);
     onNormalMode_pressed();
 }
 
@@ -1349,7 +1481,7 @@ void MainWindow::on_pushButton_4_clicked() {
 
 void MainWindow::onHome_pressed(){
     /**< Stop video */
-    //_mediaPlayer->stop();
+    _mediaPlayer->stop();
 
     /**< Clear status bar */
     emit(textChanged(""));
@@ -1367,16 +1499,48 @@ void MainWindow::onHome_pressed(){
 
 void MainWindow::onNormalMode_pressed(){
 
-    /**< Change mode before jumping */
-    AppMode_t mode = AppMode::NORMAL;
-    updateScene(mode);
-    ui->stackedWidget->setCurrentIndex(mode);
-    setAppMode(mode);
+    std::string mediaPath;
+
+    /**< Update cur Ad and Frag */
+    /* Get current ad */
+    Ad ad;
+    curAd(ad);
+    /* Get fragrance from current ad */
+    Frag::Fragrance f(ad.fragID());
+    /* Checks its settings from FragManager */
+    _fragDiff->fragrance(f);
+    /* Update current fragrance */
+    setCurFrag(f);
+
+    if( ad.enabled() ){
+      /**< Start the video */
+
+        ad.mediaPath(mediaPath);
+
+        if (openVideo(QString::fromStdString(mediaPath)))
+              this->_mediaPlayer->play();
+        else
+            updateStatusBar("ERROR: Could not load video");
+        
+
+      /**< Enable diffuser and start the associated timer */
+      _fragDiff->enable(true);
+      _fragTimer->start(f.durationOn());
+
+      /**< Change mode before jumping */
+      AppMode_t mode = AppMode::NORMAL;
+      updateScene(mode);
+      ui->stackedWidget->setCurrentIndex(mode);
+      _appmode = mode;
+      //setAppMode(mode);
+      
+    }
 
     /**< Emitting a UI signal */;
     //this->_ev_normal_mode.Signal();
-    this->_ev_diff->Signal();
+    //this->_ev_diff->Signal();
     //this->enableEventDiff(true);
+
 }
 
 void MainWindow::onInter_mode_pressed(){
@@ -1505,12 +1669,15 @@ void MainWindow::OnMediaStatusChanged(QMediaPlayer::MediaStatus status){
       switch (status) {
       case QMediaPlayer::MediaStatus::EndOfMedia :
           //std::cout << "End of media" << std::endl;
-          _curAd.mediaPath(mediaPath);
+          if(_curAd.enabled() && _appmode == AppMode::NORMAL){
+            _curAd.mediaPath(mediaPath);
 
-          if ( openVideo(QString::fromStdString(mediaPath)) ) {
+            if (openVideo(QString::fromStdString(mediaPath))) {
               this->_mediaPlayer->play();
-              this->_curAd.enable(true);
+            }
+            return;
           }
+          this->_mediaPlayer->stop();
       default :
           break;
       }
@@ -1528,19 +1695,19 @@ void MainWindow::setCurAd(Ad &ad){
     pthread_mutex_unlock(&_m_cur_ad);
 }
 
-bool MainWindow::eventDiff(){
-    static bool triggered = false;
-    pthread_mutex_lock(&_m_event_diff);
-    triggered = _event_diff;
-    pthread_mutex_unlock(&_m_event_diff);
-    return triggered;
-}
-
-void MainWindow::enableEventDiff(bool enable){
-    pthread_mutex_lock(&_m_event_diff);
-    _event_diff = enable;
-    pthread_mutex_unlock(&_m_event_diff);
-}
+//bool MainWindow::eventDiff(){
+//    static bool triggered = false;
+//    pthread_mutex_lock(&_m_event_diff);
+//    triggered = _event_diff;
+//    pthread_mutex_unlock(&_m_event_diff);
+//    return triggered;
+//}
+//
+//void MainWindow::enableEventDiff(bool enable){
+//    pthread_mutex_lock(&_m_event_diff);
+//    _event_diff = enable;
+//    pthread_mutex_unlock(&_m_event_diff);
+//}
 
 void MainWindow::curFrag(Frag::Fragrance& f){
     pthread_mutex_lock(&_m_cur_frag);
@@ -1552,11 +1719,6 @@ void MainWindow::setCurFrag(Frag::Fragrance &f){
     pthread_mutex_lock(&_m_cur_frag);
     _curFrag = f;
     pthread_mutex_unlock(&_m_cur_frag);
-}
-
-void MainWindow::onFragTimerStart(int timeout){
-    _fragDiff->enable(true);
-    _fragTimer->start(timeout);
 }
 
 void MainWindow::onFragTimerElapsed(){
@@ -1577,4 +1739,47 @@ void MainWindow::onFragTimerElapsed(){
     _fragTimer->start( timeout );
 
         
+}
+
+void MainWindow::onCheckModeTimerElapsed(){
+#define PERIODIC_LIMIT_MS ((int)3600000)    
+#define CNT_RELOAD ((int)( PERIODIC_LIMIT_MS / MODE_PERIOD_MS ) )
+
+    static int cnt = CNT_RELOAD; /**< define ratio between normal and interaction mode checks: interaction mode is checked cnt times more than normal */
+
+
+    //std::cout << "cnt: " << cnt << std::endl;
+    
+    AppMode_t mode;
+    cnt--;
+    if(! cnt ){
+        /**< Update reload */
+        cnt = CNT_RELOAD;
+        
+        /**< Check Normal Mode */
+        /* If current Ad timeslot == time timeslot */
+        onNormalMode_pressed();
+    }else {
+        /**< Check Interaction mode */
+        //mode = AppMode();
+        mode = _appmode;
+        //std::cout << "appMode " << mode << std::endl; 
+        if( detectUser() &&
+            ( (mode == AppMode::WELCOME) || (mode == AppMode::NORMAL) ))
+            onInter_mode_pressed();
+
+        /**< Check Remote connection */
+        if( ! _remoteConnected )
+            connectToRemote();
+    }
+}
+
+bool MainWindow::detectUser(){
+   /**< Read Message Queue from daemon */
+
+    static bool detected = false;
+
+    detected = !detected;
+    
+    return detected;
 }

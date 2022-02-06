@@ -11,6 +11,7 @@
 #include <QGraphicsPixmapItem>
 #include <QImage>
 #include <opencv2/objdetect.hpp>
+#include <qfiledialog.h>
 #include <qgraphicsitem.h>
 #include <qgraphicsscene.h>
 #include <qwidget.h>
@@ -51,6 +52,11 @@
 #include "fragManager.h"
 #include "fragDiffuser.h"
 
+/**< Client Server Architecture */
+/* Cant use Linux system call connect() due to naming clashes with
+ * Qt connect() function
+ */
+#include <QTcpSocket>
 
 /**
  * @brief App modes
@@ -101,9 +107,12 @@ private slots:
     void onGifEnabled(bool enable);
     void onMediaPlayerStateChanged(QMediaPlayer::State state);
     void OnMediaStatusChanged(QMediaPlayer::MediaStatus status);
-    void onFragTimerStart(int);
+    //void onFragTimerStart(int);
     void onFragTimerElapsed();
     void onCheckModeTimerElapsed();
+    void onRemoteConnectionStateChanged(QAbstractSocket::SocketState);
+    void onRemoteConnected();
+    void OnTcpDataAvail();
 
     bool eventFilter(QObject *, QEvent *);
 
@@ -118,12 +127,14 @@ private slots:
 
     /**< Thread workers */
     static void* frame_grabber_worker_thr(void* arg);
-    static void* gesture_recog_worker_thr(void* arg);
+    //static void* gesture_recog_worker_thr(void* arg);
     //static void* twitter_worker_thr(void* arg);
     static void* gif_save_worker_thr(void* arg);
-    static void* video_manager_worker_thr(void* arg);
-    static void* frag_diff_worker_thr(void* arg);
-    static void* check_mode_worker_thr(void *arg);
+    //static void* video_manager_worker_thr(void* arg);
+    //static void* frag_diff_worker_thr(void* arg);
+    //static void* check_mode_worker_thr(void *arg);
+    static void* rx_worker_thr(void* arg);
+    static void* process_worker_thr(void* arg);
 
     /**< Twitter sharing */
     bool TwitterAuthenticate();
@@ -140,6 +151,11 @@ private slots:
     /**< VideoPlayer */
     bool openVideo(const QString fname);
 
+    /**< Client-server */
+    void connectToRemote();
+    void pushTcpData(const QString &s);
+    void popTcpData(QString &s);
+
     /**< Helpers */
     void updateStatusBar(const QString str);
     AppMode_t appMode();
@@ -150,8 +166,8 @@ private slots:
     void setCurAd(Ad &ad);
     void curFrag(Frag::Fragrance &f);
     void setCurFrag(Frag::Fragrance &f);
-    bool eventDiff();
-    void enableEventDiff(bool);
+    //bool eventDiff();
+    //void enableEventDiff(bool);
     bool detectUser();
 
 /**
@@ -170,7 +186,7 @@ signals:
     void interWindUpdateStatus(const QString str);
     void textChanged(QString);
     void imgGrabbed(cv::Mat frame);
-    void fragTimerStart(int);
+    //void fragTimerStart(int);
 
 private:
     Ui::MainWindow *ui = nullptr; /**< UI main view */
@@ -191,11 +207,11 @@ private:
 
     /**< Threads */
     pthread_t _frame_grab_thr; /**< Frame Grabber thread */
-    pthread_t _gesture_recog_thr; /**< Gesture recognition thread */
-    pthread_t _twitter_thr; /**< Twitter sharing thread */
+    //pthread_t _gesture_recog_thr; /**< Gesture recognition thread */
+    //pthread_t _twitter_thr; /**< Twitter sharing thread */
     pthread_t _gif_save_thr; /**< GIF save thread */
-    pthread_t _video_manager_thr; /**< Video manager thread */
-    pthread_t _frag_diff_thr; /**< Fragrance diffusion thread */
+    //pthread_t _video_manager_thr; /**< Video manager thread */
+    //pthread_t _frag_diff_thr; /**< Fragrance diffusion thread */
     pthread_t _rx_thr; /**< Receive from Remote System thread */
     pthread_t _process_rx_thr; /**< Process rx thread */
     pthread_t _download_ad_thr; /**< Download Ad thread */
@@ -215,6 +231,7 @@ private:
     pthread_mutex_t _m_cur_ad; /**< Protects access to current Ad */
     pthread_mutex_t _m_cur_frag; /**< Protects access to current Frag */
     pthread_mutex_t _m_event_diff; /**< Protects access to current Ad */
+    pthread_mutex_t _m_tcp_buff; /**< Protects access to the TCP buffer */
     std::vector<pthread_mutex_t *> _mutexes;
     /* For condition variables */
     //pthread_mutex_t _m_cond_cam_started;
@@ -228,10 +245,11 @@ private:
     pEvent *_ev_diff; /**< Event Fragrance diffuser */
     pEvent *_ev_rx; /**< Event Rx: data received from remote system */
     pEvent *_ev_download; /**< Event Download: download a new Ad */
-    pEvent *_ev_mode_check; /**< Event Check mode: checks periodically if normal mode or interaction mode must be set */
-    pEvent *_ev_normal_mode_on;
+    pEvent *_ev_process; /**< Event process: Process Rx data */
+//    pEvent *_ev_mode_check; /**< Event Check mode: checks periodically if normal mode or interaction mode must be set */
+//    pEvent *_ev_normal_mode_on;
 //    pEvent *_ev_interaction_mode; /**< Event Interaction mode: check periodically if a user was detected */
-    pEvent *_ev_user_detected; /**< Event User detected: signals a user was detected */
+//    pEvent *_ev_user_detected; /**< Event User detected: signals a user was detected */
 
 
     /**< Filters */
@@ -281,6 +299,13 @@ private:
     /**< Normal mode */
     QTimer *_checkModeTimer; /**< Check periodically if normal mode needs to run */
 
-    /**<  */
+    /**< Client-Server: Local system is the client */
+    /* Cant use Linux system call connect() due to naming clashes with
+     * Qt connect() function
+     */
+    //int _fd_serv;
+    QTcpSocket *_remoteSock;
+    bool _remoteConnected;
+    QStringList *_remoteDataBuff;
 };
 #endif // MAINWINDOW_H
