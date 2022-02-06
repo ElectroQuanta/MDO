@@ -23,13 +23,17 @@ int main(void)
     //DigitalOutput frag("frag", 0);
     Fragrance f(0);
     Diffuser fd(f);
-
+ 
     
     bool enabled = false;
     while (getchar() != 0x20) {
-        fd.enable(enabled);
         enabled = !enabled;
-        /* code */
+        if(enabled) {
+            std::cout << "ON!" << std::endl;
+        }
+        else
+            std::cout << "OFF!" << std::endl;
+         fd.enable(enabled);
     }
     
 

@@ -1,0 +1,1 @@
+cmd_/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/Local-system/frag/Module.symvers := sed 's/ko$$/o/' /home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/Local-system/frag/modules.order | scripts/mod/modpost -m -a   -o /home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/Local-system/frag/Module.symvers -e -i Module.symvers   -T -

@@ -12,6 +12,7 @@
 #include <sstream>
 #include "ultrassonicsensor.h"
 #include <iostream>
+#include <mqueue.h>
 
 using namespace DeviceDriver;
 
@@ -25,6 +26,30 @@ void signal_handler(int sig) {
 			exit(0);
 			break;
 	}
+}
+
+#define MSGQ_PATH "/zekinha"
+    #define MAX_MSG_LEN 64
+
+
+mqd_t create_mqueues() {
+    struct mq_attr attr;
+
+    attr.mq_flags = 0;
+    attr.mq_maxmsg = 1;
+    attr.mq_msgsize = MAX_MSG_LEN;
+    attr.mq_curmsgs = 0;
+
+    mqd_t msgq_path = mq_open(MSGQ_PATH, O_RDWR | O_CREAT | O_NONBLOCK, S_IRWXU | S_IRWXG, &attr);
+
+    if (msgq_path == (mqd_t)-1) {
+        std::cerr << "In mq_open()" << std::endl;
+        mq_close(msgq_path);
+        exit(1);
+    }
+
+    return msgq_path;
+
 }
 
 bool checkDistance(int dist) {
@@ -84,7 +109,8 @@ int main(int argc, char *argv[]){
 		perror("open");
 		exit(EXIT_FAILURE);
 	}
-
+	mq_unlink(MSGQ_PATH);
+	mqd_t msgq_path = create_mqueues();
 	while (1) {
 		int count = 0;
 		for(int j = 0; j < ITER*TIMEOUT_S; j++) {
@@ -92,18 +118,23 @@ int main(int argc, char *argv[]){
         	usleep(_delay*1000);
         }
 		
-		if ((fd = open(LOGFILE,	O_CREAT | O_WRONLY | O_APPEND, 0600)) < 0) {
+		/*if ((fd = open(LOGFILE,	O_CREAT | O_WRONLY | O_APPEND, 0600)) < 0) {
 			perror("open");
 			exit(EXIT_FAILURE);
-		}
-
+		}*/
 		char c = (count > (TIMEOUT_S*ITER/2))?'1' : '0';
-		write(fd, &c, 1);
-		c = '\n';
-		write(fd, &c, 1);
+		mq_send(msgq_path, &c, 2, 1);
+		//if(mq_send(msgq_path, &c, 2, 1) == -1)
+        //	std::cout << "ERROR!!" << std::endl;
+		//c = 0;
+		//if(mq_send(msgq_path, &c, 2, 1) == -1)
+        //	std::cout << "ERROR!!" << std::endl;
+		/*write(fd, &c, 1);
+		
+		write(fd, &c, 1);*/
+		//usleep(500);
 
-
-		close(fd);
+		//close(fd);
 	}
 exit(EXIT_SUCCESS);		
 }

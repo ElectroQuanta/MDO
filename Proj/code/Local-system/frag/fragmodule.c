@@ -36,7 +36,7 @@ static struct cdev c_dev;  // Character device structure
 
 struct GpioRegisters *s_pGpioRegisters;
 
-static const int fragGpioPin = 16;
+static const int fragGpioPin = 26;
 
 ssize_t frag_device_write(struct file *pfile, const char __user *pbuff, size_t len, loff_t *off) { //tirar o static
 	struct GpioRegisters *pdev; 
