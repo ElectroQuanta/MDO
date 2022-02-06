@@ -7,6 +7,9 @@
 #include <arpa/inet.h>	//inet_addr
 #include <unistd.h>
 
+#define IP "127.0.0.1"
+#define PORT 8888
+
 int main(int argc , char *argv[])
 {
     int sock;
@@ -21,9 +24,9 @@ int main(int argc , char *argv[])
     }
     puts("Socket created");
 	
-    server.sin_addr.s_addr = inet_addr("127.0.0.1");
+    server.sin_addr.s_addr = inet_addr(IP);
     server.sin_family = AF_INET;
-    server.sin_port = htons( 8888 );
+    server.sin_port = htons( PORT );
 
     //Connect to remote server
     if (connect(sock , (struct sockaddr *)&server , sizeof(server)) < 0)

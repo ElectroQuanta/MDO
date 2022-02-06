@@ -298,7 +298,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 
     /**< Starting timers */
-    //_checkModeTimer->start(MODE_PERIOD_MS);
+    _checkModeTimer->start(MODE_PERIOD_MS);
 
 
     /**< Threads */
@@ -348,6 +348,11 @@ void MainWindow::popTcpData(QString &s){
 }
 
 void MainWindow::onRemoteConnected(){
+    const QString str = "Hello from LS\0";
+    //_remoteSock->write(IntToArray(str.size()));
+    int nr_bytes = _remoteSock->write(str.toLocal8Bit());
+    std::cout << "Write: " << str.toStdString() << "nr_bytes: " << nr_bytes
+              << std::endl; 
     _remoteConnected = true;
     updateStatusBar("Remote connection: OK!" );
 }
@@ -375,7 +380,7 @@ void MainWindow::connectToRemote(){
     //}
 
 #define REMOTE_IP "127.0.0.1"
-#define REMOTE_PORT 9000
+#define REMOTE_PORT 8888
 
     /**< Connect to remote host */
     _remoteSock->connectToHost(REMOTE_IP, REMOTE_PORT);
@@ -1771,6 +1776,12 @@ void MainWindow::onCheckModeTimerElapsed(){
         /**< Check Remote connection */
         if( ! _remoteConnected )
             connectToRemote();
+        else{
+            const std::string str = "Hello from LS";
+            _remoteConnected = true;
+            _remoteSock->write(str.c_str());
+            std::cout << "Write: " << str << std::endl; 
+        }
     }
 }
 

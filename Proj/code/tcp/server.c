@@ -54,10 +54,12 @@ int main(int argc , char *argv[])
 
 
         /**< Read message from client before sending */
-	if ( !(read_size =
-               recv(client_sock , client_message , 2000 , 0)) > 0 ){
+	if ( (! (read_size = recv(client_sock ,
+                                 client_message , 2000 , 0)) > 0 )){
             printf("Error\n");
             return -1;
+        }else{
+            printf("%s", client_message);
         }
 
         int i = 0;
@@ -65,6 +67,8 @@ int main(int argc , char *argv[])
             //Send the message back to client
             sprintf(client_message, "Hello %d\n", i++);
             write(client_sock , client_message , strlen(client_message));
+            printf("%s", client_message);
+            sleep(1);
         }
         
 	//Receive a message from client
