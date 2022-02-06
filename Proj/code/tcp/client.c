@@ -7,7 +7,8 @@
 #include <arpa/inet.h>	//inet_addr
 #include <unistd.h>
 
-#define IP "127.0.0.1"
+//#define IP "127.0.0.1"
+#define IP "10.0.0.1"
 #define PORT 8888
 
 int main(int argc , char *argv[])

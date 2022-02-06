@@ -16,6 +16,7 @@
 
 #define MSGQ_PATH "/distance"
 #define MAX_MSG_LEN 64
+#define MAX_MSGS 64
 
 mqd_t msgq_path;
 
@@ -23,15 +24,17 @@ void create_mqueues() {
   struct mq_attr attr;
 
   attr.mq_flags = 0;
-  attr.mq_maxmsg = 1;
+  attr.mq_maxmsg = 10;
   attr.mq_msgsize = MAX_MSG_LEN;
   attr.mq_curmsgs = 0;
+
+  mq_unlink(MSGQ_PATH);
 
   msgq_path = mq_open(MSGQ_PATH, O_RDWR | O_CREAT | O_NONBLOCK,
                       S_IRWXU | S_IRWXG, &attr);
 
   if (msgq_path == (mqd_t)-1) {
-    std::cerr << "In mq_open()" << std::endl;
+      perror("In mq_open()");
     mq_close(msgq_path);
     exit(1);
   }
@@ -60,11 +63,23 @@ void receive_msgq() {
 int main() {
   create_mqueues();
 
-  char message[] = "Hello CRLH!!!\0";
+  //char message[] = "Hello CRLH!!!\0";
   /* sending the message      --  mq_send() */
+
+  char c;
+  int i = 0;
+  int aux = 0;
+  #define MAX_ITER 120
+  
   while (1) {
-    if (mq_send(msgq_path, &message[0], strlen(message) + 1, 1) == -1)
-      std::cout << "ERROR!!" << std::endl;
+
+    i++;
+    aux = ((i % MAX_ITER) > ((MAX_ITER/2) - 1));
+    c = aux + '0';
+    std::cout << c << std::endl;
+    if (mq_send(msgq_path, &c, 2, 1) == -1)
+        perror("send error: ");
+//        std::cout << "ERROR!!" << std::endl;
     // receive_msgq();
     sleep(1);
   }

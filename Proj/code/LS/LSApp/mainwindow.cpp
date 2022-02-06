@@ -1492,6 +1492,7 @@ void MainWindow::onHome_pressed(){
 
     /**< Clear status bar */
     emit(textChanged(""));
+    //updateStatusBar("");
 
     /**< Change mode before jumping */
     AppMode_t mode = AppMode::WELCOME;
@@ -1499,7 +1500,7 @@ void MainWindow::onHome_pressed(){
     ui->stackedWidget->setCurrentIndex(mode);
     setAppMode(mode);
 
-    this->_curAd.enable(false);
+    _curAd.enable(false);
     _fragTimer->stop();
     _fragDiff->enable(false);
 }
@@ -1507,6 +1508,7 @@ void MainWindow::onHome_pressed(){
 void MainWindow::onNormalMode_pressed(){
 
     std::string mediaPath;
+    emit(textChanged(""));
 
     /**< Update cur Ad and Frag */
     /* Get current ad */
@@ -1553,7 +1555,7 @@ void MainWindow::onNormalMode_pressed(){
 void MainWindow::onInter_mode_pressed(){
 
     /**< Stop video */
-    //_mediaPlayer->stop();
+    _mediaPlayer->stop();
 
     /**< Change mode before jumping */
     AppMode_t mode = AppMode::INTER;
@@ -1569,6 +1571,10 @@ void MainWindow::onInter_mode_pressed(){
 }
 
 void MainWindow::onImgFilt_mode_pressed(){
+    /**< Stop video */
+    _mediaPlayer->stop();
+    _fragTimer->stop();
+    _fragDiff->enable(false);
 
     /**< Enabling filter globally */;
     onImgFiltGlobal(true);
@@ -1581,11 +1587,13 @@ void MainWindow::onImgFilt_mode_pressed(){
 
     // /**< Signal event */
     // this->_ev_frame_grab.Signal();
-    _fragTimer->stop();
-    _fragDiff->enable(false);
 }
 
 void MainWindow::onShar_mode_pressed(){
+    /**< Stop video */
+    _mediaPlayer->stop();
+    _fragTimer->stop();
+    _fragDiff->enable(false);
 
     /**< Change mode before jumping */
     AppMode_t mode = AppMode::SHAR;
@@ -1595,8 +1603,6 @@ void MainWindow::onShar_mode_pressed(){
 
     // /**< Signal event */
     //this->_ev_frame_grab.Signal();
-    _fragTimer->stop();
-    _fragDiff->enable(false);
 }
 
 /* ----------------- END DUMMY --------------------- */
@@ -1756,45 +1762,66 @@ void MainWindow::onCheckModeTimerElapsed(){
 
 
     //std::cout << "cnt: " << cnt << std::endl;
-    
+
     AppMode_t mode;
     cnt--;
-    if(! cnt ){
-        /**< Update reload */
-        cnt = CNT_RELOAD;
-        
-        /**< Check Normal Mode */
-        /* If current Ad timeslot == time timeslot */
-        onNormalMode_pressed();
-    }else {
-        /**< Check Interaction mode */
-        //mode = AppMode();
-        mode = _appmode;
-        //std::cout << "appMode " << mode << std::endl; 
-        if( detectUser() &&
-            ( (mode == AppMode::WELCOME) || (mode == AppMode::NORMAL) ))
-            onInter_mode_pressed();
+    Ad ad;
+    if (!cnt) {
+      /**< Update reload */
+      cnt = CNT_RELOAD;
 
-        /**< Check Remote connection */
-        if( ! _remoteConnected )
-            connectToRemote();
-        else{
-            const std::string str = "Hello from LS";
-            _remoteConnected = true;
-            _remoteSock->write(str.c_str());
-            std::cout << "Write: " << str << std::endl; 
-        }
+      /**< Check Normal Mode */
+      /* If current Ad timeslot == time timeslot */
+      onNormalMode_pressed();
+    } else {
+      /**< Check Interaction mode */
+      mode = _appmode;
+
+      /**< If User detected on Welcome or Normal modes */
+      if (detectUser()) {
+        if ((mode == AppMode::WELCOME) || (mode == AppMode::NORMAL))  {
+
+            updateStatusBar("User detected");
+            onInter_mode_pressed();
+          }
+      } else{
+          curAd(ad);
+              if( ad.enabled() )
+                  onNormalMode_pressed();
+              else
+                  onHome_pressed();
+      }
+
+      /**< Check Remote connection */
+      if (!_remoteConnected)
+        connectToRemote();
+      else {
+        const QString str = "Hello from LS";
+        _remoteConnected = true;
+        _remoteSock->write(str.toLocal8Bit());
+        std::cout << "Write: " << str.toStdString() << std::endl;
+      }
     }
 }
 
 bool MainWindow::detectUser(){
    /**< Read Message Queue from daemon */
 
-    static bool detected = false;
-
-    detected = !detected;
-    
-    return detected;
+    int user_detected = 0;
+    int cond = 0;
+    while(1){
+      user_detected = cond;
+      cond = _mq_user_detect->Receive();
+      if (cond == EAGAIN){
+           std::cout
+               << "User detected: " << ( user_detected - '0')
+               //<< "User detected: " << user_detected
+               //<< "; EAGAIN: " << EAGAIN
+               //<< "; Ret value: " << (user_detected - '0')
+               << std::endl;
+        return ((user_detected - '0'));
+      }
+    }
 }
 
 void MainWindow::OnTcpDataAvail(){
@@ -1845,11 +1872,13 @@ void MainWindow::connectToRemote(){
     //  return 1;
     //}
 
-#define REMOTE_IP "127.0.0.1"
-#define REMOTE_PORT 8888
+//#define REMOTE_IP "127.0.0.1"
+#define REMOTE_IP "10.0.0.4"
+#define REMOTE_PORT 3000
 
+    if(_remoteSock->state() == QAbstractSocket::UnconnectedState )
     /**< Connect to remote host */
-    _remoteSock->connectToHost(REMOTE_IP, REMOTE_PORT);
+        _remoteSock->connectToHost(REMOTE_IP, REMOTE_PORT);
 
     /**< Exit: if the connection was the successful the class will issue the Connected() signal */
 }

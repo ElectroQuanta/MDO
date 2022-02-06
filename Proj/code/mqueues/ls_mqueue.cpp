@@ -2,7 +2,7 @@
 #include <iostream>
 #include <cstring>
 
-#define MSGQ_PATH "/zekinha"
+#define MSGQ_PATH "/distance"
     #define MAX_MSG_LEN 64
 
 void create_mqueues() {
