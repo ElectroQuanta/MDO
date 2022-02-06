@@ -9402,10 +9402,11 @@ OpenCV provides an API for linear blending of two images. The calculation formul
     2) Check for interaction mode
        1) If user detected AND (=mode == Welcome OR mode == NORMAL=)
 	  1) OnInterMode_pressed();
-11) [ ] Implement client-server architecture
+11) [-] Implement client-server architecture
     1) [ ] Connect to server: bool connectToRemote()
-    2) [ ] Create thread to receive frames
-    3) [ ] Create thread to process frames
+    2) [X] Create thread to receive frames
+    3) [X] Create thread to process frames
+    4) [ ] Deploy a server to test the logic
 12) [ ] Create thread to download files
 *** Frames
 1) Ad
