@@ -324,6 +324,10 @@ MainWindow::MainWindow(QWidget *parent)
 //                    &MainWindow::frag_diff_worker_thr, this );
     //pthread_create( &_check_mode_thr, NULL,
     //                &MainWindow::check_mode_worker_thr, this );
+    pthread_create( &_rx_thr, NULL,
+                    &MainWindow::rx_worker_thr, this );
+    pthread_create( &_process_rx_thr, NULL,
+                    &MainWindow::process_worker_thr, this );
 
     //_threads.push_back(&_frame_grab_thr);
     //_threads.push_back(&_gif_save_thr);
