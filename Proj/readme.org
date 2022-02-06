@@ -8922,7 +8922,7 @@ public:
 	 #+BEGIN_SRC bash
 	 QObject::startTimer: Timers cannot be started from another thread 
 	 #+END_SRC
-*** ☛ TODO PRIORITIES [10/12]
+*** ☛ TODO PRIORITIES [12/12]
     :LOGBOOK:
     - State "☛ TODO"     from              [2022-01-06 qui 01:35]
     :END:
@@ -9402,14 +9402,15 @@ OpenCV provides an API for linear blending of two images. The calculation formul
     2) Check for interaction mode
        1) If user detected AND (=mode == Welcome OR mode == NORMAL=)
 	  1) OnInterMode_pressed();
-11) [-] Implement client-server architecture
-    1) [ ] Connect to server: bool connectToRemote()
+	  2) Connect message queue and process
+11) [X] Implement client-server architecture
+    1) [X] Connect to server: bool connectToRemote()
     2) [X] Create thread to receive frames
     3) [X] Create thread to process frames
-    4) [ ] Deploy a server to test the logic
-12) [ ] Create thread to download files
+    4) [X] Deploy a server to test the logic
+12) [X] Create thread to download files
 *** Frames
-1) Ad
+1) Ad: "A"
 2) Tamanho do buffer daqui para a frente
 3) nome do ficheiro
 4) link

@@ -328,95 +328,13 @@ MainWindow::MainWindow(QWidget *parent)
                     &MainWindow::rx_worker_thr, this );
     pthread_create( &_process_rx_thr, NULL,
                     &MainWindow::process_worker_thr, this );
+    pthread_create( &_download_ad_thr, NULL,
+                    &MainWindow::download_ad_worker_thr, this );
 
     //_threads.push_back(&_frame_grab_thr);
     //_threads.push_back(&_gif_save_thr);
     //_threads.push_back(&_video_manager_thr);
     //_threads.push_back(&_frag_diff_thr);
-}
-
-void MainWindow::OnTcpDataAvail(){
-    _ev_rx->Signal(); 
-}
-void MainWindow::pushTcpData(const QString &s){
-    pthread_mutex_lock(&_m_tcp_buff);
-    _remoteDataBuff->push_back(s);    
-    pthread_mutex_unlock(&_m_tcp_buff);
-}
-
-void MainWindow::popTcpData(QString &s){
-    pthread_mutex_lock(&_m_tcp_buff);
-    if( ! _remoteDataBuff->isEmpty() )
-        s = _remoteDataBuff->takeFirst( );    
-    pthread_mutex_unlock(&_m_tcp_buff);
-}
-
-void MainWindow::onRemoteConnected(){
-    const QString str = "Hello from LS\0";
-    //_remoteSock->write(IntToArray(str.size()));
-    int nr_bytes = _remoteSock->write(str.toLocal8Bit());
-    std::cout << "Write: " << str.toStdString() << "nr_bytes: " << nr_bytes
-              << std::endl; 
-    _remoteConnected = true;
-    updateStatusBar("Remote connection: OK!" );
-}
-
-void MainWindow::connectToRemote(){
-    //int sock;
-    //struct sockaddr_in server;
-    //char message[1000], server_reply[2000];
-
-    //// Create socket
-    //sock = socket(AF_INET, SOCK_STREAM, 0);
-    //if (sock == -1) {
-    //  printf("Could not create socket");
-    //}
-    //puts("Socket created");
-
-    //server.sin_addr.s_addr = inet_addr("127.0.0.1");
-    //server.sin_family = AF_INET;
-    //server.sin_port = htons(8888);
-
-    //// Connect to remote server
-    //if (connect(sock, (struct sockaddr *)&server, sizeof(server)) < 0) {
-    //    perror("connect failed. Error");
-    //  return 1;
-    //}
-
-#define REMOTE_IP "127.0.0.1"
-#define REMOTE_PORT 8888
-
-    /**< Connect to remote host */
-    _remoteSock->connectToHost(REMOTE_IP, REMOTE_PORT);
-
-    /**< Exit: if the connection was the successful the class will issue the Connected() signal */
-}
-
-void MainWindow::onRemoteConnectionStateChanged(
-    QAbstractSocket::SocketState state){
-    //QString str = "Remote connection: ";
-    switch(state){
-        //case QAbstractSocket::UnconnectedState :
-        //str += "Unconnected";
-        //_remoteConnected = false;
-        //break;
-        //case QAbstractSocket::HostLookupState :
-        //str += "HostLookupState";
-        //_remoteConnected = false;
-        //break;
-        case QAbstractSocket::ConnectedState :
-        _remoteConnected = true;
-        break;
-        //case QAbstractSocket::ClosingState :
-        //str += "Closing";
-        //_remoteConnected = false;
-        //break;
-    default:
-        break;
-    }
-    //str += std::to_string(state);
-    std::cout << "Connection: " << state << std::endl;
-    //updateStatusBar(str);
 }
 
 MainWindow::~MainWindow() {
@@ -448,6 +366,9 @@ MainWindow::~MainWindow() {
     //    pthread_kill( *_threads.at(j), SIGKILL );
     pthread_kill( _frame_grab_thr, SIGKILL);
     pthread_kill( _gif_save_thr, SIGKILL);
+    pthread_kill( _rx_thr, SIGKILL);
+    pthread_kill( _process_rx_thr, SIGKILL);
+    pthread_kill( _download_ad_thr, SIGKILL);
     //pthread_kill( _video_manager_thr, SIGKILL);
     //pthread_kill( _frag_diff_thr, SIGKILL);
 
@@ -1038,6 +959,11 @@ void* MainWindow::process_worker_thr(void *arg){
 
     QString data;
 
+#define CMD_AD "A"
+
+    QStringList list;
+    std::string link;
+
     while(1){
         /**< Wait for RX signal */
         mw->_ev_process->WaitForSignal();
@@ -1046,9 +972,36 @@ void* MainWindow::process_worker_thr(void *arg){
         while( !mw->_remoteDataBuff->empty() ){
             mw->popTcpData( data );
 
+            /**< Parse input */
+            list = data.split(',');
+
             /**< TODO: process it */
-            std::cout << "Processing Data: " << data.toStdString()
-                      << std::endl;
+            //std::cout << "Processing Data: " << data.toStdString()
+            //          << std::endl;
+            //    for(int i = 0; i < list.size(); i++)
+            //        std::cout << list.at(i).toStdString()
+            //                  << std::endl;           
+
+            if(list.at(0) == CMD_AD){
+                //Ad(list.at(2), list.at(3), );
+               Ad ad(list.at(2).toStdString(),
+                     list.at(3).toStdString(),
+                     list.at(4).toInt(),
+                     list.at(5).toInt(),
+                     list.at(6).toInt()
+                   );
+
+               /**< Update current Ad and fragrance */
+               mw->setCurAd(ad);
+               Frag::Fragrance f(ad.fragID());
+               mw->setCurFrag( f );
+
+               /**< Download media files */
+               mw->_ev_download->Signal();
+
+            }
+
+
         }
     }
 
@@ -1056,6 +1009,41 @@ void* MainWindow::process_worker_thr(void *arg){
 }
 
 
+/**
+ * @brief Download Ad worker thread function
+ * @param arg: ptr to a UI::MainWindow
+ *
+ * Downloads Ad using curl
+ */
+void* MainWindow::download_ad_worker_thr(void *arg){
+
+    MainWindow *mw = (MainWindow *)arg;
+
+    std::string link;
+    Ad ad;
+
+#define CMD_AD "A"
+
+    QStringList list;
+
+    while(1){
+        /**< Wait for Download signal */
+        mw->_ev_download->WaitForSignal();
+
+        /**< Get current ad */
+        mw->curAd(ad);
+
+        /**< Download link */
+        ad.link(link);
+
+        /**< Update status bar */
+        mw->updateStatusBar( "Downloaded " + QString::fromStdString(link) );
+
+        std::cout << "Downloaded " << link << std::endl;
+    }
+
+    return NULL;
+}
 
 void MainWindow::displayImg(cv::Mat frame){
 
@@ -1797,4 +1785,88 @@ bool MainWindow::detectUser(){
     detected = !detected;
     
     return detected;
+}
+
+void MainWindow::OnTcpDataAvail(){
+    _ev_rx->Signal(); 
+}
+void MainWindow::pushTcpData(const QString &s){
+    pthread_mutex_lock(&_m_tcp_buff);
+    _remoteDataBuff->push_back(s);    
+    pthread_mutex_unlock(&_m_tcp_buff);
+}
+
+void MainWindow::popTcpData(QString &s){
+    pthread_mutex_lock(&_m_tcp_buff);
+    if( ! _remoteDataBuff->isEmpty() )
+        s = _remoteDataBuff->takeFirst( );    
+    pthread_mutex_unlock(&_m_tcp_buff);
+}
+
+void MainWindow::onRemoteConnected(){
+    const QString str = "Hello from LS\0";
+    //_remoteSock->write(IntToArray(str.size()));
+    int nr_bytes = _remoteSock->write(str.toLocal8Bit());
+    std::cout << "Write: " << str.toStdString() << "nr_bytes: " << nr_bytes
+              << std::endl; 
+    _remoteConnected = true;
+    updateStatusBar("Remote connection: OK!" );
+}
+
+void MainWindow::connectToRemote(){
+    //int sock;
+    //struct sockaddr_in server;
+    //char message[1000], server_reply[2000];
+
+    //// Create socket
+    //sock = socket(AF_INET, SOCK_STREAM, 0);
+    //if (sock == -1) {
+    //  printf("Could not create socket");
+    //}
+    //puts("Socket created");
+
+    //server.sin_addr.s_addr = inet_addr("127.0.0.1");
+    //server.sin_family = AF_INET;
+    //server.sin_port = htons(8888);
+
+    //// Connect to remote server
+    //if (connect(sock, (struct sockaddr *)&server, sizeof(server)) < 0) {
+    //    perror("connect failed. Error");
+    //  return 1;
+    //}
+
+#define REMOTE_IP "127.0.0.1"
+#define REMOTE_PORT 8888
+
+    /**< Connect to remote host */
+    _remoteSock->connectToHost(REMOTE_IP, REMOTE_PORT);
+
+    /**< Exit: if the connection was the successful the class will issue the Connected() signal */
+}
+
+void MainWindow::onRemoteConnectionStateChanged(
+    QAbstractSocket::SocketState state){
+    //QString str = "Remote connection: ";
+    switch(state){
+        //case QAbstractSocket::UnconnectedState :
+        //str += "Unconnected";
+        //_remoteConnected = false;
+        //break;
+        //case QAbstractSocket::HostLookupState :
+        //str += "HostLookupState";
+        //_remoteConnected = false;
+        //break;
+        case QAbstractSocket::ConnectedState :
+        _remoteConnected = true;
+        break;
+        //case QAbstractSocket::ClosingState :
+        //str += "Closing";
+        //_remoteConnected = false;
+        //break;
+    default:
+        break;
+    }
+    //str += std::to_string(state);
+    std::cout << "Connection: " << state << std::endl;
+    //updateStatusBar(str);
 }

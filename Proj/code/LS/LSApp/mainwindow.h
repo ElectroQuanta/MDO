@@ -135,6 +135,7 @@ private slots:
     //static void* check_mode_worker_thr(void *arg);
     static void* rx_worker_thr(void* arg);
     static void* process_worker_thr(void* arg);
+    static void* download_ad_worker_thr(void* arg);
 
     /**< Twitter sharing */
     bool TwitterAuthenticate();
@@ -215,7 +216,7 @@ private:
     pthread_t _rx_thr; /**< Receive from Remote System thread */
     pthread_t _process_rx_thr; /**< Process rx thread */
     pthread_t _download_ad_thr; /**< Download Ad thread */
-    pthread_t _check_mode_thr; /**< Check normal mode thread */
+    //pthread_t _check_mode_thr; /**< Check normal mode thread */
     //pthread_t _check_normal_mode_thr; /**< Check normal mode thread */
     //pthread_t _check_interaction_mode_thr; /**< Check interaction thread */
     std::vector<pthread_t *> _threads;

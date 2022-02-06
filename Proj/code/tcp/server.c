@@ -65,7 +65,7 @@ int main(int argc , char *argv[])
         int i = 0;
         while(1){
             //Send the message back to client
-            sprintf(client_message, "Hello %d\n", i++);
+            sprintf(client_message, "A,%d,video.mp4,https://transfer.sh/ghzUgk/video.mp4,1,1,95,1\n", i++);
             write(client_sock , client_message , strlen(client_message));
             printf("%s", client_message);
             sleep(1);

@@ -36,7 +36,7 @@ namespace DeviceDriver{
 
         std::string insert_cmd = "insmod " + _modulePath;
         /**< Insert the module */
-        system( insert_cmd.c_str() );
+        //system( insert_cmd.c_str() );
         
         _fd = open( _devPath.c_str(), O_WRONLY);
         if(_fd < 0)
