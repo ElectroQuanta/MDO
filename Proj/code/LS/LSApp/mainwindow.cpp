@@ -17,6 +17,7 @@
 
 #include "frag.h"
 #include "imgfilter_defs.h" /**< For filters definition */
+#include "msgqueue.h"
 
 #include <signal.h>
 #include <QGraphicsVideoItem>
@@ -238,6 +239,15 @@ MainWindow::MainWindow(QWidget *parent)
     _remoteSock = new QTcpSocket();
     _remoteConnected = false;
     _remoteDataBuff = new QStringList();
+
+    /**< Message queue */
+    # define MQ_SIZE 64
+    _mq_user_detect = new msgQueue("/distance", MQ_SIZE);
+
+    //std::cout << "Open " << _mq_user_detect->Open() << std::endl;
+
+    if( !_mq_user_detect->Open() )
+      updateStatusBar("ERROR: Could not create the message queues");
 
 
     /**< Connect signals to slots */
@@ -664,12 +674,12 @@ void* MainWindow::frame_grabber_worker_thr(void *arg){
               // Adding the CAP_V4L2 solved the GStreamer issue
               // src: https://stackoverflow.com/a/65033057/17836786
               if (!mw->_video.open(CAM_IDX, CAP_V4L2)) {
-                  label_text = "Status:  ERROR: could not open camera...";
+                  label_text = "ERROR: could not open camera...";
               } else {
                   //mw->ui->label_status->setText("Status:  Camera OK!");
                   mw->_video.set(cv::CAP_PROP_FRAME_WIDTH, CAMERA_RES_W);
                   mw->_video.set(cv::CAP_PROP_FRAME_HEIGHT, CAMERA_RES_H);
-                  label_text = "Status:  Camera OK!";
+                  label_text = "Camera OK!";
               }
               emit(mw->textChanged(label_text));
           }

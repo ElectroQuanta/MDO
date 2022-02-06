@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "msgqueue.h"
 #include "normalwindow.h"
 #include "interwindow.h"
 #include "imgfiltwindow.h"
@@ -57,6 +58,9 @@
  * Qt connect() function
  */
 #include <QTcpSocket>
+
+/**< Message queue */
+#include "msgqueue.h"
 
 /**
  * @brief App modes
@@ -308,5 +312,8 @@ private:
     QTcpSocket *_remoteSock;
     bool _remoteConnected;
     QStringList *_remoteDataBuff;
+
+    /**< Message Queue */
+    msgQueue *_mq_user_detect = nullptr;
 };
 #endif // MAINWINDOW_H

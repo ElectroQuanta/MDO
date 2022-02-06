@@ -63,6 +63,8 @@ file(GLOB HEADER_FILES *.h)
 #message(SRC_FILES: ${SRC_FILES})
 #message(HEADER_FILES: ${HEADER_FILES})
 
+set(MQUEUE_LD_FLAGS -lrt)
+
 set(PROJECT_SOURCES
   main.cpp
   # main window
@@ -109,6 +111,9 @@ set(PROJECT_SOURCES
   # Device Drivers
   ddDigitalOut.h
   ddDigitalOut.cpp
+  # Message queue
+  msgqueue.h
+  msgqueue.cpp
 #${HEADER_FILES}
 #${SRC_FILES}
 #${RESOURCES_FILES}
@@ -139,7 +144,7 @@ endif()
 
 # CMAKE IS CASE SENSITIVE
 # src: https://stackoverflow.com/a/60693001/17836786
-target_link_libraries(${PROJECT_NAME} PRIVATE ${OpenCV_LIBS} Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::VirtualKeyboard Qt${QT_VERSION_MAJOR}::Multimedia Qt${QT_VERSION_MAJOR}::MultimediaWidgets pthread ${TWITCURL_LIB} ${MAGICK_LD_FLAGS} ${ImageMagick_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} PRIVATE ${OpenCV_LIBS} Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::VirtualKeyboard Qt${QT_VERSION_MAJOR}::Multimedia Qt${QT_VERSION_MAJOR}::MultimediaWidgets pthread ${TWITCURL_LIB} ${MQUEUE_LD_FLAGS} ${MAGICK_LD_FLAGS} ${ImageMagick_LIBRARIES})
 
 # my_tgt can be an executable, library, or module.
 #target_link_options(${PROJECT_NAME} PRIVATE "LINKER:-lopencv_core -lopencv_video -lopencv_videoio")
