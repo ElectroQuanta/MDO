@@ -9,10 +9,10 @@ set(TOOLCHAIN_PATH ${HOST_PATH}/bin)
 #If you have installed cross compiler to somewhere else, please specify that path.
 #SET(COMPILER_ROOT ${TOOLCHAIN_PATH}) 
 
-SET(TOOLS_PREFIX arm-buildroot-linux-uclibcgnueabihf)
+SET(TOOLS_PREFIX aarch64-buildroot-linux-gnu)
 
-SET (CMAKE_C_COMPILER_WORKS 1)
-SET (CMAKE_CXX_COMPILER_WORKS 1)
+#SET (CMAKE_C_COMPILER_WORKS 1)
+#SET (CMAKE_CXX_COMPILER_WORKS 1)
 
 # Define the cross compiler locations
 SET(CMAKE_C_COMPILER ${TOOLCHAIN_PATH}/${TOOLS_PREFIX}-gcc)

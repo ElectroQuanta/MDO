@@ -14,8 +14,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # ======================== OPENCV
 set(OpenCV_DIR "/usr/local/lib/cmake/opencv4")
 find_package(OpenCV REQUIRED)
-find_package(OpenCV REQUIRED PATHS "/usr/local/lib/")
-include_directories(${OpenCV_INCLUDE_DIRS})
+#find_package(OpenCV REQUIRED PATHS "/usr/local/lib/")
+#include_directories(${OpenCV_INCLUDE_DIRS})
 
 # If the package has been found, several variables will
 # be set, you can find the full list with descriptions
@@ -25,12 +25,6 @@ message(STATUS "OpenCV library status:")
 message(STATUS "    version: ${OpenCV_VERSION}")
 message(STATUS "    libraries: ${OpenCV_LIBS}")
 message(STATUS "    include path: ${OpenCV_INCLUDE_DIRS}")
-
-#set(MAGICK_CFLAGS "-I/usr/include/libpng16  -I/usr/include/pango-1.0 -I/usr/include/fribidi -I/usr/include/harfbuzz -I/usr/include/cairo -I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include -I/usr/include/pixman-1 -I/usr/include/uuid -I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/OpenEXR  -I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/uuid -I/usr/include/freetype2 -I/usr/include/libpng16  -fopenmp -Wall -g -O2 -mtune=amdfam10 -fexceptions -pthread -DMAGICKCORE_HDRI_ENABLE=1 -DMAGICKCORE_QUANTUM_DEPTH=16")
-#set(MAGICK_CPPFLAGS "-DMAGICKCORE_HDRI_ENABLE=1 -DMAGICKCORE_QUANTUM_DEPTH=16")
-#set(MAGICK_DEFS -DHAVE_CONFIG_H)
-#set(MAGICK_LIBS  "-ljbig  -ltiff -lfreetype  -ljpeg    -lpng16 -lz      -lfontconfig -lfreetype      -lXext    -lSM -lICE -lX11  -llzma  -lIlmImf -lImath -lHalf -lIex -lIexMath -lIlmThread -lpthread  -lpangocairo-1.0 -lpango-1.0 -lgobject-2.0 -lglib-2.0 -lharfbuzz -lcairo     -lz     -lm    -lpthread")
-#set(MAGICK_CXXFLAGS -pthread)
 
 
 # ====================== Imagemagick
@@ -42,9 +36,6 @@ string(STRIP "${MAGICK_LD_FLAGS}" MAGICK_LD_FLAGS)
 #set(CMAKE_CXX_FLAGS "${CMAKE_CPP_FLAGS} -std=c++11 ${MAGICK_CXX_FLAGS} ${MAGICK_LD_FLAGS}")
 
 message("LDFlags: ${MAGICK_LD_FLAGS}")
-
-
-
 
 add_definitions( -DMAGICKCORE_QUANTUM_DEPTH=16 )
 add_definitions( -DMAGICKCORE_HDRI_ENABLE=0 )
@@ -153,9 +144,7 @@ endif()
 
 # CMAKE IS CASE SENSITIVE
 # src: https://stackoverflow.com/a/60693001/17836786
-target_link_libraries(${PROJECT_NAME} PRIVATE
-  ${OpenCV_LIBS}
-  Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::VirtualKeyboard Qt${QT_VERSION_MAJOR}::Multimedia Qt${QT_VERSION_MAJOR}::MultimediaWidgets pthread ${TWITCURL_LIB} ${MQUEUE_LD_FLAGS} ${MAGICK_LD_FLAGS} ${ImageMagick_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} PRIVATE ${OpenCV_LIBS} Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::VirtualKeyboard Qt${QT_VERSION_MAJOR}::Multimedia Qt${QT_VERSION_MAJOR}::MultimediaWidgets pthread ${TWITCURL_LIB} ${MQUEUE_LD_FLAGS} ${MAGICK_LD_FLAGS} ${ImageMagick_LIBRARIES})
 
 # my_tgt can be an executable, library, or module.
 #target_link_options(${PROJECT_NAME} PRIVATE "LINKER:-lopencv_core -lopencv_video -lopencv_videoio")

@@ -9418,3 +9418,5 @@ OpenCV provides an API for linear blending of two images. The calculation formul
 6) filter_id
 7) timeSlot_id
 8) enabled
+* Screenshot
+
