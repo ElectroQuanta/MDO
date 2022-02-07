@@ -1,0 +1,48 @@
+/**
+ * @file msgqueue.cpp
+ * @author Jose Pires
+ * @date 2022-02-06
+ *
+ * @brief Implementation class for Message queue
+ *
+ */
+
+#include "msgqueue.h"
+
+msgQueue::msgQueue(std::string path, int size){
+    _path = path;
+    _sz = size;
+    _buff = new char[size];
+    _fd = -1;
+}
+msgQueue::~msgQueue(){
+    mq_close(_fd);
+    mq_unlink(_path.c_str());
+    delete [] _buff;
+}
+bool msgQueue::Open(){
+    _fd = mq_open(_path.c_str(), O_RDWR | O_NONBLOCK);
+    if(_fd == (mqd_t)-1) {
+        mq_close(_fd);
+        return false;
+    }
+
+    return true;
+}
+int msgQueue::Receive(){
+    
+    if(mq_receive(_fd, _buff, _sz, NULL) == -1) {
+            //get error from errno
+        int err = errno;
+        //is the queue empty?
+        if(err == EAGAIN)
+            return err; //no more to read
+
+        //perror("In mq_receive()");
+        mq_close(_fd);
+        //exit(1); 
+    }
+
+    /**< Return char read */
+    return _buff[0];
+}

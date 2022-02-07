@@ -3,10 +3,24 @@
 In the implementation phase, the solution developed in the various domains is
 implemented into the target platforms, accordingly to the system design
 specification. In this chapter is presented the implementation for the various
-domains and subsystems identified, namely the \texttt{Remote Client} and
+domains and subsystems identified, namely the \texttt{Remote Client},
+\texttt{Remote Server} and
 \texttt{Local System}.
 
 \input{./tex/Chap/5-Implem/localsystem.tex}
+
+\section{Deployment}
+\label{sec:deployment}
+As aforementioned the implementation of the Local System was performed and
+tested on the host before cross-compiling and deploying to the target embedded
+system.
+
+However, and even though a successful target system image was obtained, the deployment was not possible as the cross-compiling revealed itself
+more complicated due to the dependency on external libraries.
+
+Nonetheless, as the application logic was successfully validated, the deployment
+task resides only on the successful cross-compiling which could not be attended
+due to time restrictions.
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "../../../dissertation"
