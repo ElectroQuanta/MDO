@@ -1,0 +1,35 @@
+/*USER TABLE */
+CREATE TABLE User(id int NOT NULL AUTO_INCREMENT, role int NOT NULL, username varchar(100) NOT NULL UNIQUE, email varchar(100) NOT NULL UNIQUE, pass varchar(100) NOT NULL, PRIMARY KEY(id));
+/*STATIONS TABLE*/
+CREATE TABLE Station(id int AUTO_INCREMENT, name varchar(100) UNIQUE, location varchar(100), ip varchar(50) UNIQUE, PRIMARY KEY(id));
+/*CREATE TABLE Station(id int AUTO_INCREMENT, userStations_id int, name varchar(100) UNIQUE, location varchar(100), ip varchar(50) UNIQUE, PRIMARY KEY(id), FOREIGN KEY(userStations_id) REFERENCES UserStations(id) ON DELETE CASCADE);*/
+/*USER STATIONS TABLE*/
+CREATE TABLE UserStations(id int AUTO_INCREMENT, user_id int, station_id int, PRIMARY KEY(id), FOREIGN KEY(user_id) REFERENCES User(id) ON DELETE CASCADE, FOREIGN KEY(station_id) REFERENCES Station(id) ON DELETE CASCADE);
+/*CREATE TABLE UserStations(id int AUTO_INCREMENT, user_id int, PRIMARY KEY(id), FOREIGN KEY(user_id) REFERENCES User(id) ON DELETE CASCADE);*/
+/*FRAGRANCE LIST TABLE*/
+CREATE TABLE FragranceList(id int AUTO_INCREMENT, station_id int UNIQUE, PRIMARY KEY(id), FOREIGN KEY(station_id) REFERENCES Station(id) ON DELETE CASCADE);
+/*FRAGRANCE TABLE*/
+CREATE TABLE Fragrance(id int AUTO_INCREMENT, fragranceList_id int, name varchar(50) NOT NULL, intensity varchar(20), vol_ml_max int, vol_ml_level int, description varchar(100), PRIMARY KEY(id), FOREIGN KEY(fragranceList_id) REFERENCES FragranceList(id) ON DELETE CASCADE);
+/*TIME TABLE TABLE*/
+CREATE TABLE TimeTable(id int AUTO_INCREMENT, week int, station_id int, PRIMARY KEY(id), FOREIGN KEY(station_id) REFERENCES Station(id) ON DELETE CASCADE);
+/*TIME SLOT TABLE*/
+CREATE TABLE TimeSlot(id int, timeTable_id int, duration int, cost int, PRIMARY KEY(id), FOREIGN KEY(timeTable_id) REFERENCES TimeTable(id) ON DELETE CASCADE);
+/*FILTER TABLE*/
+create table Filter(id int AUTO_INCREMENT, name varchar(20), PRIMARY KEY(id));
+/*AD TABLE*/
+CREATE TABLE Ad(id int AUTO_INCREMENT, fragrance_id int, user_id int, timeSlot_id int, station_id int, filter_id int, active boolean, PRIMARY KEY(id), FOREIGN KEY(user_id) REFERENCES User(id) ON DELETE CASCADE, FOREIGN KEY(fragrance_id) REFERENCES Fragrance(id) ON DELETE CASCADE, FOREIGN KEY(timeSlot_id) REFERENCES TimeSlot(id) ON DELETE CASCADE, FOREIGN KEY(station_id) REFERENCES Station(id) ON DELETE CASCADE, FOREIGN KEY(filter_id) REFERENCES Filter(id) ON DELETE CASCADE);
+/*MEDIAFILE TABLE*/
+create table MediaFile(id int AUTO_INCREMENT, ad_id int, filename varchar(100), filesize varchar(100), filetype varchar(100), mdata blob, description varchar(200), PRIMARY KEY(id), FOREIGN KEY (ad_id) REFERENCES Ad(id) ON DELETE CASCADE);
+
+/*---------- TRIGGER TO NOT INSERT DUPLICATED ROWS -----------*/
+delimiter @
+CREATE TRIGGER avoid_duplication
+BEFORE INSERT ON UserStations FOR EACH ROW
+BEGIN
+IF EXISTS (SELECT * FROM UserStations WHERE (NEW.user_id = user_id and NEW.station_id = station_id)) THEN
+    SIGNAL SQLSTATE '45000'
+    SET MESSAGE_TEXT = 'That user is already added to the station';
+END IF;
+END @
+delimiter ;
+/*-------------------------------------------------------------*/

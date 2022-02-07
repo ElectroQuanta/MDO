@@ -1,0 +1,84 @@
+/*ADDING ROWS USER */
+INSERT INTO User(role, username, email, pass) values (0, "hugofreitas", "hugofreitas12@gmail.com", "hugof37");
+INSERT INTO User(role, username, email, pass) values (0, "zepires", "a50178@alunos.uminho.pt", "zepires");
+/*ADDING STATION*/
+insert into Station(name, location, ip) values("Station 1", "UMinho", "192.168.15.0");
+/*ADDING ROWS USER STATIONS*/
+INSERT INTO UserStations(user_id, station_id) values (1, 1);
+INSERT INTO UserStations(user_id, station_id) values (2, 1);
+/*ADDING FRAGRANCE LIST*/
+insert into FragranceList(station_id) values (1);
+/*ADDING ROWS FRAGRANCE*/
+insert into Fragrance(fragranceList_id, name) values(1, "Coffee");
+insert into Fragrance(fragranceList_id, name) values(1, "Perfume");
+/*ADDING ROWS TIME TABLE*/
+INSERT INTO TimeTable(week, station_id) values(1,1);
+INSERT INTO TimeTable(week, station_id) values(2, 1);
+INSERT INTO TimeTable(week, station_id) values(3, 1);
+INSERT INTO TimeTable(week, station_id) values(4, 1);
+INSERT INTO TimeTable(week, station_id) values(5, 1);
+INSERT INTO TimeTable(week, station_id) values(6, 1);
+INSERT INTO TimeTable(week, station_id) values(7, 1);
+INSERT INTO TimeTable(week, station_id) values(8, 1);
+INSERT INTO TimeTable(week, station_id) values(9, 1);
+INSERT INTO TimeTable(week, station_id) values(10, 1);
+/* --- 10 ---*/
+INSERT INTO TimeTable(week, station_id) values(11, 1);
+INSERT INTO TimeTable(week, station_id) values(12, 1);
+INSERT INTO TimeTable(week, station_id) values(13 ,1);
+INSERT INTO TimeTable(week, station_id) values(14, 1);
+INSERT INTO TimeTable(week, station_id) values(15, 1);
+INSERT INTO TimeTable(week, station_id) values(16, 1);
+INSERT INTO TimeTable(week, station_id) values(17, 1);
+INSERT INTO TimeTable(week, station_id) values(18, 1);
+INSERT INTO TimeTable(week, station_id) values(19, 1);
+INSERT INTO TimeTable(week, station_id) values(20, 1);
+/* --- 20 ---*/
+INSERT INTO TimeTable(week, station_id) values(21, 1);
+INSERT INTO TimeTable(week, station_id) values(22, 1);
+INSERT INTO TimeTable(week, station_id) values(23, 1);
+INSERT INTO TimeTable(week, station_id) values(24, 1);
+INSERT INTO TimeTable(week, station_id) values(25, 1);
+INSERT INTO TimeTable(week, station_id) values(26, 1);
+INSERT INTO TimeTable(week, station_id) values(27, 1);
+INSERT INTO TimeTable(week, station_id) values(28, 1);
+INSERT INTO TimeTable(week, station_id) values(29, 1);
+INSERT INTO TimeTable(week, station_id) values(30, 1);
+/* --- 30 ---*/
+INSERT INTO TimeTable(week, station_id) values(31, 1);
+INSERT INTO TimeTable(week, station_id) values(32, 1);
+INSERT INTO TimeTable(week, station_id) values(33, 1);
+INSERT INTO TimeTable(week, station_id) values(34, 1);
+INSERT INTO TimeTable(week, station_id) values(35, 1);
+INSERT INTO TimeTable(week, station_id) values(36, 1);
+INSERT INTO TimeTable(week, station_id) values(37, 1);
+INSERT INTO TimeTable(week, station_id) values(38, 1);
+INSERT INTO TimeTable(week, station_id) values(39, 1);
+INSERT INTO TimeTable(week, station_id) values(40, 1);
+/* --- 40 ---*/
+INSERT INTO TimeTable(week, station_id) values(41, 1);
+INSERT INTO TimeTable(week, station_id) values(42, 1);
+INSERT INTO TimeTable(week, station_id) values(43, 1);
+INSERT INTO TimeTable(week, station_id) values(44, 1);
+INSERT INTO TimeTable(week, station_id) values(45, 1);
+INSERT INTO TimeTable(week, station_id) values(46, 1);
+INSERT INTO TimeTable(week, station_id) values(47, 1);
+INSERT INTO TimeTable(week, station_id) values(48, 1);
+INSERT INTO TimeTable(week, station_id) values(49, 1);
+INSERT INTO TimeTable(week, station_id) values(50, 1);
+/* --- 50 ---*/
+INSERT INTO TimeTable(week, station_id) values(51, 1);
+INSERT INTO TimeTable(week, station_id) values(52, 1);
+INSERT INTO TimeTable(week, station_id) values(53, 1);
+INSERT INTO TimeTable(week, station_id) values(54, 1);
+/* --- 54 ---*/
+/*ADDING ROWS TIME SLOT*/
+/*INSERT INTO TimeSlot(id, timeTable_id, duration, cost) values (3, 1, 60, 10);*/
+/*ADDING ROWS FILTER*/
+INSERT INTO Filter(name) values("Moustache");
+INSERT INTO Filter(name) values("Hat");
+/*ADDING ROWS AD*/
+INSERT INTO Ad(fragrance_id, user_id, timeSlot_id, station_id, filter_id, active) values (1, 1, 3, 1, 1, false);
+/*ADDING ROWS MEDIAFILE*/
+
+/*---------------------------------------------------------------------*/

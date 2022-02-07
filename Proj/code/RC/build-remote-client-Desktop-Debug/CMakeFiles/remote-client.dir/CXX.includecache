@@ -6,38 +6,6 @@
 
 #IncludeRegexTransform: 
 
-/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/build-remote-client-Desktop-Debug/remote-client_autogen/EWIEGA46WW/moc_adminwindow.cpp
-adminwindow.h
-/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/build-remote-client-Desktop-Debug/remote-client_autogen/EWIEGA46WW/adminwindow.h
-QtCore/qbytearray.h
--
-QtCore/qmetatype.h
--
-
-/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/build-remote-client-Desktop-Debug/remote-client_autogen/EWIEGA46WW/moc_brandwindow.cpp
-brandwindow.h
-/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/build-remote-client-Desktop-Debug/remote-client_autogen/EWIEGA46WW/brandwindow.h
-QtCore/qbytearray.h
--
-QtCore/qmetatype.h
--
-
-/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/build-remote-client-Desktop-Debug/remote-client_autogen/EWIEGA46WW/moc_mainwindow.cpp
-mainwindow.h
-/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/build-remote-client-Desktop-Debug/remote-client_autogen/EWIEGA46WW/mainwindow.h
-QtCore/qbytearray.h
--
-QtCore/qmetatype.h
--
-
-/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/build-remote-client-Desktop-Debug/remote-client_autogen/mocs_compilation.cpp
-EWIEGA46WW/moc_adminwindow.cpp
-/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/build-remote-client-Desktop-Debug/remote-client_autogen/EWIEGA46WW/moc_adminwindow.cpp
-EWIEGA46WW/moc_brandwindow.cpp
-/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/build-remote-client-Desktop-Debug/remote-client_autogen/EWIEGA46WW/moc_brandwindow.cpp
-EWIEGA46WW/moc_mainwindow.cpp
-/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/build-remote-client-Desktop-Debug/remote-client_autogen/EWIEGA46WW/moc_mainwindow.cpp
-
 /home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/remote-client/adminwindow.h
 QWidget
 -
@@ -54,12 +22,6 @@ QFileInfo
 
 /home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/remote-client/db-namespaces.h
 string
--
-
-/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/remote-client/main.cpp
-mainwindow.h
-/home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/remote-client/mainwindow.h
-QApplication
 -
 
 /home/hugof37/Desktop/ESRG/Group_Repo/ESRG-Sem1/Proj/code/RC/remote-client/mainwindow.cpp
