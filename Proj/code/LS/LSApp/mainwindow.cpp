@@ -308,7 +308,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 
     /**< Starting timers */
-    _checkModeTimer->start(MODE_PERIOD_MS);
+    //_checkModeTimer->start(MODE_PERIOD_MS);
 
 
     /**< Threads */
@@ -1760,7 +1760,6 @@ void MainWindow::onCheckModeTimerElapsed(){
 
     static int cnt = CNT_RELOAD; /**< define ratio between normal and interaction mode checks: interaction mode is checked cnt times more than normal */
 
-
     //std::cout << "cnt: " << cnt << std::endl;
 
     AppMode_t mode;
@@ -1778,19 +1777,19 @@ void MainWindow::onCheckModeTimerElapsed(){
       mode = _appmode;
 
       /**< If User detected on Welcome or Normal modes */
-      if (detectUser()) {
-        if ((mode == AppMode::WELCOME) || (mode == AppMode::NORMAL))  {
+      //if (detectUser()) {
+      //  if ((mode == AppMode::WELCOME) || (mode == AppMode::NORMAL))  {
 
-            updateStatusBar("User detected");
-            onInter_mode_pressed();
-          }
-      } else{
-          curAd(ad);
-              if( ad.enabled() )
-                  onNormalMode_pressed();
-              else
-                  onHome_pressed();
-      }
+      //      updateStatusBar("User detected");
+      //      onInter_mode_pressed();
+      //    }
+      //} else{
+      //    curAd(ad);
+      //        if( ad.enabled() )
+      //            onNormalMode_pressed();
+      //        else
+      //            onHome_pressed();
+      //}
 
       /**< Check Remote connection */
       if (!_remoteConnected)

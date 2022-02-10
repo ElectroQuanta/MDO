@@ -1,8 +1,17 @@
 cmake_minimum_required(VERSION 3.5)
 
+set(CMAKE_BUILD_TYPE Debug)
+# External toolchain( it must be set before project() )
+set(RASP 1)
+if(RASP EQUAL 1)
+  set(CMAKE_TOOLCHAIN_FILE ${CMAKE_SOURCE_DIR}/toolchain/rasptoolchain.cmake)
+  message(${CMAKE_TOOLCHAIN_FILE})
+endif()
+
 project(LSApp VERSION 0.1 LANGUAGES CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
+
 
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
@@ -10,6 +19,8 @@ set(CMAKE_AUTORCC ON)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+
 
 # ======================== OPENCV
 set(OpenCV_DIR "/usr/local/lib/cmake/opencv4")
@@ -42,9 +53,6 @@ string(STRIP "${MAGICK_LD_FLAGS}" MAGICK_LD_FLAGS)
 #set(CMAKE_CXX_FLAGS "${CMAKE_CPP_FLAGS} -std=c++11 ${MAGICK_CXX_FLAGS} ${MAGICK_LD_FLAGS}")
 
 message("LDFlags: ${MAGICK_LD_FLAGS}")
-
-
-
 
 add_definitions( -DMAGICKCORE_QUANTUM_DEPTH=16 )
 add_definitions( -DMAGICKCORE_HDRI_ENABLE=0 )

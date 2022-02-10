@@ -9418,10 +9418,118 @@ OpenCV provides an API for linear blending of two images. The calculation formul
 6) filter_id
 7) timeSlot_id
 8) enabled
-* Screenshot
-* aaahahah
-aaaaaa 
-- aaaaaa
- 
- 
+*** Deployment
+1) Ze
+   1) SW 
+      1) Remote client + DB server deployment
+	 1) Download Hugo code
+	 2) Compile
+      2) Run RC + LS in localhost
+   2) Rasp
+      1. Compile example program to rasp
+2) Hugo
+   1) buildroot
+   2) Compile example program to rasp
+* Deployment
+** Buildroot
+ - What is?
+ - Why use it?: to generate custom embedded Linux systems according to our
+   application's requirements
+- [[file:~/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/Buildroot/buildroot-2021.08.1][Path]]
+*** Installation
+    1. Check the manual
+    2. Install mandatory packages: =sudo apt install <package>=
+    3. Install optional packages:
+       1. =sudo apt install ncurses5=
+       2. Source control version: =sudo apt install git=
+    4. Verify installed packages: =which <package>=
+    5. Create a directory in home directory to put all buildroot files
+    6. Download the buildroot installation
+*** Compilation
+1) Setup:
+     #+begin_src bash
+     # help
+     make help
 
+# cleaning:
+#   clean                  - delete all files created by build
+#   distclean              - delete all non-source files (including .config)
+# 
+# build:
+#   all                    - make world
+#   toolchain              - build toolchain
+#   sdk                    - build relocatable sdk
+# 
+# Configuration:
+#   menuconfig             - interactive curses-based configurator
+# 
+# Miscellaneous:
+#   source                 - download all sources needed for offline-build
+#   external-deps          - list external packages used
+#   legal-info             - generate info about license compliance
+#   show-info              - generate info about packages, as a JSON blurb
+#   pkg-stats              - generate info about packages as JSON and HTML
+#   missing-cpe            - generate XML snippets for missing CPE identifiers
+#   printvars              - dump internal variables selected with VARS=...
+# 
+#   make V=0|1             - 0 => quiet build (default), 1 => verbose build
+#   make O=dir             - Locate all output files in "dir", including .config
+
+      # obtain the list of available default configurations (for devices)
+      make list-defconfigs | grep raspberry
+      # create the default config for raspberry pi 64
+        make raspberrypi_64_defconfig
+      #+end_src
+2) Run configuration: see [[id:02eb8d33-4f65-49c4-b33d-e0f4b51acb87][here]]
+3) Run =make= to build the image
+   1) The image should be built incrementally
+      1) Qt support
+      2) Opencv
+      3) Camera support
+      4) External libraries
+	 1) ImageMagick
+	 2) Twitcurl
+
+*** Configuration
+    :PROPERTIES:
+    :ID:       02eb8d33-4f65-49c4-b33d-e0f4b51acb87
+    :END:
+       1. =make menuconfig=
+       2. Under system configuration:
+	  1. go to "run a getty (login prompt) after boot"
+	  2. change the "TTY port" content to "ttyAMA0" and the baudrate to 115200
+       3. Select "root password"
+       4. Go to Target Packages->Networking applications and enable:
+	  1. dhcpcd
+	  2. droapbear
+       5. Go to the first window and enter in "filesystem images", navifate to "tar
+	  the root filesystem" and enable it, after it's enabled you must select a
+	  "compression method" =bzip2=
+       6. Apply all changes to the image: =make=
+*** Deployment
+- Flashing SD card
+  1) Option B: use =dd= command
+     #+BEGIN_SRC bash
+     sudo dd if=output/images/sdcard of=/dev/sda
+     #+END_SRC
+- Configuring system on Raspberry Pi
+  - edit cmdline.txt: replace =ttyAMA0= with =ttyS0=
+  - edit config.txt: =enable_uart=1==
+*** Check boot process
+    1. Check UART:
+    2. Use a terminal console to connect
+    3. Test the Ethernet and ssh connection
+    4. Secure copy to transfer files
+       1. and also can be used to configure and perform REMOTE debugging
+          sessions
+*** Check buildroot Examples
+    - Compilation: =./output/host/bin/arm-linux-gcc-10.3.0=
+    - Transfer: =scp <src-path> username@IP:/<dest-path>=
+
+**** Cross compilation
+1) Keep the CMakeLists.txt at the original path
+2) Create different build folders inside =./=
+   1) =build_desktop=
+   2) =build_rasp=
+3) Create a toolchain file ([[file:code/LS/LSApp/toolchain/rasptoolchain.cmake::#File%20raspberrytoolchain.cmake%20for%20ROS%20and%20system%20packages%20to%20cross%20compile.][src]])
+4) Add the toolchain path to =CMakeLists.txt=

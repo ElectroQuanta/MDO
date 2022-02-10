@@ -1,0 +1,76 @@
+\section{Remote Server}
+\label{sec:rs}
+%
+The \gls{mdo-rs} was one of the subsystems previously designed to be implemented.
+This application would give a more distributed architecture to the overall system.
+
+Unfortunately, because of laps in time spent trying to resolve some unexpected issues and for many other variants, it turned out that it was not possible to develop a real Remote Server.
+So, in terms to make everything work at its minimums, it was implemented a "kind of" Remote Server in the Remote Client.
+This improvised Remote Server has a full database running in MySQL Server (as it could be seen before) and it has threads to create connections with clients - in this case, local systems - and send to them the information needed, such as new Ads information.
+
+\subsection{Data Base}
+The Data Base is one of the most important parts of this system for obvious reasons: this keeps all data stored and easy to access from the Remote Client and the Remote server.
+Throughout its implementation, it suffered various iterations that were being stored in two different scripts, these scripts are \texttt{init.txt} (that initializes the Data Base) and \texttt{insert-values.txt} that populates the Data Base.
+Implementing it by this way made everything more easy to develop because if it were errors on the Data Base, it was very fast to drop it, create it and populate it again.
+
+Listing \ref{lst:init-sql} shows the init script to create the database.
+%
+\lstinputlisting[language=c++, caption={Script to create Data Base},label=lst:init-sql,
+style=customc]{./listing/init.txt}%
+
+Listing \ref{lst:populate-sql} shows the init script to create the database.
+%
+\lstinputlisting[language=c++, caption={Script to populate Data Base},label=lst:populate-sql,
+style=customc]{./listing/init.txt}%
+
+ 
+
+\subsection{Threads}
+Looking back to Listing \ref{lst:mainwindow-h}, the threads that are being used are:
+\begin{item-c}
+\item \texttt{server\_thr} -- used to receive connections from other systems;
+\item \texttt{receive\_from\_ls\_thr} -- used to receive messages from other systems;
+\item \texttt{send\_to\_ls\_thr} -- used to send data to local system;
+\item \texttt{update\_local\_system\_thr} -- updates the local system periodically.
+\end{item-c}
+
+\subsubsection{server\_thr}
+In listing \ref{lst:server-thr} it is possible to take a look to the thread that waits for the connection of the local system.
+%
+\lstinputlisting[language=c++, firstline=413, lastline=463, caption={Implementation of Server Thread},label=lst:server-thr,
+style=customc]{./listing/rc-mainwindow.cpp}%
+
+This function creates a socket with a default port and starts the binding.
+After a successes on binding, the thread blocks on \texttt{listen} to listen for an incoming connection.
+As soon as it comes an incoming connection, the thread accepts it and runs the functions \texttt{connectionEneable} and stores the socket in order to keep the communication and signalize other functions that they can start sharing content with the local system.
+
+\subsubsection{receive\_from\_ls\_thr}
+In listing \ref{lst:recv-from-ls} is the implementation of the thread that receives messages from the local system.
+%
+\lstinputlisting[language=c++, firstline=492, lastline=505, caption={Implementation of Receive from \gls{mdo-l} Thread},label=lst:recv-from-ls,
+style=customc]{./listing/rc-mainwindow.cpp}%
+
+The function wait for the server to be connected to the local system, once that connection is established it blocks on the \texttt{recv}, waiting to receive something from the previously stored socket.
+
+\subsubsection{send\_to\_ls\_thr}
+Listing \ref{lst:send-to-ls} shows how the thread to send data to the local system works
+%
+\lstinputlisting[language=c++, firstline=507, lastline=530, caption={Implementation of Send to \gls{mdo-l} Thread},label=lst:send-to-ls,
+style=customc]{./listing/rc-mainwindow.cpp}%
+
+Firstly, as in the previous thread, it waits until connection is established. After that, it waits for a conditional signal that is sent when a timer expires. When that signal triggers to HIGH, it creates a frame to send that will be interpreted by the local system.
+
+\subsubsection{update\_local\_system\_thr}
+This function waits for a conditional signal to continue executing. This conditional signal is set when a timer expires, after that it jumps to the function \texttt{upload\_and\_update} that uploads the file with \texttt{curlpp} and then signalizes the previous function to execute.
+%
+\lstinputlisting[language=c++, firstline=264, lastline=288, caption={Implementation of Update \gls{mdo-l} Thread},label=lst:updt-ls,
+style=customc]{./listing/rc-mainwindow.cpp}%
+
+Obviously, this was the fastest way used to implement a Remote Server,
+encapsulating it in the Remote Client. In the future, all these threads will
+leave this app and will migrate and be adjusted to work in a more expandable and
+robust way.
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../../../dissertation"
+%%% End:
