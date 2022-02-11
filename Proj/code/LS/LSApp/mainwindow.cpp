@@ -308,7 +308,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 
     /**< Starting timers */
-    //_checkModeTimer->start(MODE_PERIOD_MS);
+    _checkModeTimer->start(MODE_PERIOD_MS);
 
 
     /**< Threads */
@@ -986,8 +986,8 @@ void* MainWindow::process_worker_thr(void *arg){
             list = data.split(',');
 
             /**< TODO: process it */
-            //std::cout << "Processing Data: " << data.toStdString()
-            //          << std::endl;
+            std::cout << "Processing Data: " << data.toStdString()
+                      << std::endl;
             //    for(int i = 0; i < list.size(); i++)
             //        std::cout << list.at(i).toStdString()
             //                  << std::endl;           
@@ -1795,10 +1795,7 @@ void MainWindow::onCheckModeTimerElapsed(){
       if (!_remoteConnected)
         connectToRemote();
       else {
-        const QString str = "Hello from LS";
-        _remoteConnected = true;
-        _remoteSock->write(str.toLocal8Bit());
-        std::cout << "Write: " << str.toStdString() << std::endl;
+          onRemoteConnected();
       }
     }
 }
@@ -1840,11 +1837,10 @@ void MainWindow::popTcpData(QString &s){
 }
 
 void MainWindow::onRemoteConnected(){
-    const QString str = "Hello from LS\0";
+    const QString str = "Hello from LS\n";
     //_remoteSock->write(IntToArray(str.size()));
     int nr_bytes = _remoteSock->write(str.toLocal8Bit());
-    std::cout << "Write: " << str.toStdString() << "nr_bytes: " << nr_bytes
-              << std::endl; 
+    std::cout << "Write: nr_bytes: " << nr_bytes << "; msg: " << str.toStdString(); 
     _remoteConnected = true;
     updateStatusBar("Remote connection: OK!" );
 }
@@ -1873,7 +1869,8 @@ void MainWindow::connectToRemote(){
 
 //#define REMOTE_IP "127.0.0.1"
 #define REMOTE_IP "10.0.0.4"
-#define REMOTE_PORT 3000
+//#define REMOTE_IP "10.42.0.1"
+#define REMOTE_PORT 5000
 
     if(_remoteSock->state() == QAbstractSocket::UnconnectedState )
     /**< Connect to remote host */
@@ -1886,21 +1883,13 @@ void MainWindow::onRemoteConnectionStateChanged(
     QAbstractSocket::SocketState state){
     //QString str = "Remote connection: ";
     switch(state){
-        //case QAbstractSocket::UnconnectedState :
-        //str += "Unconnected";
-        //_remoteConnected = false;
-        //break;
-        //case QAbstractSocket::HostLookupState :
-        //str += "HostLookupState";
-        //_remoteConnected = false;
-        //break;
         case QAbstractSocket::ConnectedState :
         _remoteConnected = true;
         break;
-        //case QAbstractSocket::ClosingState :
-        //str += "Closing";
-        //_remoteConnected = false;
-        //break;
+        case QAbstractSocket::UnconnectedState :
+        case QAbstractSocket::HostLookupState :
+        case QAbstractSocket::ClosingState :
+        _remoteConnected = false;
     default:
         break;
     }

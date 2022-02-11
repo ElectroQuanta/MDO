@@ -17,8 +17,12 @@ SET(TOOLS_PREFIX aarch64-buildroot-linux-gnu)
 # Define the cross compiler locations
 SET(CMAKE_C_COMPILER ${TOOLCHAIN_PATH}/${TOOLS_PREFIX}-gcc)
 SET(CMAKE_CXX_COMPILER ${TOOLCHAIN_PATH}/${TOOLS_PREFIX}-g++)
-# Define the sysroot path for the RaspberryPi distribution in our tools folder 
+# Define the sysroot path for the RaspberryPi distribution in our tools folder
+
 SET(CMAKE_FIND_ROOT_PATH ${HOST_PATH}/${TOOLS_PREFIX}/sysroot)
+
+#set(OpenCV_DIR "/usr/local/lib/cmake/opencv4")
+#aarch64-buildroot-linux-gnu/sysroot/usr/lib/cmake/opencv4/
 
 
 #message("Buildroot_DIR:" ${BUILDROOT_DIR})

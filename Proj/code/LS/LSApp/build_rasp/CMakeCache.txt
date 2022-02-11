@@ -198,35 +198,8 @@ CMAKE_TOOLCHAIN_FILE:FILEPATH=/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/20
 // Studio IDE projects all commands are done without /nologo.
 CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
 
-//Path to the ImageMagick binary directory.
-IMAGEMAGICK_BINARY_PATH:PATH=ImageMagick_EXECUTABLE_DIR-NOTFOUND
-
-//Path to ImageMagick's composite executable.
-IMAGEMAGICK_COMPOSITE_EXECUTABLE:FILEPATH=
-
-//Path to ImageMagick's convert executable.
-IMAGEMAGICK_CONVERT_EXECUTABLE:FILEPATH=
-
-//Path to ImageMagick's import executable.
-IMAGEMAGICK_IMPORT_EXECUTABLE:FILEPATH=
-
-//Path to ImageMagick's mogrify executable.
-IMAGEMAGICK_MOGRIFY_EXECUTABLE:FILEPATH=
-
-//Path to ImageMagick's montage executable.
-IMAGEMAGICK_MONTAGE_EXECUTABLE:FILEPATH=
-
-//Path to the ImageMagick binary directory.
-ImageMagick_EXECUTABLE_DIR:PATH=ImageMagick_EXECUTABLE_DIR-NOTFOUND
-
-//Path to the ImageMagick arch-specific include dir.
-ImageMagick_Magick++_ARCH_INCLUDE_DIR:PATH=ImageMagick_Magick++_ARCH_INCLUDE_DIR-NOTFOUND
-
-//Path to the ImageMagick arch-independent include dir.
-ImageMagick_Magick++_INCLUDE_DIR:PATH=ImageMagick_Magick++_INCLUDE_DIR-NOTFOUND
-
-//Path to the ImageMagick Magick++ library.
-ImageMagick_Magick++_LIBRARY:FILEPATH=ImageMagick_Magick++_LIBRARY-NOTFOUND
+//The directory containing a CMake configuration file for ImageMagick.
+ImageMagick_DIR:PATH=ImageMagick_DIR-NOTFOUND
 
 //Value Computed by CMake
 LSApp_BINARY_DIR:STATIC=/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/code/LS/LSApp/build_rasp
@@ -235,37 +208,46 @@ LSApp_BINARY_DIR:STATIC=/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/
 LSApp_SOURCE_DIR:STATIC=/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/code/LS/LSApp
 
 //Path to a program.
-MAGICK_CONFIG:FILEPATH=/usr/local/bin/Magick++-config
+MAGICK_CONFIG:FILEPATH=/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/Buildroot/buildroot-2021.08.1/output/host/bin/Magick++-config
 
-//pkg-config executable
-PKG_CONFIG_EXECUTABLE:FILEPATH=/usr/bin/pkg-config
+//The directory containing a CMake configuration file for OpenCV.
+OpenCV_DIR:PATH=/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/Buildroot/buildroot-2021.08.1/output/host/aarch64-buildroot-linux-gnu/sysroot/usr/lib64/cmake/opencv4
 
 //The directory containing a CMake configuration file for QT.
-QT_DIR:PATH=/home/zmpl/Qt/5.13.2/gcc_64/lib/cmake/Qt5
+QT_DIR:PATH=/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/Buildroot/buildroot-2021.08.1/output/host/aarch64-buildroot-linux-gnu/sysroot/usr/lib64/cmake/Qt5
 
 //The directory containing a CMake configuration file for Qt5Core.
-Qt5Core_DIR:PATH=/home/zmpl/Qt/5.13.2/gcc_64/lib/cmake/Qt5Core
+Qt5Core_DIR:PATH=/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/Buildroot/buildroot-2021.08.1/output/host/aarch64-buildroot-linux-gnu/sysroot/usr/lib64/cmake/Qt5Core
 
 //The directory containing a CMake configuration file for Qt5Gui.
-Qt5Gui_DIR:PATH=/home/zmpl/Qt/5.13.2/gcc_64/lib/cmake/Qt5Gui
+Qt5Gui_DIR:PATH=/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/Buildroot/buildroot-2021.08.1/output/host/aarch64-buildroot-linux-gnu/sysroot/usr/lib64/cmake/Qt5Gui
+
+//The directory containing a CMake configuration file for Qt5MultimediaWidgets.
+Qt5MultimediaWidgets_DIR:PATH=/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/Buildroot/buildroot-2021.08.1/output/host/aarch64-buildroot-linux-gnu/sysroot/usr/lib64/cmake/Qt5MultimediaWidgets
+
+//The directory containing a CMake configuration file for Qt5Multimedia.
+Qt5Multimedia_DIR:PATH=/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/Buildroot/buildroot-2021.08.1/output/host/aarch64-buildroot-linux-gnu/sysroot/usr/lib64/cmake/Qt5Multimedia
+
+//The directory containing a CMake configuration file for Qt5Network.
+Qt5Network_DIR:PATH=/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/Buildroot/buildroot-2021.08.1/output/host/aarch64-buildroot-linux-gnu/sysroot/usr/lib64/cmake/Qt5Network
+
+//The directory containing a CMake configuration file for Qt5QmlModels.
+Qt5QmlModels_DIR:PATH=/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/Buildroot/buildroot-2021.08.1/output/host/aarch64-buildroot-linux-gnu/sysroot/usr/lib64/cmake/Qt5QmlModels
+
+//The directory containing a CMake configuration file for Qt5Qml.
+Qt5Qml_DIR:PATH=/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/Buildroot/buildroot-2021.08.1/output/host/aarch64-buildroot-linux-gnu/sysroot/usr/lib64/cmake/Qt5Qml
+
+//The directory containing a CMake configuration file for Qt5Quick.
+Qt5Quick_DIR:PATH=/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/Buildroot/buildroot-2021.08.1/output/host/aarch64-buildroot-linux-gnu/sysroot/usr/lib64/cmake/Qt5Quick
+
+//The directory containing a CMake configuration file for Qt5VirtualKeyboard.
+Qt5VirtualKeyboard_DIR:PATH=/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/Buildroot/buildroot-2021.08.1/output/host/aarch64-buildroot-linux-gnu/sysroot/usr/lib64/cmake/Qt5VirtualKeyboard
 
 //The directory containing a CMake configuration file for Qt5Widgets.
-Qt5Widgets_DIR:PATH=/home/zmpl/Qt/5.13.2/gcc_64/lib/cmake/Qt5Widgets
+Qt5Widgets_DIR:PATH=/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/Buildroot/buildroot-2021.08.1/output/host/aarch64-buildroot-linux-gnu/sysroot/usr/lib64/cmake/Qt5Widgets
 
 //The directory containing a CMake configuration file for Qt5.
-Qt5_DIR:PATH=/home/zmpl/Qt/5.13.2/gcc_64/lib/cmake/Qt5
-
-//Path to a file.
-_qt5gui_OPENGL_INCLUDE_DIR:PATH=_qt5gui_OPENGL_INCLUDE_DIR-NOTFOUND
-
-//Path to a library.
-pkgcfg_lib_PC_Magick++_Magick++-7.Q16HDRI:FILEPATH=pkgcfg_lib_PC_Magick++_Magick++-7.Q16HDRI-NOTFOUND
-
-//Path to a library.
-pkgcfg_lib_PC_Magick++_MagickCore-7.Q16HDRI:FILEPATH=pkgcfg_lib_PC_Magick++_MagickCore-7.Q16HDRI-NOTFOUND
-
-//Path to a library.
-pkgcfg_lib_PC_Magick++_MagickWand-7.Q16HDRI:FILEPATH=pkgcfg_lib_PC_Magick++_MagickWand-7.Q16HDRI-NOTFOUND
+Qt5_DIR:PATH=/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/Buildroot/buildroot-2021.08.1/output/host/aarch64-buildroot-linux-gnu/sysroot/usr/lib64/cmake/Qt5
 
 
 ########################
@@ -398,63 +380,5 @@ CMAKE_UNAME:INTERNAL=/usr/bin/uname
 //ADVANCED property for variable: CMAKE_VERBOSE_MAKEFILE
 CMAKE_VERBOSE_MAKEFILE-ADVANCED:INTERNAL=1
 //Details about finding OpenCV
-FIND_PACKAGE_MESSAGE_DETAILS_OpenCV:INTERNAL=[/usr/local][v4.5.5()]
-//ADVANCED property for variable: IMAGEMAGICK_BINARY_PATH
-IMAGEMAGICK_BINARY_PATH-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: IMAGEMAGICK_COMPOSITE_EXECUTABLE
-IMAGEMAGICK_COMPOSITE_EXECUTABLE-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: IMAGEMAGICK_CONVERT_EXECUTABLE
-IMAGEMAGICK_CONVERT_EXECUTABLE-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: IMAGEMAGICK_IMPORT_EXECUTABLE
-IMAGEMAGICK_IMPORT_EXECUTABLE-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: IMAGEMAGICK_MOGRIFY_EXECUTABLE
-IMAGEMAGICK_MOGRIFY_EXECUTABLE-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: IMAGEMAGICK_MONTAGE_EXECUTABLE
-IMAGEMAGICK_MONTAGE_EXECUTABLE-ADVANCED:INTERNAL=1
-PC_Magick++_CFLAGS:INTERNAL=-fopenmp;-DMAGICKCORE_HDRI_ENABLE=1;-DMAGICKCORE_QUANTUM_DEPTH=16;-fopenmp;-DMAGICKCORE_HDRI_ENABLE=1;-DMAGICKCORE_QUANTUM_DEPTH=16;-fopenmp;-DMAGICKCORE_HDRI_ENABLE=1;-DMAGICKCORE_QUANTUM_DEPTH=16;-I/usr/local/include/ImageMagick-7
-PC_Magick++_CFLAGS_I:INTERNAL=
-PC_Magick++_CFLAGS_OTHER:INTERNAL=-fopenmp;-DMAGICKCORE_HDRI_ENABLE=1;-DMAGICKCORE_QUANTUM_DEPTH=16;-fopenmp;-DMAGICKCORE_HDRI_ENABLE=1;-DMAGICKCORE_QUANTUM_DEPTH=16;-fopenmp;-DMAGICKCORE_HDRI_ENABLE=1;-DMAGICKCORE_QUANTUM_DEPTH=16
-PC_Magick++_FOUND:INTERNAL=1
-PC_Magick++_INCLUDEDIR:INTERNAL=/usr/local/include/ImageMagick-7
-PC_Magick++_INCLUDE_DIRS:INTERNAL=/usr/local/include/ImageMagick-7
-PC_Magick++_LDFLAGS:INTERNAL=-L/usr/local/lib;-lMagick++-7.Q16HDRI;-lMagickWand-7.Q16HDRI;-lMagickCore-7.Q16HDRI
-PC_Magick++_LDFLAGS_OTHER:INTERNAL=
-PC_Magick++_LIBDIR:INTERNAL=/usr/local/lib
-PC_Magick++_LIBRARIES:INTERNAL=Magick++-7.Q16HDRI;MagickWand-7.Q16HDRI;MagickCore-7.Q16HDRI
-PC_Magick++_LIBRARY_DIRS:INTERNAL=/usr/local/lib
-PC_Magick++_LIBS:INTERNAL=
-PC_Magick++_LIBS_L:INTERNAL=
-PC_Magick++_LIBS_OTHER:INTERNAL=
-PC_Magick++_LIBS_PATHS:INTERNAL=
-PC_Magick++_MODULE_NAME:INTERNAL=Magick++
-PC_Magick++_Magick++_INCLUDEDIR:INTERNAL=
-PC_Magick++_Magick++_LIBDIR:INTERNAL=
-PC_Magick++_Magick++_PREFIX:INTERNAL=
-PC_Magick++_Magick++_VERSION:INTERNAL=
-PC_Magick++_PREFIX:INTERNAL=/usr/local
-PC_Magick++_STATIC_CFLAGS:INTERNAL=-fopenmp;-DMAGICKCORE_HDRI_ENABLE=1;-DMAGICKCORE_QUANTUM_DEPTH=16;-fopenmp;-DMAGICKCORE_HDRI_ENABLE=1;-DMAGICKCORE_QUANTUM_DEPTH=16;-fopenmp;-DMAGICKCORE_HDRI_ENABLE=1;-DMAGICKCORE_QUANTUM_DEPTH=16;-I/usr/local/include/ImageMagick-7
-PC_Magick++_STATIC_CFLAGS_I:INTERNAL=
-PC_Magick++_STATIC_CFLAGS_OTHER:INTERNAL=-fopenmp;-DMAGICKCORE_HDRI_ENABLE=1;-DMAGICKCORE_QUANTUM_DEPTH=16;-fopenmp;-DMAGICKCORE_HDRI_ENABLE=1;-DMAGICKCORE_QUANTUM_DEPTH=16;-fopenmp;-DMAGICKCORE_HDRI_ENABLE=1;-DMAGICKCORE_QUANTUM_DEPTH=16
-PC_Magick++_STATIC_INCLUDE_DIRS:INTERNAL=/usr/local/include/ImageMagick-7
-PC_Magick++_STATIC_LDFLAGS:INTERNAL=-L/usr/local/lib;-lMagick++-7.Q16HDRI;-lm;-lMagickWand-7.Q16HDRI;-ljbig;-ltiff;-lfreetype;-ljpeg;-lpng16;-lz;-lfontconfig;-lfreetype;-lXext;-lSM;-lICE;-lX11;-llzma;-lIlmImf;-lImath;-lHalf;-lIex;-lIexMath;-lIlmThread;-lpthread;-lpangocairo-1.0;-lpango-1.0;-lgobject-2.0;-lglib-2.0;-lharfbuzz;-lcairo;-lz;-lm;-lpthread;-lgomp;-lm;-lMagickCore-7.Q16HDRI;-ljbig;-ltiff;-lfreetype;-ljpeg;-lpng16;-lz;-lfontconfig;-lfreetype;-lXext;-lSM;-lICE;-lX11;-llzma;-lIlmImf;-lImath;-lHalf;-lIex;-lIexMath;-lIlmThread;-lpthread;-lpangocairo-1.0;-lpango-1.0;-lgobject-2.0;-lglib-2.0;-lharfbuzz;-lcairo;-lz;-lm;-lpthread;-lgomp;-lm
-PC_Magick++_STATIC_LDFLAGS_OTHER:INTERNAL=
-PC_Magick++_STATIC_LIBDIR:INTERNAL=
-PC_Magick++_STATIC_LIBRARIES:INTERNAL=Magick++-7.Q16HDRI;m;MagickWand-7.Q16HDRI;jbig;tiff;freetype;jpeg;png16;z;fontconfig;freetype;Xext;SM;ICE;X11;lzma;IlmImf;Imath;Half;Iex;IexMath;IlmThread;pthread;pangocairo-1.0;pango-1.0;gobject-2.0;glib-2.0;harfbuzz;cairo;z;m;pthread;gomp;m;MagickCore-7.Q16HDRI;jbig;tiff;freetype;jpeg;png16;z;fontconfig;freetype;Xext;SM;ICE;X11;lzma;IlmImf;Imath;Half;Iex;IexMath;IlmThread;pthread;pangocairo-1.0;pango-1.0;gobject-2.0;glib-2.0;harfbuzz;cairo;z;m;pthread;gomp;m
-PC_Magick++_STATIC_LIBRARY_DIRS:INTERNAL=/usr/local/lib
-PC_Magick++_STATIC_LIBS:INTERNAL=
-PC_Magick++_STATIC_LIBS_L:INTERNAL=
-PC_Magick++_STATIC_LIBS_OTHER:INTERNAL=
-PC_Magick++_STATIC_LIBS_PATHS:INTERNAL=
-PC_Magick++_VERSION:INTERNAL=7.1.0
-//ADVANCED property for variable: PKG_CONFIG_EXECUTABLE
-PKG_CONFIG_EXECUTABLE-ADVANCED:INTERNAL=1
-__pkg_config_arguments_PC_Magick++:INTERNAL=QUIET;Magick++
-__pkg_config_checked_PC_Magick++:INTERNAL=1
-//ADVANCED property for variable: pkgcfg_lib_PC_Magick++_Magick++-7.Q16HDRI
-pkgcfg_lib_PC_Magick++_Magick++-7.Q16HDRI-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: pkgcfg_lib_PC_Magick++_MagickCore-7.Q16HDRI
-pkgcfg_lib_PC_Magick++_MagickCore-7.Q16HDRI-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: pkgcfg_lib_PC_Magick++_MagickWand-7.Q16HDRI
-pkgcfg_lib_PC_Magick++_MagickWand-7.Q16HDRI-ADVANCED:INTERNAL=1
-prefix_result:INTERNAL=/usr/local/lib
+FIND_PACKAGE_MESSAGE_DETAILS_OpenCV:INTERNAL=[/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/Buildroot/buildroot-2021.08.1/output/host/aarch64-buildroot-linux-gnu/sysroot/usr][v4.5.3()]
 

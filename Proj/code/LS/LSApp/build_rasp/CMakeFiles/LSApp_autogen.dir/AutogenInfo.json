@@ -1,0 +1,226 @@
+{
+	"BUILD_DIR" : "/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/code/LS/LSApp/build_rasp/LSApp_autogen",
+	"CMAKE_BINARY_DIR" : "/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/code/LS/LSApp/build_rasp",
+	"CMAKE_CURRENT_BINARY_DIR" : "/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/code/LS/LSApp/build_rasp",
+	"CMAKE_CURRENT_SOURCE_DIR" : "/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/code/LS/LSApp",
+	"CMAKE_EXECUTABLE" : "/usr/bin/cmake",
+	"CMAKE_SOURCE_DIR" : "/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/code/LS/LSApp",
+	"HEADERS" : 
+	[
+		[
+			"/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/code/LS/LSApp/ad.h",
+			"MU",
+			"EWIEGA46WW/moc_ad.cpp"
+		],
+		[
+			"/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/code/LS/LSApp/ddDigitalOut.h",
+			"MU",
+			"EWIEGA46WW/moc_ddDigitalOut.cpp"
+		],
+		[
+			"/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/code/LS/LSApp/frag.h",
+			"MU",
+			"EWIEGA46WW/moc_frag.cpp"
+		],
+		[
+			"/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/code/LS/LSApp/fragDiffuser.h",
+			"MU",
+			"EWIEGA46WW/moc_fragDiffuser.cpp"
+		],
+		[
+			"/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/code/LS/LSApp/fragManager.h",
+			"MU",
+			"EWIEGA46WW/moc_fragManager.cpp"
+		],
+		[
+			"/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/code/LS/LSApp/imgfilter.h",
+			"MU",
+			"EWIEGA46WW/moc_imgfilter.cpp"
+		],
+		[
+			"/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/code/LS/LSApp/imgfilter_defs.h",
+			"MU",
+			"EWIEGA46WW/moc_imgfilter_defs.cpp"
+		],
+		[
+			"/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/code/LS/LSApp/imgfiltwindow.h",
+			"MU",
+			"EWIEGA46WW/moc_imgfiltwindow.cpp"
+		],
+		[
+			"/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/code/LS/LSApp/interwindow.h",
+			"MU",
+			"EWIEGA46WW/moc_interwindow.cpp"
+		],
+		[
+			"/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/code/LS/LSApp/mainwindow.h",
+			"MU",
+			"EWIEGA46WW/moc_mainwindow.cpp"
+		],
+		[
+			"/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/code/LS/LSApp/msgqueue.h",
+			"MU",
+			"EWIEGA46WW/moc_msgqueue.cpp"
+		],
+		[
+			"/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/code/LS/LSApp/normalwindow.h",
+			"MU",
+			"EWIEGA46WW/moc_normalwindow.cpp"
+		],
+		[
+			"/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/code/LS/LSApp/pEvent.h",
+			"MU",
+			"EWIEGA46WW/moc_pEvent.cpp"
+		],
+		[
+			"/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/code/LS/LSApp/post.h",
+			"MU",
+			"EWIEGA46WW/moc_post.cpp"
+		],
+		[
+			"/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/code/LS/LSApp/sharwindow.h",
+			"MU",
+			"EWIEGA46WW/moc_sharwindow.cpp"
+		]
+	],
+	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
+	"INCLUDE_DIR" : "/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/code/LS/LSApp/build_rasp/LSApp_autogen/include",
+	"MOC_COMPILATION_FILE" : "/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/code/LS/LSApp/build_rasp/LSApp_autogen/mocs_compilation.cpp",
+	"MOC_DEFINITIONS" : 
+	[
+		"MAGICKCORE_HDRI_ENABLE=0",
+		"MAGICKCORE_QUANTUM_DEPTH=16",
+		"QT_CORE_LIB",
+		"QT_GUI_LIB",
+		"QT_MULTIMEDIAWIDGETS_LIB",
+		"QT_MULTIMEDIA_LIB",
+		"QT_NETWORK_LIB",
+		"QT_QMLMODELS_LIB",
+		"QT_QML_LIB",
+		"QT_QUICK_LIB",
+		"QT_VIRTUALKEYBOARD_LIB",
+		"QT_WIDGETS_LIB"
+	],
+	"MOC_DEPEND_FILTERS" : 
+	[
+		[
+			"Q_PLUGIN_METADATA",
+			"[\n][ \t]*Q_PLUGIN_METADATA[ \t]*\\([^\\)]*FILE[ \t]*\"([^\"]+)\""
+		]
+	],
+	"MOC_INCLUDES" : 
+	[
+		"/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/code/LS/LSApp/build_rasp",
+		"/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/code/LS/LSApp",
+		"/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/Buildroot/buildroot-2021.08.1/output/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/ImageMagick-7",
+		"/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/Buildroot/buildroot-2021.08.1/output/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/opencv4",
+		"/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/Buildroot/buildroot-2021.08.1/output/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5",
+		"/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/Buildroot/buildroot-2021.08.1/output/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtWidgets",
+		"/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/Buildroot/buildroot-2021.08.1/output/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtGui",
+		"/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/Buildroot/buildroot-2021.08.1/output/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtCore",
+		"/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/Buildroot/buildroot-2021.08.1/output/host/mkspecs/devices/linux-buildroot-g++",
+		"/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/Buildroot/buildroot-2021.08.1/output/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtVirtualKeyboard",
+		"/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/Buildroot/buildroot-2021.08.1/output/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQuick",
+		"/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/Buildroot/buildroot-2021.08.1/output/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQmlModels",
+		"/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/Buildroot/buildroot-2021.08.1/output/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtQml",
+		"/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/Buildroot/buildroot-2021.08.1/output/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtNetwork",
+		"/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/Buildroot/buildroot-2021.08.1/output/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimedia",
+		"/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/Buildroot/buildroot-2021.08.1/output/host/aarch64-buildroot-linux-gnu/sysroot/usr/include/qt5/QtMultimediaWidgets",
+		"/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/Buildroot/buildroot-2021.08.1/output/host/aarch64-buildroot-linux-gnu/include/c++/11.2.0",
+		"/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/Buildroot/buildroot-2021.08.1/output/host/aarch64-buildroot-linux-gnu/include/c++/11.2.0/aarch64-buildroot-linux-gnu",
+		"/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/Buildroot/buildroot-2021.08.1/output/host/aarch64-buildroot-linux-gnu/include/c++/11.2.0/backward",
+		"/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/Buildroot/buildroot-2021.08.1/output/host/lib/gcc/aarch64-buildroot-linux-gnu/11.2.0/include",
+		"/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/Buildroot/buildroot-2021.08.1/output/host/lib/gcc/aarch64-buildroot-linux-gnu/11.2.0/include-fixed",
+		"/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/Buildroot/buildroot-2021.08.1/output/host/aarch64-buildroot-linux-gnu/include",
+		"/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/Buildroot/buildroot-2021.08.1/output/host/aarch64-buildroot-linux-gnu/sysroot/usr/include"
+	],
+	"MOC_MACRO_NAMES" : [ "Q_OBJECT", "Q_GADGET", "Q_NAMESPACE", "Q_NAMESPACE_EXPORT" ],
+	"MOC_OPTIONS" : [],
+	"MOC_PATH_PREFIX" : true,
+	"MOC_PREDEFS_CMD" : 
+	[
+		"/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/Buildroot/buildroot-2021.08.1/output/host/bin/aarch64-buildroot-linux-gnu-g++",
+		"-dM",
+		"-E",
+		"-c",
+		"/usr/share/cmake-3.16/Modules/CMakeCXXCompilerABI.cpp"
+	],
+	"MOC_PREDEFS_FILE" : "/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/code/LS/LSApp/build_rasp/LSApp_autogen/moc_predefs.h",
+	"MOC_RELAXED_MODE" : false,
+	"MOC_SKIP" : [],
+	"MULTI_CONFIG" : false,
+	"PARALLEL" : 6,
+	"PARSE_CACHE_FILE" : "/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/code/LS/LSApp/build_rasp/CMakeFiles/LSApp_autogen.dir/ParseCache.txt",
+	"QT_MOC_EXECUTABLE" : "/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/Buildroot/buildroot-2021.08.1/output/host/bin/moc",
+	"QT_UIC_EXECUTABLE" : "/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/Buildroot/buildroot-2021.08.1/output/host/bin/uic",
+	"QT_VERSION_MAJOR" : 5,
+	"SETTINGS_FILE" : "/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/code/LS/LSApp/build_rasp/CMakeFiles/LSApp_autogen.dir/AutogenUsed.txt",
+	"SOURCES" : 
+	[
+		[
+			"/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/code/LS/LSApp/ad.cpp",
+			"MU"
+		],
+		[
+			"/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/code/LS/LSApp/ddDigitalOut.cpp",
+			"MU"
+		],
+		[
+			"/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/code/LS/LSApp/frag.cpp",
+			"MU"
+		],
+		[
+			"/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/code/LS/LSApp/fragDiffuser.cpp",
+			"MU"
+		],
+		[
+			"/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/code/LS/LSApp/fragManager.cpp",
+			"MU"
+		],
+		[
+			"/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/code/LS/LSApp/imgfilter.cpp",
+			"MU"
+		],
+		[
+			"/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/code/LS/LSApp/imgfiltwindow.cpp",
+			"MU"
+		],
+		[
+			"/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/code/LS/LSApp/interwindow.cpp",
+			"MU"
+		],
+		[
+			"/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/code/LS/LSApp/main.cpp",
+			"MU"
+		],
+		[
+			"/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/code/LS/LSApp/mainwindow.cpp",
+			"MU"
+		],
+		[
+			"/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/code/LS/LSApp/msgqueue.cpp",
+			"MU"
+		],
+		[
+			"/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/code/LS/LSApp/normalwindow.cpp",
+			"MU"
+		],
+		[
+			"/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/code/LS/LSApp/pEvent.cpp",
+			"MU"
+		],
+		[
+			"/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/code/LS/LSApp/post.cpp",
+			"MU"
+		],
+		[
+			"/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/code/LS/LSApp/sharwindow.cpp",
+			"MU"
+		]
+	],
+	"UIC_OPTIONS" : [],
+	"UIC_SEARCH_PATHS" : [],
+	"UIC_SKIP" : [],
+	"UIC_UI_FILES" : [],
+	"VERBOSITY" : 0
+}

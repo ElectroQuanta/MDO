@@ -1,0 +1,4 @@
+/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/code/LS/LSApp/build_rasp/CMakeFiles/edit_cache.dir
+/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/code/LS/LSApp/build_rasp/CMakeFiles/rebuild_cache.dir
+/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/code/LS/LSApp/build_rasp/CMakeFiles/LSApp.dir
+/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/code/LS/LSApp/build_rasp/CMakeFiles/LSApp_autogen.dir

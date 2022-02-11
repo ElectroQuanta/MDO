@@ -7261,6 +7261,27 @@ advantage of size over the number of scent elements is decreased significantly,
    DELEGATES       = fontconfig freetype jbig jng jpeg lzma openexr pango png ps tiff x zlib
  ==============================================================================
  #+END_EXAMPLE
+
+#+BEGIN_EXAMPLE
+MagickConfig: /usr/local/bin/Magick++-config
+LDFlags: -L/usr/local/lib -lMagick++-7.Q16HDRI -lMagickWand-7.Q16HDRI -lMagickCore-7.Q16HDRI
+-- Found ImageMagick: /usr/local/lib/libMagick++-7.Q16HDRI.so (found version "7.1.0-23") 
+CMAKE INCLUDE DIRS: /usr/local/include/ImageMagick-7
+CMAKE LIBS DIRS: /usr/local/lib/libMagick++-7.Q16HDRI.so
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/r
+epo/Proj/code/LS/LSApp/build
+#+END_EXAMPLE
+
+#+BEGIN_EXAMPLE
+MagickConfig: /home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/Buildroot/buildroot-2021
+.08.1/output/host/bin/Magick++-config                                                        
+LDFlags: -L/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/Buildroot/buildroot-2021.08
+.1/output/host/bin/../aarch64-buildroot-linux-gnu/sysroot/usr/lib -lMagick++-7.Q16HDRI -lMagic
+kWand-7.Q16HDRI -lMagickCore-7.Q16HDRI                                                       
+-- Could NOT find ImageMagick (missing: ImageMagick_Magick++_LIBRARY
+#+END_EXAMPLE
 *** ✔ DONE Testing
     :LOGBOOK:
     - State "✔ DONE"     from              [2022-02-01 ter 18:15]
@@ -9510,7 +9531,7 @@ OpenCV provides an API for linear blending of two images. The calculation formul
 - Flashing SD card
   1) Option B: use =dd= command
      #+BEGIN_SRC bash
-     sudo dd if=output/images/sdcard of=/dev/sda
+     sudo dd if=output/images/sdcard.img of=/dev/sda status=progress
      #+END_SRC
 - Configuring system on Raspberry Pi
   - edit cmdline.txt: replace =ttyAMA0= with =ttyS0=
@@ -9533,3 +9554,19 @@ OpenCV provides an API for linear blending of two images. The calculation formul
    2) =build_rasp=
 3) Create a toolchain file ([[file:code/LS/LSApp/toolchain/rasptoolchain.cmake::#File%20raspberrytoolchain.cmake%20for%20ROS%20and%20system%20packages%20to%20cross%20compile.][src]])
 4) Add the toolchain path to =CMakeLists.txt=
+
+* Build Qt with CMake for Embedded Systems
+
+#+BEGIN_SRC bash
+# 4m:51s https://www.youtube.com/watch?v=Iz0V0WPUArY
+vim setup-env-talk
+
+env_setup_file = path/to/sdk/environment-setup-aarch64-tdx-linux
+
+qtc_dir = /home/burkhard/Qt/Qt5.15.2/Tools/QtCreater
+
+ssh root@<device_name>.local
+
+configure-qtcreator.sh --name Goldfinger --env-setup $env_setup_file --creator-base $qtc_dir --device <device_name>.local
+#+END_SRC
+

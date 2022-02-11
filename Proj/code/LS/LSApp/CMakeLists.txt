@@ -2,8 +2,9 @@ cmake_minimum_required(VERSION 3.5)
 
 set(CMAKE_BUILD_TYPE Debug)
 # External toolchain( it must be set before project() )
-set(RASP 1)
-if(RASP EQUAL 1)
+set(CROSS_COMPILE "RASP4_64")
+#set(CROSS_COMPILE "Desktop")
+if(CROSS_COMPILE STREQUAL "RASP4_64")
   set(CMAKE_TOOLCHAIN_FILE ${CMAKE_SOURCE_DIR}/toolchain/rasptoolchain.cmake)
   message(${CMAKE_TOOLCHAIN_FILE})
 endif()
@@ -11,7 +12,6 @@ endif()
 project(LSApp VERSION 0.1 LANGUAGES CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
-
 
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
@@ -23,9 +23,10 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 
 # ======================== OPENCV
-set(OpenCV_DIR "/usr/local/lib/cmake/opencv4")
+#set(OpenCV_DIR "/usr/local/lib/cmake/opencv4")
+#aarch64-buildroot-linux-gnu/sysroot/usr/lib/cmake/opencv4/
 find_package(OpenCV REQUIRED)
-find_package(OpenCV REQUIRED PATHS "/usr/local/lib/")
+#find_package(OpenCV REQUIRED PATHS "/usr/local/lib/")
 include_directories(${OpenCV_INCLUDE_DIRS})
 
 # If the package has been found, several variables will
@@ -45,19 +46,40 @@ message(STATUS "    include path: ${OpenCV_INCLUDE_DIRS}")
 
 
 # ====================== Imagemagick
-find_program(MAGICK_CONFIG "Magick++-config")
-execute_process(COMMAND "${MAGICK_CONFIG}" "--libs" OUTPUT_VARIABLE MAGICK_LD_FLAGS)
-# Remove trailing whitespace (CMAKE warns about this)
-string(STRIP "${MAGICK_LD_FLAGS}" MAGICK_LD_FLAGS)
+add_definitions( -DMAGICKCORE_QUANTUM_DEPTH=16 )
+add_definitions( -DMAGICKCORE_HDRI_ENABLE=0 )
+
+if(CROSS_COMPILE STREQUAL "RASP4_64")
+  message("RASP4_64")
+  find_program(MAGICK_CONFIG ${BUILDROOT_DIR}/output/host/bin/Magick++-config)
+  find_package(ImageMagick PATHS ${HOST_PATH}/${TOOLS_PREFIX}/sysroot/usr/lib/ COMPONENTS Magick++)
+  #set(ImageMagick_DIR ${HOST_PATH}/${TOOLS_PREFIX}/sysroot/usr/lib/)
+  set(ImageMagick_INCLUDE_DIRS ${HOST_PATH}/${TOOLS_PREFIX}/sysroot/usr/include/ImageMagick-7)
+#  set(ImageMagick_INCLUDE_DIRS /usr/local/include/ImageMagick-7)
+  #set(ImageMagick_LIBRARY_PATH /usr/local/lib/ImageMagick-7)
+  set(ImageMagick_LIBRARIES ${HOST_PATH}/${TOOLS_PREFIX}/sysroot/usr/lib/libMagick++-7.Q16HDRI.so)
+#  set(ImageMagick_LIBRARIES /usr/local/lib/libMagick++-7.Q16HDRI.so)
+else()
+  message("Desktop")
+  find_program(MAGICK_CONFIG Magick++-config)
+  message("MagickConfig: ${MAGICK_CONFIG}")
+  execute_process(COMMAND "${MAGICK_CONFIG}" "--libs" OUTPUT_VARIABLE MAGICK_LD_FLAGS)
+  # Remove trailing whitespace (CMAKE warns about this)
+  string(STRIP "${MAGICK_LD_FLAGS}" MAGICK_LD_FLAGS)
 # Append all flags to CMAKE_CXX_FLAGS
 #set(CMAKE_CXX_FLAGS "${CMAKE_CPP_FLAGS} -std=c++11 ${MAGICK_CXX_FLAGS} ${MAGICK_LD_FLAGS}")
 
 message("LDFlags: ${MAGICK_LD_FLAGS}")
-
-add_definitions( -DMAGICKCORE_QUANTUM_DEPTH=16 )
-add_definitions( -DMAGICKCORE_HDRI_ENABLE=0 )
 find_package(ImageMagick COMPONENTS Magick++)
+endif()
+
+
+#<configure name="INCLUDE_PATH" value="/usr/local/include/ImageMagick-7"/>
 include_directories(${ImageMagick_INCLUDE_DIRS})
+
+message("CMAKE INCLUDE DIRS: ${ImageMagick_INCLUDE_DIRS}")
+message("CMAKE LIBS DIRS: ${ImageMagick_LIBRARIES}")
+message("CMAKE LIBS LIBRARY PATH: ${ImageMagick_LIBRARIES}")
 
 # ============================ Qt
 set(CMAKE_PREFIX_PATH "/home/zmpl/Qt/5.13.2/gcc_64/lib/cmake")
