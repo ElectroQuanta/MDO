@@ -13,8 +13,12 @@
 #include "ultrassonicsensor.h"
 #include <iostream>
 #include <mqueue.h>
+#include "ddDigitalOut.h"
+#include "fragDiffuser.h"
+#include "frag.h"
 
 using namespace DeviceDriver;
+using namespace Frag;
 
 void signal_handler(int sig) {
 	switch(sig) {
@@ -61,7 +65,7 @@ bool checkDistance(int dist) {
 
 int main(int argc, char *argv[]){
 	pid_t pid, sid;
-	int len, fd;
+	int len;
 	time_t timebuf;
 	
 	pid = fork(); // create a new process
@@ -105,6 +109,9 @@ int main(int argc, char *argv[]){
 
 	UltrassonicSensor s1(S_TRIG, S1_ECHO, S_TIMEOUT);
 	UltrassonicSensor s2(S_TRIG, S2_ECHO, S_TIMEOUT);
+	Fragrance f(0);
+    Diffuser fd(f);
+	bool enabled = false;
 	if(!s2.Open() || !s1.Open()) {
 		perror("open");
 		exit(EXIT_FAILURE);
@@ -118,23 +125,13 @@ int main(int argc, char *argv[]){
         	usleep(_delay*1000);
         }
 		
-		/*if ((fd = open(LOGFILE,	O_CREAT | O_WRONLY | O_APPEND, 0600)) < 0) {
-			perror("open");
-			exit(EXIT_FAILURE);
-		}*/
 		char c = (count > (TIMEOUT_S*ITER/2))?'1' : '0';
 		mq_send(msgq_path, &c, 2, 1);
-		//if(mq_send(msgq_path, &c, 2, 1) == -1)
-        //	std::cout << "ERROR!!" << std::endl;
-		//c = 0;
-		//if(mq_send(msgq_path, &c, 2, 1) == -1)
-        //	std::cout << "ERROR!!" << std::endl;
-		/*write(fd, &c, 1);
-		
-		write(fd, &c, 1);*/
-		//usleep(500);
-
-		//close(fd);
+		if(c == '1')
+			enabled = true;
+		else
+			false;
+		fd.enable(enabled);
 	}
 exit(EXIT_SUCCESS);		
 }

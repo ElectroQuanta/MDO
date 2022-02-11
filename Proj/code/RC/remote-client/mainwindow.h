@@ -104,5 +104,7 @@ private:
     pthread_t receive, _send;
     int sock;
     Ad ad_to_send;
+    bool sent;
+    int n_hour;
 };
 #endif // MAINWINDOW_H

@@ -20,7 +20,7 @@ void panic(char *msg);
 #define panic(m)	{perror(m); abort();}
 
 #define UPDATE_LS_TIMEOUT 1
-#define TIMEOUT_MS 30000
+#define TIMEOUT_MS 10000
 
 /**
  * @brief The PageViews enum helps to handle the stackWidget in a more pratical way.
@@ -364,15 +364,23 @@ void MainWindow::upload_and_update(void *arg) {
            request.setOpt(new HttpHeader(headers));
            request.setOpt(new Url(url));
            /**< Receiveng the output (download link) in a file */
-           FILE* fp=freopen("link.txt", "w", stdout);
+           /*FILE* fp=freopen("link.txt", "w", stdout);
            request.perform();
+           request.getInfo
            freopen ("/dev/tty", "a", stdout);
-           std::ifstream link_file("link.txt");
-
+           std::ifstream link_file("link.txt");*/
+           std::ostringstream response;
+           request.setOpt(new curlpp::options::WriteStream(&response));
+           request.perform();
+           std::cout << response.str() << std::endl;
            /**< Get the Download Link */
            std::string buff;
-           std::getline(link_file, buff);
-           std::string link(buff);
+           //std::getline(link_file, buff);
+           std::string link(response.str());
+           if(link.empty()) {
+              std::cout << "Error, no link" << std::endl;
+              return;
+           }
 
            ad_to_send.fname = file_name;
            ad_to_send.link = link;
@@ -430,7 +438,7 @@ void* MainWindow::server_thr(void* arg) {
         //Prepare the sockaddr_in structure
         server.sin_family = AF_INET;
         server.sin_addr.s_addr = INADDR_ANY;
-        server.sin_port = htons( 8888);
+        server.sin_port = htons( 5000);
 
         //Bind
         if( bind(socket_desc,(struct sockaddr *)&server , sizeof(server)) < 0)
@@ -522,9 +530,9 @@ void* MainWindow::send_to_ls_thr(void *arg) {
         std::stringstream ss;
         ss << buf_size;
         std::string buf_size_str = ss.str();
-        std::string buffer = "A," + buf_size_str + "," + buff;
-        send(mw->sock , buffer.c_str(), buffer.size(), 0);
-        std::cout << "Enviado!!" << std::endl;
+        std::string buffer = "A," + buf_size_str + "," + buff + "\n";
+        int res = send(mw->sock , buffer.c_str(), buffer.size(), 0);
+            std::cout << "Enviado!!" << std::endl;
     }/* close the client's channel */
     return 0;
 }
