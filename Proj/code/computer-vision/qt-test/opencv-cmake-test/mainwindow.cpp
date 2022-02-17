@@ -38,7 +38,7 @@ void MainWindow::on_pushButton_pressed()
     //ui->pushButton->setText("Hello");
     Mat image;
     VideoCapture capture;
-    capture.open(0);
+    capture.open(-1, cv::CAP_V4L2);
     if(capture.isOpened())
     {
         cout << "Capture is opened" << endl;

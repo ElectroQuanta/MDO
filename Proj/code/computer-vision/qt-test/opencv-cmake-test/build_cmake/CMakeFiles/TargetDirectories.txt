@@ -1,0 +1,4 @@
+/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/code/computer-vision/qt-test/opencv-cmake-test/build_cmake/CMakeFiles/rebuild_cache.dir
+/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/code/computer-vision/qt-test/opencv-cmake-test/build_cmake/CMakeFiles/edit_cache.dir
+/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/code/computer-vision/qt-test/opencv-cmake-test/build_cmake/CMakeFiles/testCmake.dir
+/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/code/computer-vision/qt-test/opencv-cmake-test/build_cmake/CMakeFiles/testCmake_autogen.dir

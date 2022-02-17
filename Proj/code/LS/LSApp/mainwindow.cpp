@@ -1055,6 +1055,42 @@ void* MainWindow::download_ad_worker_thr(void *arg){
     return NULL;
 }
 
+/**
+ * @brief Download Ad worker thread function
+ * @param arg: ptr to a UI::MainWindow
+ *
+ * Downloads Ad using curl
+ */
+void* MainWindow::detect_user_worker_thr(void *arg){
+
+    MainWindow *mw = (MainWindow *)arg;
+
+    std::string link;
+    Ad ad;
+
+#define CMD_AD "A"
+
+    QStringList list;
+
+    while(1){
+        /**< Wait for Download signal */
+        mw->_ev_download->WaitForSignal();
+
+        /**< Get current ad */
+        mw->curAd(ad);
+
+        /**< Download link */
+        ad.link(link);
+
+        /**< Update status bar */
+        mw->updateStatusBar( "Downloaded " + QString::fromStdString(link) );
+
+        std::cout << "Downloaded " << link << std::endl;
+    }
+
+    return NULL;
+}
+
 void MainWindow::displayImg(cv::Mat frame){
 
     //switch(_appmode){
@@ -1240,7 +1276,7 @@ void MainWindow::recognizeGesture(cv::Mat &frame){
 
           //QString auxStr, auxStr2;
 
-          std::string statusStr = "Status: Gest detected: (x,y): " +
+          std::string statusStr = "Gest detected: (x,y): " +
               std::to_string(p.x) + "," + std::to_string(p.y);
 
         updateStatusBar(QString::fromStdString(statusStr)  );
@@ -1251,12 +1287,12 @@ void MainWindow::recognizeGesture(cv::Mat &frame){
           QWidget *targetWidget = QApplication::widgetAt(screenPos);
 
           if( targetWidget == nullptr){
-              //QPoint cursorP = QCursor::pos();
-              //std::cout << "Hand: (x,y) = "
-              //          << p.x << "," << p.y << std::endl;
-              //std::cout << "Cursor: (x,y) = "
-              //          << cursorP.x() << "," << cursorP.y() << std::endl;
-              //std::cout << "targetWidget not found" << std::endl;
+              QPoint cursorP = QCursor::pos();
+              std::cout << "Hand: (x,y) = "
+                        << p.x << "," << p.y << std::endl;
+              std::cout << "Cursor: (x,y) = "
+                        << cursorP.x() << "," << cursorP.y() << std::endl;
+              std::cout << "targetWidget not found" << std::endl;
               return;
           }
 

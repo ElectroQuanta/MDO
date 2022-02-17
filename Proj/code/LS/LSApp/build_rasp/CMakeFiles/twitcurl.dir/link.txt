@@ -1,0 +1,2 @@
+/usr/bin/ar qc libtwitcurl.a  CMakeFiles/twitcurl.dir/twitcurl_autogen/mocs_compilation.cpp.o CMakeFiles/twitcurl.dir/lib/src/base64.cpp.o CMakeFiles/twitcurl.dir/lib/src/HMAC_SHA1.cpp.o CMakeFiles/twitcurl.dir/lib/src/oauthlib.cpp.o CMakeFiles/twitcurl.dir/lib/src/SHA1.cpp.o CMakeFiles/twitcurl.dir/lib/src/urlencode.cpp.o CMakeFiles/twitcurl.dir/lib/src/twitcurl.cpp.o
+/usr/bin/ranlib libtwitcurl.a

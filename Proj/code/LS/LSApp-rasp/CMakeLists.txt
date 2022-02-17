@@ -1,0 +1,212 @@
+cmake_minimum_required(VERSION 3.5)
+
+set(CMAKE_BUILD_TYPE Debug)
+# External toolchain( it must be set before project() )
+set(CROSS_COMPILE "RASP4_64")
+#set(CROSS_COMPILE "Desktop")
+if(CROSS_COMPILE STREQUAL "RASP4_64")
+  set(CMAKE_TOOLCHAIN_FILE ${CMAKE_SOURCE_DIR}/toolchain/rasptoolchain.cmake)
+  message(${CMAKE_TOOLCHAIN_FILE})
+endif()
+
+project(LSApp VERSION 0.1 LANGUAGES CXX)
+
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+
+
+# ======================== OPENCV
+#set(OpenCV_DIR "/usr/local/lib/cmake/opencv4")
+#aarch64-buildroot-linux-gnu/sysroot/usr/lib/cmake/opencv4/
+find_package(OpenCV REQUIRED)
+#find_package(OpenCV REQUIRED PATHS "/usr/local/lib/")
+include_directories(${OpenCV_INCLUDE_DIRS})
+
+# If the package has been found, several variables will
+# be set, you can find the full list with descriptions
+# in the OpenCVConfig.cmake file.
+# Print some message showing some of them
+message(STATUS "OpenCV library status:")
+message(STATUS "    version: ${OpenCV_VERSION}")
+message(STATUS "    libraries: ${OpenCV_LIBS}")
+message(STATUS "    include path: ${OpenCV_INCLUDE_DIRS}")
+
+# ====================== Imagemagick
+add_definitions( -DMAGICKCORE_QUANTUM_DEPTH=16 )
+add_definitions( -DMAGICKCORE_HDRI_ENABLE=0 )
+
+if(CROSS_COMPILE STREQUAL "RASP4_64")
+  message("RASP4_64")
+  find_program(MAGICK_CONFIG ${BUILDROOT_DIR}/output/host/bin/Magick++-config)
+  find_package(ImageMagick PATHS ${HOST_PATH}/${TOOLS_PREFIX}/sysroot/usr/lib/ COMPONENTS Magick++)
+  set(ImageMagick_INCLUDE_DIRS ${HOST_PATH}/${TOOLS_PREFIX}/sysroot/usr/include/ImageMagick-7)
+  set(ImageMagick_LIBRARIES ${HOST_PATH}/${TOOLS_PREFIX}/sysroot/usr/lib/libMagick++-7.Q16HDRI.so)
+else()
+  message("Desktop")
+  find_program(MAGICK_CONFIG Magick++-config)
+find_package(ImageMagick COMPONENTS Magick++)
+endif()
+
+#set(MAGICK_CFLAGS "-I/usr/include/libpng16  -I/usr/include/pango-1.0 -I/usr/include/fribidi -I/usr/include/harfbuzz -I/usr/include/cairo -I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include -I/usr/include/pixman-1 -I/usr/include/uuid -I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/OpenEXR  -I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/uuid -I/usr/include/freetype2 -I/usr/include/libpng16  -fopenmp -Wall -g -O2 -mtune=amdfam10 -fexceptions -pthread -DMAGICKCORE_HDRI_ENABLE=1 -DMAGICKCORE_QUANTUM_DEPTH=16")
+#set(MAGICK_CPPFLAGS "-DMAGICKCORE_HDRI_ENABLE=1 -DMAGICKCORE_QUANTUM_DEPTH=16")
+#set(MAGICK_DEFS -DHAVE_CONFIG_H)
+#set(MAGICK_LIBS  "-ljbig  -ltiff -lfreetype  -ljpeg    -lpng16 -lz      -lfontconfig -lfreetype      -lXext    -lSM -lICE -lX11  -llzma  -lIlmImf -lImath -lHalf -lIex -lIexMath -lIlmThread -lpthread  -lpangocairo-1.0 -lpango-1.0 -lgobject-2.0 -lglib-2.0 -lharfbuzz -lcairo     -lz     -lm    -lpthread")
+#set(MAGICK_CXXFLAGS -pthread)
+
+  message("MagickConfig: ${MAGICK_CONFIG}")
+  execute_process(COMMAND "${MAGICK_CONFIG}" "--libs" OUTPUT_VARIABLE MAGICK_LD_FLAGS)
+  # Remove trailing whitespace (CMAKE warns about this)
+  string(STRIP "${MAGICK_LD_FLAGS}" MAGICK_LD_FLAGS)
+# Append all flags to CMAKE_CXX_FLAGS
+#set(CMAKE_CXX_FLAGS "${CMAKE_CPP_FLAGS} -std=c++11 ${MAGICK_CXX_FLAGS} ${MAGICK_LD_FLAGS}")
+
+message("LDFlags: ${MAGICK_LD_FLAGS}")
+
+#<configure name="INCLUDE_PATH" value="/usr/local/include/ImageMagick-7"/>
+include_directories(${ImageMagick_INCLUDE_DIRS})
+
+message("CMAKE INCLUDE DIRS: ${ImageMagick_INCLUDE_DIRS}")
+message("CMAKE LIBS DIRS: ${ImageMagick_LIBRARIES}")
+message("CMAKE LIBS LIBRARY PATH: ${ImageMagick_LIBRARIES}")
+
+# ============================ Qt
+set(CMAKE_PREFIX_PATH "/home/zmpl/Qt/5.13.2/gcc_64/lib/cmake")
+
+find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets VirtualKeyboard Multimedia MultimediaWidgets REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets VirtualKeyboard Multimedia MultimediaWidgets REQUIRED)
+
+#find_package(pthread REQUIRED)
+#set(SRC_FILES )
+
+# ================ TWITCURL
+#$(CC) twitterClient.cpp -I./include/ -L ./libtwitcurl.a -ltwitcurl -o twitterClient
+if(CROSS_COMPILE STREQUAL "RASP4_64")
+  set(CURL_INCLUDE_DIR ${HOST_PATH}/${TOOLS_PREFIX}/sysroot/usr/include/curl)
+  set(CURL_LIBRARIES ${HOST_PATH}/${TOOLS_PREFIX}/sysroot/usr/lib/libcurl.so)
+  message("CURL INCLUDE DIR: " ${CURL_INCLUDE_DIR})
+  message("CURL LIBRARIES" ${CURL_LIBRARIES})
+include_directories(${CURL_INCLUDE_DIR})
+else()
+  find_package(CURL REQUIRED)
+endif()
+
+# Build Twitter static library
+set(twitSrcs
+  ${CMAKE_SOURCE_DIR}/lib/src/base64.cpp
+  ${CMAKE_SOURCE_DIR}/lib/src/HMAC_SHA1.cpp
+  ${CMAKE_SOURCE_DIR}/lib/src/oauthlib.cpp
+  ${CMAKE_SOURCE_DIR}/lib/src/SHA1.cpp
+  ${CMAKE_SOURCE_DIR}/lib/src/urlencode.cpp
+  ${CMAKE_SOURCE_DIR}/lib/src/twitcurl.cpp)
+add_library(twitcurl STATIC ${twitSrcs})
+
+
+set(TWITCURL_LIB twitcurl)
+#set(TWITCURL_LIB -L${CMAKE_SOURCE_DIR}/staticlibs/libtwitcurl.a)
+message("TWITCURL_LIB ${TWITCURL_LIB}")
+
+set(MQUEUE_LD_FLAGS -lrt)
+
+set(PROJECT_SOURCES
+  main.cpp
+  # main window
+  mainwindow.cpp
+  mainwindow.h
+  mainwindow.ui
+  resources.qrc
+  # normal window
+  normalwindow.h
+  normalwindow.cpp
+  normalwindow.ui
+  # interaction window
+  interwindow.h
+  interwindow.cpp
+  interwindow.ui
+  # imgfilter window
+  imgfiltwindow.h
+  imgfiltwindow.cpp
+  imgfiltwindow.ui
+  # shar window
+  sharwindow.h
+  sharwindow.cpp
+  sharwindow.ui
+  # imgfilter
+  imgfilter_defs.h
+  imgfilter.h
+  imgfilter.cpp
+  # post
+  post.h
+  post.cpp
+  #pEvent
+  pEvent.h
+  pEvent.cpp
+  #Ad
+  ad.h
+  ad.cpp
+  # Fragrance
+  frag.h
+  frag.cpp
+  fragManager.h
+  fragManager.cpp
+  fragDiffuser.h
+  fragDiffuser.cpp
+  # Device Drivers
+  ddDigitalOut.h
+  ddDigitalOut.cpp
+  # Message queue
+  msgqueue.h
+  msgqueue.cpp
+#${HEADER_FILES}
+#${SRC_FILES}
+#${RESOURCES_FILES}
+)
+
+if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
+    qt_add_executable(${PROJECT_NAME}
+        MANUAL_FINALIZATION
+        ${PROJECT_SOURCES}
+    )
+# Define target properties for Android with Qt 6 as:
+#    set_property(TARGET ${PROJECT_NAME} APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
+#                 ${CMAKE_CURRENT_SOURCE_DIR}/android)
+# For more information, see https://doc.qt.io/qt-6/qt-add-executable.html#target-creation
+else()
+    if(ANDROID)
+        add_library(${PROJECT_NAME} SHARED
+            ${PROJECT_SOURCES}
+        )
+# Define properties for Android with Qt 5 after find_package() calls as:
+#    set(ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android")
+    else()
+        add_executable(${PROJECT_NAME}
+            ${PROJECT_SOURCES}
+        )
+    endif()
+endif()
+
+# CMAKE IS CASE SENSITIVE
+# src: https://stackoverflow.com/a/60693001/17836786
+target_link_libraries(${PROJECT_NAME} PRIVATE ${TWITCURL_LIB} ${CURL_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} PRIVATE
+  ${OpenCV_LIBS}
+  Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::VirtualKeyboard Qt${QT_VERSION_MAJOR}::Multimedia Qt${QT_VERSION_MAJOR}::MultimediaWidgets pthread ${MQUEUE_LD_FLAGS} ${MAGICK_LD_FLAGS} ${ImageMagick_LIBRARIES})
+
+# my_tgt can be an executable, library, or module.
+#target_link_options(${PROJECT_NAME} PRIVATE "LINKER:-lopencv_core -lopencv_video -lopencv_videoio")
+
+set_target_properties(${PROJECT_NAME} PROPERTIES
+    MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
+    MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
+    MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
+)
+
+if(QT_VERSION_MAJOR EQUAL 6)
+    qt_finalize_executable(${PROJECT_NAME})
+endif()

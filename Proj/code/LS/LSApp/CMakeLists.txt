@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.5)
 
 set(CMAKE_BUILD_TYPE Debug)
+#set(CROSS_COMPILE "RASP4_64")
 # External toolchain( it must be set before project() )
-set(CROSS_COMPILE "RASP4_64")
 #set(CROSS_COMPILE "Desktop")
 if(CROSS_COMPILE STREQUAL "RASP4_64")
   set(CMAKE_TOOLCHAIN_FILE ${CMAKE_SOURCE_DIR}/toolchain/rasptoolchain.cmake)
@@ -38,13 +38,6 @@ message(STATUS "    version: ${OpenCV_VERSION}")
 message(STATUS "    libraries: ${OpenCV_LIBS}")
 message(STATUS "    include path: ${OpenCV_INCLUDE_DIRS}")
 
-#set(MAGICK_CFLAGS "-I/usr/include/libpng16  -I/usr/include/pango-1.0 -I/usr/include/fribidi -I/usr/include/harfbuzz -I/usr/include/cairo -I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include -I/usr/include/pixman-1 -I/usr/include/uuid -I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/OpenEXR  -I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/uuid -I/usr/include/freetype2 -I/usr/include/libpng16  -fopenmp -Wall -g -O2 -mtune=amdfam10 -fexceptions -pthread -DMAGICKCORE_HDRI_ENABLE=1 -DMAGICKCORE_QUANTUM_DEPTH=16")
-#set(MAGICK_CPPFLAGS "-DMAGICKCORE_HDRI_ENABLE=1 -DMAGICKCORE_QUANTUM_DEPTH=16")
-#set(MAGICK_DEFS -DHAVE_CONFIG_H)
-#set(MAGICK_LIBS  "-ljbig  -ltiff -lfreetype  -ljpeg    -lpng16 -lz      -lfontconfig -lfreetype      -lXext    -lSM -lICE -lX11  -llzma  -lIlmImf -lImath -lHalf -lIex -lIexMath -lIlmThread -lpthread  -lpangocairo-1.0 -lpango-1.0 -lgobject-2.0 -lglib-2.0 -lharfbuzz -lcairo     -lz     -lm    -lpthread")
-#set(MAGICK_CXXFLAGS -pthread)
-
-
 # ====================== Imagemagick
 add_definitions( -DMAGICKCORE_QUANTUM_DEPTH=16 )
 add_definitions( -DMAGICKCORE_HDRI_ENABLE=0 )
@@ -53,15 +46,20 @@ if(CROSS_COMPILE STREQUAL "RASP4_64")
   message("RASP4_64")
   find_program(MAGICK_CONFIG ${BUILDROOT_DIR}/output/host/bin/Magick++-config)
   find_package(ImageMagick PATHS ${HOST_PATH}/${TOOLS_PREFIX}/sysroot/usr/lib/ COMPONENTS Magick++)
-  #set(ImageMagick_DIR ${HOST_PATH}/${TOOLS_PREFIX}/sysroot/usr/lib/)
   set(ImageMagick_INCLUDE_DIRS ${HOST_PATH}/${TOOLS_PREFIX}/sysroot/usr/include/ImageMagick-7)
-#  set(ImageMagick_INCLUDE_DIRS /usr/local/include/ImageMagick-7)
-  #set(ImageMagick_LIBRARY_PATH /usr/local/lib/ImageMagick-7)
   set(ImageMagick_LIBRARIES ${HOST_PATH}/${TOOLS_PREFIX}/sysroot/usr/lib/libMagick++-7.Q16HDRI.so)
-#  set(ImageMagick_LIBRARIES /usr/local/lib/libMagick++-7.Q16HDRI.so)
 else()
   message("Desktop")
   find_program(MAGICK_CONFIG Magick++-config)
+find_package(ImageMagick COMPONENTS Magick++)
+endif()
+
+#set(MAGICK_CFLAGS "-I/usr/include/libpng16  -I/usr/include/pango-1.0 -I/usr/include/fribidi -I/usr/include/harfbuzz -I/usr/include/cairo -I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include -I/usr/include/pixman-1 -I/usr/include/uuid -I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/OpenEXR  -I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/uuid -I/usr/include/freetype2 -I/usr/include/libpng16  -fopenmp -Wall -g -O2 -mtune=amdfam10 -fexceptions -pthread -DMAGICKCORE_HDRI_ENABLE=1 -DMAGICKCORE_QUANTUM_DEPTH=16")
+#set(MAGICK_CPPFLAGS "-DMAGICKCORE_HDRI_ENABLE=1 -DMAGICKCORE_QUANTUM_DEPTH=16")
+#set(MAGICK_DEFS -DHAVE_CONFIG_H)
+#set(MAGICK_LIBS  "-ljbig  -ltiff -lfreetype  -ljpeg    -lpng16 -lz      -lfontconfig -lfreetype      -lXext    -lSM -lICE -lX11  -llzma  -lIlmImf -lImath -lHalf -lIex -lIexMath -lIlmThread -lpthread  -lpangocairo-1.0 -lpango-1.0 -lgobject-2.0 -lglib-2.0 -lharfbuzz -lcairo     -lz     -lm    -lpthread")
+#set(MAGICK_CXXFLAGS -pthread)
+
   message("MagickConfig: ${MAGICK_CONFIG}")
   execute_process(COMMAND "${MAGICK_CONFIG}" "--libs" OUTPUT_VARIABLE MAGICK_LD_FLAGS)
   # Remove trailing whitespace (CMAKE warns about this)
@@ -70,9 +68,6 @@ else()
 #set(CMAKE_CXX_FLAGS "${CMAKE_CPP_FLAGS} -std=c++11 ${MAGICK_CXX_FLAGS} ${MAGICK_LD_FLAGS}")
 
 message("LDFlags: ${MAGICK_LD_FLAGS}")
-find_package(ImageMagick COMPONENTS Magick++)
-endif()
-
 
 #<configure name="INCLUDE_PATH" value="/usr/local/include/ImageMagick-7"/>
 include_directories(${ImageMagick_INCLUDE_DIRS})
@@ -88,19 +83,34 @@ find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets VirtualKeyboard Multimedia Mult
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets VirtualKeyboard Multimedia MultimediaWidgets REQUIRED)
 
 #find_package(pthread REQUIRED)
-
 #set(SRC_FILES )
 
 # ================ TWITCURL
+#$(CC) twitterClient.cpp -I./include/ -L ./libtwitcurl.a -ltwitcurl -o twitterClient
+if(CROSS_COMPILE STREQUAL "RASP4_64")
+  set(CURL_INCLUDE_DIR ${HOST_PATH}/${TOOLS_PREFIX}/sysroot/usr/include/curl)
+  set(CURL_LIBRARIES ${HOST_PATH}/${TOOLS_PREFIX}/sysroot/usr/lib/libcurl.so)
+  message("CURL INCLUDE DIR: " ${CURL_INCLUDE_DIR})
+  message("CURL LIBRARIES" ${CURL_LIBRARIES})
+include_directories(${CURL_INCLUDE_DIR})
+else()
+  find_package(CURL REQUIRED)
+endif()
+
+# Build Twitter static library
+set(twitSrcs
+  ${CMAKE_SOURCE_DIR}/lib/src/base64.cpp
+  ${CMAKE_SOURCE_DIR}/lib/src/HMAC_SHA1.cpp
+  ${CMAKE_SOURCE_DIR}/lib/src/oauthlib.cpp
+  ${CMAKE_SOURCE_DIR}/lib/src/SHA1.cpp
+  ${CMAKE_SOURCE_DIR}/lib/src/urlencode.cpp
+  ${CMAKE_SOURCE_DIR}/lib/src/twitcurl.cpp)
+add_library(twitcurl STATIC ${twitSrcs})
+
+
 set(TWITCURL_LIB twitcurl)
-
-file(GLOB RESOURCE_FILES *.qrc)
-file(GLOB SRC_FILES *.cpp)
-file(GLOB HEADER_FILES *.h)
-
-#message(RESOURCE_FILES: ${RESOURCE_FILES})
-#message(SRC_FILES: ${SRC_FILES})
-#message(HEADER_FILES: ${HEADER_FILES})
+#set(TWITCURL_LIB -L${CMAKE_SOURCE_DIR}/staticlibs/libtwitcurl.a)
+message("TWITCURL_LIB ${TWITCURL_LIB}")
 
 set(MQUEUE_LD_FLAGS -lrt)
 
@@ -183,9 +193,10 @@ endif()
 
 # CMAKE IS CASE SENSITIVE
 # src: https://stackoverflow.com/a/60693001/17836786
+target_link_libraries(${PROJECT_NAME} PRIVATE ${TWITCURL_LIB} ${CURL_LIBRARIES})
 target_link_libraries(${PROJECT_NAME} PRIVATE
   ${OpenCV_LIBS}
-  Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::VirtualKeyboard Qt${QT_VERSION_MAJOR}::Multimedia Qt${QT_VERSION_MAJOR}::MultimediaWidgets pthread ${TWITCURL_LIB} ${MQUEUE_LD_FLAGS} ${MAGICK_LD_FLAGS} ${ImageMagick_LIBRARIES})
+  Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::VirtualKeyboard Qt${QT_VERSION_MAJOR}::Multimedia Qt${QT_VERSION_MAJOR}::MultimediaWidgets pthread ${MQUEUE_LD_FLAGS} ${MAGICK_LD_FLAGS} ${ImageMagick_LIBRARIES})
 
 # my_tgt can be an executable, library, or module.
 #target_link_options(${PROJECT_NAME} PRIVATE "LINKER:-lopencv_core -lopencv_video -lopencv_videoio")

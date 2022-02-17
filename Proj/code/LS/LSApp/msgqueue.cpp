@@ -30,6 +30,9 @@ bool msgQueue::Open(){
     return true;
 }
 int msgQueue::Receive(){
+
+    if(_fd < 0)
+        return _fd;
     
     if(mq_receive(_fd, _buff, _sz, NULL) == -1) {
             //get error from errno

@@ -98,7 +98,7 @@ void SharWindow::on_pb_edit_ok_clicked()
 
     ui->stackedWidget->setCurrentIndex(UIPages::STATUS);
     // Share post
-    if( !ui ->lineEdit_msg->text().isEmpty() )
+    //if( !ui ->lineEdit_msg->text().isEmpty() )
         emit twitterShare( ui->lineEdit_msg->text() );
 }
 

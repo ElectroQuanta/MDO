@@ -1,0 +1,1 @@
+cmd_/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/code/LS/DDrivers/USS/hc-sro4.mod := { echo  /home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/code/LS/DDrivers/USS/hc-sro4.o;  echo; } > /home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/code/LS/DDrivers/USS/hc-sro4.mod

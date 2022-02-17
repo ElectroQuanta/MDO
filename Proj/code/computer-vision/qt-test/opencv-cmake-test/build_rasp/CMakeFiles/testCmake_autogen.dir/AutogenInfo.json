@@ -1,0 +1,82 @@
+{
+	"BUILD_DIR" : "/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/code/computer-vision/qt-test/opencv-cmake-test/build_rasp/testCmake_autogen",
+	"CMAKE_BINARY_DIR" : "/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/code/computer-vision/qt-test/opencv-cmake-test/build_rasp",
+	"CMAKE_CURRENT_BINARY_DIR" : "/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/code/computer-vision/qt-test/opencv-cmake-test/build_rasp",
+	"CMAKE_CURRENT_SOURCE_DIR" : "/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/code/computer-vision/qt-test/opencv-cmake-test",
+	"CMAKE_EXECUTABLE" : "/usr/bin/cmake",
+	"CMAKE_SOURCE_DIR" : "/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/code/computer-vision/qt-test/opencv-cmake-test",
+	"HEADERS" : 
+	[
+		[
+			"/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/code/computer-vision/qt-test/opencv-cmake-test/mainwindow.h",
+			"MU",
+			"EWIEGA46WW/moc_mainwindow.cpp"
+		]
+	],
+	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
+	"INCLUDE_DIR" : "/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/code/computer-vision/qt-test/opencv-cmake-test/build_rasp/testCmake_autogen/include",
+	"MOC_COMPILATION_FILE" : "/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/code/computer-vision/qt-test/opencv-cmake-test/build_rasp/testCmake_autogen/mocs_compilation.cpp",
+	"MOC_DEFINITIONS" : [ "QT_CORE_LIB", "QT_GUI_LIB", "QT_WIDGETS_LIB" ],
+	"MOC_DEPEND_FILTERS" : 
+	[
+		[
+			"Q_PLUGIN_METADATA",
+			"[\n][ \t]*Q_PLUGIN_METADATA[ \t]*\\([^\\)]*FILE[ \t]*\"([^\"]+)\""
+		]
+	],
+	"MOC_INCLUDES" : 
+	[
+		"/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/code/computer-vision/qt-test/opencv-cmake-test/build_rasp",
+		"/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/code/computer-vision/qt-test/opencv-cmake-test",
+		"/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/Buildroot/buildroot-2021.11.1-32bits-opencv4/output/host/arm-buildroot-linux-uclibcgnueabihf/sysroot/usr/include/opencv4",
+		"/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/Buildroot/buildroot-2021.11.1-32bits-opencv4/output/host/arm-buildroot-linux-uclibcgnueabihf/sysroot/usr/include/qt5",
+		"/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/Buildroot/buildroot-2021.11.1-32bits-opencv4/output/host/arm-buildroot-linux-uclibcgnueabihf/sysroot/usr/include/qt5/QtWidgets",
+		"/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/Buildroot/buildroot-2021.11.1-32bits-opencv4/output/host/arm-buildroot-linux-uclibcgnueabihf/sysroot/usr/include/qt5/QtGui",
+		"/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/Buildroot/buildroot-2021.11.1-32bits-opencv4/output/host/arm-buildroot-linux-uclibcgnueabihf/sysroot/usr/include/qt5/QtCore",
+		"/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/Buildroot/buildroot-2021.11.1-32bits-opencv4/output/host/mkspecs/devices/linux-buildroot-g++",
+		"/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/Buildroot/buildroot-2021.11.1-32bits-opencv4/output/host/arm-buildroot-linux-uclibcgnueabihf/sysroot/usr/include",
+		"/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/Buildroot/buildroot-2021.11.1-32bits-opencv4/output/host/arm-buildroot-linux-uclibcgnueabihf/include/c++/10.3.0",
+		"/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/Buildroot/buildroot-2021.11.1-32bits-opencv4/output/host/arm-buildroot-linux-uclibcgnueabihf/include/c++/10.3.0/arm-buildroot-linux-uclibcgnueabihf",
+		"/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/Buildroot/buildroot-2021.11.1-32bits-opencv4/output/host/arm-buildroot-linux-uclibcgnueabihf/include/c++/10.3.0/backward",
+		"/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/Buildroot/buildroot-2021.11.1-32bits-opencv4/output/host/lib/gcc/arm-buildroot-linux-uclibcgnueabihf/10.3.0/include",
+		"/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/Buildroot/buildroot-2021.11.1-32bits-opencv4/output/host/lib/gcc/arm-buildroot-linux-uclibcgnueabihf/10.3.0/include-fixed",
+		"/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/Buildroot/buildroot-2021.11.1-32bits-opencv4/output/host/arm-buildroot-linux-uclibcgnueabihf/include"
+	],
+	"MOC_MACRO_NAMES" : [ "Q_OBJECT", "Q_GADGET", "Q_NAMESPACE", "Q_NAMESPACE_EXPORT" ],
+	"MOC_OPTIONS" : [],
+	"MOC_PATH_PREFIX" : true,
+	"MOC_PREDEFS_CMD" : 
+	[
+		"/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/Buildroot/buildroot-2021.11.1-32bits-opencv4/output/host/bin/arm-buildroot-linux-uclibcgnueabihf-g++",
+		"-dM",
+		"-E",
+		"-c",
+		"/usr/share/cmake-3.16/Modules/CMakeCXXCompilerABI.cpp"
+	],
+	"MOC_PREDEFS_FILE" : "/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/code/computer-vision/qt-test/opencv-cmake-test/build_rasp/testCmake_autogen/moc_predefs.h",
+	"MOC_RELAXED_MODE" : false,
+	"MOC_SKIP" : [],
+	"MULTI_CONFIG" : false,
+	"PARALLEL" : 6,
+	"PARSE_CACHE_FILE" : "/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/code/computer-vision/qt-test/opencv-cmake-test/build_rasp/CMakeFiles/testCmake_autogen.dir/ParseCache.txt",
+	"QT_MOC_EXECUTABLE" : "/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/Buildroot/buildroot-2021.11.1/output/host/bin/moc",
+	"QT_UIC_EXECUTABLE" : "/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/Buildroot/buildroot-2021.11.1/output/host/bin/uic",
+	"QT_VERSION_MAJOR" : 5,
+	"SETTINGS_FILE" : "/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/code/computer-vision/qt-test/opencv-cmake-test/build_rasp/CMakeFiles/testCmake_autogen.dir/AutogenUsed.txt",
+	"SOURCES" : 
+	[
+		[
+			"/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/code/computer-vision/qt-test/opencv-cmake-test/main.cpp",
+			"MU"
+		],
+		[
+			"/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/repo/Proj/code/computer-vision/qt-test/opencv-cmake-test/mainwindow.cpp",
+			"MU"
+		]
+	],
+	"UIC_OPTIONS" : [],
+	"UIC_SEARCH_PATHS" : [],
+	"UIC_SKIP" : [],
+	"UIC_UI_FILES" : [],
+	"VERBOSITY" : 0
+}

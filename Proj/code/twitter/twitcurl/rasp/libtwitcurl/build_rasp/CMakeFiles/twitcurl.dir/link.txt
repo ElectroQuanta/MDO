@@ -1,0 +1,2 @@
+/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/Buildroot/buildroot-2021.08.1/output/host/bin/aarch64-buildroot-linux-gnu-ar qc libtwitcurl.a  CMakeFiles/twitcurl.dir/base64.cpp.o CMakeFiles/twitcurl.dir/HMAC_SHA1.cpp.o CMakeFiles/twitcurl.dir/oauthlib.cpp.o CMakeFiles/twitcurl.dir/SHA1.cpp.o CMakeFiles/twitcurl.dir/urlencode.cpp.o CMakeFiles/twitcurl.dir/twitcurl.cpp.o
+/home/zmpl/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/Buildroot/buildroot-2021.08.1/output/host/bin/aarch64-buildroot-linux-gnu-ranlib libtwitcurl.a

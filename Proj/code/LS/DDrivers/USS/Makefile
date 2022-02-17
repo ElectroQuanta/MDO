@@ -1,14 +1,22 @@
 obj-m += hc-sro4.o
 
-ARCH=arm
-CROSS_COMPILE=/home/hugof37/Desktop/ESRG/buildroot/buildroot-2021.02.5/output/host/bin/arm-buildroot-linux-gnueabihf-
-# KERNEL_DIR=/lib/modules/3.18.0-trunk-rpi/build
-KERNEL_DIR=/home/hugof37/Desktop/ESRG/buildroot/buildroot-2021.02.5/output/build/linux-custom
-# KERNEL_DIR=../linux
-# CC=arm-linux-gnueabihf-gcc
+
+HOME=/home/zmpl
+BUILDROOT_DIR=$(HOME)/OneDrive-UM/Univ/MI_Electro/Sem7/SEC/2021-22/Buildroot/buildroot-2021.11.1
+BUILD_PATH=$(BUILDROOT_DIR)/output/build
+HOST_PATH=$(BUILDROOT_DIR)/output/host
+TOOLCHAIN_PATH=$(HOST_PATH)/bin
+
+#TOOLS_PREFIX=arm-buildroot-linux-uclibcgnueabihf
+TOOLS_PREFIX=arm-buildroot-linux-gnueabihf
+
+
+KDIR := $(BUILD_PATH)/linux-custom
+ARCH ?= arm
+CROSS_COMPILE ?= $(TOOLCHAIN_PATH)/$(TOOLS_PREFIX)-
 
 all:
-	make -C $(KERNEL_DIR) M=$(PWD) modules ARCH=$(ARCH) CROSS_COMPILE=$(CROSS_COMPILE)
+	make -C $(KDIR) M=$(PWD) modules ARCH=$(ARCH) CROSS_COMPILE=$(CROSS_COMPILE)
 
 clean:
-	make -C $(KERNEL_DIR) M=$(PWD) clean ARCH=$(ARCH) CROSS_COMPILE=$(CROSS_COMPILE)
+	make -C $(KDIR) M=$(PWD) clean ARCH=$(ARCH) CROSS_COMPILE=$(CROSS_COMPILE)

@@ -140,6 +140,7 @@ private slots:
     static void* rx_worker_thr(void* arg);
     static void* process_worker_thr(void* arg);
     static void* download_ad_worker_thr(void* arg);
+    static void* detect_user_worker_thr(void* arg);
 
     /**< Twitter sharing */
     bool TwitterAuthenticate();
@@ -223,6 +224,7 @@ private:
     //pthread_t _check_mode_thr; /**< Check normal mode thread */
     //pthread_t _check_normal_mode_thr; /**< Check normal mode thread */
     //pthread_t _check_interaction_mode_thr; /**< Check interaction thread */
+    pthread_t _detect_user_thr; /**< Download Ad thread */
     std::vector<pthread_t *> _threads;
 
     /**< Mutexes */
@@ -237,6 +239,7 @@ private:
     pthread_mutex_t _m_cur_frag; /**< Protects access to current Frag */
     pthread_mutex_t _m_event_diff; /**< Protects access to current Ad */
     pthread_mutex_t _m_tcp_buff; /**< Protects access to the TCP buffer */
+    pthread_mutex_t _m_user_detect; /**< Protects access to user detected shared var */
     std::vector<pthread_mutex_t *> _mutexes;
     /* For condition variables */
     //pthread_mutex_t _m_cond_cam_started;
@@ -315,5 +318,6 @@ private:
 
     /**< Message Queue */
     msgQueue *_mq_user_detect = nullptr;
+    bool _user_detected = false;
 };
 #endif // MAINWINDOW_H

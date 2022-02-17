@@ -1,0 +1,182 @@
+#+TITLE: Local System App
+#+AUTHOR: José Pires
+#+DATE: [2022-01-01 sáb 22:02]
+#+EMAIL: a50178@alunos.uminho.pt
+
+* Preamble
+This directory contains the Local System App.
+The UI is Qt-based.
+
+** File struct
+- =.gitignore=: local file to ignore Qt compilation files
+- =resources/=: folder where are added all resources, like =img=
+- =resources.qrc=: =xml= file declaring all the resources used in the project
+- =CmakeLists.txt=: setup file for CMake execution (makefile generation)
+- =*.ui=: files defining the UI views; they are paired with =.h= and =.cpp=
+  files with the same prefix to define views' controllers.
+- =main.cpp=: driver file - contains the =main()= function that drives the Qt
+  App execution
+
+** UI Views [5/5]
+1) [X] Welcome view: =MainWindow=
+   - displayed when no Ad is supposed to be running
+   - contains a description about the project, how to rent ads, etc.
+2) [X] Normal mode view: =NormalWindow=
+   - Reproduces video in fullscreen (with audio)
+3) [X] Interaction mode view: =InterWindow=
+   1) includes:
+      1) =Main menu=: page0
+      2) =Picture mode=: page1
+      3) =GIF mode=: page2
+4) [X] Image filtering view: =ImgFiltWindow=
+   1) includes:
+      1) =Main menu=
+5) [X] Sharing mode: =SharWindow=
+   1) includes:
+      1) =Main menu=: selection (page 0)
+      2) =Editing=: presents a virtual keyboard (page 1)
+      3) =Status=: presents a status message box to the user (page 2)
+** Classes [0/5]
+- [ ] =MainWindow=: drives the application logic and controls all the app's
+  top-level UI views
+- [ ] =NormalWindow=: drives the =Normal mode= logic and controls its UI view
+- [ ] =InterWindow=: drives the =Interaction mode= logic and controls its UI
+  view.
+  - It enables selection of /Image filters/, /Taking a pic/, and /Creating a
+    GIF/
+  - It handles /Picture mode/ and /GIF mode/ views
+- [ ] =ImgFiltWindow=: drives the /Image filtering/ logic and controls its UI
+  view
+- [ ] =SharWindow=: drives the =Sharing mode= logic and controls its UI view
+  - It enables selection of /Social media network/, /Editing a post/, and /Post
+    sharing status/
+  - It handles /Edit post/ and /Post sharing status/ views
+
+* Compilation
+=CMake= is the preferred build system for the App.
+- =Qt= and =CMake= external builds are based on =Cmake=.
+- It eases the integration with external libraries, e.g., =OpenCV=.
+** Qt
+1) open a project and select the =CMakeLists.txt= file.
+2) Press =Build=
+
+The app will be build and executed.
+** CMake (external)
+1) Create a build folder and navigate to there
+   #+BEGIN_SRC bash
+   mkdir build && cd build
+   #+END_SRC
+2) Run =CMake= to generate the makefile
+   #+BEGIN_SRC bash
+   cmake ..
+   #+END_SRC
+3) Run =make= to build the application
+   #+BEGIN_SRC bash
+   make -j$(nproc)
+   #+END_SRC
+4) Run the executable
+   #+BEGIN_SRC bash
+   ./LSApp 
+   #+END_SRC
+5) Rebuild
+   1) Remove the build folder
+      #+BEGIN_SRC bash
+      # navigate to root and remove the build folder
+      cd .. && rm -rf build
+      #+END_SRC
+   2) Repeat the steps 1-4
+
+* Qt
+Because =CMake= is the preferred build system, every file must be added to
+=CMakeLists.txt= before =Qt= can recognize. This is done as follows:
+#+BEGIN_SRC cmake
+  add_executable(LSApp
+    main.cpp
+    mainwindow.cpp
+    mainwindow.h
+    mainwindow.ui
+    resources.qrc
+    <fname.ext>
+  )
+#+END_SRC
+** Adding resources
+Resources can be added by as follows:
+- Add the files into =resources/= dir and the appropriate subdir
+- Select the =resources.qrc= file in QtCreator (Edit view)
+- Right-click it and press =Add Existing Files=
+- Select the files to add and press =OK=
+
+These resources should now be available for QtDesigner or for QtCreator handling.
+** ✔ DONE Add Virtual Keyboard to Sharing menu
+   :LOGBOOK:
+   - State "✔ DONE"     from "☛ TODO"     [2022-01-03 seg 00:43]
+   - State "☛ TODO"     from              [2022-01-02 dom 19:48]
+   :END:
+A virtual keyboard (on-screen) can be added to facilitate user input to edit the
+post.
+- Qt supports this feature by using the =QtVirtualKeyboard= ([[https://doc.qt.io/qt-5/qtvirtualkeyboard-index.html][src]]), which is
+  available for QtQuick and QtWidgets applications.
+- Thus, it can be used in QML and C++.
+- It targets Desktop and Embedded systems.
+
+*TL;DR*: There is a project that was compiled and run successfully on
+=/code/qt/virtualkeyboard/= 
+*** Installation
+=QtVirtualKeyboard= is available as a =Qt= module, meaning it should be
+installed by the =Qt= maintenance tool.
+- The maintenance tool is available only for =Qt= website installations. ([[https://www.qt.io/download-open-source?hsCtaTracking=9f6a2170-a938-42df-a8e2-a9f0b1d6cdce%257C6cb0de4f-9bb5-4778-ab02-bfb62735f3e5][src]])
+- When installing =Qt=, select =Custom Install= and then select the desired
+  modules, e.g. =QtVirtualKeyboard=.
+*** Compilation
+**** Includes
+For =QtVirtualKeyboard= to be used, it must be included. Thus, =#include
+<QtVirtualKeyboard>=, in every file required. 
+- For more info, see [[https://doc.qt.io/qt-6/qtvirtualkeyboard-module.html#details][here]].
+**** Module loading
+For the module to be recognized, it requires:
+- =main.cpp=: Add this line in =main()= function ([[https://stackoverflow.com/q/57161308][src]]):
+  #+BEGIN_SRC cpp
+  #include <QtWidgets>
+
+  int main(int argc, char *argv[]) {
+   /**< Add this line */
+    qputenv("QT_IM_MODULE", QByteArray("qtvirtualkeyboard"));
+
+    QApplication app(argc, argv);
+    QMainWindow window;
+    QLineEdit input(&window);
+    input.move(250, 250);
+    window.show();
+    return app.exec();
+    }
+  #+END_SRC
+- =.bashrc=: /maybe/ this line must be added too:
+  #+BEGIN_SRC bash
+  # Qt virtual keyboard
+  export QT_IM_MODULE=qtvirtualkeyboard
+  #+END_SRC
+**** CMake builds
+- Add the following to =CmakeLists.txt=
+  #+BEGIN_SRC cmake
+find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets VirtualKeyboard REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets VirtualKeyboard REQUIRED)
+
+target_link_libraries(${PROJECT_NAME} PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::VirtualKeyboard)
+  #+END_SRC
+**** ✔ DONE Example project
+     :LOGBOOK:
+     - State "✔ DONE"     from              [2022-01-03 seg 00:47]
+       - *SUCCESS*
+     :END:
+- project that was compiled and run successfully on =/code/qt/virtualkeyboard/=
+- Select the input text and the virtual keyboard will show up
+* External libraries setup
+** OpenCV
+- Add the following to the =CMakeLists.txt=
+    #+BEGIN_SRC cmake
+set(OpenCV_DIR "usr/local/lib/cmake/opencv4")
+find_package(OpenCV REQUIRED)
+include_directories(${OpenCV_INCLUDE_DIRS})
+
+target_link_libraries(${PROJECT_NAME} PRIVATE Qt5::Widgets ${OpenCV_LIBS})
+    #+END_SRC

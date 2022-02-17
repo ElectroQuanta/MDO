@@ -9570,3 +9570,89 @@ ssh root@<device_name>.local
 configure-qtcreator.sh --name Goldfinger --env-setup $env_setup_file --creator-base $qtc_dir --device <device_name>.local
 #+END_SRC
 
+* TODO
+
+** ✔ DONE Copy files
+   :LOGBOOK:
+   - State "✔ DONE"     from "☛ TODO"     [2022-02-15 ter 04:41]
+   - State "☛ TODO"     from              [2022-02-15 ter 04:01]
+   :END:
+1) Daemon
+2) Device drivers
+   1) Frag
+   2) USS
+3) LSApp and directories
+
+#+BEGIN_SRC bash
+scp LSApp/ root@10.42.0.100:/etc/LS
+
+
+#+END_SRC
+
+- /etc
+  - /LS
+    + App
+      - bin
+	- LSApp
+      - models
+      - ads
+      - filters
+      - fragrances
+      - posts
+      - resources
+      - twitter
+    + /Daemon
+      - daemon
+    + /DDrivers
+      - Frag
+	- frag.ko
+      - USS
+	- hc-sro4.ko
+  - init.d/
+    - Sinit.sh
+
+** ✔ DONE Config.txt
+   :LOGBOOK:
+   - State "✔ DONE"     from "☛ TODO"     [2022-02-15 ter 04:41]
+   - State "☛ TODO"     from              [2022-02-15 ter 04:15]
+   :END:
+- Rotate screen
+  #+BEGIN_EXAMPLE
+  # rotate display
+  display_rotate=1
+  #+END_EXAMPLE
+
+** ✔ DONE Init script
+   :LOGBOOK:
+   - State "✔ DONE"     from "☛ TODO"     [2022-02-15 ter 04:10]
+   - State "☛ TODO"     from              [2022-02-15 ter 04:02]
+   :END:
+
+#+BEGIN_SRC bash
+#!/bin/sh
+
+# create and installing message queues
+rm -rf /dev/mqueue
+mkdir /dev/mqueue
+mount -t mqueue distance /dev/mqueue
+
+# Insert device drivers kernel modules
+insmod /etc/LS/DDrivers/Frag/frag.ko
+insmod /etc/LS/DDrivers/USS/hc-sro4.ko
+
+# starting daemon
+/etc/LS/Daemon/daemon &
+
+# change directory
+cd /etc/LS/App/bin/
+
+# starting application
+/etc/LS/App/bin/LSApp -platform linuxfb
+
+#+END_SRC
+
+** Fix application [0/4]
+2) [ ] Fix Window size / scaling
+1) [ ] Fix paths
+3) [ ] Fix logic for mqueues
+4) [ ] Fix User detection timing
