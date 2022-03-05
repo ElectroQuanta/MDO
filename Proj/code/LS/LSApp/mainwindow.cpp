@@ -88,8 +88,6 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    Ui::MainWindow newWindow;
-
     /**< TITLE BAR */
     // remove title bar (we dont want this in the embedded display)
     // UNCOMMENT this at the end
