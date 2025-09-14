@@ -8,9 +8,7 @@ The Marketing Digital Outdoor (MDO) is a marketing scenting device with video
 and audio capabilities which allows the user to interact with the device through
 hand gestures.
 
-file:Proj/report/img/hw-all-crop.jpg
-
-
+[[file:Proj/report/img/hw-all-crop.jpg]]
 
 ** Features [10/10]
 - [X] Advertising through a screen and speakers;
