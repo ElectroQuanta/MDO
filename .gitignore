@@ -50,3 +50,6 @@ moc_*
 # ignore clangd files and folders
 .cache/
 compile_commands.json
+
+# ignore .html file
+*.html
